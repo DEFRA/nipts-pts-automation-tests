@@ -1,10 +1,10 @@
 ﻿using BoDi;
 using Microsoft.Extensions.Configuration;
-using pets_com_automation_tests.Configuration;
+using nipts_pts_automation_tests.Configuration;
 using System.Reflection;
 
 
-namespace pets_com_automation_tests.Data
+namespace nipts_pts_automation_tests.Data
 {
     public class User
     {

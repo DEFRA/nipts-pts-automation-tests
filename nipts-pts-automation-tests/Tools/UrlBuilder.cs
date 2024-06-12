@@ -1,8 +1,8 @@
 ﻿
 using BoDi;
-using pets_com_automation_tests.Configuration;
+using nipts_pts_automation_tests.Configuration;
 
-namespace pets_com_automation_tests.Tools
+namespace nipts_pts_automation_tests.Tools
 {
     public interface IUrlBuilder
     {

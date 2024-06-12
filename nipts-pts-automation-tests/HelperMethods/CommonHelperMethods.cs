@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
 
-namespace pets_com_automation_tests.HelperMethods
+namespace nipts_pts_automation_tests.HelperMethods
 {
     public static class CommonHelperMethods
     {

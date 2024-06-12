@@ -4,10 +4,10 @@ using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Safari;
 using OpenQA.Selenium;
-using pets_com_automation_tests.Configuration;
+using nipts_pts_automation_tests.Configuration;
 using TechTalk.SpecFlow;
 
-namespace pets_com_automation_tests.Capabilities
+namespace nipts_pts_automation_tests.Capabilities
 {
     public class BrowserStackCapability : IDriverOptions
     {

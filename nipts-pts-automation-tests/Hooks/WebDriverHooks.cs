@@ -1,13 +1,13 @@
 ﻿using BoDi;
 using Defra.UI.Framework.Object;
 using OpenQA.Selenium;
-using pets_com_automation_tests.Capabilities;
-using pets_com_automation_tests.Configuration;
+using nipts_pts_automation_tests.Capabilities;
+using nipts_pts_automation_tests.Configuration;
 using System.Reflection;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Infrastructure;
 
-namespace pets_com_automation_tests.Hooks
+namespace nipts_pts_automation_tests.Hooks
 {
     [Binding]
     public class WebDriverHook

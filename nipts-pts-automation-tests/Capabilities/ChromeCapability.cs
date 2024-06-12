@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
-using pets_com_automation_tests.Configuration;
+using nipts_pts_automation_tests.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
-namespace pets_com_automation_tests.Capabilities
+namespace nipts_pts_automation_tests.Capabilities
 {
     public class ChromeCapability : IDriverOptions
     {

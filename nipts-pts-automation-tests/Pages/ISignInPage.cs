@@ -1,4 +1,4 @@
-﻿namespace pets_com_automation_tests.Pages
+﻿namespace nipts_pts_automation_tests.Pages
 {
     public interface ISignInPage
     {

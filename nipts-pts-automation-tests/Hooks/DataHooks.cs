@@ -1,8 +1,8 @@
 ﻿using BoDi;
-using pets_com_automation_tests.Configuration;
+using nipts_pts_automation_tests.Configuration;
 using TechTalk.SpecFlow;
 
-namespace pets_com_automation_tests.Hooks
+namespace nipts_pts_automation_tests.Hooks
 {
     [Binding]
     public class DataHooks

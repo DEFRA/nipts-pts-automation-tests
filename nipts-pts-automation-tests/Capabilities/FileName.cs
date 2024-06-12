@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace pets_com_automation_tests.Capabilities
+namespace nipts_pts_automation_tests.Capabilities
 {
     public interface IDriverOptions
     {

@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using System.Data;
 
-namespace pets_com_automation_tests.HelperMethods
+namespace nipts_pts_automation_tests.HelperMethods
 {
     public interface IDataHelperConnections
     {

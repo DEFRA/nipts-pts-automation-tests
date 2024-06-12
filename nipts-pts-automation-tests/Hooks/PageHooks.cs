@@ -1,12 +1,12 @@
 ﻿using BoDi;
-using pets_com_automation_tests.Configuration;
-using pets_com_automation_tests.Data;
-using pets_com_automation_tests.HelperMethods;
-using pets_com_automation_tests.Pages;
-using pets_com_automation_tests.Tools;
+using nipts_pts_automation_tests.Configuration;
+using nipts_pts_automation_tests.Data;
+using nipts_pts_automation_tests.HelperMethods;
+using nipts_pts_automation_tests.Pages;
+using nipts_pts_automation_tests.Tools;
 using TechTalk.SpecFlow;
 
-namespace pets_com_automation_tests.Hooks
+namespace nipts_pts_automation_tests.Hooks
 {
     [Binding]
     public class PageHooks
