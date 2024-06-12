@@ -1,10 +1,10 @@
 ﻿using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
-using pets_com_automation_tests.Configuration;
+using nipts_pts_automation_tests.Configuration;
 using SeleniumExtras.WaitHelpers;
 
 
-namespace pets_com_automation_tests.HelperMethods
+namespace nipts_pts_automation_tests.HelperMethods
 {
     internal static class Waits
     {

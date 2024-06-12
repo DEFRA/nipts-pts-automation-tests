@@ -1,6 +1,6 @@
 ﻿using Defra.UI.Framework.Configuration;
 
-namespace pets_com_automation_tests.Configuration
+namespace nipts_pts_automation_tests.Configuration
 {
     public class UiFrameworkConfiguration : IFrameworkConfiguration
     {

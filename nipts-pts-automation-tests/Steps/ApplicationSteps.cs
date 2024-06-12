@@ -2,11 +2,11 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
-using pets_com_automation_tests.Data;
-using pets_com_automation_tests.HelperMethods;
-using pets_com_automation_tests.Pages;
+using nipts_pts_automation_tests.Data;
+using nipts_pts_automation_tests.HelperMethods;
+using nipts_pts_automation_tests.Pages;
 
-namespace pets_com_automation_tests.Steps
+namespace nipts_pts_automation_tests.Steps
 {
     [Binding]
     public class ApplicationSteps

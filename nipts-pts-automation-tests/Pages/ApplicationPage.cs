@@ -1,11 +1,11 @@
 ﻿using BoDi;
 using OpenQA.Selenium;
-using pets_com_automation_tests.Configuration;
-using pets_com_automation_tests.HelperMethods;
-using pets_com_automation_tests.Tools;
+using nipts_pts_automation_tests.Configuration;
+using nipts_pts_automation_tests.HelperMethods;
+using nipts_pts_automation_tests.Tools;
 
 
-namespace pets_com_automation_tests.Pages
+namespace nipts_pts_automation_tests.Pages
 {
     public class ApplicationPage : IApplicationPage
     {

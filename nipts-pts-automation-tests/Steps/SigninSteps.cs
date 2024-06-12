@@ -1,12 +1,12 @@
 ﻿using BoDi;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using pets_com_automation_tests.Data;
-using pets_com_automation_tests.Pages;
-using pets_com_automation_tests.Tools;
+using nipts_pts_automation_tests.Data;
+using nipts_pts_automation_tests.Pages;
+using nipts_pts_automation_tests.Tools;
 using TechTalk.SpecFlow;
 
-namespace pets_com_automation_tests.Steps
+namespace nipts_pts_automation_tests.Steps
 {
     [Binding]
     public class SigninSteps

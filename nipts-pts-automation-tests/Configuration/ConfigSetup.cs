@@ -4,7 +4,7 @@ using TechTalk.SpecFlow;
 using TestExecutionContext = NUnit.Framework.Internal.TestExecutionContext;
 
 
-namespace pets_com_automation_tests.Configuration
+namespace nipts_pts_automation_tests.Configuration
 {
     [Binding]
     public class ConfigSetup
