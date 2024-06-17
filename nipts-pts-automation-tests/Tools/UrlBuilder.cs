@@ -6,7 +6,8 @@ namespace nipts_pts_automation_tests.Tools
 {
     public interface IUrlBuilder
     {
-        public UrlBuilder Default();
+        //public UrlBuilder Default();
+        public UrlBuilder Default(string portal);
         public string Build();
         public UrlBuilder Add(string segment);
 
@@ -59,9 +60,13 @@ namespace nipts_pts_automation_tests.Tools
             return path;
         }
 
-        public UrlBuilder Default()
+        public UrlBuilder Default(string portal)
         {
-            BaseUrl = ConfigSetup.BaseConfiguration.TestConfiguration.Environment;
+            if(portal.Contains("Com"))
+                BaseUrl = ConfigSetup.BaseConfiguration.TestConfiguration.ComPortalUrl;
+            else if(portal.Contains("App"))
+                BaseUrl = ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl;
+
             return this;
         }
 

@@ -134,3 +134,8 @@ C:\Users\payewale\source\repos\nipts-pts-automation-tests\nipts-pts-automation-t
 C:\Users\payewale\source\repos\nipts-pts-automation-tests\nipts-pts-automation-tests\obj\Debug\net8.0\nipts-pts-automation-tests.pdb
 C:\Users\payewale\source\repos\nipts-pts-automation-tests\nipts-pts-automation-tests\obj\Debug\net8.0\nipts-pts-automation-tests.genruntimeconfig.cache
 C:\Users\payewale\source\repos\nipts-pts-automation-tests\nipts-pts-automation-tests\obj\Debug\net8.0\ref\nipts-pts-automation-tests.dll
+C:\Users\payewale\source\repos\nipts-pts-automation-tests\nipts-pts-automation-tests\bin\Debug\net8.0\AssemblyInfo.cs
+C:\Users\payewale\source\repos\nipts-pts-automation-tests\nipts-pts-automation-tests\bin\Debug\net8.0\appsettings.json
+C:\Users\payewale\source\repos\nipts-pts-automation-tests\nipts-pts-automation-tests\bin\Debug\net8.0\nuget.config
+C:\Users\payewale\source\repos\nipts-pts-automation-tests\nipts-pts-automation-tests\bin\Debug\net8.0\TestExecution.json
+C:\Users\payewale\source\repos\nipts-pts-automation-tests\nipts-pts-automation-tests\bin\Debug\net8.0\testrun.runsettings

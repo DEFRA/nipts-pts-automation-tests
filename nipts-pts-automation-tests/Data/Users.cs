@@ -40,17 +40,8 @@ namespace nipts_pts_automation_tests.Data
                 builder.AddJsonFile(filePath, false, true);
                 var settings = builder.Build();
                 var usersList = settings.GetSection("Users").Get<List<User>>();
-                string environment = ConfigSetup.BaseConfiguration.TestConfiguration.Environment;
-                /*if (environment != null && !environment.ToLower().Contains("uk.trade.defra.gov.uk"))
-                {
-                    environment = environment.ToLower().Substring("https://".Length);
-                    environment = environment.ToLower().Replace("-uk.trade.azure.defra.cloud", "");
-                }
-                else
-                {
-                    environment = "prd";
-                }
-                */
+                string environment = ConfigSetup.BaseConfiguration.TestConfiguration.ComPortalUrl;
+
                 var filterList = environment.ToLower().Contains("sign-up", StringComparison.CurrentCultureIgnoreCase)
                     ? usersList.FindAll(d => d.LoginInfo.Equals(info) && d.Environment.ToLower().Contains("test"))
                     : usersList.FindAll(d => d.LoginInfo.Equals(info) && d.Environment.ToLower().Contains(environment));

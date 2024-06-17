@@ -1,7 +1,6 @@
 ﻿using BoDi;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using nipts_pts_automation_tests.Data;
 using nipts_pts_automation_tests.Pages;
 using nipts_pts_automation_tests.Tools;
 using TechTalk.SpecFlow;
@@ -29,9 +28,18 @@ namespace nipts_pts_automation_tests.Steps
         [When(@"that I navigate to the Pets compliance portal")]
         public void GivenThatINavigateToThePetsCompliancePortal()
         {
-            string url = UrlBuilder.Default().Build();
+            string url = UrlBuilder.Default("Com").Build();
             _driver.Navigate().GoToUrl(url);
             Assert.True(applicationPage.VerifyNextPageIsLoaded("Check a pet from"), "We are not in the home Page");
+        }
+
+        [Given(@"that I navigate to the Pets application portal")]
+        [When(@"that I navigate to the Pets application portal")]
+        public void GivenThatINavigateToThePetsApplicationPortal()
+        {
+            string url = UrlBuilder.Default("App").Build();
+            _driver.Navigate().GoToUrl(url);
+            Assert.True(applicationPage.VerifyNextPageIsLoaded("This is for testing use only"), "We are not in the home Page");
         }
 
         [Given(@"click on sign in button")]

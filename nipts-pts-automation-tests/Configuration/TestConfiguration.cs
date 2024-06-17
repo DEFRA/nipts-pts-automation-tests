@@ -2,7 +2,8 @@
 {
     public class TestConfiguration
     {
-        public string Environment { get; set; }
+        public string ComPortalUrl { get; set; }
+        public string AppPortalUrl { get; set; }
         public string EnvPassword { get; set; }
         public string Platform { get; set; }
         public bool Headless { get; set; }
