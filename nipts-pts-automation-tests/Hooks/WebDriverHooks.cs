@@ -69,10 +69,6 @@ namespace nipts_pts_automation_tests.Hooks
                 }
                 Driver.Close();
                 Driver.Quit();
-                if (!ConfigSetup.BaseConfiguration.TestConfiguration.Environment.Contains("pre"))
-                {
-                    DeleteApplicationViaBackend();
-                }
             }
         }
 

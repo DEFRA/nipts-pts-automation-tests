@@ -1,1 +1,3 @@
-{"Nodes":[],"ExecutionTime":"2024-06-12T14:12:58.1066527Z","GenerationTime":"0001-01-01T00:00:00","PluginUserSpecFlowId":"65a7de08-3b0c-4050-886c-5b553b1a4611","CLIUserSpecFlowId":null,"ExecutionResults":[{"ContextType":"Scenario","FeatureFolderPath":"Features","FeatureTitle":"SignIn","ScenarioTitle":"Navigate to Pets Compliance Portal Page","ScenarioArguments":["Current sailing"],"Status":"OK","StepResults":[{"Duration":"00:00:00.8202966","Status":"OK","Error":null,"Outputs":null},{"Duration":"00:00:02.6502630","Status":"OK","Error":null,"Outputs":null},{"Duration":"00:00:00.1444709","Status":"OK","Error":null,"Outputs":null}],"Outputs":null}],"StepReports":null}
+{
+  "$schema": "https://specflow.org/specflow-config.json"
+}
