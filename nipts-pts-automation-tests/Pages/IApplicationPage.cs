@@ -3,6 +3,9 @@
     public interface IApplicationPage
     {
         public bool VerifyNextPageIsLoaded(string pageName);
+        public void ClickOnWelshLang();
+        public void ClickOnApplyForADocument();
+        public void ClickOnEnglishLang();
 
     }
 }

@@ -86,12 +86,13 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Navigate to Pets Application Portal Page")]
-        [NUnit.Framework.TestCaseAttribute("This is for testing use only", null)]
-        public void NavigateToPetsApplicationPortalPage(string nextPage, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("Sign in using Government Gateway", "test", null)]
+        public void NavigateToPetsApplicationPortalPage(string nextPage, string logininfo, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("nextPage", nextPage);
+            argumentsOfScenario.Add("logininfo", logininfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate to Pets Application Portal Page", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 9
 this.ScenarioInitialize(scenarioInfo);
@@ -108,6 +109,9 @@ this.FeatureBackground();
 #line hidden
 #line 10
  testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 11
+ testRunner.Then(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
