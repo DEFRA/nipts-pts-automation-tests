@@ -48,5 +48,19 @@ namespace nipts_pts_automation_tests.Steps
         {
             applicationPage.ClickOnApplyForADocument();
         }
+
+        [When(@"click on continue")]
+        [Then(@"click on continue")]
+        public void ThenClickOnContinue()
+        {
+            applicationPage.ClickOnContinueWelsh();
+        }
+
+        [When(@"click on back")]
+        [Then(@"click on back")]
+        public void ThenClickOnBack()
+        {
+            applicationPage.ClickOnBackWelsh();
+        }
     }
 }

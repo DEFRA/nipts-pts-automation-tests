@@ -2,10 +2,8 @@
 {
     public interface IPersonalDetailsPage
     {
-        public bool VerifyPersonalDetails(string user);
-        public void ClickOnContinue();
-        public void ClickOnBack();
+        public bool VerifyPersonalDetails(string userType);
         public void SelectOptionOnPersonalDetailsPage(string option);
-
+        public bool VerifyErrorMessageOnPersonalDetailsPage(string errorMessage);
     }
 }

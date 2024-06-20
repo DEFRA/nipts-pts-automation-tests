@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("nipts-pts-automation-tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+436253ae4acbb24da5ef500591b0552ea74b0390")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a5b7533bae94e81ad8cda68fd4c2f2075196288")]
 [assembly: System.Reflection.AssemblyProductAttribute("nipts-pts-automation-tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("nipts-pts-automation-tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

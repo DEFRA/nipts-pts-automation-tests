@@ -6,6 +6,7 @@
         public void ClickOnWelshLang();
         public void ClickOnApplyForADocument();
         public void ClickOnEnglishLang();
-
+        public void ClickOnContinueWelsh();
+        public void ClickOnBackWelsh();
     }
 }

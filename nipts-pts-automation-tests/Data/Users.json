@@ -1,13 +1,13 @@
 {
   "Users": [
     {
-      "userId": "73 34 13 27 72 05",
+      "userId": "58 45 38 17 88 10",
       "password": "Test@12345",
       "logininfo": "test",
-      "UserName": "",
-      "UserEmail": "",
-      "Useraddress": "",
-      "UserPhoneNumber": "",
+      "UserName": "test test",
+      "UserEmail": "nikita.phatak+1906@capgemini.com",
+      "Useraddress": "75 BRUNSWICK STREET",
+      "UserPhoneNumber": "07833861111"
     },
     {
       "userId": "73 34 13 27 72 05",

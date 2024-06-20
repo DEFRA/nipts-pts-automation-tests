@@ -14,8 +14,8 @@ Scenario: Verify Personal Details page
 
 
 	Examples: 
-	| logininfo | nextPage                      | nextPage1                    |
-	| test      | Lifelong pet travel documents | Ydy’ch manylion chi’n gywir? |
+	| logininfo | nextPage                      | nextPage1    |
+	| test      | Lifelong pet travel documents | manylion chi |
 
 	Scenario: Verify Personal Details page Welsh and English version
 	Given that I navigate to the Pets application portal
@@ -30,8 +30,8 @@ Scenario: Verify Personal Details page
 
 
 	Examples: 
-	| logininfo | nextPage                      | nextPage1                 | nextPage2                    |
-	| test      | Lifelong pet travel documents | Are your details correct? | Ydy’ch manylion chi’n gywir? |
+	| logininfo | nextPage                      | nextPage1                 | nextPage2    |
+	| test      | Lifelong pet travel documents | Are your details correct? | manylion chi |
 
 
 	Scenario: Verify Error message for not selecting option on Personal Details page 
@@ -78,3 +78,18 @@ Scenario: Verify Personal Details page
 	Examples: 
 	| logininfo | nextPage                      | nextPage1               |
 	| test      | Lifelong pet travel documents | What is your full name? |
+
+
+	Scenario: Verify back link on Personal Details page 
+	Given that I navigate to the Pets application portal
+	When  sign in with valid credentials with logininfo '<logininfo>'
+	Then  verify next page '<nextPage>' is loaded
+	When  click on Apply for a document
+	And   click on Welsh language 
+	And   click on back
+	Then  verify next page '<nextPage1>' is loaded
+
+
+	Examples: 
+	| logininfo | nextPage                      | nextPage1                     |
+	| test      | Lifelong pet travel documents | Lifelong pet travel documents |

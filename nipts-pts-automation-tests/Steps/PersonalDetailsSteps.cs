@@ -1,7 +1,7 @@
 ﻿using BoDi;
-using nipts_pts_automation_tests.Data;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
@@ -23,30 +23,23 @@ namespace nipts_pts_automation_tests.Steps
             _objectContainer = container;
         }
 
-        [When(@"click on continue")]
-        [Then(@"click on continue")]
-        public void ThenClickOnContinue()
-        {
-            personalDetailsPage.ClickOnContinue();
-        }
-
-        [When(@"click on back")]
-        [Then(@"click on back")]
-        public void ThenClickOnBack()
-        {
-            personalDetailsPage.ClickOnBack();
-        }
 
         [Then(@"verify Personal Details for user '([^']*)'")]
-        public void ThenVerifyPersonalDetails(string user)
+        public void ThenVerifyPersonalDetails(string userType)
         {
-            personalDetailsPage.VerifyPersonalDetails(user);
+            Assert.True(personalDetailsPage.VerifyPersonalDetails(userType),"Personal details not matching");
         }
 
         [When(@"select '([^']*)' on Personal Details page")]
         public void ThenSelectOptionOnPersonalDetailsPage(string option)
         {
             personalDetailsPage.SelectOptionOnPersonalDetailsPage(option);
+        }
+
+        [Then(@"verify error message '([^']*)' on Personal Details page")]
+        public void ThenVerifyErrorMessageOnPersonalDetailsPage(string errorMessage)
+        {
+            Assert.True(personalDetailsPage.VerifyErrorMessageOnPersonalDetailsPage(errorMessage), "Invalid error on Personal Details Page");
         }
 
     }

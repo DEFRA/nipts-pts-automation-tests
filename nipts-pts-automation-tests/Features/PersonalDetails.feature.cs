@@ -77,7 +77,7 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Personal Details page")]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "Ydy�ch manylion chi�n gywir?", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", null)]
         public void VerifyPersonalDetailsPage(string logininfo, string nextPage, string nextPage1, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -123,7 +123,7 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Personal Details page Welsh and English version")]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "Are your details correct?", "Ydy�ch manylion chi�n gywir?", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "Are your details correct?", "manylion chi", null)]
         public void VerifyPersonalDetailsPageWelshAndEnglishVersion(string logininfo, string nextPage, string nextPage1, string nextPage2, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -312,6 +312,52 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("click on continue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 75
+ testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage1), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Verify back link on Personal Details page")]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "Lifelong pet travel documents", null)]
+        public void VerifyBackLinkOnPersonalDetailsPage(string logininfo, string nextPage, string nextPage1, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("logininfo", logininfo);
+            argumentsOfScenario.Add("nextPage", nextPage);
+            argumentsOfScenario.Add("nextPage1", nextPage1);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify back link on Personal Details page", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 83
+ this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 84
+ testRunner.Given("that I navigate to the Pets application portal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 85
+ testRunner.When(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 86
+ testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 87
+ testRunner.When("click on Apply for a document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 88
+ testRunner.And("click on Welsh language", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 89
+ testRunner.And("click on back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 90
  testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage1), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
