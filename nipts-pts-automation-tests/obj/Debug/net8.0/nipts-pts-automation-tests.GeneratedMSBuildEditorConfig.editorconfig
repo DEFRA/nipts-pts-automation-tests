@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = nipts_pts_automation_tests
-build_property.ProjectDir = C:\Users\payewale\source\repos\nipts-pts-automation-tests\nipts-pts-automation-tests\
+build_property.ProjectDir = C:\Users\nphatak\Source\Repos\nipts-pts-automation-tests\nipts-pts-automation-tests\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
