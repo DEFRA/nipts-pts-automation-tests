@@ -16,6 +16,9 @@ namespace nipts_pts_automation_tests.Pages
         #region Page Objects
 
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')]"));
+        private IWebElement Englishclick => _driver.WaitForElement(By.XPath("//a[contains(text(),'English')]"));
+        private IWebElement Welshclick => _driver.WaitForElement(By.XPath("//a[contains(text(),'Cymraeg')]"));
+        
         #endregion Page Objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -31,6 +34,16 @@ namespace nipts_pts_automation_tests.Pages
         {
             string text = PageHeading.Text;
             return PageHeading.Text.Contains(pageName);
+        }
+
+        public void ClickOnWelshLang()
+        {
+            Welshclick.Click();
+        }
+
+        public void ClickOnEnglishLang()
+        {
+            Englishclick.Click();
         }
 
         #endregion Page Methods

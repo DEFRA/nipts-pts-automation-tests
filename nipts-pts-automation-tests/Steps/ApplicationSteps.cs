@@ -30,5 +30,18 @@ namespace nipts_pts_automation_tests.Steps
             Assert.True(applicationPage.VerifyNextPageIsLoaded(pageName), "Expected page not loaded");
         }
 
+        [When(@"click on Welsh language")]
+        [Then(@"click on Welsh language")]
+        public void ThenClickOnWelshLang()
+        {
+            applicationPage.ClickOnWelshLang();
+        }
+
+        [When(@"click on English language")]
+        [Then(@"click on English language")]
+        public void ThenClickOnEnglishLang()
+        {
+            applicationPage.ClickOnEnglishLang();
+        }
     }
 }

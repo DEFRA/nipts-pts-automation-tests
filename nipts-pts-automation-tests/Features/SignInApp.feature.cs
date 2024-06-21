@@ -85,14 +85,15 @@ namespace nipts_pts_automation_tests.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Navigate to Pets Application Portal Page")]
-        [NUnit.Framework.TestCaseAttribute("This is for testing use only", null)]
-        public void NavigateToPetsApplicationPortalPage(string nextPage, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("Navigate  and Sign In to Pets Application Portal Page")]
+        [NUnit.Framework.TestCaseAttribute("Sign in using Government Gateway", "test2", null)]
+        public void NavigateAndSignInToPetsApplicationPortalPage(string nextPage, string logininfo, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("nextPage", nextPage);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate to Pets Application Portal Page", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            argumentsOfScenario.Add("logininfo", logininfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate  and Sign In to Pets Application Portal Page", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -108,6 +109,49 @@ this.FeatureBackground();
 #line hidden
 #line 10
  testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 11
+ testRunner.Then(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Verify Sign Out is displayed in WELSH language")]
+        [NUnit.Framework.TestCaseAttribute("Sign in using Government Gateway", "test2", "Allgofnodi", null)]
+        public void VerifySignOutIsDisplayedInWELSHLanguage(string nextPage, string logininfo, string signOutLinkText, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("nextPage", nextPage);
+            argumentsOfScenario.Add("logininfo", logininfo);
+            argumentsOfScenario.Add("SignOutLinkText", signOutLinkText);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Sign Out is displayed in WELSH language", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 18
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 6
+this.FeatureBackground();
+#line hidden
+#line 19
+ testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 20
+ testRunner.Then(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 21
+ testRunner.When("click on Welsh language", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 22
+ testRunner.Then(string.Format("verify sign out link in displayed in selected language \'{0}\'", signOutLinkText), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

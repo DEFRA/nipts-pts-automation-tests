@@ -8,13 +8,13 @@ namespace nipts_pts_automation_tests.Data
 {
     public class User
     {
-        public string UserName { get; set; }
+        public string UserId { get; set; }
         public string password { get; set; }
-        public string OrgID { get; set; }
         public string LoginInfo { get; set; }
-        public string Environment { get; set; }
-        public bool HomePage { get; set; }
-
+        public string UserName { get; set; }
+        public string UserEmail { get; set; }
+        public string Useraddress { get; set; }
+        public string UserPhoneNumber { get; set; }
     }
     public interface IUserObject
     {
@@ -34,17 +34,15 @@ namespace nipts_pts_automation_tests.Data
             lock (_lock)
             {
                 string jsonPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var filePath = Path.Combine(jsonPath, "Data", "Users", "Users.json");
+                var filePath = Path.Combine(jsonPath, "Data", "Users.json");
 
                 var builder = new ConfigurationBuilder();
                 builder.AddJsonFile(filePath, false, true);
                 var settings = builder.Build();
                 var usersList = settings.GetSection("Users").Get<List<User>>();
-                string environment = ConfigSetup.BaseConfiguration.TestConfiguration.ComPortalUrl;
+                string environment = ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl;
 
-                var filterList = environment.ToLower().Contains("sign-up", StringComparison.CurrentCultureIgnoreCase)
-                    ? usersList.FindAll(d => d.LoginInfo.Equals(info) && d.Environment.ToLower().Contains("test"))
-                    : usersList.FindAll(d => d.LoginInfo.Equals(info) && d.Environment.ToLower().Contains(environment));
+                var filterList = usersList.FindAll(d => d.LoginInfo.Equals(info));
 
                 Random rng = new Random();
                 User = filterList[rng.Next(filterList.Count)];
