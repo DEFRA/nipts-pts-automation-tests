@@ -17,7 +17,7 @@ Scenario: Verify Personal Details page
 	| logininfo | nextPage                      | nextPage1    |
 	| test      | Lifelong pet travel documents | manylion chi |
 
-	Scenario: Verify Personal Details page Welsh and English version
+	Scenario: Verify Personal Details page in Welsh and English version
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
 	Then  verify next page '<nextPage>' is loaded
@@ -34,7 +34,7 @@ Scenario: Verify Personal Details page
 	| test      | Lifelong pet travel documents | Are your details correct? | manylion chi |
 
 
-	Scenario: Verify Error message for not selecting option on Personal Details page 
+	Scenario: Verify Error message on not selecting option before continue on Personal Details page 
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
 	Then  verify next page '<nextPage>' is loaded
@@ -45,8 +45,8 @@ Scenario: Verify Personal Details page
 
 
 	Examples: 
-	| logininfo | nextPage                      | errorMessage                        |
-	| test      | Lifelong pet travel documents | Tell us if your details are correct |
+	| logininfo | nextPage                      | errorMessage                   |
+	| test      | Lifelong pet travel documents | Dwedwch a yw eich manylion chi |
 
 	Scenario: Verify next page after selecting Yes on Personal Details page 
 	Given that I navigate to the Pets application portal

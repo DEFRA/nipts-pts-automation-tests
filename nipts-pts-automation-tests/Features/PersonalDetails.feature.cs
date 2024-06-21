@@ -122,9 +122,9 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify Personal Details page Welsh and English version")]
+        [NUnit.Framework.DescriptionAttribute("Verify Personal Details page in Welsh and English version")]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "Are your details correct?", "manylion chi", null)]
-        public void VerifyPersonalDetailsPageWelshAndEnglishVersion(string logininfo, string nextPage, string nextPage1, string nextPage2, string[] exampleTags)
+        public void VerifyPersonalDetailsPageInWelshAndEnglishVersion(string logininfo, string nextPage, string nextPage1, string nextPage2, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -132,7 +132,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("nextPage", nextPage);
             argumentsOfScenario.Add("nextPage1", nextPage1);
             argumentsOfScenario.Add("nextPage2", nextPage2);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Personal Details page Welsh and English version", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Personal Details page in Welsh and English version", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 20
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -175,16 +175,18 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify Error message for not selecting option on Personal Details page")]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "Tell us if your details are correct", null)]
-        public void VerifyErrorMessageForNotSelectingOptionOnPersonalDetailsPage(string logininfo, string nextPage, string errorMessage, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("Verify Error message on not selecting option before continue on Personal Details " +
+            "page")]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "Dwedwch a yw eich manylion chi", null)]
+        public void VerifyErrorMessageOnNotSelectingOptionBeforeContinueOnPersonalDetailsPage(string logininfo, string nextPage, string errorMessage, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("logininfo", logininfo);
             argumentsOfScenario.Add("nextPage", nextPage);
             argumentsOfScenario.Add("errorMessage", errorMessage);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Error message for not selecting option on Personal Details page", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Error message on not selecting option before continue on Personal Details " +
+                    "page", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 37
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
