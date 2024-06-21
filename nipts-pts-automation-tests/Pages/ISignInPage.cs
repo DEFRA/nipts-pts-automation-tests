@@ -4,7 +4,8 @@
     {
         public void ClickSignIn();
         public void ClickSignedOut();
+        public bool IsSignedIn(string userId, string password);
         public bool IsSignedOut();
-        public void EnterPAssword();
+        public void EnterPassword();
     }
 }

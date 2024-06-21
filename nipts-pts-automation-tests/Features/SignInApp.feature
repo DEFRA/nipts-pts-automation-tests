@@ -8,7 +8,8 @@ Background:
 
 Scenario: Navigate to Pets Application Portal Page
 	Then  verify next page '<nextPage>' is loaded
+	Then  sign in with valid credentials with logininfo '<logininfo>'
 
 	Examples: 
-	| nextPage                        |
-	| This is for testing use only    |
+	| nextPage                         | logininfo |
+	| Sign in using Government Gateway | test      |

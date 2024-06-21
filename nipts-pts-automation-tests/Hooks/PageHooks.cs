@@ -31,6 +31,7 @@ namespace nipts_pts_automation_tests.Hooks
             // Pages
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<SignInPage, ISignInPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<ApplicationPage, IApplicationPage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PersonalDetailsPage, IPersonalDetailsPage>());
 
         }
 
