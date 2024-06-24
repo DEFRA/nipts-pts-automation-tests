@@ -2,7 +2,6 @@
 using OpenQA.Selenium;
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
-using nipts_pts_automation_tests.Tools;
 
 
 namespace nipts_pts_automation_tests.Pages
@@ -11,7 +10,6 @@ namespace nipts_pts_automation_tests.Pages
     {
         private string Platform => ConfigSetup.BaseConfiguration.TestConfiguration.Platform;
         private IObjectContainer _objectContainer;
-        private IUrlBuilder? UrlBuilder => _objectContainer.IsRegistered<IUrlBuilder>() ? _objectContainer.Resolve<IUrlBuilder>() : null;
 
         #region Page Objects
 
@@ -23,6 +21,9 @@ namespace nipts_pts_automation_tests.Pages
         public IWebElement lnkManageAccount => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='Manage Account']"));
         public IWebElement lnkManageYourAccount => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='manage your account']"));
         public IWebElement lnkViewDocsFromManageAcc => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='View your lifelong pet travel documents or apply for a new one']"));
+      
+        private IWebElement ContinueWelshEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Parhau')]"));
+        private IWebElement BaclWelshEle => _driver.WaitForElement(By.XPath("//a[contains(text(),'Yn ôl')]"));
         #endregion Page Objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -50,6 +51,43 @@ namespace nipts_pts_automation_tests.Pages
             Englishclick.Click();
         }
 
+        public void ClickOnApplyForADocument()
+        {
+            ApplyForADocEle.Click();
+        }
+
+        public void ClickOnContinueWelsh()
+        {
+            ContinueWelshEle.Click();
+        }
+
+        public void ClickOnBackWelsh()
+        {
+            BaclWelshEle.Click();
+        }
+
+        public void SwitchToPreviousOpenTab()
+        {
+            _driver.SwitchTo().Window(_driver.WindowHandles.First());
+        }
+
+        public void SwitchToNextTab()
+        {
+            _driver.SwitchTo().Window(_driver.WindowHandles.LastOrDefault());
+            Thread.Sleep(1000);
+        }
+
+        public void ClickBrowserBack()
+        {
+            _driver.Navigate().Back();
+        }
+
+        public void CloseCurrentTab()
+        {
+            _driver.Close();
+        }
+
+      
         public bool VerifyLanguageAtPageFooter(string displayedLang)
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,4000)", "");
@@ -57,11 +95,7 @@ namespace nipts_pts_automation_tests.Pages
             return FooterLanguageSelector.Text.Contains(displayedLang);
         }
 
-        public void ClickOnApplyForADocument()
-        {
-            ApplyForADocEle.Click();
-        }
-
+      
         public void ClickOnManageAccountLink()
         {
             lnkManageAccount.Click();
@@ -80,5 +114,4 @@ namespace nipts_pts_automation_tests.Pages
         #endregion Page Methods
 
     }
-
 }

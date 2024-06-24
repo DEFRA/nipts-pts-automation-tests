@@ -3,7 +3,6 @@ using OpenQA.Selenium;
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using SeleniumExtras.WaitHelpers;
-using TechTalk.SpecFlow;
 
 
 namespace nipts_pts_automation_tests.Pages

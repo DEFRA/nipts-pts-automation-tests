@@ -30,5 +30,5 @@ Scenario: View Pets travel documents from Manage your accounts page
 	Then  verify next page '<nextPage1>' is loaded
 
 Examples: 
-	| nextPage                         | logininfo | nextPage2					| nextPage1						 |
-	| Sign in using Government Gateway | test2     | Manage your Defra account  | Lifelong pet travel documents  |
+	| nextPage                         | logininfo | nextPage1                     | nextPage2                 |
+	| Sign in using Government Gateway | test2     | Lifelong pet travel documents | Manage your Defra account |
