@@ -1,10 +1,8 @@
 ﻿using BoDi;
-using Defra.UI.Framework.Driver;
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.Data;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
-using System.Linq;
 
 
 namespace nipts_pts_automation_tests.Pages

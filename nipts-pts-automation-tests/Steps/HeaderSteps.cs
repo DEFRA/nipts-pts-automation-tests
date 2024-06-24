@@ -1,0 +1,58 @@
+﻿using BoDi;
+using nipts_pts_automation_tests.HelperMethods;
+using nipts_pts_automation_tests.Pages;
+using NUnit.Framework;
+using OpenQA.Selenium;
+using TechTalk.SpecFlow;
+
+namespace nipts_pts_automation_tests.Steps
+{
+    [Binding]
+
+    public class HeaderSteps
+    {
+        private readonly IObjectContainer _objectContainer;
+        private readonly ScenarioContext _scenarioContext;
+        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
+        private IHeaderPage? headerPage => _objectContainer.IsRegistered<IHeaderPage>() ? _objectContainer.Resolve<IHeaderPage>() : null;
+
+        public HeaderSteps(ScenarioContext context, IObjectContainer container)
+        {
+            _scenarioContext = context;
+            _objectContainer = container;
+        }
+
+        [Then(@"Click on GOV.UK link in the header of the page")]
+        [When(@"Click on GOV.UK link in the header of the page")]
+        public void ClickGOVLink()
+        {
+            headerPage.ClickGOVHeaderLink();
+        }
+
+        [Then(@"verify feedback page is loaded")]
+        public void ThenVerifyFeedbackPageIsLoaded()
+        {
+            Assert.True(headerPage.VerifyFeedbackPageLoaded(), "Feed back page not loaded");
+        }
+
+        [Then(@"verify generic GOV page is loaded")]
+        public void ThenVerifygenericGOVPageIsLoaded()
+        {
+            Assert.True(headerPage.VerifyGenericGOVPageLoaded(), "Generic GOV page not loaded");
+        }
+
+        [When(@"click on the feedback link")]
+        [Then(@"click on the feedback link")]
+        public void ThenClickOnTheFeedbackLink()
+        {
+            headerPage.ClickOnFeedBackLink();
+        }
+
+        [Then(@"verify header title '([^']*)'")]
+        public void ThenVerifyHeaderTitle(string pageTitle)
+        {
+            headerPage.VerifyHeaderTitle(pageTitle);
+        }
+
+    }
+}

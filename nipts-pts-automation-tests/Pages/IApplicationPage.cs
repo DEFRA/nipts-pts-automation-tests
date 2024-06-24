@@ -8,5 +8,9 @@
         public void ClickOnEnglishLang();
         public void ClickOnContinueWelsh();
         public void ClickOnBackWelsh();
+        public void SwitchToPreviousOpenTab();
+        public void SwitchToNextTab();
+        public void ClickBrowserBack();
+        public void CloseCurrentTab();
     }
 }
