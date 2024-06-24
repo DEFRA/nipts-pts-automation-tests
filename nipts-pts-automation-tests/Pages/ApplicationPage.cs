@@ -36,8 +36,6 @@ namespace nipts_pts_automation_tests.Pages
             return PageHeading.Text.Contains(pageName);
         }
 
-        #endregion Page Methods
-
         public void ClickOnWelshLang()
         {
             Welshclick.Click();
@@ -62,6 +60,29 @@ namespace nipts_pts_automation_tests.Pages
         {
             BaclWelshEle.Click();
         }
-    }
 
+        public void SwitchToPreviousOpenTab()
+        {
+            _driver.SwitchTo().Window(_driver.WindowHandles.First());
+        }
+
+        public void SwitchToNextTab()
+        {
+            _driver.SwitchTo().Window(_driver.WindowHandles.LastOrDefault());
+            Thread.Sleep(1000);
+        }
+
+        public void ClickBrowserBack()
+        {
+            _driver.Navigate().Back();
+        }
+
+        public void CloseCurrentTab()
+        {
+            _driver.Close();
+        }
+
+        #endregion Page Methods
+
+    }
 }

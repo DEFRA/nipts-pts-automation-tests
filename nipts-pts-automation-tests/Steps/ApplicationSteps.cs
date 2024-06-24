@@ -62,5 +62,33 @@ namespace nipts_pts_automation_tests.Steps
         {
             applicationPage.ClickOnBackWelsh();
         }
+
+        [Then(@"Close Current tab")]
+        public void CloseCurrentTab()
+        {
+            applicationPage.CloseCurrentTab();
+        }
+
+        [When(@"click browser back")]
+        [Then(@"click browser back")]
+        public void ClickBrowserBack()
+        {
+            applicationPage.ClickBrowserBack();
+        }
+
+        [When(@"switch to next opened tab")]
+        [Then(@"switch to next opened tab")]
+        public void SwitchToTab()
+        {
+            applicationPage.SwitchToNextTab();
+            _driver.ElementImplicitWait();
+        }
+
+        [When(@"switch to previous tab")]
+        [Then(@"switch to previous tab")]
+        public void SwitchToPreviousTab()
+        {
+            applicationPage.SwitchToPreviousOpenTab();
+        }
     }
 }
