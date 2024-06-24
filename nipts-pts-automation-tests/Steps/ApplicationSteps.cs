@@ -90,5 +90,12 @@ namespace nipts_pts_automation_tests.Steps
         {
             applicationPage.SwitchToPreviousOpenTab();
         }
+
+        [Then(@"verify error message '([^']*)' on Pets")]
+        public void ThenVerifyErrorMessage(string errorMessage)
+        {
+            Assert.True(applicationPage.VerifyErrorMessage(errorMessage), "Full Name error message not matching");
+        }
+
     }
 }

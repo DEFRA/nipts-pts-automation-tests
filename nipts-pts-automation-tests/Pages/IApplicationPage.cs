@@ -12,5 +12,6 @@
         public void SwitchToNextTab();
         public void ClickBrowserBack();
         public void CloseCurrentTab();
+        public bool VerifyErrorMessage(string errorMessage);
     }
 }

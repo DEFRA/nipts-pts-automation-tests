@@ -34,6 +34,9 @@ namespace nipts_pts_automation_tests.Hooks
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PersonalDetailsPage, IPersonalDetailsPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<FooterPage, IFooterPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<HeaderPage, IHeaderPage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<FullNamePage, IFullNamePage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PhoneNumberPage, IPhoneNumberPage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PostcodeAddressPage, IPostcodeAddressPage>());
 
         }
 
