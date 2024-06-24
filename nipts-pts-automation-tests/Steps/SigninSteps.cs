@@ -73,5 +73,12 @@ namespace nipts_pts_automation_tests.Steps
         {
             Assert.True(signin.VerifySignOutTextInSelectedLanguage(SignOutText), "SignOut text language not matching");
         }
+
+        [When(@"click on Apply for a document")]
+        [Then(@"click on Apply for a document")]
+        public void ThenClickOnApplyForADocument()
+        {
+            applicationPage.ClickOnApplyForADocument();
+        }
     }
 }

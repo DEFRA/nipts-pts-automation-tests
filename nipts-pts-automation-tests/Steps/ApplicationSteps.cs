@@ -43,5 +43,29 @@ namespace nipts_pts_automation_tests.Steps
         {
             applicationPage.ClickOnEnglishLang();
         }
+
+        [Then(@"verify displayed language at page footer '([^']*)'")]
+        public void ThenVerifySignOutTextInSelectedLanguage(string DisplayedLang)
+        {
+            Assert.True(applicationPage.VerifyLanguageAtPageFooter(DisplayedLang), "Displayed language not matching at page footer");
+        }
+
+        [Then(@"I should navigate to Manage account")]
+        public void ThenIShouldNavigateToManageAccount()
+        {
+            applicationPage.ClickOnManageAccountLink();
+        }
+
+        [Then(@"I click on Manage your account")]
+        public void ThenIClickOnManageYourAccount()
+        {
+            applicationPage.ClickOnManageYourAccountLink();
+        }
+
+        [Then(@"click on View your pet travel documents or apply new one")]
+        public void ClickOnViewYourPetDocumentFromManageYourAccount()
+        {
+            applicationPage.ClickOnViewYourPetTravelDoc();
+        }
     }
 }
