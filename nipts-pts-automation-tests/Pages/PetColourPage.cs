@@ -1,5 +1,6 @@
 ﻿using BoDi;
 using nipts_pts_automation_tests.Configuration;
+using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
 
 namespace nipts_pts_automation_tests.Pages
