@@ -17,5 +17,7 @@
         public void ClickOnManageYourAccountLink();
         public void ClickOnViewYourPetTravelDoc();
         public bool VerifyLanguageAtPageFooter(string displayedLang);
+        public void ClickOnContinueEng();
+
     }
 }

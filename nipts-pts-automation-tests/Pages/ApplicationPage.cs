@@ -24,6 +24,7 @@ namespace nipts_pts_automation_tests.Pages
         public IWebElement lnkManageAccount => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='Manage Account']"));
         public IWebElement lnkManageYourAccount => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='manage your account']"));
         public IWebElement lnkViewDocsFromManageAcc => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='View your lifelong pet travel documents or apply for a new one']"));
+        private IWebElement ContinueEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
 
 
         #endregion Page Objects
@@ -115,6 +116,12 @@ namespace nipts_pts_automation_tests.Pages
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             return FooterLanguageSelector.Text.Contains(displayedLang);
         }
+
+        public void ClickOnContinueEng()
+        {
+            ContinueEle.Click();
+        }
+
         #endregion Page Methods
 
     }

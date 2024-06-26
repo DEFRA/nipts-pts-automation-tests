@@ -101,5 +101,12 @@ namespace nipts_pts_automation_tests.Steps
         {
             Assert.True(applicationPage.VerifyLanguageAtPageFooter(DisplayedLang), "Displayed language not matching at page footer");
         }
+
+        [When(@"click on continue english")]
+        [Then(@"click on continue english")]
+        public void ThenClickOnContinueEng()
+        {
+            applicationPage.ClickOnContinueEng();
+        }
     }
 }
