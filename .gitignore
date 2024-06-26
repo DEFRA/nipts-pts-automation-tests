@@ -371,3 +371,11 @@ FodyWeavers.xsd
 *.feature.cs
 
 .vs/
+/nipts-pts-automation-tests/bin/Debug/net8.0/nipts-pts-automation-tests.dll
+/nipts-pts-automation-tests/bin/Debug/net8.0/nipts-pts-automation-tests.exe
+/nipts-pts-automation-tests/bin/Debug/net8.0/nipts-pts-automation-tests.pdb
+/nipts-pts-automation-tests/bin/Debug/net8.0/nunit_random_seed.tmp
+/nipts-pts-automation-tests/bin/Debug/net8.0/TestExecution.json
+/nipts-pts-automation-tests/obj/Debug/net8.0/ref/nipts-pts-automation-tests.dll
+/nipts-pts-automation-tests/obj/Debug/net8.0/refint/nipts-pts-automation-tests.dll
+/nipts-pts-automation-tests/bin/Debug/net8.0/nipts-pts-automation-tests.dll
