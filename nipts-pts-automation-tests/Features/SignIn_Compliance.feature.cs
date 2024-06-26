@@ -20,9 +20,9 @@ namespace nipts_pts_automation_tests.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("SignInApp")]
+    [NUnit.Framework.DescriptionAttribute("SignIn compliance portal")]
     [NUnit.Framework.CategoryAttribute("Regression")]
-    public partial class SignInAppFeature
+    public partial class SignInCompliancePortalFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
@@ -30,14 +30,14 @@ namespace nipts_pts_automation_tests.Features
         private static string[] featureTags = new string[] {
                 "Regression"};
         
-#line 1 "SignInApp.feature"
+#line 1 "SignIn_Compliance.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "SignInApp", "Sign in to Pets application Portal", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "SignIn compliance portal", "Sign in to Pets application Portal", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         

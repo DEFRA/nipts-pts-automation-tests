@@ -1,5 +1,5 @@
 @Regression
-Feature: SignInApp
+Feature: SignIn compliance portal
 
 Sign in to Pets application Portal
 

@@ -20,7 +20,7 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement ContinueWelshEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Parhau')] | //button[contains(text(),'Continue')]"));
         private IWebElement BaclWelshEle => _driver.WaitForElement(By.XPath("//a[contains(text(),'Yn ôl')]"));
         private IWebElement ErrorMessageEle => _driver.WaitForElement(By.XPath("//ul[contains(@class,'govuk-error-summary__list')]//a | //ul[contains(@class,'govuk-error-summary__list')]//span"));
-
+        private IWebElement FooterLanguageSelector => _driver.WaitForElement(By.XPath("(//a[contains(@class,'govuk-footer__link')])[3]"));
         public IWebElement lnkManageAccount => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='Manage Account']"));
         public IWebElement lnkManageYourAccount => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='manage your account']"));
         public IWebElement lnkViewDocsFromManageAcc => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='View your lifelong pet travel documents or apply for a new one']"));
@@ -109,6 +109,12 @@ namespace nipts_pts_automation_tests.Pages
             lnkViewDocsFromManageAcc.Click();
         }
 
+        public bool VerifyLanguageAtPageFooter(string displayedLang)
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,4000)", "");
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
+            return FooterLanguageSelector.Text.Contains(displayedLang);
+        }
         #endregion Page Methods
 
     }

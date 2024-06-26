@@ -68,6 +68,12 @@ namespace nipts_pts_automation_tests.Pages
                 Continue.Click();
             }
         }
+
+        public bool VerifySignOutTextInSelectedLanguage(string signOutText)
+        {
+            return SignOut.Text.Contains(signOutText);
+        }
+
     }
 
 }

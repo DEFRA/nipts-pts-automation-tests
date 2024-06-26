@@ -4,6 +4,24 @@
       "userId": "58 45 38 17 88 10",
       "password": "Test@12345",
       "logininfo": "test",
+      "UserName": "",
+      "UserEmail": "",
+      "Useraddress": "",
+      "UserPhoneNumber": ""
+    },
+    {
+      "userId": "73 34 13 27 72 05",
+      "password": "Test@12345",
+      "logininfo": "test1",
+      "UserName": "",
+      "UserEmail": "",
+      "Useraddress": "",
+      "UserPhoneNumber": ""
+    },
+    {
+      "userId": "58 45 38 17 88 10",
+      "password": "Test@12345",
+      "logininfo": "test2",
       "UserName": "test test",
       "UserEmail": "nikita.phatak+1906@capgemini.com",
       "Useraddress": "75 BRUNSWICK STREET",
@@ -16,7 +34,7 @@
       "UserName": "",
       "UserEmail": "",
       "Useraddress": "",
-      "UserPhoneNumber": "",
+      "UserPhoneNumber": ""
     }
   ]
 }

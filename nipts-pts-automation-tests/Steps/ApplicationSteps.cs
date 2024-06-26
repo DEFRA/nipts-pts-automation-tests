@@ -96,6 +96,10 @@ namespace nipts_pts_automation_tests.Steps
         {
             Assert.True(applicationPage.VerifyErrorMessage(errorMessage), "Full Name error message not matching");
         }
-
+        [Then(@"verify displayed language at page footer '([^']*)'")]
+        public void ThenVerifySignOutTextInSelectedLanguage(string DisplayedLang)
+        {
+            Assert.True(applicationPage.VerifyLanguageAtPageFooter(DisplayedLang), "Displayed language not matching at page footer");
+        }
     }
 }
