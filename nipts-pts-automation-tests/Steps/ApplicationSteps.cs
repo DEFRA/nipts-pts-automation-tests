@@ -97,5 +97,35 @@ namespace nipts_pts_automation_tests.Steps
             Assert.True(applicationPage.VerifyErrorMessage(errorMessage), "Full Name error message not matching");
         }
 
+        [Then(@"verify displayed language at page footer '([^']*)'")]
+        public void ThenVerifySignOutTextInSelectedLanguage(string DisplayedLang)
+        {
+            Assert.True(applicationPage.VerifyLanguageAtPageFooter(DisplayedLang), "Displayed language not matching at page footer");
+        }
+
+        [When(@"click on continue english")]
+        [Then(@"click on continue english")]
+        public void ThenClickOnContinueEng()
+        {
+            applicationPage.ClickOnContinueEng();
+        }
+
+        [Then(@"I should navigate to Manage account")]
+        public void ThenIShouldNavigateToManageAccount()
+        {
+            applicationPage.ClickOnManageAccountLink();
+        }
+
+        [Then(@"I click on Manage your account")]
+        public void ThenIClickOnManageYourAccount()
+        {
+            applicationPage.ClickOnManageYourAccountLink();
+        }
+
+        [Then(@"click on View your pet travel documents or apply new one")]
+        public void ClickOnViewYourPetDocumentFromManageYourAccount()
+        {
+            applicationPage.ClickOnViewYourPetTravelDoc();
+        }
     }
 }

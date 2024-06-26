@@ -68,5 +68,10 @@ namespace nipts_pts_automation_tests.Steps
             signin.ClickSignedOut();
         }
 
+        [Then(@"verify sign out link in displayed in selected language '([^']*)'")]
+        public void ThenVerifySignOutTextInSelectedLanguage(string SignOutText)
+        {
+            Assert.True(signin.VerifySignOutTextInSelectedLanguage(SignOutText), "SignOut text language not matching");
+        }
     }
 }

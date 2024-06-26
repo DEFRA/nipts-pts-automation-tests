@@ -20,9 +20,9 @@ namespace nipts_pts_automation_tests.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("SignInApp")]
+    [NUnit.Framework.DescriptionAttribute("SignInCom")]
     [NUnit.Framework.CategoryAttribute("Regression")]
-    public partial class SignInAppFeature
+    public partial class SignInComFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
@@ -30,14 +30,14 @@ namespace nipts_pts_automation_tests.Features
         private static string[] featureTags = new string[] {
                 "Regression"};
         
-#line 1 "SignInApp.feature"
+#line 1 "SignInCom.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "SignInApp", "Sign in to Pets application Portal", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "SignInCom", "Sign in to Pets Compliance Portal", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,20 +80,19 @@ namespace nipts_pts_automation_tests.Features
 #line 6
 #line hidden
 #line 7
- testRunner.Given("that I navigate to the Pets application portal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("that I navigate to the Pets compliance portal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Navigate to Pets Application Portal Page")]
-        [NUnit.Framework.TestCaseAttribute("Sign in using Government Gateway", "test", null)]
-        public void NavigateToPetsApplicationPortalPage(string nextPage, string logininfo, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("Navigate to Pets Compliance Portal Page")]
+        [NUnit.Framework.TestCaseAttribute("Current sailing", null)]
+        public void NavigateToPetsCompliancePortalPage(string nextPage, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("nextPage", nextPage);
-            argumentsOfScenario.Add("logininfo", logininfo);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate to Pets Application Portal Page", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate to Pets Compliance Portal Page", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -108,10 +107,10 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 10
- testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.When("click on sign in button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
- testRunner.Then(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

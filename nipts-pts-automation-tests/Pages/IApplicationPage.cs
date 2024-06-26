@@ -13,5 +13,10 @@
         public void ClickBrowserBack();
         public void CloseCurrentTab();
         public bool VerifyErrorMessage(string errorMessage);
+        public void ClickOnManageAccountLink();
+        public void ClickOnManageYourAccountLink();
+        public void ClickOnViewYourPetTravelDoc();
+        public bool VerifyLanguageAtPageFooter(string displayedLang);
+        public void ClickOnContinueEng();
     }
 }
