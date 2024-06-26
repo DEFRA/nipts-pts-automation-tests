@@ -35,6 +35,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Users.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="nuget.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
