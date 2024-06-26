@@ -1,5 +1,5 @@
 @Regression
-Feature: EnterSpecies
+Feature: PetSpecies
 
 Sign in to Pets application Portal
 
