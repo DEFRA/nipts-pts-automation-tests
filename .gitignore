@@ -32,6 +32,9 @@ bld/
 [Ll]og/
 [Ll]ogs/
 [Bb]in/Debug/net8.0
+[Rr]ef/
+[Re]efint
+[Oo]bj/Debug/net8.0
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
