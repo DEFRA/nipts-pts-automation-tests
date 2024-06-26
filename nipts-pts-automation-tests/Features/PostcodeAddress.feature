@@ -22,10 +22,10 @@ Scenario: Enter postcode and select address on Pets
 	Then  verify next page '<nextPage4>' is loaded
 
 	Examples: 
-	| logininfo | nextPage                      | nextPage1    | nextPage2               | nextPage3 | nextPage4 | nextPage5 | fullname     | postcode | phoneNumber |
-	| test      | Lifelong pet travel documents | manylion chi | What is your full name? |           |           |           | TestFullName | SE1 7PB  | 0745678944  |
+	| logininfo | nextPage                      | nextPage1    | nextPage2               | nextPage3   | nextPage4 | fullname     | postcode |
+	| test      | Lifelong pet travel documents | manylion chi | What is your full name? | ch cod post |           | TestFullName | SE1 7PB  |
 
-Scenario: Verify error message for invalid Full Name
+Scenario: Verify error message for invalid postcode
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
 	Then  verify next page '<nextPage>' is loaded
@@ -42,5 +42,5 @@ Scenario: Verify error message for invalid Full Name
 	| logininfo | nextPage                      | fullname     | postcode | errorMessage                        |
 	| test      | Lifelong pet travel documents | TestFullName |          | Rhowch god post                     |
 	| test      | Lifelong pet travel documents | TestFullName | SE10 1EE | Rhowch gyfeiriad dilys yng Nghymru  |
-	| test      | Lifelong pet travel documents | TestFullName | SE1 7PBABCDEFGHIJKLMNOP  | gallwch ei ychwanegu eich hunan isod |
+	| test      | Lifelong pet travel documents | TestFullName | SE1 7PBABCDEFGHIJKLMNOP  | Rhowch god post llawn yn y fformat cywir |
 

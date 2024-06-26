@@ -76,9 +76,9 @@ namespace nipts_pts_automation_tests.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Enter Telephone Number on Pets")]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "What is your full name?", "", "", "", "TestFullName", "SE1 7PB", "0745678944", null)]
-        public void EnterTelephoneNumberOnPets(string logininfo, string nextPage, string nextPage1, string nextPage2, string nextPage3, string nextPage4, string nextPage5, string fullname, string postcode, string phoneNumber, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("Enter Full Name on Pets")]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "What is your full name?", "ch cod post", "TestFullName", null)]
+        public void EnterFullNameOnPets(string logininfo, string nextPage, string nextPage1, string nextPage2, string nextPage3, string fullname, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -87,12 +87,8 @@ namespace nipts_pts_automation_tests.Features
             argumentsOfScenario.Add("nextPage1", nextPage1);
             argumentsOfScenario.Add("nextPage2", nextPage2);
             argumentsOfScenario.Add("nextPage3", nextPage3);
-            argumentsOfScenario.Add("nextPage4", nextPage4);
-            argumentsOfScenario.Add("nextPage5", nextPage5);
             argumentsOfScenario.Add("fullname", fullname);
-            argumentsOfScenario.Add("postcode", postcode);
-            argumentsOfScenario.Add("phoneNumber", phoneNumber);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Enter Telephone Number on Pets", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Enter Full Name on Pets", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -139,48 +135,23 @@ this.ScenarioInitialize(scenarioInfo);
 #line 18
  testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage3), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 19
- testRunner.When(string.Format("enter your postcode \'{0}\'", postcode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 20
- testRunner.And("select address", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 21
- testRunner.And("click on continue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 22
- testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage4), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 23
- testRunner.When(string.Format("enter phone number \'{0}\'", phoneNumber), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 24
- testRunner.And("click on continue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 25
- testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage5), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
             }
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify error message for invalid contact Telephone Number")]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "07456789**", "fel 01632 960 001 neu 07700 900 982", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "", "Rhowch eich rhif ff", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "0745678976435847687465", "fel 01632 960 001 neu 07700 900 982", null)]
-        public void VerifyErrorMessageForInvalidContactTelephoneNumber(string logininfo, string nextPage, string fullname, string postcode, string phoneNumber, string errorMessage, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("Verify error message for invalid full Name")]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "", "Rhowch eich enw llawn", null)]
+        public void VerifyErrorMessageForInvalidFullName(string logininfo, string nextPage, string fullname, string errorMessage, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("logininfo", logininfo);
             argumentsOfScenario.Add("nextPage", nextPage);
             argumentsOfScenario.Add("fullname", fullname);
-            argumentsOfScenario.Add("postcode", postcode);
-            argumentsOfScenario.Add("phoneNumber", phoneNumber);
             argumentsOfScenario.Add("errorMessage", errorMessage);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify error message for invalid contact Telephone Number", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 31
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify error message for invalid full Name", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -190,49 +161,34 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 32
+#line 25
  testRunner.Given("that I navigate to the Pets application portal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 33
+#line 26
  testRunner.When(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 34
+#line 27
  testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 35
+#line 28
  testRunner.When("click on Welsh language", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 36
+#line 29
  testRunner.And("click on Apply for a document", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 37
+#line 30
  testRunner.And("select \'Nac ydyn\' on Personal Details page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 38
+#line 31
  testRunner.When("click on continue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 39
+#line 32
  testRunner.When(string.Format("enter your full name \'{0}\'", fullname), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 40
+#line 33
  testRunner.And("click on continue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 41
- testRunner.When(string.Format("enter your postcode \'{0}\'", postcode), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 42
- testRunner.And("select address", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 43
- testRunner.And("click on continue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 44
- testRunner.And(string.Format("enter phone number \'{0}\'", phoneNumber), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 45
- testRunner.And("click on continue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 46
+#line 34
  testRunner.Then(string.Format("verify error message \'{0}\' on Pets", errorMessage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

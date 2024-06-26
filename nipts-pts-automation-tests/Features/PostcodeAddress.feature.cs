@@ -77,8 +77,8 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Enter postcode and select address on Pets")]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "What is your full name?", "", "", "", "TestFullName", "SE1 7PB", "0745678944", null)]
-        public void EnterPostcodeAndSelectAddressOnPets(string logininfo, string nextPage, string nextPage1, string nextPage2, string nextPage3, string nextPage4, string nextPage5, string fullname, string postcode, string phoneNumber, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "What is your full name?", "ch cod post", "", "TestFullName", "SE1 7PB", null)]
+        public void EnterPostcodeAndSelectAddressOnPets(string logininfo, string nextPage, string nextPage1, string nextPage2, string nextPage3, string nextPage4, string fullname, string postcode, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -88,10 +88,8 @@ namespace nipts_pts_automation_tests.Features
             argumentsOfScenario.Add("nextPage2", nextPage2);
             argumentsOfScenario.Add("nextPage3", nextPage3);
             argumentsOfScenario.Add("nextPage4", nextPage4);
-            argumentsOfScenario.Add("nextPage5", nextPage5);
             argumentsOfScenario.Add("fullname", fullname);
             argumentsOfScenario.Add("postcode", postcode);
-            argumentsOfScenario.Add("phoneNumber", phoneNumber);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Enter postcode and select address on Pets", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
@@ -156,11 +154,11 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify error message for invalid Full Name")]
+        [NUnit.Framework.DescriptionAttribute("Verify error message for invalid postcode")]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "", "Rhowch god post", null)]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE10 1EE", "Rhowch gyfeiriad dilys yng Nghymru", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PBABCDEFGHIJKLMNOP", "gallwch ei ychwanegu eich hunan isod", null)]
-        public void VerifyErrorMessageForInvalidFullName(string logininfo, string nextPage, string fullname, string postcode, string errorMessage, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PBABCDEFGHIJKLMNOP", "Rhowch god post llawn yn y fformat cywir", null)]
+        public void VerifyErrorMessageForInvalidPostcode(string logininfo, string nextPage, string fullname, string postcode, string errorMessage, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -169,7 +167,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("fullname", fullname);
             argumentsOfScenario.Add("postcode", postcode);
             argumentsOfScenario.Add("errorMessage", errorMessage);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify error message for invalid Full Name", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify error message for invalid postcode", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 28
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
