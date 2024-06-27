@@ -2,11 +2,6 @@
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace nipts_pts_automation_tests.Steps

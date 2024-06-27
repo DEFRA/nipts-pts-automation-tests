@@ -25,6 +25,10 @@ namespace nipts_pts_automation_tests.Pages
 
         #region Page Methods
 
+        public void SelectBreedOfPet(string petBreed)
+        { 
+        
+        }
 
         #endregion Page Methods
 

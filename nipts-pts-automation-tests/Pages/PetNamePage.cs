@@ -2,6 +2,7 @@
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
+using TechTalk.SpecFlow;
 
 namespace nipts_pts_automation_tests.Pages
 {
@@ -24,6 +25,11 @@ namespace nipts_pts_automation_tests.Pages
         }
 
         #region Page Methods
+
+        public void EnterNameOfPet(string petName)
+        { 
+        
+        }
 
 
         #endregion Page Methods
