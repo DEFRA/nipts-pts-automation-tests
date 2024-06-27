@@ -39,7 +39,12 @@ namespace nipts_pts_automation_tests.Hooks
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PostcodeAddressPage, IPostcodeAddressPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<MicrochipNumberPage, IMicrochipNumberPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<MicrochipDatePage, IMicrochipDatePage>());
-            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<EnterSpeciesPage, IEnterSpeciesPage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PetBreedPage, IPetBreedPage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PetColourPage, IPetColourPage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PetDateOfBirthPage, IPetDateOfBirthPage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PetNamePage, IPetNamePage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PetSexPage, IPetSexPage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PetFeaturesPage, IPetFeaturesPage>());
         }
 
         private TU GetBaseWithContainer<T, TU>() where T : TU =>
