@@ -9,14 +9,14 @@ namespace nipts_pts_automation_tests.Steps
 {
     [Binding]
 
-    public class EnterSpeciesSteps
+    public class PetSpeciesSteps
     {
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
         private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IEnterSpeciesPage? enterSpeciesPage => _objectContainer.IsRegistered<IEnterSpeciesPage>() ? _objectContainer.Resolve<IEnterSpeciesPage>() : null;
+        private IPetSpeciesPage? enterSpeciesPage => _objectContainer.IsRegistered<IPetSpeciesPage>() ? _objectContainer.Resolve<IPetSpeciesPage>() : null;
 
-        public EnterSpeciesSteps(ScenarioContext context, IObjectContainer container)
+        public PetSpeciesSteps(ScenarioContext context, IObjectContainer container)
         {
             _scenarioContext = context;
             _objectContainer = container;

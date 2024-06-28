@@ -2,5 +2,7 @@
 {
     public interface IPetSexPage
     {
+        public void SelectPetsSexOption(string sex);
+        public bool VerifyErrorMessageOnSelectSexOfPetPage(string errorMessage);
     }
 }
