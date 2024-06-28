@@ -94,7 +94,7 @@ namespace nipts_pts_automation_tests.Steps
         [Then(@"verify error message '([^']*)' on Pets")]
         public void ThenVerifyErrorMessage(string errorMessage)
         {
-            Assert.True(applicationPage.VerifyErrorMessage(errorMessage), "Full Name error message not matching");
+            Assert.True(applicationPage.VerifyErrorMessage(errorMessage), "Error message not matching");
         }
 
         [Then(@"verify displayed language at page footer '([^']*)'")]
