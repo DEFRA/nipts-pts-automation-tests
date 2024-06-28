@@ -51,8 +51,14 @@ namespace nipts_pts_automation_tests.Steps
         [Then(@"verify header title '([^']*)'")]
         public void ThenVerifyHeaderTitle(string pageTitle)
         {
-            headerPage.VerifyHeaderTitle(pageTitle);
+            Assert.True(headerPage.VerifyHeaderTitle(pageTitle), "Header Title not matching");
         }
 
+        [Then(@"verify header banner '([^']*)'")]
+        public void ThenVerifyHeaderBanner(string bannerText)
+        {
+            Assert.True(headerPage.VerifyHeaderBanner(bannerText), "Header banner text not matching");
+
+        }
     }
 }

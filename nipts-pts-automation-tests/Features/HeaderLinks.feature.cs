@@ -77,13 +77,14 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Check header page links")]
-        [NUnit.Framework.TestCaseAttribute("test", "Taking a pet from Great Britain to Northern Ireland", null)]
-        public void CheckHeaderPageLinks(string logininfo, string title, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("test", "Mynd ag anifail anwes o Brydain Fawr i Ogledd Iwerddon", "Mae hwn yn wasanaeth newydd - bydd", null)]
+        public void CheckHeaderPageLinks(string logininfo, string title, string bannerText, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("logininfo", logininfo);
             argumentsOfScenario.Add("title", title);
+            argumentsOfScenario.Add("bannerText", bannerText);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Check header page links", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 7
  this.ScenarioInitialize(scenarioInfo);
@@ -108,21 +109,24 @@ namespace nipts_pts_automation_tests.Features
  testRunner.Then(string.Format("verify header title \'{0}\'", title), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 12
- testRunner.When("click on the feedback link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then(string.Format("verify header banner \'{0}\'", bannerText), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 13
- testRunner.And("switch to next opened tab", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("click on the feedback link", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 14
- testRunner.Then("verify feedback page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("switch to next opened tab", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 15
- testRunner.When("switch to previous tab", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Then("verify feedback page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 16
- testRunner.And("Click on GOV.UK link in the header of the page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("switch to previous tab", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 17
+ testRunner.And("Click on GOV.UK link in the header of the page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 18
  testRunner.Then("verify generic GOV page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

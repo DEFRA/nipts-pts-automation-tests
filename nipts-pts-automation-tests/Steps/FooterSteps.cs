@@ -26,28 +26,28 @@ namespace nipts_pts_automation_tests.Steps
         [Then(@"click privacy link on footer page")]
         public void ClickPrivacyLinkFooterPage()
         {
-            footerPage.ClickOnPrivacyFooterLink();
+            Assert.True(footerPage.ClickOnPrivacyFooterLink(), "Privacy notice link not valid");
         }
 
         [When(@"click cookies link on footer page")]
         [Then(@"click cookies link on footer page")]
         public void ClickCookiesLinkFooterPage()
         {
-            footerPage.ClickOnCookiesFooterLink();
+            Assert.True(footerPage.ClickOnCookiesFooterLink(), "Cookies link not valid");
         }
 
         [When(@"click accessibility link on footer page")]
         [Then(@"click accessibility link on footer page")]
         public void ClickAccessibilityLinkFooterPage()
         {
-            footerPage.ClickOnAccessibilityFooterLink();
+            Assert.True(footerPage.ClickOnAccessibilityFooterLink(), "Accessibility link not valid");
         }
 
         [When(@"click TCs link on footer page")]
         [Then(@"click TCs link on footer page")]
         public void ClickTCsLinkFooterPage()
         {
-            footerPage.ClickOnTCsFooterLink();
+            Assert.True(footerPage.ClickOnTCsFooterLink(), "TCs link not valid");
         }
 
         [Then(@"verify text '([^']*)' on the page footer")]
