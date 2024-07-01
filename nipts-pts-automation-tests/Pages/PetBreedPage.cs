@@ -13,6 +13,8 @@ namespace nipts_pts_automation_tests.Pages
         #region Page Objects
 
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']"));
+       
+        public IWebElement BreedTypeEle => _driver.WaitForElementExists(By.Id("Breeds"));
 
         #endregion Page Objects
 
@@ -24,11 +26,13 @@ namespace nipts_pts_automation_tests.Pages
         }
 
         #region Page Methods
+        public void EnterFreeTextBreed(string breed)
+        {
+            BreedTypeEle.Click();
 
-        public void SelectBreedOfPet(string petBreed)
-        { 
-        
+            BreedTypeEle.SendKeys(breed);
         }
+
 
         #endregion Page Methods
 

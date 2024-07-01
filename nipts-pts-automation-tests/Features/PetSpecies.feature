@@ -1,7 +1,7 @@
 @Regression
 Feature: PetSpecies
 
-Sign in to Pets application Portal
+Pet Species page in Pets application Portal
 
 Background: 
 	Given that I navigate to the Pets application portal
@@ -30,5 +30,5 @@ Scenario: Select species on Pets Application Portal Page in the WELSH language
 	Then  verify next page '<nextPage5>' is loaded
 
 	Examples: 
-	| nextPage                         | logininfo | nextPage1                     | nextPage2                 | MicrochipOption | MicrochipNumber | nextPage3                                       | nextPage4                         | errorMessage                | DisplayedLang2 | Pet | nextPage5               |
-	| Sign in using Government Gateway | test      | Lifelong pet travel documents | Is your pet microchipped? | Yes             | 767876543212332 | When was your pet microchipped or last scanned? | Is your pet a dog, cat or ferret? | cath anwes neu ffured anwes | English        | Dog | What breed is your dog? |
+	| nextPage                         | logininfo | nextPage1                     | nextPage2                 | MicrochipOption | MicrochipNumber | nextPage3                                       | nextPage4                         | errorMessage        | DisplayedLang2 | Pet | nextPage5               |		
+	| Sign in using Government Gateway | test      | Lifelong pet travel documents | Is your pet microchipped? | Yes             | 767876543212332 | When was your pet microchipped or last scanned? | Is your pet a dog, cat or ferret? | Dwedwch a ydych chi | English        | Dog | What breed is your dog? |

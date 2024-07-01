@@ -2,6 +2,6 @@
 {
     internal interface IPetBreedPage
     {
-        public void SelectBreedOfPet(string petBreed);
+        public void EnterFreeTextBreed(string breed);
     }
 }

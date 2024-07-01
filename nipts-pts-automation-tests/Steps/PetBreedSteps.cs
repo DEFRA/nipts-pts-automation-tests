@@ -27,7 +27,8 @@ namespace nipts_pts_automation_tests.Steps
         [Then(@"Select breed of your pet '([^']*)'")]
         public void WhenEnterBreedOfPet(string petBreed)
         {
-            petBreedPage.SelectBreedOfPet(petBreed);
+            petBreedPage.EnterFreeTextBreed(petBreed);
+            
         }
     }
 }
