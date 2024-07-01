@@ -13,7 +13,6 @@ namespace nipts_pts_automation_tests.Pages
 
         #region Page Objects
 
-        private IWebElement ErrorMessageEle => _driver.WaitForElement(By.XPath("//a[@href='#PetSpecies']"));
         private IWebElement DogRadioButton => _driver.WaitForElementExists(By.CssSelector("#Dog"));
         private IWebElement CatRadioButton => _driver.WaitForElementExists(By.CssSelector("#Cat"));
         private IWebElement FerretRadioButton => _driver.WaitForElementExists(By.CssSelector("#Ferret"));
@@ -28,11 +27,6 @@ namespace nipts_pts_automation_tests.Pages
         }
 
         #region Page Methods
-
-        public bool VerifyErrorMessageOnEnterSpeciesPage(string errorMessage)
-        {
-            return ErrorMessageEle.Text.Contains(errorMessage);
-        }
 
         public void SelectSpecies(string species)
         {

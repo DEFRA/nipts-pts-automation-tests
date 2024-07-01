@@ -22,11 +22,6 @@ namespace nipts_pts_automation_tests.Steps
             _objectContainer = container;
         }
 
-        [Then(@"verify error message '([^']*)' on Enter Species page")]
-        public void ThenVerifyErrorMessageOnEnterSpeciesPage(string errorMessage)
-        {
-            Assert.True(enterSpeciesPage.VerifyErrorMessageOnEnterSpeciesPage(errorMessage), "Invalid error on Enter species Page");
-        }
 
         [Then(@"I have selected an option as '([^']*)' for pet")]
         public void ThenIHaveSelectedAnOptionAsForPet(string petType)

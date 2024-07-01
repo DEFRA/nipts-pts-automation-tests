@@ -23,7 +23,7 @@ Scenario: Select species on Pets Application Portal Page in the WELSH language
 	Then  verify next page '<nextPage4>' is loaded
 	Then  click on Welsh language
 	When  click on continue
-	Then  verify error message '<errorMessage>' on Enter Species page
+	Then  verify error message '<errorMessage>' on Pets
 	Then  verify displayed language at page footer '<DisplayedLang2>'
 	And   I have selected an option as '<Pet>' for pet
 	When  click on continue
