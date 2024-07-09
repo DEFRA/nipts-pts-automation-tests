@@ -127,5 +127,13 @@ namespace nipts_pts_automation_tests.Steps
         {
             applicationPage.ClickOnViewYourPetTravelDoc();
         }
+
+        [Then(@"I should see the application in '([^']*)' status")]
+        public void ThenIShouldSeeTheApplicationInStatus(string applicationStatus)
+        {
+            var petName = _scenarioContext.Get<string>("PetName");
+
+            Assert.IsTrue(applicationPage.VerifyTheExpectedStatus(petName, applicationStatus), $"The submitted application is not in expected status of '{applicationStatus}'");
+        }
     }
 }
