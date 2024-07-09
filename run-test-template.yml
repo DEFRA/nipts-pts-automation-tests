@@ -57,7 +57,7 @@ jobs:
       inputs:
         buildType: 'specific'
         project: '023a3c95-20fd-49b4-b068-4706843ba0d7'
-        pipeline: '5692'
+        pipeline: '7383'
         buildVersionToDownload: 'latestFromBranch'
         branchName: ${{ parameters.branchName }}
         downloadType: 'single'
