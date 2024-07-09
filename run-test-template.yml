@@ -74,15 +74,15 @@ jobs:
     
     - task: ExtractFiles@1
       inputs:
-        archiveFilePatterns: '**/nipts.pts.automation.tests.zip'
-        destinationFolder: '$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests'
+        archiveFilePatterns: '**/nipts-pts-automation-tests.zip'
+        destinationFolder: '$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests'
         cleanDestinationFolder: false
         overwriteExistingFiles: true
     
     - task: replacetokens@3
       displayName: Replace Tokens
       inputs:
-        rootDirectory: '$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests'
+        rootDirectory: '$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests'
         targetFiles: 'appsettings.json'
         encoding: auto
         writeBOM: true
@@ -95,15 +95,15 @@ jobs:
         enableTelemetry: false
 
     - powershell: |
-        $jsonString = Get-Content "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/appsettings.json" | Out-String
+        $jsonString = Get-Content "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/appsettings.json" | Out-String
         # $tr = $jsonString.replace("`"DBConnectionstring`": `"`"", "`"DBConnectionstring`": `"$(RemosDbConnectionString)`"");
-        $tr | Out-file -Filepath "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/appsettings.json"
+        $tr | Out-file -Filepath "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/appsettings.json"
         Write-Host $tr
       displayName: 'Display appsettings.json'
     
     - powershell: |
-        Set-Location -Path "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests"
-        dotnet test "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/nipts.pts.automation.tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml"
+        Set-Location -Path "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests"
+        dotnet test "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml"
       displayName: 'Execute Tests'
       failOnStderr: true
       ignoreLASTEXITCODE: true
@@ -114,9 +114,9 @@ jobs:
         displayName: 'LivingDoc with FeatureFolder generatorSource'
         inputs:
           generatorSource: 'TestAssembly'
-          testAssemblyFilePath: '$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/nipts.pts.automation.tests.dll'
-          testExecutionJson: '$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/TestExecution.json'
-          projectName: 'nipts.pts.automation.tests'
+          testAssemblyFilePath: '$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll'
+          testExecutionJson: '$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/TestExecution.json'
+          projectName: 'nipts-pts-automation-tests'
           projectLanguage: 'en'
           workItemPrefix: 'WI'
         enabled: true
@@ -129,13 +129,13 @@ jobs:
       inputs:
           testResultsFiles: 'TestFailures*.png'
           artifactName: ${{ parameters.jobName }}
-          targetPath: '$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/TestResults/'
+          targetPath: '$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/TestResults/'
 
     - task: PublishTestResults@2
       displayName: 'Publish Test Results'
       inputs:
         testResultsFormat: VSTest
         testResultsFiles: ${{ parameters.jobName }}.xml
-        searchFolder: '$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/TestResults/'
+        searchFolder: '$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/TestResults/'
         testRunTitle: ${{ parameters.jobName }}
         failTaskOnFailedTests: true
