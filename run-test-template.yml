@@ -94,16 +94,16 @@ jobs:
         useLegacyPattern: false
         enableTelemetry: false
 
-    # - powershell: |
-    #     $jsonString = Get-Content "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/appsettings.json" | Out-String
-    #     $tr = $jsonString.replace("`"DBConnectionstring`": `"`"", "`"DBConnectionstring`": `"$(RemosDbConnectionString)`"");
-    #     $tr | Out-file -Filepath "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/appsettings.json"
-    #     Write-Host $tr
-    #   displayName: 'Display appsettings.json'
+    - powershell: |
+        $jsonString = Get-Content "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/appsettings.json" | Out-String
+        # $tr = $jsonString.replace("`"DBConnectionstring`": `"`"", "`"DBConnectionstring`": `"$(RemosDbConnectionString)`"");
+        $tr | Out-file -Filepath "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/appsettings.json"
+        Write-Host $tr
+      displayName: 'Display appsettings.json'
     
     - powershell: |
         Set-Location -Path "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests"
-        dotnet test "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/nipts.pts.automation.tests.dll" --settings "$(System.DefaultWorkingDirectory)/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml"
+        dotnet test "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/nipts.pts.automation.tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml"
       displayName: 'Execute Tests'
       failOnStderr: true
       ignoreLASTEXITCODE: true
