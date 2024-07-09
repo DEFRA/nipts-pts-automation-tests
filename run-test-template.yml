@@ -36,21 +36,21 @@ jobs:
 
   steps:
     
-    - #task: AzureKeyVault@2
-      #displayName: Get Secrets from TST Keyvault 
-      #inputs:
-        #azureSubscription: ${{ parameters.envConfigParam}}
-        #azureSubscription: 'AZD-TRD-TST1'
-        #connectedServiceName: 'AZD-TRD-TST1'
-        #keyvaultName: 'TSTTRDINFKV1001'
-        #SecretsFilter: 'RemosDbConnectionString' #-'DBConnectionstring'
-        #RunAsPreJob: false
+    # - task: AzureKeyVault@2
+    #   displayName: Get Secrets from TST Keyvault 
+    #   inputs:
+    #     azureSubscription: ${{ parameters.envConfigParam}}
+    #     azureSubscription: 'AZD-TRD-TST1'
+    #     connectedServiceName: 'AZD-TRD-TST1'
+    #     keyvaultName: 'TSTTRDINFKV1001'
+    #     SecretsFilter: 'RemosDbConnectionString' #-'DBConnectionstring'
+    #     RunAsPreJob: false
 
-    - #powershell: echo "##vso[task.setvariable variable= RemosDbConnectionString;isOutput=true]$(RemosDbConnectionString)"
-      #name: setvarStep
+    # - powershell: echo "##vso[task.setvariable variable= RemosDbConnectionString;isOutput=true]$(RemosDbConnectionString)"
+    #   name: setvarStep
       
-    - #script: echo $(RemosDbConnectionString)
-      #name: echovar
+    # - script: echo $(RemosDbConnectionString)
+    #   name: echovar
 
     - task: DownloadBuildArtifacts@0
       displayName: TestArtifact
