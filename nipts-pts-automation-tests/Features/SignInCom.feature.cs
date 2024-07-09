@@ -86,12 +86,10 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Navigate to Pets Compliance Portal Page")]
-        [NUnit.Framework.TestCaseAttribute("Current sailing", null)]
-        public void NavigateToPetsCompliancePortalPage(string nextPage, string[] exampleTags)
+        public void NavigateToPetsCompliancePortalPage()
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("nextPage", nextPage);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate to Pets Compliance Portal Page", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 9
 this.ScenarioInitialize(scenarioInfo);
@@ -108,9 +106,6 @@ this.FeatureBackground();
 #line hidden
 #line 10
  testRunner.When("click on sign in button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 11
- testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
