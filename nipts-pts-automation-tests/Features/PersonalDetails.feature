@@ -91,5 +91,5 @@ Scenario: Verify Personal Details page
 
 
 	Examples: 
-	| logininfo | nextPage                      | nextPage1                     |
-	| test      | Lifelong pet travel documents | Lifelong pet travel documents |
+	| logininfo | nextPage                      | nextPage1                                       |
+	| test      | Lifelong pet travel documents | Dogfennau teithio gydol oes i anifeiliaid anwes |
