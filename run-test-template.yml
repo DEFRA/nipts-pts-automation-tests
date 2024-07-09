@@ -1,0 +1,141 @@
+parameters:
+  - name: jobName
+    type: string
+  - name: envConfigParam
+    type: string
+  - name: apiEndPoint
+    type: string
+  - name: branchName
+    type: string
+  - name: SeleniumGrid
+    type: string
+  - name: DeviceName
+    type: string
+  - name: BSOSVersion
+    type: string
+  - name: dependsOn
+    type: string
+  - name: targetBrowserName
+    type: string
+
+jobs: 
+
+- job: ${{ parameters.jobName }}
+  displayName: ${{ parameters.jobName }}
+  timeoutInMinutes: 300
+
+  pool:
+    name: 'DEFRA-TRD'
+
+  variables:
+    - template: test-variables_CI.yml
+      parameters:
+        env: ${{parameters.envConfigParam}}
+        jobNameParam: ${{parameters.jobName}}
+        targerBrowser: ${{parameters.targetBrowserName}}
+
+  steps:
+    
+    - #task: AzureKeyVault@2
+      #displayName: Get Secrets from TST Keyvault 
+      #inputs:
+        #azureSubscription: ${{ parameters.envConfigParam}}
+        #azureSubscription: 'AZD-TRD-TST1'
+        #connectedServiceName: 'AZD-TRD-TST1'
+        #keyvaultName: 'TSTTRDINFKV1001'
+        #SecretsFilter: 'RemosDbConnectionString' #-'DBConnectionstring'
+        #RunAsPreJob: false
+
+    - #powershell: echo "##vso[task.setvariable variable= RemosDbConnectionString;isOutput=true]$(RemosDbConnectionString)"
+      #name: setvarStep
+      
+    - #script: echo $(RemosDbConnectionString)
+      #name: echovar
+
+    - task: DownloadBuildArtifacts@0
+      displayName: TestArtifact
+      inputs:
+        buildType: 'specific'
+        project: '023a3c95-20fd-49b4-b068-4706843ba0d7'
+        pipeline: '5692'
+        buildVersionToDownload: 'latestFromBranch'
+        branchName: ${{ parameters.branchName }}
+        downloadType: 'single'
+        artifactName: 'drop'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
+    - task: CopyFiles@2
+      displayName: 'Copy Test Artifacts'
+      inputs:
+        SourceFolder: '$(System.ArtifactsDirectory)/drop'
+        TargetFolder: $(System.DefaultWorkingDirectory)
+        OverWrite: true
+        CleanTargetFolder: true
+    
+    - task: ExtractFiles@1
+      inputs:
+        archiveFilePatterns: '**/nipts.pts.automation.tests.zip'
+        destinationFolder: '$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests'
+        cleanDestinationFolder: false
+        overwriteExistingFiles: true
+    
+    - task: replacetokens@3
+      displayName: Replace Tokens
+      inputs:
+        rootDirectory: '$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests'
+        targetFiles: 'appsettings.json'
+        encoding: auto
+        writeBOM: true
+        escapeType: json
+        actionOnMissing: warn
+        keepToken: false
+        tokenPrefix: '#{{'
+        tokenSuffix: '}}'
+        useLegacyPattern: false
+        enableTelemetry: false
+
+    # - powershell: |
+    #     $jsonString = Get-Content "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/appsettings.json" | Out-String
+    #     $tr = $jsonString.replace("`"DBConnectionstring`": `"`"", "`"DBConnectionstring`": `"$(RemosDbConnectionString)`"");
+    #     $tr | Out-file -Filepath "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/appsettings.json"
+    #     Write-Host $tr
+    #   displayName: 'Display appsettings.json'
+    
+    - powershell: |
+        Set-Location -Path "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests"
+        dotnet test "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/nipts.pts.automation.tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml"
+      displayName: 'Execute Tests'
+      failOnStderr: true
+      ignoreLASTEXITCODE: true
+      continueOnError: true
+    
+    - ${{ if or( eq(parameters.branchName, 'refs/heads/master'), contains(parameters.branchName, 'release'), eq(parameters.branchName, 'dev') ) }}:
+      - task: SpecFlowPlus@0
+        displayName: 'LivingDoc with FeatureFolder generatorSource'
+        inputs:
+          generatorSource: 'TestAssembly'
+          testAssemblyFilePath: '$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/nipts.pts.automation.tests.dll'
+          testExecutionJson: '$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/TestExecution.json'
+          projectName: 'nipts.pts.automation.tests'
+          projectLanguage: 'en'
+          workItemPrefix: 'WI'
+        enabled: true
+        continueOnError: true
+        condition: always()
+        timeoutInMinutes: 10
+    
+    - task: PublishPipelineArtifact@0
+      displayName: 'Publish Screenshots'
+      inputs:
+          testResultsFiles: 'TestFailures*.png'
+          artifactName: ${{ parameters.jobName }}
+          targetPath: '$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/TestResults/'
+
+    - task: PublishTestResults@2
+      displayName: 'Publish Test Results'
+      inputs:
+        testResultsFormat: VSTest
+        testResultsFiles: ${{ parameters.jobName }}.xml
+        searchFolder: '$(System.DefaultWorkingDirectory)/nipts.pts.automation.tests/TestResults/'
+        testRunTitle: ${{ parameters.jobName }}
+        failTaskOnFailedTests: true

@@ -1,0 +1,45 @@
+trigger:
+- master
+- dev
+- feature/*
+- task/*
+- '*'
+ 
+schedules:
+- cron: '0 0 * * *'
+  displayName: Daily midnight build
+  branches:
+    include:
+    - dev
+
+pool:
+    name: 'DEFRA-TRD'
+
+variables:
+  BuildConfiguration: Release
+      
+steps:
+
+  - task: DotNetCoreCLI@2
+    displayName: Restore for $(BuildConfiguration)
+    inputs:
+      command: 'restore'
+      projects: '**/nipts-pts-automation-tests.csproj'
+      feedsToUse: 'config'
+      nugetConfigPath: 'nipts-pts-automation-tests/nuget.config'
+
+
+  - task: DotNetCoreCLI@2
+    displayName: publish for $(BuildConfiguration)
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: '**/nipts-pts-automation-tests.csproj'
+      arguments: --no-restore --configuration $(BuildConfiguration) -o $(Build.ArtifactStagingDirectory)
+
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'

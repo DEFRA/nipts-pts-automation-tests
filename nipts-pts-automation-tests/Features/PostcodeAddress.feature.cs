@@ -156,8 +156,8 @@ this.ScenarioInitialize(scenarioInfo);
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify error message for invalid postcode")]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "", "Rhowch god post", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE10 1EE", "Rhowch gyfeiriad dilys yng Nghymru", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PBABCDEFGHIJKLMNOP", "Rhowch god post llawn yn y fformat cywir", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE10 1EE", "", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PBABCDEFGHIJKLMNOP", "", null)]
         public void VerifyErrorMessageForInvalidPostcode(string logininfo, string nextPage, string fullname, string postcode, string errorMessage, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;

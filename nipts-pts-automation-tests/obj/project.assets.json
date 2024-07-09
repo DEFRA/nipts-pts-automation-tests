@@ -7260,19 +7260,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\nphatak\\.nuget\\packages\\": {}
+    "C:\\Users\\payewale\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nphatak\\Source\\Repos\\nipts-pts-automation-tests\\nipts-pts-automation-tests\\nipts-pts-automation-tests.csproj",
+      "projectUniqueName": "C:\\Users\\payewale\\Source\\Repos\\nipts-pts-automation-tests\\nipts-pts-automation-tests\\nipts-pts-automation-tests.csproj",
       "projectName": "nipts-pts-automation-tests",
-      "projectPath": "C:\\Users\\nphatak\\Source\\Repos\\nipts-pts-automation-tests\\nipts-pts-automation-tests\\nipts-pts-automation-tests.csproj",
-      "packagesPath": "C:\\Users\\nphatak\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nphatak\\Source\\Repos\\nipts-pts-automation-tests\\nipts-pts-automation-tests\\obj\\",
+      "projectPath": "C:\\Users\\payewale\\Source\\Repos\\nipts-pts-automation-tests\\nipts-pts-automation-tests\\nipts-pts-automation-tests.csproj",
+      "packagesPath": "C:\\Users\\payewale\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\payewale\\Source\\Repos\\nipts-pts-automation-tests\\nipts-pts-automation-tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\nphatak\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\payewale\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7377,7 +7377,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
