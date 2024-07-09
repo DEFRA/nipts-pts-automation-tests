@@ -4,6 +4,7 @@ using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 
 
+
 namespace nipts_pts_automation_tests.Pages
 {
     public class ApplicationPage : IApplicationPage
@@ -16,7 +17,7 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']"));
         private IWebElement Englishclick => _driver.WaitForElement(By.XPath("//a[contains(text(),'English')]"));
         private IWebElement Welshclick => _driver.WaitForElement(By.XPath("//a[contains(text(),'Cymraeg')]"));
-        private IWebElement ApplyForADocEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Apply for a document')]"));
+        private IWebElement ApplyForADocEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Apply for a document')] | //button[contains(text(),'Gwneud cais am ddogfen')]"));
         private IWebElement ContinueWelshEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Parhau')] | //button[contains(text(),'Continue')]"));
         private IWebElement BaclWelshEle => _driver.WaitForElement(By.XPath("//a[contains(text(),'Yn ôl')]"));
         private IWebElement ErrorMessageEle => _driver.WaitForElement(By.XPath("//ul[contains(@class,'govuk-error-summary__list')]//a | //ul[contains(@class,'govuk-error-summary__list')]//span"));
@@ -25,6 +26,7 @@ namespace nipts_pts_automation_tests.Pages
         public IWebElement lnkManageYourAccount => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='manage your account']"));
         public IWebElement lnkViewDocsFromManageAcc => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='View your lifelong pet travel documents or apply for a new one']"));
         private IWebElement ContinueEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
+        private IWebElement tableBody => _driver.WaitForElement(By.XPath("//table/tbody"));
         #endregion Page Objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -119,7 +121,27 @@ namespace nipts_pts_automation_tests.Pages
         {
             ContinueEle.Click();
         }
+        public bool VerifyTheExpectedStatus(string petName, string status)
+        {
+            Thread.Sleep(5000);
+            _driver.Navigate().Refresh();
+          //  _driver.WaitForPageToLoad();
+            var trCollection = tableBody.FindElements(By.TagName("tr"));
 
+            foreach (var element in trCollection)
+            {
+                var tableHeader = element.FindElement(By.TagName("th"));
+
+                if (tableHeader.Text.Equals(petName))
+                {
+                    var tdCollection = element.FindElements(By.TagName("td"));
+
+                    return tdCollection[2].Text.Trim().ToUpper().Equals(status.ToUpper());
+                }
+            }
+
+            return false;
+        }
         #endregion Page Methods
 
     }

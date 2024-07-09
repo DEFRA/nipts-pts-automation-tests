@@ -15,13 +15,19 @@ namespace nipts_pts_automation_tests.Steps
         private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
         private IApplicationPage? applicationPage => _objectContainer.IsRegistered<IApplicationPage>() ? _objectContainer.Resolve<IApplicationPage>() : null;
         private IDataHelperConnections? dataHelperConnections => _objectContainer.IsRegistered<IDataHelperConnections>() ? _objectContainer.Resolve<IDataHelperConnections>() : null;
-
+        private IPetFeaturesPage? petfeaturePage => _objectContainer.IsRegistered<IPetFeaturesPage>() ? _objectContainer.Resolve<IPetFeaturesPage>() : null;
         public PetFeatuesSteps(ScenarioContext context, IObjectContainer container)
         {
             _scenarioContext = context;
             _objectContainer = container;
         }
 
+        [Then(@"enter Pets significant features '([^']*)'")]
+        public void ThenIHaveSelectedAnOptionAsForSignificantFeatures(string hasSignificantFeatures)
+        {
+            var significantFeature = petfeaturePage.SelectSignificantFeaturesOption(hasSignificantFeatures);
+            
+        }   
 
     }
 }

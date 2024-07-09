@@ -13,6 +13,9 @@ namespace nipts_pts_automation_tests.Pages
         #region Page Objects
 
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']"));
+        private IWebElement txtDay => _driver.WaitForElement(By.Id("Day"));
+        private IWebElement txtMonth => _driver.WaitForElement(By.Id("Month"));
+        private IWebElement txtYear => _driver.WaitForElement(By.Id("Year"));
 
         #endregion Page Objects
 
@@ -24,6 +27,22 @@ namespace nipts_pts_automation_tests.Pages
         }
 
         #region Page Methods
+        public string EnterDateMonthYear(DateTime dateTime)
+        {
+            var day = dateTime.ToString("dd");
+            var month = dateTime.ToString("MM");
+            var year = dateTime.ToString("yyyy");
+
+            txtDay.Clear();
+            txtMonth.Clear();
+            txtYear.Clear();
+
+            txtDay.SendKeys(day);
+            txtMonth.SendKeys(month);
+            txtYear.SendKeys(year);
+
+            return $"{day}/{month}/{year}";
+        }
 
 
         #endregion Page Methods

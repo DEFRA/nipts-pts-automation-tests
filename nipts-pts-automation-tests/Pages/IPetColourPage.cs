@@ -2,5 +2,6 @@
 {
     public interface IPetColourPage
     {
+        public void SelectColorOption(string color);
     }
 }
