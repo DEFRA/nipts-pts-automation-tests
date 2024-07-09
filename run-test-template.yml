@@ -96,7 +96,7 @@ jobs:
 
     - powershell: |
         $jsonString = Get-Content "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/appsettings.json" | Out-String
-        # $tr = $jsonString.replace("`"DBConnectionstring`": `"`"", "`"DBConnectionstring`": `"$(RemosDbConnectionString)`"");
+        $tr = $jsonString.replace("`"DBConnectionstring`": `"`"", "`"DBConnectionstring`": `"`"");
         $tr | Out-file -Filepath "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/appsettings.json"
         Write-Host $tr
       displayName: 'Display appsettings.json'
