@@ -1,4 +1,3 @@
-@Regression
 Feature: SignInCom
 
 Sign in to Pets Compliance Portal
