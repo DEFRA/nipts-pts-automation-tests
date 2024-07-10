@@ -3,6 +3,7 @@ Feature: PersonalDetails
 
 Personal Details page in Pets application Portal
 
+@CrossBrowser
 Scenario: Verify Personal Details page
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
@@ -91,5 +92,5 @@ Scenario: Verify Personal Details page
 
 
 	Examples: 
-	| logininfo | nextPage                      | nextPage1                     |
-	| test      | Lifelong pet travel documents | Lifelong pet travel documents |
+	| logininfo | nextPage                      | nextPage1                                       |
+	| test      | Lifelong pet travel documents | Dogfennau teithio gydol oes i anifeiliaid anwes |

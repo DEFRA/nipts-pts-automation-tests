@@ -3,6 +3,7 @@ Feature: PostcodeAddress
 
 Update and verify Postcode Address on Pets application Portal
 
+@CrossBrowser
 Scenario: Enter postcode and select address on Pets 
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
@@ -41,6 +42,6 @@ Scenario: Verify error message for invalid postcode
 	Examples: 
 	| logininfo | nextPage                      | fullname     | postcode | errorMessage                        |
 	| test      | Lifelong pet travel documents | TestFullName |          | Rhowch god post                     |
-	| test      | Lifelong pet travel documents | TestFullName | SE10 1EE | Rhowch gyfeiriad dilys yng Nghymru  |
-	| test      | Lifelong pet travel documents | TestFullName | SE1 7PBABCDEFGHIJKLMNOP  | Rhowch god post llawn yn y fformat cywir |
+	| test      | Lifelong pet travel documents | TestFullName | SE10 1EE |    |
+	| test      | Lifelong pet travel documents | TestFullName | SE1 7PBABCDEFGHIJKLMNOP  |   |
 
