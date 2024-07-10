@@ -2,5 +2,6 @@
 {
     public interface IPetFeaturesPage
     {
+        public string SelectSignificantFeaturesOption(string hasSignificantFeatures);
     }
 }

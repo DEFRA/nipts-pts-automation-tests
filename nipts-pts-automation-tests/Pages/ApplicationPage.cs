@@ -4,6 +4,7 @@ using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 
 
+
 namespace nipts_pts_automation_tests.Pages
 {
     public class ApplicationPage : IApplicationPage
@@ -25,6 +26,7 @@ namespace nipts_pts_automation_tests.Pages
         public IWebElement lnkManageYourAccount => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='manage your account']"));
         public IWebElement lnkViewDocsFromManageAcc => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='View your lifelong pet travel documents or apply for a new one']"));
         private IWebElement ContinueEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
+        private IWebElement tableBody => _driver.WaitForElement(By.XPath("//table/tbody"));
         #endregion Page Objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -119,7 +121,27 @@ namespace nipts_pts_automation_tests.Pages
         {
             ContinueEle.Click();
         }
+        public bool VerifyTheExpectedStatus(string petName, string status)
+        {
+            Thread.Sleep(5000);
+            _driver.Navigate().Refresh();
+          //  _driver.WaitForPageToLoad();
+            var trCollection = tableBody.FindElements(By.TagName("tr"));
 
+            foreach (var element in trCollection)
+            {
+                var tableHeader = element.FindElement(By.TagName("th"));
+
+                if (tableHeader.Text.Equals(petName))
+                {
+                    var tdCollection = element.FindElements(By.TagName("td"));
+
+                    return tdCollection[2].Text.Trim().ToUpper().Equals(status.ToUpper());
+                }
+            }
+
+            return false;
+        }
         #endregion Page Methods
 
     }
