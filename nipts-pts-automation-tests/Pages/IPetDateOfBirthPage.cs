@@ -2,5 +2,6 @@
 {
     public interface IPetDateOfBirthPage
     {
+        public string EnterDateMonthYear(DateTime dateTime);
     }
 }

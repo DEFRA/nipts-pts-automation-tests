@@ -24,7 +24,14 @@ namespace nipts_pts_automation_tests.Pages
         }
 
         #region Page Methods
-
+        public void SelectColorOption(string color)
+        {
+            if (!string.IsNullOrEmpty(color))
+            {
+                var rdoColor = _driver.WaitForElement(By.XPath($"//div[@class='govuk-radios__item']/label[@for='{color.Replace(" ", string.Empty)}']"));
+                rdoColor.Click();
+            }
+        }
 
         #endregion Page Methods
 
