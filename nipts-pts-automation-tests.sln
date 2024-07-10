@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI", "CI", "{8655DED8-0432-
 	ProjectSection(SolutionItems) = preProject
 		build-automation-pipeline.yml = build-automation-pipeline.yml
 		pipeline-automation.yml = pipeline-automation.yml
+		pipeline-crossbrowser.yml = pipeline-crossbrowser.yml
 		run-test-template.yml = run-test-template.yml
 		test-variables_CI.yml = test-variables_CI.yml
 	EndProjectSection

@@ -3,6 +3,7 @@ Feature: PostcodeAddress
 
 Update and verify Postcode Address on Pets application Portal
 
+@CrossBrowser
 Scenario: Enter postcode and select address on Pets 
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'

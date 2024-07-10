@@ -3,6 +3,7 @@ Feature: PersonalDetails
 
 Personal Details page in Pets application Portal
 
+@CrossBrowser
 Scenario: Verify Personal Details page
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'

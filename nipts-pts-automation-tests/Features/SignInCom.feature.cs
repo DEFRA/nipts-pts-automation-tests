@@ -21,14 +21,12 @@ namespace nipts_pts_automation_tests.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("SignInCom")]
-    [NUnit.Framework.CategoryAttribute("Regression")]
     public partial class SignInComFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private static string[] featureTags = new string[] {
-                "Regression"};
+        private static string[] featureTags = ((string[])(null));
         
 #line 1 "SignInCom.feature"
 #line hidden
@@ -77,9 +75,9 @@ namespace nipts_pts_automation_tests.Features
         
         public virtual void FeatureBackground()
         {
-#line 6
+#line 5
 #line hidden
-#line 7
+#line 6
  testRunner.Given("that I navigate to the Pets compliance portal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
         }
@@ -91,7 +89,7 @@ namespace nipts_pts_automation_tests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate to Pets Compliance Portal Page", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 9
+#line 8
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -101,10 +99,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 6
+#line 5
 this.FeatureBackground();
 #line hidden
-#line 10
+#line 9
  testRunner.When("click on sign in button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             }
