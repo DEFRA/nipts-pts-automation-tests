@@ -16,7 +16,7 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement GOVLink => _driver.WaitForElement(By.XPath("//*[name()='svg' and @class='govuk-header__logotype']"));
         private IWebElement Feedbacktext => _driver.WaitForElement(By.XPath("//div[@id='QID3']//div[@class='QuestionText BorderColor']"));
         private IWebElement GenericGOVPage => _driver.WaitForElement(By.XPath("//span[contains(@class,'govuk-!-margin-bottom-2 govuk-!-display-block')]"));
-        private IWebElement feedbacklink => _driver.WaitForElement(By.XPath("//a[contains(text(),'eich adborth')]"));
+        private IWebElement feedbacklink => _driver.WaitForElement(By.XPath("//a[contains(text(),' adborth (yn agor mewn tab newydd)')]"));
         private IWebElement HeaderTitle => _driver.WaitForElement(By.XPath("//div[@class='govuk-header__content']/a[contains(@class,'govuk-header')]"));
         private IWebElement HeaderBanner => _driver.WaitForElement(By.XPath("//span[@class='govuk-phase-banner__text']"));
 

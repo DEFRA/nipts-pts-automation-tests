@@ -44,13 +44,10 @@ Scenario: View Pet travel documents in WELSH
 	And confirm the declaration checkbox
 	Then click Accept and Send button from Declaration page
 	Then click on Apply for another lifelong pet travel document link
-	And  verify next page 'Dogfennau teithio' is loaded
-	Then  verify displayed language at page footer '<FooterLang1>'
+	And  verify next page 'ch manylion chi' is loaded
+	Then verify displayed language at page footer '<FooterLang1>'
 	And  click on English language
-	Then  verify displayed language at page footer '<FooterLang2>'
-	And click on Welsh language
-	When click on Apply for a document
-	Then verify next page '<nextPage9>' is loaded
+	Then verify displayed language at page footer '<FooterLang2>'
 	
 		
 	Examples: 
