@@ -23,8 +23,8 @@ Scenario: Enter postcode and select address on Pets
 	Then  verify next page '<nextPage4>' is loaded
 
 	Examples: 
-	| logininfo | nextPage                      | nextPage1    | nextPage2               | nextPage3   | nextPage4 | fullname     | postcode |
-	| test      | Lifelong pet travel documents | manylion chi | What is your full name? | ch cod post |           | TestFullName | SE1 7PB  |
+	| logininfo | nextPage                      | nextPage1    | nextPage2 | nextPage3   | nextPage4 | fullname     | postcode |
+	| test      | Lifelong pet travel documents | manylion chi | Beth yw   | ch cod post |           | TestFullName | SE1 7PB  |
 
 Scenario: Verify error message for invalid postcode
 	Given that I navigate to the Pets application portal

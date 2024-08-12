@@ -119,7 +119,7 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Sign Out functionality for WELSH language")]
-        [NUnit.Framework.TestCaseAttribute("Sign in using Government Gateway", "test", "Allgofnodi", "English", "Sign Out", "Cymraeg", "gywir", null)]
+        [NUnit.Framework.TestCaseAttribute("Sign in using Government Gateway", "test", "Allgofnodi", "English", "Sign out", "Cymraeg", "gywir", null)]
         public void VerifySignOutFunctionalityForWELSHLanguage(string nextPage, string logininfo, string signOutLinkText, string displayedLang, string signOutLinkText2, string displayedLang2, string nextPage1, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;

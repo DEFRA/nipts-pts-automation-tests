@@ -77,7 +77,7 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Enter Full Name on Pets")]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "What is your full name?", "ch cod post", "TestFullName", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post", "TestFullName", null)]
         public void EnterFullNameOnPets(string logininfo, string nextPage, string nextPage1, string nextPage2, string nextPage3, string fullname, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;

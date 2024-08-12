@@ -76,8 +76,8 @@ Scenario: Verify Personal Details page
 
 
 	Examples: 
-	| logininfo | nextPage                                        | nextPage1               |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | What is your full name? |
+	| logininfo | nextPage                                        | nextPage1 |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Beth yw   |
 
 
 	Scenario: Verify back link on Personal Details page 

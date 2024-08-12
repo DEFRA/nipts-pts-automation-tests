@@ -18,8 +18,8 @@ Scenario: Enter Full Name on Pets
 	Then  verify next page '<nextPage3>' is loaded
 
 	Examples: 
-	| logininfo | nextPage                      | nextPage1    | nextPage2               | nextPage3   | fullname     | 
-	| test      | Lifelong pet travel documents | manylion chi | What is your full name? | ch cod post | TestFullName |
+	| logininfo | nextPage                      | nextPage1    | nextPage2 | nextPage3   | fullname     | 
+	| test      | Lifelong pet travel documents | manylion chi | Beth yw   | ch cod post | TestFullName |
 
 Scenario: Verify error message for invalid full Name
 	Given that I navigate to the Pets application portal
