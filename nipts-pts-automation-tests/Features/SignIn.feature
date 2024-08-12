@@ -30,4 +30,4 @@ Scenario: Verify Sign Out functionality for WELSH language
 
 	Examples: 
 	| nextPage                         | logininfo | SignOutLinkText | DisplayedLang | SignOutLinkText2 | DisplayedLang2 | nextPage1    |
-	| Sign in using Government Gateway | test      | Allgofnodi      | English       | Sign Out         | Cymraeg        | gywir        |
+	| Sign in using Government Gateway | test      | Allgofnodi      | English       | Sign out         | Cymraeg        | gywir        |

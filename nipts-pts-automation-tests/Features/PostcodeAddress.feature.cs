@@ -78,7 +78,7 @@ namespace nipts_pts_automation_tests.Features
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Enter postcode and select address on Pets")]
         [NUnit.Framework.CategoryAttribute("CrossBrowser")]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "What is your full name?", "ch cod post", "", "TestFullName", "SE1 7PB", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post", "", "TestFullName", "SE1 7PB", null)]
         public void EnterPostcodeAndSelectAddressOnPets(string logininfo, string nextPage, string nextPage1, string nextPage2, string nextPage3, string nextPage4, string fullname, string postcode, string[] exampleTags)
         {
             string[] @__tags = new string[] {
