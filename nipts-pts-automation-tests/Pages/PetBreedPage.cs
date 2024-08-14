@@ -14,7 +14,7 @@ namespace nipts_pts_automation_tests.Pages
 
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']"));
        
-        public IWebElement BreedTypeEle => _driver.WaitForElementExists(By.Id("Breeds"));
+        public IWebElement BreedTypeEle => _driver.WaitForElementExists(By.Id("BreedId"));
 
         #endregion Page Objects
 
