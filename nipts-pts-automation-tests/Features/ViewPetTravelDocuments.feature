@@ -31,13 +31,13 @@ Scenario: View Pet travel documents in WELSH
 	Then   click on continue 
 	And  verify next page '<nextPage5>' is loaded
     Then  enter the pet date of birth
-	And click on continue english
+	And click on continue
 	And  verify next page '<nextPage6>' is loaded
 	Then Select pet color as '<color>'
-	And click on continue english
+	And click on continue
 	And  verify next page '<nextPage7>' is loaded
 	Then enter Pets significant features '<features>'
-	And click on continue english
+	And click on continue
 	And  verify next page '<nextPage8>' is loaded
 	Then confirm By sending this application, you confirm that you've given accurate and truthful information about your pet checkbox
 	And confirm Defra's privacy policy checkbox
