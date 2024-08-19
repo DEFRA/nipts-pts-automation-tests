@@ -21,7 +21,7 @@ Scenario: Enter Full Name on Pets
 	| logininfo | nextPage                      | nextPage1    | nextPage2 | nextPage3   | fullname     | 
 	| test      | Lifelong pet travel documents | manylion chi | Beth yw   | ch cod post | TestFullName |
 
-Scenario: Verify error message for invalid full Name
+Scenario: Verify error message for blank and invalid full Name
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
 	Then  verify next page '<nextPage>' is loaded
@@ -36,4 +36,5 @@ Scenario: Verify error message for invalid full Name
 	Examples: 
 	| logininfo | nextPage                      | fullname     | errorMessage                        |
 	| test      | Lifelong pet travel documents |              | Rhowch eich enw llawn               |
+	| test      | Lifelong pet travel documents |I am entering 300 letters in enter full name in pets travel portal. I am entering 300 letters in enter full name in pets travel portal. I am entering 300 letters in enter full name in pets travel portal. I am entering 300 letters in enter full name in pets travel portal.Error message is displayed....              | gan ddefnyddio 300 o gymeriadau neu lai               |
 
