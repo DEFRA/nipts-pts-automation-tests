@@ -48,6 +48,7 @@ namespace nipts_pts_automation_tests.Hooks
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PetFeaturesPage, IPetFeaturesPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PetSpeciesPage, IPetSpeciesPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<CheckYourAnswersDeclarationPage, ICheckYourAnswersDeclarationPage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<ManualAddressPage, IManualAddressPage>());
 
         }
 

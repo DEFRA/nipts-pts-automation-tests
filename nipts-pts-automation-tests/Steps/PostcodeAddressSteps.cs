@@ -40,5 +40,11 @@ namespace nipts_pts_automation_tests.Steps
             Assert.True(postcodeAddressPage.ThenVerifyErrorMessageOnPetsPostcodePage(errorMessage), "Full Name error message not matching");
         }
 
+        [When(@"click on change postcode")]
+        public void WhenClickChangePostcode()
+        {
+            postcodeAddressPage.ClickChangePostcode();
+        }
+
     }
 }

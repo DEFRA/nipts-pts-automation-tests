@@ -140,10 +140,10 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify error message for blank full Name")]
+        [NUnit.Framework.DescriptionAttribute("Verify error message for blank and invalid full Name")]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "", "Rhowch eich enw llawn", null)]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", @"I am entering 300 letters in enter full name in pets travel portal. I am entering 300 letters in enter full name in pets travel portal. I am entering 300 letters in enter full name in pets travel portal. I am entering 300 letters in enter full name in pets travel portal.Error message is displayed....", "gan ddefnyddio 300 o gymeriadau neu lai", null)]
-        public void VerifyErrorMessageForBlankFullName(string logininfo, string nextPage, string fullname, string errorMessage, string[] exampleTags)
+        public void VerifyErrorMessageForBlankAndInvalidFullName(string logininfo, string nextPage, string fullname, string errorMessage, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -151,7 +151,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("nextPage", nextPage);
             argumentsOfScenario.Add("fullname", fullname);
             argumentsOfScenario.Add("errorMessage", errorMessage);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify error message for blank full Name", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify error message for blank and invalid full Name", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
