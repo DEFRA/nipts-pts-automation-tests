@@ -8,7 +8,7 @@ Scenario: Select pet sex in WELSH and verify next page in the application
 	When  sign in with valid credentials with logininfo '<logininfo>'
 	Then  verify next page '<nextPage>' is loaded
 	When  click on Apply for a document
-	And  select 'Yes' on Personal Details page
+	And   select 'Yes' on Personal Details page
 	When  click on continue english
 	Then  I selected the '<MicrochipOption>' option
 	And   provided microchip number as <MicrochipNumber>
