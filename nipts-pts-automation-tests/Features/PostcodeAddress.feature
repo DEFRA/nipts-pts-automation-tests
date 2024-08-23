@@ -7,9 +7,9 @@ Update and verify Postcode Address on Pets application Portal
 Scenario: Enter postcode and select address on Pets 
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
+	And   click on Welsh language 
 	Then  verify next page '<nextPage>' is loaded
-	When  click on Welsh language 
-	And   click on Apply for a document
+	When  click on Apply for a document
 	Then  verify next page '<nextPage1>' is loaded
 	When  select 'Nac ydyn' on Personal Details page
 	And   click on continue
@@ -30,9 +30,9 @@ Scenario: Enter postcode and select address on Pets
 Scenario: Verify error message for invalid postcode
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
+	And   click on Welsh language 
 	Then  verify next page '<nextPage>' is loaded
-	When  click on Welsh language 
-	And   click on Apply for a document
+	When  click on Apply for a document
 	And   select 'Nac ydyn' on Personal Details page
 	When  click on continue
 	When  enter your full name '<fullname>'
@@ -49,9 +49,9 @@ Scenario: Verify error message for invalid postcode
 	Scenario: Change postcode on what is your address page
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
+	And   click on Welsh language 
 	Then  verify next page '<nextPage>' is loaded
-	When  click on Welsh language 
-	And   click on Apply for a document
+	When  click on Apply for a document
 	And   select 'Nac ydyn' on Personal Details page
 	When  click on continue
 	When  enter your full name '<fullname>'
