@@ -15,10 +15,10 @@ namespace nipts_pts_automation_tests.Pages
 
         #region Page Objects
 
-        private IWebElement rdoYes => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='Yes']"));
-        private IWebElement rdoNo => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='No']"));
+        private IWebElement rdoYes => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='MicrochippedYes']"));
+        private IWebElement rdoNo => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='MicrochippedNo']"));
 
-        private IWebElement txtMicroshipNumber => _driver.WaitForElement(By.XPath("//input[@id='microchipinput']"));
+        private IWebElement txtMicroshipNumber => _driver.WaitForElement(By.XPath("//input[@id='MicrochipNumber']"));
         #endregion Page Objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
