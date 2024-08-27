@@ -2,6 +2,7 @@
 {
     public interface IApplicationPage
     {
+        public bool VerifyTheExpectedStatus(string petName, string status);
         public bool VerifyNextPageIsLoaded(string pageName);
         public void ClickOnWelshLang();
         public void ClickOnApplyForADocument();

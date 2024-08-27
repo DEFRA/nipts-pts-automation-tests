@@ -14,7 +14,7 @@ namespace nipts_pts_automation_tests.Pages
         #region Page Objects
 
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']"));
-        private IWebElement PrivacyLink => _driver.WaitForElement(By.XPath("//a[contains(text(),'Privacy notice')]"));
+        private IWebElement PrivacyLink => _driver.WaitForElement(By.XPath("//a[contains(text(),'Hysbysiad preifatrwydd')]"));
         private IWebElement CookiesLink => _driver.WaitForElement(By.XPath("//a[@href='/Content/Cookies']"));
         private IWebElement AccessibilityLink => _driver.WaitForElement(By.XPath("//a[@href='/Content/AccessibilityStatement']"));
         private IWebElement TermsAndConditionsLink => _driver.WaitForElement(By.XPath("//a[@href='/Content/TermsAndConditions']"));
@@ -31,31 +31,35 @@ namespace nipts_pts_automation_tests.Pages
 
         #region Page Methods
 
-        public void ClickOnCookiesFooterLink()
+        public bool ClickOnCookiesFooterLink()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,2000)", "");
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             jsExecutor.ExecuteScript("arguments[0].click();", CookiesLink);
+            return CookiesLink.Text.Contains("Cwcis");
         }
 
-        public void ClickOnAccessibilityFooterLink()
+        public bool ClickOnAccessibilityFooterLink()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,2000)", "");
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             jsExecutor.ExecuteScript("arguments[0].click();", AccessibilityLink);
+            return AccessibilityLink.Text.Contains("Datganiad hygyrchedd");
         }
 
-        public void ClickOnPrivacyFooterLink()
+        public bool ClickOnPrivacyFooterLink()
         {
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             jsExecutor.ExecuteScript("arguments[0].click();", PrivacyLink);
+            return PrivacyLink.Text.Contains("Hysbysiad preifatrwydd");
         }
 
-        public void ClickOnTCsFooterLink()
+        public bool ClickOnTCsFooterLink()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,2000)", "");
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             jsExecutor.ExecuteScript("arguments[0].click();", TermsAndConditionsLink);
+            return TermsAndConditionsLink.Text.Contains("Telerau ac amodau");
         }
 
         public bool VerifyFooterText(string FooterHintText)

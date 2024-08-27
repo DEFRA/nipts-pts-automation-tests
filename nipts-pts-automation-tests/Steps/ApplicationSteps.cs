@@ -94,7 +94,7 @@ namespace nipts_pts_automation_tests.Steps
         [Then(@"verify error message '([^']*)' on Pets")]
         public void ThenVerifyErrorMessage(string errorMessage)
         {
-            Assert.True(applicationPage.VerifyErrorMessage(errorMessage), "Full Name error message not matching");
+            Assert.True(applicationPage.VerifyErrorMessage(errorMessage), "Error message not matching");
         }
 
         [Then(@"verify displayed language at page footer '([^']*)'")]
@@ -126,6 +126,14 @@ namespace nipts_pts_automation_tests.Steps
         public void ClickOnViewYourPetDocumentFromManageYourAccount()
         {
             applicationPage.ClickOnViewYourPetTravelDoc();
+        }
+
+        [Then(@"I should see the application in '([^']*)' status")]
+        public void ThenIShouldSeeTheApplicationInStatus(string applicationStatus)
+        {
+            var petName = _scenarioContext.Get<string>("PetName");
+
+            Assert.IsTrue(applicationPage.VerifyTheExpectedStatus(petName, applicationStatus), $"The submitted application is not in expected status of '{applicationStatus}'");
         }
     }
 }

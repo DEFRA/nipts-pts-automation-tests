@@ -3,7 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nipts-pts-automation-tests", "nipts-pts-automation-tests\nipts-pts-automation-tests.csproj", "{614FF7CE-727E-45F6-924F-14CD08F02A95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nipts-pts-automation-tests", "nipts-pts-automation-tests\nipts-pts-automation-tests.csproj", "{614FF7CE-727E-45F6-924F-14CD08F02A95}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI", "CI", "{8655DED8-0432-4624-875F-2B1DF8178097}"
+	ProjectSection(SolutionItems) = preProject
+		build-automation-pipeline.yml = build-automation-pipeline.yml
+		pipeline-automation.yml = pipeline-automation.yml
+		pipeline-crossbrowser.yml = pipeline-crossbrowser.yml
+		run-test-template.yml = run-test-template.yml
+		test-variables_CI.yml = test-variables_CI.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

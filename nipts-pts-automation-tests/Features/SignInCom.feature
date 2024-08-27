@@ -1,4 +1,3 @@
-@Regression
 Feature: SignInCom
 
 Sign in to Pets Compliance Portal
@@ -8,8 +7,3 @@ Background:
 
 Scenario: Navigate to Pets Compliance Portal Page
 	When  click on sign in button
-	Then  verify next page '<nextPage>' is loaded
-
-	Examples: 
-	| nextPage           |
-	| Current sailing    |

@@ -1,0 +1,48 @@
+parameters:
+  - name: jobNameParam
+    type: string
+  - name: env
+    type: string
+  - name: targerBrowser
+    type: string
+
+
+variables:
+
+- name: SeleniumGrid
+  value: 'https://hub.browserstack.com/wd/hub/'
+- name: DeviceName
+  value: 'Windows'
+- name: BSOSVersion
+  value: '11'
+- name: runTrigger
+  value: 'devpipeline'
+- name: Environment
+  value:  ${{ parameters.env }}
+- name: Build
+  value: ReMos_UI_Tests_$(Build.BuildNumber)
+- name: Target
+  value: ${{ parameters.targerBrowser }}
+- name: Where
+  ${{ if eq(parameters.jobNameParam, 'EnvironmentCheck') }}:
+    value: 'TestCategory=EnvCheck'
+  ${{ if eq(parameters.jobNameParam, 'Regression') }}:
+    value: 'TestCategory=Regression'
+  ${{ if eq(parameters.jobNameParam, 'Pre') }}:
+    value: 'TestCategory=Pre'
+  ${{ if eq(parameters.jobNameParam, 'RunOnlyScenarios') }}:
+    value: 'TestCategory=RunOnly'
+  ${{ if eq(parameters.jobNameParam, 'SmokeTest') }}:
+    value: 'TestCategory=SmokeTest'
+  ${{ if eq(parameters.jobNameParam, 'FirefoxBrowserRun') }}:
+    value: 'TestCategory=CrossBrowser'
+  ${{ if eq(parameters.jobNameParam, 'ChromeBrowserRun') }}:
+    value: 'TestCategory=CrossBrowser'
+  ${{ if eq(parameters.jobNameParam, 'EdgeBrowserRun') }}:
+    value: 'TestCategory=CrossBrowser'
+  ${{ if eq(parameters.jobNameParam, 'IOSIpad12Run') }}:
+    value: 'TestCategory=CrossBrowser'
+  ${{ if eq(parameters.jobNameParam, 'IOSIphone14Run') }}:
+    value: 'TestCategory=CrossBrowser'
+  ${{ if eq(parameters.jobNameParam, 'SelfServeRegression') }}:
+    value: 'TestCategory=SelfServeRegression'

@@ -6,14 +6,13 @@ using OpenQA.Selenium;
 
 namespace nipts_pts_automation_tests.Pages
 {
-    public class EnterSpeciesPage : IEnterSpeciesPage
+    public class PetSpeciesPage : IPetSpeciesPage
     {
         private string Platform => ConfigSetup.BaseConfiguration.TestConfiguration.Platform;
         private IObjectContainer _objectContainer;
 
         #region Page Objects
 
-        private IWebElement ErrorMessageEle => _driver.WaitForElement(By.XPath("//a[@href='#PetSpecies']"));
         private IWebElement DogRadioButton => _driver.WaitForElementExists(By.CssSelector("#Dog"));
         private IWebElement CatRadioButton => _driver.WaitForElementExists(By.CssSelector("#Cat"));
         private IWebElement FerretRadioButton => _driver.WaitForElementExists(By.CssSelector("#Ferret"));
@@ -22,17 +21,12 @@ namespace nipts_pts_automation_tests.Pages
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
 
-        public EnterSpeciesPage(IObjectContainer container)
+        public PetSpeciesPage(IObjectContainer container)
         {
             _objectContainer = container;
         }
 
         #region Page Methods
-
-        public bool VerifyErrorMessageOnEnterSpeciesPage(string errorMessage)
-        {
-            return ErrorMessageEle.Text.Contains(errorMessage);
-        }
 
         public void SelectSpecies(string species)
         {

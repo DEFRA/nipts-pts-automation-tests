@@ -7265,11 +7265,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\payewale\\source\\repos\\nipts-pts-automation-tests\\nipts-pts-automation-tests\\nipts-pts-automation-tests.csproj",
+      "projectUniqueName": "C:\\Users\\payewale\\Source\\Repos\\nipts-pts-automation-tests\\nipts-pts-automation-tests\\nipts-pts-automation-tests.csproj",
       "projectName": "nipts-pts-automation-tests",
-      "projectPath": "C:\\Users\\payewale\\source\\repos\\nipts-pts-automation-tests\\nipts-pts-automation-tests\\nipts-pts-automation-tests.csproj",
+      "projectPath": "C:\\Users\\payewale\\Source\\Repos\\nipts-pts-automation-tests\\nipts-pts-automation-tests\\nipts-pts-automation-tests.csproj",
       "packagesPath": "C:\\Users\\payewale\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\payewale\\source\\repos\\nipts-pts-automation-tests\\nipts-pts-automation-tests\\obj\\",
+      "outputPath": "C:\\Users\\payewale\\Source\\Repos\\nipts-pts-automation-tests\\nipts-pts-automation-tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\payewale\\AppData\\Roaming\\NuGet\\NuGet.Config",

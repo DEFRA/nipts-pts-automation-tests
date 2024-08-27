@@ -16,7 +16,16 @@
       "UserName": "",
       "UserEmail": "",
       "Useraddress": "",
-      "UserPhoneNumber": "",
+      "UserPhoneNumber": ""
+    },
+    {
+      "userId": "55 67 59 70 96 51",
+      "password": "Test@12345",
+      "logininfo": "test2",
+      "UserName": "nikita phatak",
+      "UserEmail": "nikita.phatak+1901@capgemini.com",
+      "Useraddress": "THE JET 67 BRUNSWICK STREET",
+      "UserPhoneNumber": "07833861118"
     }
   ]
 }

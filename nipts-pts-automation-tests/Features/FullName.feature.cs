@@ -77,7 +77,7 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Enter Full Name on Pets")]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "What is your full name?", "ch cod post", "TestFullName", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post", "TestFullName", null)]
         public void EnterFullNameOnPets(string logininfo, string nextPage, string nextPage1, string nextPage2, string nextPage3, string fullname, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -140,9 +140,10 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Verify error message for invalid full Name")]
+        [NUnit.Framework.DescriptionAttribute("Verify error message for blank and invalid full Name")]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "", "Rhowch eich enw llawn", null)]
-        public void VerifyErrorMessageForInvalidFullName(string logininfo, string nextPage, string fullname, string errorMessage, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", @"I am entering 300 letters in enter full name in pets travel portal. I am entering 300 letters in enter full name in pets travel portal. I am entering 300 letters in enter full name in pets travel portal. I am entering 300 letters in enter full name in pets travel portal.Error message is displayed....", "gan ddefnyddio 300 o gymeriadau neu lai", null)]
+        public void VerifyErrorMessageForBlankAndInvalidFullName(string logininfo, string nextPage, string fullname, string errorMessage, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -150,7 +151,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("nextPage", nextPage);
             argumentsOfScenario.Add("fullname", fullname);
             argumentsOfScenario.Add("errorMessage", errorMessage);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify error message for invalid full Name", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify error message for blank and invalid full Name", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

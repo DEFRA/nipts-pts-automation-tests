@@ -9,6 +9,7 @@ Pets header page
 	When  sign in with valid credentials with logininfo '<logininfo>'
 	When  click on Welsh language 
 	Then  verify header title '<title>'
+	Then  verify header banner '<bannerText>'
 	When  click on the feedback link
 	And   switch to next opened tab
 	Then  verify feedback page is loaded
@@ -17,5 +18,5 @@ Pets header page
 	Then  verify generic GOV page is loaded
 
 	Examples: 
-	| logininfo | title                                               |
-	| test      | Taking a pet from Great Britain to Northern Ireland |
+	| logininfo | title                                                  | bannerText                         |
+	| test      | Mynd ag anifail anwes o Brydain Fawr i Ogledd Iwerddon | Mae hwn yn wasanaeth newydd - bydd |

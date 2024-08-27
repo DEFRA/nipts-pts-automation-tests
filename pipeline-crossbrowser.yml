@@ -1,0 +1,123 @@
+trigger: none
+
+parameters:
+  - name: branchName
+    type: string
+    default: 'refs/heads/dev'
+  - name: Environment
+    type: string
+    default: 'tst'
+  - name: ApiEndpoint
+    type: string
+    default: 'dev'
+  - name: SeleniumGrid
+    type: string
+    default: 'https://hub.browserstack.com/wd/hub/'
+  - name: DeviceName
+    type: string
+    default: 'Windows'
+  - name: BSOSVersion
+    type: string
+    default: '11'
+  - name: Target
+    type: string
+    default: 'Edge'
+  
+schedules:
+- cron: "0 10 * * Mon,Tue,Wed,Thu,Fri"
+  displayName: Daily CrossBrowser build
+  branches:
+    include:
+    - dev
+    exclude:
+    - feature/*
+    - task/*
+    - master
+    
+
+resources:
+  repositories:
+    - repository: clientautomationreponew
+      type: github
+      name: DEFRA/nipts-pts-automation-tests
+      ref: $(Build.SourceBranch)
+      endpoint: DEFRA
+
+stages:
+  
+  - stage: EnvironmentCheck
+    displayName: EnvironmentCheck
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: EnvironmentCheck
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        DeviceName: ${{parameters.DeviceName}}
+        BSOSVersion: ${{parameters.BSOSVersion}}
+        dependsOn: ''
+        targetBrowserName: ${{parameters.Target}}
+
+        
+  - stage: ChromeBrowserRun
+    displayName: ChromeBrowserRun
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: ChromeBrowserRun
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        DeviceName: ${{parameters.DeviceName}}
+        BSOSVersion: ${{parameters.BSOSVersion}}
+        dependsOn: 'EnvironmentCheck'
+        targetBrowserName: 'Chrome'
+
+  
+  - stage: EdgeBrowserRun
+    displayName: EdgeBrowserRun
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: EdgeBrowserRun
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        DeviceName: ${{parameters.DeviceName}}
+        BSOSVersion: '10'
+        dependsOn: ''
+        targetBrowserName: 'Edge'
+
+  - stage: IOSIphone14Run
+    displayName: IOSIphone14Run
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: IOSIphone14Run
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        DeviceName: 'iPhone 14'
+        BSOSVersion: '16'
+        dependsOn: ''
+        targetBrowserName: 'Chrome'
+
+  - stage: IOSIpad12Run
+    displayName: IOSIpad12Run
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: IOSIpad12Run
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        DeviceName: 'iPad Pro 12.9 2022'
+        BSOSVersion: '16'
+        dependsOn: ''
+        targetBrowserName: 'Chrome'
