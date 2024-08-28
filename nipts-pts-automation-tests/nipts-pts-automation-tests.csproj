@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <SpecFlowFeatureFiles Remove="Features\PetBreed.feature" />
     <SpecFlowFeatureFiles Remove="Features\PetName.feature" />
   </ItemGroup>
 
@@ -18,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Features\PetBreed.feature" />
     <Compile Include="Features\PetName.feature" />
   </ItemGroup>
 
