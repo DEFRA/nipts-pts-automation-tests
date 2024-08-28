@@ -16,6 +16,8 @@ namespace nipts_pts_automation_tests.Pages
        
         public IWebElement BreedTypeEle => _driver.WaitForElementExists(By.Id("BreedId"));
 
+        private By ErrorMessage => By.XPath("//div[contains(@class,'govuk-error-summary__body')]//a");
+
         #endregion Page Objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -28,9 +30,16 @@ namespace nipts_pts_automation_tests.Pages
         #region Page Methods
         public void EnterFreeTextBreed(string breed)
         {
-            BreedTypeEle.Click();
+            if (!breed.Equals(""))
+            {
+                BreedTypeEle.Click();
+                BreedTypeEle.SendKeys(breed);
+            }
+        }
 
-            BreedTypeEle.SendKeys(breed);
+        public bool VerifyErrorMessageOnPetBreedPage(string errorMessage)
+        {
+            return _driver.FindElement(ErrorMessage).Text.Contains(errorMessage);
         }
 
 

@@ -3,5 +3,6 @@
     internal interface IPetBreedPage
     {
         public void EnterFreeTextBreed(string breed);
+        public bool VerifyErrorMessageOnPetBreedPage(string errorMessage);
     }
 }

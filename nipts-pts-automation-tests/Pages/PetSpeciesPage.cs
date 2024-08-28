@@ -34,12 +34,15 @@ namespace nipts_pts_automation_tests.Pages
                 switch (species)
                 {
                     case "Dog":
+                    case "Ci":
                         DogRadioButton.Click();
                         break;
                     case "Cat":
+                    case "Cath":
                         CatRadioButton.Click();
                         break;
                     case "Ferret":
+                    case "Ffured":
                         FerretRadioButton.Click();
                         break;
                 }
