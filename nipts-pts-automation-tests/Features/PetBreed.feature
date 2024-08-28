@@ -52,9 +52,9 @@ Scenario: Verify error messages for invalid input on pet breed in WELSH
 	Examples: 
 	| logininfo | nextPage                                        | nextPage1    | Pet | MicrochipNumber | PetBreed | MicrochipOption | errorMessage                                     |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch ci chi?   | Ci  | 676789876543321 |          | Yes             | Dewiswch frid neu rhowch frid eich anifail anwes |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch ci chi?   | Ci  | 676789876543321 | ABCDEFGHIJKLMNOPHDJHGDFJKGFDKJBVKJDFNBKJFDHGKJSDHFGKDJHFKJSDHFKJHDSKJFHDKJHKJDHFKDHGJGJHSDFVJSDHFJDBFJEDDIUFGEISEHFKSDNFSBDFJFGFGFGHGHDHBVCJXCVKJDFGVKD         | Yes  | Rhowch frid gan ddefnyddio 150 o gymeriadau neu lai |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch ci chi?   | Ci  | 676789876543321 | A£$%EFGHIJKLMNOPHDJHGDFJKGFDKJBVKJDFNBKJFDHGKJSDHFGKDJHFKJSDHFKJHDSKJFHDKJHKJDHFKDHGJGJHSDFVJSDHFJDBFJEDDIUFGEISEHFKSDNFSBDFJFGFGFGHGHDHBVCJXCVKJDFGVKD         | Yes  | Rhowch frid gan ddefnyddio 150 o gymeriadau neu lai |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch cath chi? | Cath| 676789876543321 |          | Yes             | Dewiswch frid neu rhowch frid eich anifail anwes |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch cath chi? | Cath| 676789876543321 | ABCDEFGHIJKLMNOPHDJHGDFJKGFDKJBVKJDFNBKJFDHGKJSDHFGKDJHFKJSDHFKJHDSKJFHDKJHKJDHFKDHGJGJHSDFVJSDHFJDBFJEDDIUFGEISEHFKSDNFSBDFJFGFGFGHGHDHBVCJXCVKJDFGVKD         | Yes  | Rhowch frid gan ddefnyddio 150 o gymeriadau neu lai |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch cath chi? | Cath| 676789876543321 | A£$%EFGHIJKLMNOPHDJHGDFJKGFDKJBVKJDFNBKJFDHGKJSDHFGKDJHFKJSDHFKJHDSKJFHDKJHKJDHFKDHGJGJHSDFVJSDHFJDBFJEDDIUFGEISEHFKSDNFSBDFJFGFGFGHGHDHBVCJXCVKJDFGVKD         | Yes  | Rhowch frid gan ddefnyddio 150 o gymeriadau neu lai |
 
 Scenario: Verify select breed page not coming for Ferret in WELSH 
 	Given that I navigate to the Pets application portal
