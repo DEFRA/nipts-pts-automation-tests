@@ -6,5 +6,6 @@
         public void EnterPostcode(string postcode);
         public void SelectAddress();
         public bool ThenVerifyErrorMessageOnPetsPostcodePage(string errorMessage);
+        public bool VerifyTotalAddressFoundOnSelectAddressPage();
     }
 }
