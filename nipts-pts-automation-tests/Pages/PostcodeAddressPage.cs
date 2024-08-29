@@ -20,6 +20,7 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement ErrorMessageEle => _driver.WaitForElement(By.XPath("//ul[contains(@class,'govuk-error-summary__list')]//a"));
         private IWebElement FindAddressWelshEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Dod o hyd i gyfeiriad')]"));
         private IWebElement ChangePostcode => _driver.WaitForElement(By.XPath("//a[contains(text(),'Newid')]"));
+        private IWebElement totalAddress => _driver.WaitForElement(By.XPath("//select//option[1]"));
         #endregion Page Objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -54,8 +55,11 @@ namespace nipts_pts_automation_tests.Pages
             ChangePostcode.Click();
         }
 
+        public bool VerifyTotalAddressFoundOnSelectAddressPage()
+        {
+            return totalAddress.Text.Contains("o gyfeiriadau wedi'u canfod");
+        }
+
         #endregion Page Methods
-
-
     }
 }
