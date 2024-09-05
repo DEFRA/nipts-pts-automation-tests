@@ -45,6 +45,17 @@ namespace nipts_pts_automation_tests.Pages
             return $"{day}/{month}/{year}";
         }
 
+        public void EnterPetsMicrochipDate(string microchipDay, string microchipMonth, string microchipYear)
+        {
+            txtDay.Clear();
+            txtMonth.Clear();
+            txtYear.Clear();
+
+            txtDay.SendKeys(microchipDay);
+            txtMonth.SendKeys(microchipMonth);
+            txtYear.SendKeys(microchipYear);
+
+        }
 
         #endregion Page Methods
 

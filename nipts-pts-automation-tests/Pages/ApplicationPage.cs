@@ -4,7 +4,6 @@ using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 
 
-
 namespace nipts_pts_automation_tests.Pages
 {
     public class ApplicationPage : IApplicationPage
@@ -123,7 +122,6 @@ namespace nipts_pts_automation_tests.Pages
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             return FooterLanguageSelector.Text.Contains(displayedLang);
         }
-
         public void ClickOnContinueEng()
         {
             ContinueEle.Click();
