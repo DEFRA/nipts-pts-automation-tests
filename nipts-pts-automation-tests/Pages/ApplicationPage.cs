@@ -2,6 +2,9 @@
 using OpenQA.Selenium;
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
+using Defra.UI.Framework.Driver;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 
 
@@ -123,10 +126,13 @@ namespace nipts_pts_automation_tests.Pages
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             return FooterLanguageSelector.Text.Contains(displayedLang);
         }
-
         public void ClickOnContinueEng()
         {
             ContinueEle.Click();
+
+            IWebElement wb = new WebDriverWait(_driver, TimeSpan.FromSeconds(20)).Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("input[type='search']")));
+            IJavaScriptExecutor jse = (IJavaScriptExecutor)_driver;
+            jse.ExecuteScript("arguments[0].setAttribute('QA Test Automation Developer')", wb);
         }
 
         public bool VerifyTheExpectedStatus(string petName, string status)
