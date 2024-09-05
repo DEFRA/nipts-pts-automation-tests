@@ -28,5 +28,31 @@ namespace nipts_pts_automation_tests.Steps
             var microchippedDate = microchipDatePage?.EnterDateMonthYear(DateTime.Now.AddYears(-3));
             _scenarioContext.Add("MicrochippedDate", microchippedDate);
         }
+
+        [Then(@"verify error message '([^']*)' on microchip date page")]
+        public void ThenVerifyErrorMessageOnManualAddressPage(string errorMessage)
+        {
+            Assert.True(microchipDatePage.VerifyErrorMessageOnMicrochipDatePage(errorMessage), "Invalid error on manual address page");
+        }
+
+        [Then(@"enter older date in microchip date field")]
+        public void ThenProvideOlderThanExpectedDateMicrochipped()
+        {
+            microchipDatePage.EnterDateMonthYear(new DateTime(1980, 1, 1));
+        }
+
+        [When(@"enter future date in microchip date field")]
+        public void ThenProvideFutureDateInExpectedDateMicrochipped()
+        {
+            microchipDatePage.EnterDateMonthYear(new DateTime(2026, 1, 1));
+        }
+
+        [When(@"enter microchip date before pet date of birth")]
+        public void ThenProvideMicrochipDateBeforePetDateOfBirth()
+        {
+            microchipDatePage.EnterDateMonthYear(new DateTime(2024, 1, 1));
+        }
+
+
     }
 }

@@ -15,6 +15,7 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement txtDay => _driver.WaitForElement(By.Id("Day"));
         private IWebElement txtMonth => _driver.WaitForElement(By.Id("Month"));
         private IWebElement txtYear => _driver.WaitForElement(By.Id("Year"));
+        private By ErrorMessage => By.XPath("//div[contains(@class,'govuk-error-summary__body')]//a");
 
 
         #endregion Page Objects
@@ -45,6 +46,10 @@ namespace nipts_pts_automation_tests.Pages
             return $"{day}/{month}/{year}";
         }
 
+        public bool VerifyErrorMessageOnMicrochipDatePage(string errorMessage)
+        {   
+            return _driver.FindElement(ErrorMessage).Text.Contains(errorMessage);
+        }
 
         #endregion Page Methods
 
