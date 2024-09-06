@@ -60,8 +60,8 @@ Scenario: Verify Personal Details page
 
 
 	Examples: 
-	| logininfo | nextPage                                        | nextPage1                 |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Is your pet microchipped? |
+	| logininfo | nextPage                                        | nextPage1        |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn |
 
 	
 	Scenario: Verify next page after selecting No on Personal Details page 

@@ -25,8 +25,8 @@ Scenario: Enter Telephone Number on Pets
 	Then  verify next page '<nextPage5>' is loaded
 
 	Examples: 
-	| logininfo | nextPage                      | nextPage1    | nextPage2| nextPage3    | nextPage4  | nextPage5                 | fullname     | postcode | phoneNumber |
-	| test      | Lifelong pet travel documents | manylion chi | Beth yw  | ch cod post? | ch rhif ff | Is your pet microchipped? | TestFullName | SE1 7PB  | 0745678944  |
+	| logininfo | nextPage                      | nextPage1    | nextPage2| nextPage3    | nextPage4  | nextPage5        | fullname     | postcode | phoneNumber |
+	| test      | Lifelong pet travel documents | manylion chi | Beth yw  | ch cod post? | ch rhif ff | Oes microsglodyn | TestFullName | SE1 7PB  | 0745678944  |
 
 Scenario: Verify error message for invalid contact Telephone Number
 	Given that I navigate to the Pets application portal
