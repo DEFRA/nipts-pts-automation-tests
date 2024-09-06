@@ -22,11 +22,19 @@ namespace nipts_pts_automation_tests.Steps
             _objectContainer = container;
         }
 
+        [When(@"I have provided date of PETS microchipped")]
         [Then(@"I have provided date of PETS microchipped")]
         public void ThenIHaveProvidedDateOfPETSMicrochipped()
         {
             var microchippedDate = microchipDatePage?.EnterDateMonthYear(DateTime.Now.AddYears(-3));
             _scenarioContext.Add("MicrochippedDate", microchippedDate);
+        }
+
+        [When(@"enter microchip date as '([^']*)', '([^']*)', '([^']*)'")]
+        [Then(@"enter microchip date as '([^']*)', '([^']*)', '([^']*)'")]
+        public void ThenEnterPetsMicrochipDate(string MicrochipDay, string MicrochipMonth, string MicrochipYear)
+        {
+            microchipDatePage.EnterPetsMicrochipDate(MicrochipDay, MicrochipMonth, MicrochipYear);
         }
     }
 }
