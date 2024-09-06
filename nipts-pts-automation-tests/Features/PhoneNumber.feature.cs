@@ -77,7 +77,7 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Enter Telephone Number on Pets")]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Is your pet microchipped?", "TestFullName", "SE1 7PB", "0745678944", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn", "TestFullName", "SE1 7PB", "0745678944", null)]
         public void EnterTelephoneNumberOnPets(string logininfo, string nextPage, string nextPage1, string nextPage2, string nextPage3, string nextPage4, string nextPage5, string fullname, string postcode, string phoneNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
