@@ -3,5 +3,6 @@
     public interface IPetNamePage
     {
         public void EnterNameOfPet(string petName);
+        public bool VerifyErrorMessageOnEnterPetNamePage(string errorMessage);
     }
 }

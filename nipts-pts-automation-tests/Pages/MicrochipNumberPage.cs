@@ -33,11 +33,11 @@ namespace nipts_pts_automation_tests.Pages
         {
             var microChipOrTattoOption = option.ToLower();
 
-            if (microChipOrTattoOption.Equals("yes"))
+            if (microChipOrTattoOption.Equals("yes") || microChipOrTattoOption.Equals("oes"))
             {
                 rdoYes.Click();
             }
-            else if (microChipOrTattoOption.Equals("no"))
+            else if (microChipOrTattoOption.Equals("no") || microChipOrTattoOption.Equals("nac oes"))
             {
                 rdoNo.Click();
             }
