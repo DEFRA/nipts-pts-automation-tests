@@ -15,6 +15,8 @@ namespace nipts_pts_automation_tests.Pages
 
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']"));
         private IWebElement PetNametxt => _driver.WaitForElement(By.Id("PetName"));
+        private IWebElement ErrorMessageEle => _driver.WaitForElement(By.XPath("//a[@href='#PetName']"));
+
         #endregion Page Objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -31,6 +33,12 @@ namespace nipts_pts_automation_tests.Pages
             PetNametxt.Clear();
             PetNametxt.SendKeys(petName);
         }
+
+        public bool VerifyErrorMessageOnEnterPetNamePage(string errorMessage)
+        {
+            return ErrorMessageEle.Text.Contains(errorMessage);
+        }
+
 
 
         #endregion Page Methods
