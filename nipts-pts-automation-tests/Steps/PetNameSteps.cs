@@ -1,6 +1,7 @@
 ﻿using BoDi;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
@@ -28,6 +29,12 @@ namespace nipts_pts_automation_tests.Steps
         public void WhenEnterNameOfPet(string petName)
         {
             petNamePage.EnterNameOfPet(petName);
+        }
+
+        [Then(@"verify error message '([^']*)' on enter pet name")]
+        public void ThenVerifyErrorMessageOnSelectSexOfPetPage(string errorMessage)
+        {
+            Assert.True(petNamePage.VerifyErrorMessageOnEnterPetNamePage(errorMessage), "Invalid error on enter pet name page");
         }
     }
 }
