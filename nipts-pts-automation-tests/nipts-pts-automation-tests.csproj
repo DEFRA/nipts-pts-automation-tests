@@ -9,15 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <SpecFlowFeatureFiles Remove="Features\PetName.feature" />
-  </ItemGroup>
-
-  <ItemGroup>
     <UpToDateCheckInput Remove="features\PetSex.feature" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Features\PetName.feature" />
   </ItemGroup>
 
   <ItemGroup>
