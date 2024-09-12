@@ -28,7 +28,7 @@ Scenario: Enter Pet name in WELSH and verify next page in the application
 
 
 	Examples: 
-	| logininfo | nextPage										  | nextPage1   | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2                    | PetName | 
+	| logininfo | nextPage										  | nextPage1   | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2                    | PetName |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Beth yw enw | Ci  | 676789876543321 | Ci Affgan| Yes             | rhyw eich anifail anwes      | toto    |
 
 
@@ -52,8 +52,8 @@ Scenario: Verify WELSH error message when no option is selected on enter pet nam
 	And  click on continue
 	And  verify next page '<nextPage1>' is loaded
 	When Enter name of your pet '<PetName>'
-	And click on continue
-	Then  verify error message '<ErrorMessage>' on enter pet name
+	And  click on continue
+	Then verify error message '<ErrorMessage>' on enter pet name
 	
 
 Examples: 
