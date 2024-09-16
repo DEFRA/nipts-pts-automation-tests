@@ -36,7 +36,7 @@ Scenario: View Pet travel documents in WELSH
 	Then Select pet color as '<color>'
 	And click on continue
 	And  verify next page '<nextPage7>' is loaded
-	Then enter Pets significant features '<features>'
+	Then select Pets significant features '<featureOption>'
 	And click on continue
 	And  verify next page '<nextPage8>' is loaded
 	Then confirm By sending this application, you confirm that you've given accurate and truthful information about your pet checkbox
