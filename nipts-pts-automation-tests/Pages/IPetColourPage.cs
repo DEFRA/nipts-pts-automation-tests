@@ -3,5 +3,7 @@
     public interface IPetColourPage
     {
         public void SelectColorOption(string color);
+        public bool VerifyErrorMessageOnPetColorPage(string errorMessage);
+        public void EnterOtherColorText(string petColour);
     }
 }
