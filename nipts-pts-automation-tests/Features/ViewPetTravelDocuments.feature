@@ -36,7 +36,7 @@ Scenario: View Pet travel documents in WELSH
 	Then Select pet color as '<color>'
 	And click on continue
 	And  verify next page '<nextPage7>' is loaded
-	Then enter Pets significant features '<features>'
+	Then select Pets significant features '<featureOption>'
 	And click on continue
 	And  verify next page '<nextPage8>' is loaded
 	Then confirm By sending this application, you confirm that you've given accurate and truthful information about your pet checkbox
@@ -51,5 +51,5 @@ Scenario: View Pet travel documents in WELSH
 	
 		
 	Examples: 
-	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3       | PetSex | nextPage4    | nextPage5     | nextPage6			     | color | nextPage7            | features | nextPage8           | nextPage10                    | FooterLang1 | FooterLang2 | nextPage9	 |
-	| test2     | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | sex is your pet | Gwryw  | Beth yw rhyw | date of birth | Beth yw prif liw eich ci | Arall | significant features | No       | Check your answers  | Lifelong pet travel documents | English     | Cymraeg     | manylion chi |
+	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3       | PetSex | nextPage4    | nextPage5     | nextPage6			     | color | nextPage7            | featureOption | nextPage8           | nextPage10                    | FooterLang1 | FooterLang2 | nextPage9	 |
+	| test2     | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | sex is your pet | Gwryw  | Beth yw rhyw | date of birth | Beth yw prif liw eich ci | Arall | significant features | No            | Check your answers  | Lifelong pet travel documents | English     | Cymraeg     | manylion chi |
