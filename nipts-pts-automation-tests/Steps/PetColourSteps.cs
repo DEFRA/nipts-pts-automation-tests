@@ -1,6 +1,7 @@
 ﻿using BoDi;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
@@ -27,6 +28,19 @@ namespace nipts_pts_automation_tests.Steps
         {
             petcolorPage.SelectColorOption(color);
             
+        }
+
+        [Then(@"verify error message '([^']*)' on pet color page")]
+        public void ThenVerifyErrorMessageOnPetColorPage(string errorMessage)
+        {
+            Assert.True(petcolorPage.VerifyErrorMessageOnPetColorPage(errorMessage), "Invalid error on select color of pet Page");
+        }
+
+        [When(@"Enter text in Other color '([^']*)' option")]
+        [Then(@"Enter text in Other color '([^']*)' option")]
+        public void WhenOtherColorOfPet(string petColour)
+        {
+            petcolorPage.EnterOtherColorText(petColour);
         }
     }
 }
