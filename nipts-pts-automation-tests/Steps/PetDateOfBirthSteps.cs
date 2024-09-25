@@ -29,5 +29,13 @@ namespace nipts_pts_automation_tests.Steps
             _scenarioContext.Add("DateOfBirth", dateOfBirth);
         }
 
+
+        [When(@"enter pets date of birth as '([^']*)', '([^']*)', '([^']*)'")]
+        [Then(@"enter pets date of birth as '([^']*)', '([^']*)', '([^']*)'")]
+        public void ThenEnterPetsMicrochipDate(string PetDOBDay, string PetDOBMonth, string PetDOBYear)
+        {
+            petdobPage.EnterPetsDateOfBirth(PetDOBDay, PetDOBMonth, PetDOBYear);
+        }
+
     }
 }
