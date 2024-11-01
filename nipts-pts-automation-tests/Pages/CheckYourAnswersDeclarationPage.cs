@@ -17,8 +17,9 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement SendApplicationButton => _driver.WaitForElementExists(By.XPath("//button[contains(@class,'govuk-button')] | //button[@type='submit']"));
         private IWebElement chkAgreeToAccuracy => _driver.WaitForElement(By.XPath("//div[@class='govuk-checkboxes__item']/label[@for='AgreedToAccuracy']"));
         private IWebElement chkAgreeTermsAndPrivacyPolicy => _driver.WaitForElement(By.XPath("//div[@class='govuk-checkboxes__item']/label[@for='AgreedToPrivacyPolicy']"));
-        private IWebElement chkAgreesToDeclaration => _driver.WaitForElement(By.XPath("//div[@class='govuk-checkboxes__item']/label[@for='AgreedToDeclaration']"));
-        private IWebElement lnkApplyForAnother => _driver.WaitForElement(By.XPath("//a[contains(text(),'Apply for another')]"));
+        private IWebElement chkAgreesToDeclaration => _driver.WaitForElementExists(By.XPath("//input[@id='AgreedToDeclaration']"));
+
+        private IWebElement lnkApplyForAnother => _driver.WaitForElement(By.XPath("//a[contains(text(),'Gwneud cais am ddogfen deithio')]"));
 
         #endregion Page Objects
 
@@ -37,6 +38,7 @@ namespace nipts_pts_automation_tests.Pages
 
         public void TickAgreedToDeclaration()
         {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", chkAgreesToDeclaration);
             chkAgreesToDeclaration.Click();
         }
 

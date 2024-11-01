@@ -35,8 +35,8 @@ Scenario: Enter valid significant feature and verify next page in the applicatio
 	And   verify next page '<nextPage2>' is loaded
 
 	Examples: 
-	| logininfo | nextPage                                        | nextPage1                                                 | Pet | MicrochipNumber | PetBreed | MicrochipOption | PetName | PetSex | color | featureOption | feature    | nextPage2                                   |
-	| test2     | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes gan eich anifail anwes unrhyw nodweddion arwyddocaol? | Dog | 676789876543321 | Pug      | Oes             | toto    | Gwryw  | Coch  | Oes           | Shiny hair | Check your answers and sign the declaration |
+	| logininfo | nextPage                                        | nextPage1                                                 | Pet | MicrochipNumber | PetBreed | MicrochipOption | PetName | PetSex | color | featureOption | feature    | nextPage2             |
+	| test2     | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes gan eich anifail anwes unrhyw nodweddion arwyddocaol? | Dog | 676789876543321 | Pug      | Oes             | toto    | Gwryw  | Coch  | Oes           | Shiny hair | Gwiriwch eich atebion |
 
 Scenario: Select no option on significant feature and verify next page in the application
 	Given that I navigate to the Pets application portal
@@ -69,8 +69,8 @@ Scenario: Select no option on significant feature and verify next page in the ap
 	And   verify next page '<nextPage2>' is loaded
 
 	Examples: 
-	| logininfo | nextPage                                        | nextPage1                                                 | Pet | MicrochipNumber | PetBreed | MicrochipOption | PetName | PetSex | color | featureOption | nextPage2                                   |
-	| test2     | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes gan eich anifail anwes unrhyw nodweddion arwyddocaol? | Dog | 676789876543321 | Pug      | Oes             | toto    | Gwryw  | Coch  | Nac oes       | Check your answers and sign the declaration |
+	| logininfo | nextPage                                        | nextPage1                                                 | Pet | MicrochipNumber | PetBreed | MicrochipOption | PetName | PetSex | color | featureOption | nextPage2             |
+	| test2     | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes gan eich anifail anwes unrhyw nodweddion arwyddocaol? | Dog | 676789876543321 | Pug      | Oes             | toto    | Gwryw  | Coch  | Nac oes       | Gwiriwch eich atebion |
 
 Scenario: Validate error messages for not selecting any option on significant feature page
 	Given that I navigate to the Pets application portal
