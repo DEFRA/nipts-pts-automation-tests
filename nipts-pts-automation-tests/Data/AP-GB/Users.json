@@ -1,0 +1,15 @@
+{
+  "Users": [
+    {
+      "userId": "36 23 34 92 01 16",
+      "password": "Automation123$",
+      "logininfo": "test",
+      "UserName": "test test",
+      "UserEmail": "",
+      "Useraddress": "",
+      "UserPhoneNumber": "07833861111",
+      "Environment": "tst",
+      "HomePage": true
+    }
+  ]
+}
