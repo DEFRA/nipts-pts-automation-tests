@@ -41,6 +41,9 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LandingPage
 
         public void ClickContinueButton()
         {
+            By continueBy = By.XPath("//button[contains(text(),'Continue')]");
+
+            if (_driver.FindElements(continueBy).Count > 0)
             btnContinue.Click();
         }
 

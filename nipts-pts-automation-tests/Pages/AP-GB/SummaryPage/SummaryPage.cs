@@ -22,8 +22,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.SummaryPage
         private IReadOnlyCollection<IWebElement> divMicrochipInformation => _driver.WaitForElements(By.XPath("//div[@id='document-microchip-card']//dl/div"));
         private IReadOnlyCollection<IWebElement> divPetDetails => _driver.WaitForElements(By.XPath("//div[@id='document-pet-card']//dl/div"));
         private IReadOnlyCollection<IWebElement> divPetOwnerDetails => _driver.WaitForElements(By.XPath("//div[@id='document-owner-card']//dl/div"));
-        private IWebElement lnkPDFDownload => _driver.WaitForElement(By.XPath("//a[contains(text(),'Download PDF')]"));
-        private IWebElement lnkPrint => _driver.WaitForElement(By.XPath("//a[contains(text(),'Print this page')]"));
+        private IWebElement lnkPDFDownload => _driver.WaitForElement(By.XPath("//a[contains(text(),'Download your application')]"));
+        private IWebElement lnkPrint => _driver.WaitForElement(By.XPath("//a[contains(text(),'Print your application')]"));
         #endregion
 
         #region Methods
@@ -39,7 +39,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.SummaryPage
 
         public bool ClickPrintdLink()
         {
-            //return lnkPrint.IsClickable();
+            //lnkPrint.Click();
             return true;
         }
 

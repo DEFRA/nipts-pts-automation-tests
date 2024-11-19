@@ -104,7 +104,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         [Then(@"I should navigate to the TermsAndConditions details correct page")]
         public void ThenIShouldNavigateToTheTermsAndConditionsDetailsCorrectPage()
         {
-            var pageTitle = "Terms and conditions for taking a dog, cat or ferret from Great Britain to Northern Ireland";
+            var pageTitle = "Northern Ireland Pet Travel Scheme terms and conditions";
             Assert.IsTrue(HomePage?.IsNextPageLoaded(pageTitle), $"The page {pageTitle} not loaded!");
         }
 

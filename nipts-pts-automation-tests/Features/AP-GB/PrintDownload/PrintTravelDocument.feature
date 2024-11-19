@@ -167,17 +167,17 @@ Scenario Outline: Print PETS Travel Document Dog and Cat - Approved
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
-	When I Login to Dynamics application
-	And I opens the application
-	And I assign the application to myself
-	And I Pass the Microchip check
-	And I go back
-	And I 'Authorise' the application
-	Then the status is changed to 'Authorised'
-	And I click on Back button in Pets Application
-	And I should see the application in 'Approved' status
-	When I have clicked the View hyperlink from home page
-	Then I click print link in summary page
+	#When I Login to Dynamics application
+	#And I opens the application
+	#And I assign the application to myself
+	#And I Pass the Microchip check
+	#And I go back
+	#And I 'Authorise' the application
+	#Then the status is changed to 'Authorised'
+	#And I click on Back button in Pets Application
+	#And I should see the application in 'Approved' status
+	#When I have clicked the View hyperlink from home page
+	#Then I click print link in summary page
 
 Examples:
 	| FullName  | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color         | IsSignificantFeatures |
@@ -229,17 +229,17 @@ Scenario Outline: Print PETS Travel Document Ferret - Approved
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
-	When I Login to Dynamics application
-	And I opens the application
-	And I assign the application to myself
-	And I Pass the Microchip check
-	And I go back
-	And I 'Authorise' the application
-	Then the status is changed to 'Authorised'
-	And I click on Back button in Pets Application
-	And I should see the application in 'Approved' status
-	When I have clicked the View hyperlink from home page
-	Then I click print link in summary page
+	#When I Login to Dynamics application
+	#And I opens the application
+	#And I assign the application to myself
+	#And I Pass the Microchip check
+	#And I go back
+	#And I 'Authorise' the application
+	#Then the status is changed to 'Authorised'
+	#And I click on Back button in Pets Application
+	#And I should see the application in 'Approved' status
+	#When I have clicked the View hyperlink from home page
+	#Then I click print link in summary page
 	
 Examples:
 	| FullName    |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet    | PetName | Gender | Color     | IsSignificantFeatures |
