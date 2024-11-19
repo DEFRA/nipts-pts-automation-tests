@@ -103,5 +103,5 @@ Scenario: View Submission confirmation page in WELSH
 	
 		
 	Examples: 
-	| logininfo | nextPage          | nextPage1           | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3     | PetSex | nextPage4  | color  | featureOption  | FooterLang1 | FooterLang2 | nextPage5 | fullname | postcode | phoneNumber   |
-	| test3     | Dogfennau teithio | Newid eich manylion | Ci  | 676789876543321 | Basenji  | Yes             | Beth yw   | toto    | ch cyfeiriad? | Gwryw  | ch rhif ff | Du     | Nac oes        | English     | Cymraeg     | Cais wedi | New User | CV31 2EE | 07833861122   |
+	| logininfo | nextPage          | nextPage1           | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3     | PetSex | nextPage4  | color  | featureOption  | FooterLang1 | FooterLang2 | nextPage5 | fullname | postcode | phoneNumber  |
+	| test3     | Dogfennau teithio | Newid eich manylion | Ci  | 676789876543321 | Basenji  | Yes             | Beth yw   | toto    | ch cyfeiriad? | Gwryw  | ch rhif ff | Du     | Nac oes        | English     | Cymraeg     | Cais wedi | New User | CV31 2EE | 07833861122  |
