@@ -13,7 +13,7 @@ namespace nipts_pts_automation_tests.Pages
 
         #region Page Objects
 
-        private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']"));
+        private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading'] | //h1[@class='govuk-panel__title']"));
         private By Englishclick => By.XPath("//a[contains(text(),'English')]");
         private By Welshclick =By.XPath("//a[contains(text(),'Cymraeg')]");
         private IWebElement ApplyForADocEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Apply for a document')] | //button[contains(text(),'Gwneud cais am ddogfen')]"));
@@ -26,6 +26,7 @@ namespace nipts_pts_automation_tests.Pages
         public IWebElement lnkViewDocsFromManageAcc => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='Gweld eich dogfennau teithio gydol oes i anifeiliaid anwes neu wneud cais am un newydd.']"));
         private IWebElement ContinueEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IWebElement tableBody => _driver.WaitForElement(By.XPath("//table/tbody"));
+        private IWebElement HelpWelshEle => _driver.WaitForElement(By.XPath("//a[contains(text(),'Cael help')]"));
         #endregion Page Objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -146,6 +147,11 @@ namespace nipts_pts_automation_tests.Pages
             }
 
             return false;
+        }
+
+        public void ClickOnHelpWelshLink()
+        {
+            HelpWelshEle.Click();
         }
         #endregion Page Methods
 

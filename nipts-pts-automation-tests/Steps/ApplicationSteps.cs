@@ -135,5 +135,12 @@ namespace nipts_pts_automation_tests.Steps
 
             Assert.IsTrue(applicationPage.VerifyTheExpectedStatus(petName, applicationStatus), $"The submitted application is not in expected status of '{applicationStatus}'");
         }
+
+        [When(@"click on Get Help Welsh Link")]
+        [Then(@"click on Get Help Welsh Link")]
+        public void ThenClickOnGetHelpWelshLink()
+        {
+            applicationPage.ClickOnHelpWelshLink();
+        }
     }
 }
