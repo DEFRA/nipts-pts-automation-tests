@@ -37,6 +37,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         }
 
         [Given(@"I have provided the password for Landing page")]
+        [When(@"I have provided the password for Landing page")]
         [Then(@"I have provided the password for Landing page")]
         public void GivenIHaveProvidedThePasswordForLandingPage()
         {
