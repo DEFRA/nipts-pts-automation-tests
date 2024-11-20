@@ -27,6 +27,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerAddressPage
         private IWebElement txtTownOrCity => _driver.WaitForElement(By.Id("TownOrCity"));
         private IWebElement txtCounty => _driver.WaitForElement(By.Id("County"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
+        private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
 
         #endregion
 
@@ -38,7 +39,9 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerAddressPage
 
         public void ClickContinueButton()
         {
-            _driver.ContinueButton();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,500)", "");
+            btnContinue.Click();
+            //_driver.ContinueButton();
         }
 
         public void ClickSearchButton()

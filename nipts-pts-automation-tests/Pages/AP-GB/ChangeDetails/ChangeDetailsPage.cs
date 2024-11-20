@@ -16,7 +16,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[@class='govuk-fieldset__heading']"), true);
-        private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(@class,'govuk-button')] | //button[@type='submit']"));
+        private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IWebElement rdoYes => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='Yes']"));
         private IWebElement rdoNo => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='No']"));
         private IReadOnlyCollection<IWebElement> divPetOwnerDetailsList => _driver.WaitForElements(By.XPath("//dl/div"));
@@ -24,6 +24,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails
 
         public void ClickContinueButton()
         {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,500)", "");
             btnContinue.Click();
         }
 

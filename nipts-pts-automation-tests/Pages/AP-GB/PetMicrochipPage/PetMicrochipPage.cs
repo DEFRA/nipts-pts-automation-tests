@@ -16,18 +16,21 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetMicrochipPage
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[@class='govuk-fieldset__heading']"), true);
-        private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[@type='submit']"), true);
+        //private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[@type='submit']"), true);
         private IWebElement rdoYes => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='MicrochippedYes']"));
         private IWebElement rdoNo => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='MicrochippedNo']"));
         private IWebElement txtMicroshipNumber => _driver.WaitForElement(By.XPath("//input[@id='MicrochipNumber']"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
+        private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
 
         #endregion
 
         #region Methods
         public void ClickContinueButton()
         {
-            _driver.ContinueButton();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,500)", "");
+            btnContinue.Click();
+            //_driver.ContinueButton();
         }
 
         public string EnterMicrochipNumber()

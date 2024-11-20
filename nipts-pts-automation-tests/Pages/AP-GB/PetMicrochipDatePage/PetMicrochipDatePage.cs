@@ -20,6 +20,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetMicrochipDatePage
         private IWebElement txtMonth => _driver.WaitForElement(By.Id("Month"));
         private IWebElement txtYear => _driver.WaitForElement(By.Id("Year"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
+        private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
 
         #endregion
 
@@ -49,7 +50,9 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetMicrochipDatePage
 
         public void ClickContinueButton()
         {
-            _driver.ContinueButton();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,500)", "");
+            btnContinue.Click();
+            //_driver.ContinueButton();
         }
         public bool IsError(string errorMessage)
         {

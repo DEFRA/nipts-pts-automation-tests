@@ -310,7 +310,7 @@ Scenario Outline: Modify PETS colour By Registered User with details correct - F
 	And I select the index 1 from address list
 	When I click Continue button from What is your postcode page
 	Then I should redirected to What is your phone number page
-	And I provided the phone number '<PhoneNumber>' on pets
+	And I provided the phone number '<PhoneNumber>'
 	When I click Continue button from What is your phone number page
 	Then I should redirected to the Is your pet microchipped page
 	And I selected the '<MicrochipOption>' option

@@ -19,6 +19,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetDOBPage
         private IWebElement txtDay => _driver.WaitForElement(By.Id("Day"), true);
         private IWebElement txtMonth => _driver.WaitForElement(By.Id("Month"), true);
         private IWebElement txtYear => _driver.WaitForElement(By.Id("Year"), true);
+        private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
 
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
 
@@ -63,7 +64,9 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetDOBPage
 
         public void ClickContinueButton()
         {
-            _driver.ContinueButton();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,500)", "");
+            btnContinue.Click();
+            //_driver.ContinueButton();
         }
 
         #endregion

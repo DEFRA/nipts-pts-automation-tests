@@ -20,6 +20,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerAddressManuallyPage
         private IWebElement CityAddressLine => _driver.WaitForElement(By.CssSelector("#TownOrCity"));
         private IWebElement CountyAddressLine => _driver.WaitForElement(By.CssSelector("#County"));
         private IWebElement PostCodeAddressLine => _driver.WaitForElement(By.CssSelector("#Postcode"));
+        private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         #endregion
 
         #region Methods
@@ -39,7 +40,9 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerAddressManuallyPage
 
         public void ClickContinueButton()
         {
-            _driver.ContinueButton();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,500)", "");
+            btnContinue.Click();
+            //_driver.ContinueButton();
         }
         #endregion
     }

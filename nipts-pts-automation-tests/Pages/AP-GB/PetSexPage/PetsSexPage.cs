@@ -18,6 +18,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetSexPage
         public IWebElement rdoFemale => _driver.WaitForElementExists(By.CssSelector("#Female"), true);
         public IWebElement rdoMale => _driver.WaitForElementExists(By.CssSelector("#Male"), true);
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
+        private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         #endregion
 
         #region Methods
@@ -47,7 +48,9 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetSexPage
 
         public void ClickContinueButton()
         {
-            _driver.ContinueButton();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,500)", "");
+            btnContinue.Click();
+            //_driver.ContinueButton();
         }
 
         public bool IsError(string errorMessage)

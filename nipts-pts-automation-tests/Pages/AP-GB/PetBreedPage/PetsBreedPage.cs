@@ -18,7 +18,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetBreedPage
         public IWebElement drpBreedType => _driver.WaitForElementExists(By.XPath("//*[@id='BreedId']"));
         private IWebElement txtBreed => _driver.WaitForElement(By.Name("BreedName"));
         private IWebElement drpBreedsListBox => _driver.WaitForElement(By.Id("BreedId__listbox"));
-        private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[@class='govuk-button']"));
+        private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
         #endregion
 
@@ -52,8 +52,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetBreedPage
 
         public void ClickContinueButton()
         {
-            Thread.Sleep(2000);
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", btnContinue);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,500)", "");
+            btnContinue.Click();
+            //Thread.Sleep(2000);
+            //((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", btnContinue);
         }
 
         public void EnterFreeTextBreed(string breed)

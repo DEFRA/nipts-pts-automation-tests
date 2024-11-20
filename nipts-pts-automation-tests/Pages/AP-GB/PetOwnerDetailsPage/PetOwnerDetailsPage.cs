@@ -21,6 +21,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerDetailsPage
         public IWebElement petOwnerName => _driver.WaitForElement(By.XPath("//*[normalize-space(text())='Name']/following-sibling::dd"));
         public IWebElement updatedPetOwnerAddress => _driver.WaitForElement(By.XPath("//*[normalize-space(text())='Address']//following-sibling::dd"), true);
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
+        private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         #endregion
 
         #region Methods
@@ -41,7 +42,9 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerDetailsPage
         }
         public void ClickContinueButton()
         {
-            _driver.ContinueButton();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,500)", "");
+            btnContinue.Click();
+            //_driver.ContinueButton();
         }
         public bool VerifyUpdatedPhoneNumber(String phoneNumber)
         {
