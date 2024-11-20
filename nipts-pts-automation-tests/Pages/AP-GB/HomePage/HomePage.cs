@@ -26,7 +26,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
         public IWebElement PrivacyNoticeLink => _driver.WaitForElement(By.XPath("//a[contains(text(),'Privacy notice')]"));
         public IWebElement TermsAndConditionsLink => _driver.WaitForElement(By.XPath("//a[contains(text(),'Terms and conditions')]"));
         public IWebElement CrownCopyrightLink => _driver.WaitForElement(By.XPath("/html/body/footer/div/div/div[2]/a"));
-        private IWebElement btnApplyForDocument => _driver.WaitForElement(By.ClassName("govuk-button"), true);
+        private IWebElement btnApplyForDocument => _driver.WaitForElement(By.XPath("//button[contains(text(),'Apply for a document')]"), true);
         private IReadOnlyCollection<IWebElement> tableRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr"), true);
         private IReadOnlyCollection<IWebElement> tableHeaderRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr/th"), true);
         private IReadOnlyCollection<IWebElement> tableActionRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr/td[4]//a"), true);
@@ -89,6 +89,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
         public void ClickApplyForPetTravelDocument()
         {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,300)", "");
             btnApplyForDocument.Click();
         }
 

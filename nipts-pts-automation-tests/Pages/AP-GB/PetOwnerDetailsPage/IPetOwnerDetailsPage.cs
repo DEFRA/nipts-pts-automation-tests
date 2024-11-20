@@ -7,7 +7,7 @@
         void SelectIsOwnerDetailsCorrect(string petsOwnerDetails);
         bool VerifyUpdatedPhoneNumber(String phoneNumber);
         bool VerifyUpdatedName(string petOwnerName);
-        bool VerifyUpdatedPetOwnerAddress(string petOwnerAddress);
+        bool VerifyUpdatedPetOwnerAddress(string PetOwnerPostcode);
         public bool IsError(string errorMessage);
     }
 }

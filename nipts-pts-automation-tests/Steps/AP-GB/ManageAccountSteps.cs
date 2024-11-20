@@ -19,6 +19,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         private IManageAccountPage? ManageAccountPage => _objectContainer.IsRegistered<IManageAccountPage>() ? _objectContainer.Resolve<IManageAccountPage>() : null;
         private IHomePage? homePage => _objectContainer.IsRegistered<IHomePage>() ? _objectContainer.Resolve<IHomePage>() : null;
         private IPetOwnerDetailsPage? PetOwnerDetailsPage => _objectContainer.IsRegistered<IPetOwnerDetailsPage>() ? _objectContainer.Resolve<IPetOwnerDetailsPage>() : null;
+        private IUrlBuilder? UrlBuilder => _objectContainer.IsRegistered<IUrlBuilder>() ? _objectContainer.Resolve<IUrlBuilder>() : null;
 
         public ManageAccountSteps(ScenarioContext context, IObjectContainer container)
         {
@@ -102,7 +103,9 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             ManageAccountPage?.EnterLastName(_scenarioContext.Get<string>("OriginalLastName"));
             ThenIClickContinue();
             ThenIClickOnBackButton();
-            ThenIGoBackToPetsApplication();
+            //ThenIGoBackToPetsApplication();
+            string url = UrlBuilder.Default("App").Build();
+            _driver?.Navigate().GoToUrl(url);
             homePage?.ClickApplyForPetTravelDocument();
             String petOwnerName = _scenarioContext.Get<string>("OriginalFirstName") + " " + _scenarioContext.Get<string>("OriginalLastName");
             Assert.IsTrue(PetOwnerDetailsPage?.VerifyUpdatedName(petOwnerName));
@@ -121,10 +124,12 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             string[] PostCode = postcode.Split(',');
             if (!PostCode[0].Equals(_scenarioContext.Get<string>("ExistingPostcode")))
             {
+                _scenarioContext.Add("PetOwnerPostcode", PostCode[0]);
                 ManageAccountPage?.EnterTheValidPostcode(PostCode[0]);
             }
             else
             {
+                _scenarioContext.Add("PetOwnerPostcode", PostCode[1]);
                 ManageAccountPage?.EnterTheValidPostcode(PostCode[1]);
             }
         }

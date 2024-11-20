@@ -29,6 +29,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             _objectContainer = container;
         }
 
+        [When(@"that I navigate to the DEFRA application")]
         [Given(@"that I navigate to the DEFRA application")]
         public void GivenThatINavigateToTheDEFRAApplication()
         {

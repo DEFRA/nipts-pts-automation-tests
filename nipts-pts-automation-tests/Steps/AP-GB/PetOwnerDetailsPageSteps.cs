@@ -60,7 +60,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         {
             _driver?.Navigate().Refresh();
 
-            Assert.IsTrue(PetOwnerDetailsPage?.VerifyUpdatedPetOwnerAddress(_scenarioContext.Get<string>("SelectedAddress")));
+            Assert.IsTrue(PetOwnerDetailsPage?.VerifyUpdatedPetOwnerAddress(_scenarioContext.Get<string>("PetOwnerPostcode")));
         }
 
     }

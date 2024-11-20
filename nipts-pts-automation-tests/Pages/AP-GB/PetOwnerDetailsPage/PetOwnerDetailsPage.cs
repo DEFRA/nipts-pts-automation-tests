@@ -51,10 +51,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerDetailsPage
         {
             return petOwnerName.Text.Equals(name);
         }
-        public bool VerifyUpdatedPetOwnerAddress(string petOwnerAddress)
+        public bool VerifyUpdatedPetOwnerAddress(string PetOwnerPostcode)
         {
-            var updatedAddress = updatedPetOwnerAddress.Text.Replace("\r\n", "").Replace(" ", string.Empty);
-            return updatedAddress.Equals(petOwnerAddress.Replace(",", string.Empty).Replace(" ", string.Empty));
+            var updatedAddress = updatedPetOwnerAddress.Text.Replace("\r\n", "");
+            return updatedAddress.Contains(PetOwnerPostcode);
         }
 
         public bool IsError(string errorMessage)

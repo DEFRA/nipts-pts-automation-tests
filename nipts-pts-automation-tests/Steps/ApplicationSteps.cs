@@ -116,11 +116,11 @@ namespace nipts_pts_automation_tests.Steps
         //    applicationPage.ClickOnManageAccountLink();
         //}
 
-        [Then(@"I click on Manage your account")]
-        public void ThenIClickOnManageYourAccount()
-        {
-            applicationPage.ClickOnManageYourAccountLink();
-        }
+        //[Then(@"I click on Manage your account")]
+        //public void ThenIClickOnManageYourAccount()
+        //{
+        //    applicationPage.ClickOnManageYourAccountLink();
+        //}
 
         [Then(@"click on View your pet travel documents or apply new one")]
         public void ClickOnViewYourPetDocumentFromManageYourAccount()
