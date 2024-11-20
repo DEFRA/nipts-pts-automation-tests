@@ -68,7 +68,7 @@ Scenario Outline: Verify postcode search page validations and should not moves t
 	When I click Continue button from What is your full name page
 	Then I should redirected to What is your postcode page
 	And I provided the postcode '<PostCode>'
-	When I click Continue button from What is your postcode page
+	When I click Search button
 	Then I should see an error message '<ErrorMessage>' in What is your postcode page
 
 Examples:

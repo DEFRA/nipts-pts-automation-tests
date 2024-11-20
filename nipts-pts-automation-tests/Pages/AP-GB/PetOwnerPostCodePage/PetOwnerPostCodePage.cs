@@ -17,7 +17,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerPostCodePage
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
         public IWebElement PetOwnerPostCodePageHeading => _driver.WaitForElement(By.CssSelector(".govuk-label.govuk-label--xl"), true);
         public IWebElement PostCodeTextBox => _driver.WaitForElement(By.CssSelector("#Postcode"));
-        public IWebElement FindAddressButton => _driver.WaitForElement(By.CssSelector(".govuk-button"));
+        public IWebElement FindAddressButton => _driver.WaitForElement(By.XPath("//button[contains(text(),'Find address')]"));
         public IWebElement ManuallyAddressLink => _driver.WaitForElement(By.XPath("//*[@id='main-content']/div/div/p/a"));
         #endregion
 

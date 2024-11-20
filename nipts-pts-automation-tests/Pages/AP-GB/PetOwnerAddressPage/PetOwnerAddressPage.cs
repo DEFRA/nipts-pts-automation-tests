@@ -21,7 +21,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerAddressPage
         private IWebElement btnFindAddress => _driver.WaitForElement(By.XPath("//button[@type='submit']"));
         private IWebElement txtPostCode => _driver.WaitForElement(By.Id("Postcode"), true);
         private IWebElement drpAddress => _driver.WaitForElement(By.CssSelector("#Address"));
-        private IWebElement lnkEnterAddress => _driver.WaitForElement(By.XPath("//p/a[@class='govuk-link']"));
+        private IWebElement lnkEnterAddress => _driver.WaitForElement(By.XPath("//a[contains(text(),'Enter the address manually')]"));
         private IWebElement txtAddressLineOne => _driver.WaitForElement(By.Id("AddressLineOne"));
         private IWebElement txtAddressLineTwo => _driver.WaitForElement(By.Id("AddressLineTwo"));
         private IWebElement txtTownOrCity => _driver.WaitForElement(By.Id("TownOrCity"));

@@ -230,7 +230,7 @@ Scenario Outline: Verify pet's significant features page validations by no selec
 	And I selected the '<MicrochipOption>' option on pets
 	And I provided microchip number as '<MicrochipNumber>' on pets
 	When I click Continue button from microchipped page
-	Then I should redirected to When was your pet microchipped or last scanned? page
+	Then I should redirected to When was your pet microchipped or last scanned page
 	And I have provided date of PETS microchipped
 	When I click Continue button from When was your pet microchipped page
 	Then I should redirected to the Is your pet a cat, dog or ferret page
