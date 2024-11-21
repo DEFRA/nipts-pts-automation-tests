@@ -563,9 +563,10 @@ Scenario Outline: Check PETS Travel Document details By Reference number - statu
 	Then click on signout button and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
-	Then I should redirected to the Sign in using Government Gateway page
-	When I have provided the CP credentials and signin
-	And I have provided the password for prototype research page
+	And I have provided the password for Landing page
+	#Then I should redirected to the Sign in using Government Gateway page
+	#When I have provided the CP credentials and signin
+	#And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
@@ -628,10 +629,9 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	When I navigate to the port checker application
 	And I click signin button on port checker application
 	And I have provided the password for Landing page
-	And I click Continue button from Landing page
-	Then I should redirected to the Sign in using Government Gateway page
-	When I have provided the CP credentials and signin
-	And I have provided the password for prototype research page
+	#Then I should redirected to the Sign in using Government Gateway page
+	#When I have provided the CP credentials and signin
+	#And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
