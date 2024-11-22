@@ -11,7 +11,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LandingPage
 
         #region Page Objects
 
-        private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')]"), true);
+        private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[contains(@class,'govuk-fieldset__heading')]"));
 
         private IWebElement txtLoging => _driver.WaitForElement(By.XPath("//input[@id='password'] | //input[@id='EnteredPassword']"));
 

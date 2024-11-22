@@ -49,7 +49,7 @@ namespace nipts_pts_automation_tests.Steps
         [Then(@"sign in with valid credentials with logininfo '([^']*)'")]
         public void ThenSignInWithValidCredentialsWithLogininfo(string userType)
         {
-            var user = UserObject.GetUser(userType);
+            var user = UserObject.GetUserById(userType);
             _objectContainer.RegisterInstanceAs(user);
             Assert.True(signin.IsSignedIn(user.UserId, user.password), "Not able to sign in");
         }

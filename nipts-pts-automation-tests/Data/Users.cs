@@ -22,6 +22,7 @@ namespace nipts_pts_automation_tests.Data
     public interface IUserObject
     {
         public User GetUser(string application);
+        public User GetUserById(string info);
     }
 
     public class UserObject : IUserObject
@@ -43,9 +44,6 @@ namespace nipts_pts_automation_tests.Data
                 builder.AddJsonFile(filePath, false, true);
                 var settings = builder.Build();
                 var usersList = settings.GetSection("Users").Get<List<User>>();
-                //string environment = ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl;
-
-                //var filterList = usersList.FindAll(d => d.LoginInfo.Equals(info));
 
                 Random rng = new Random();
                 User = usersList[rng.Next(usersList.Count)];
@@ -53,6 +51,26 @@ namespace nipts_pts_automation_tests.Data
             }
             return User;
         }
+
+        public User GetUserById(string info)
+        {
+            lock (_lock)
+            {
+                string jsonPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var filePath = Path.Combine(jsonPath, "Data", "Users.json");
+
+                var builder = new ConfigurationBuilder();
+                builder.AddJsonFile(filePath, false, true);
+                var settings = builder.Build();
+                var usersList = settings.GetSection("Users").Get<List<User>>();
+                var filterList = usersList.FindAll(d => d.LoginInfo.Equals(info));
+                Random rng = new Random();
+                User = filterList[rng.Next(filterList.Count)];
+
+            }
+            return User;
+        }
+
     }
 
 
