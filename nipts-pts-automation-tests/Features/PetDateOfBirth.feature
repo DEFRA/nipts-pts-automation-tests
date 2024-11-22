@@ -17,7 +17,7 @@ Scenario: Enter valid pet date of birth and validate next page in the applicatio
 	When  click on continue
 	When  enter microchip date as '<MicrochipDay>', '<MicrochipMonth>', '<MicrochipYear>'
 	When  click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	When  Select breed of your pet '<PetBreed>'
 	Then  click on continue
@@ -51,7 +51,7 @@ Scenario: Enter valid pet date of birth and validate next page in the applicatio
 	When  click on continue
 	When  enter microchip date as '<MicrochipDay>', '<MicrochipMonth>', '<MicrochipYear>'
 	When  click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	When  Select breed of your pet '<PetBreed>'
 	Then  click on continue

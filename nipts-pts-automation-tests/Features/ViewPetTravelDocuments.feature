@@ -15,7 +15,7 @@ Scenario: View Pet travel documents in WELSH
 	When  click on continue english
 	Then  I have provided date of PETS microchipped
 	When  click on continue english
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue english
 	And  verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'
