@@ -17,7 +17,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ManageAccountPage
 
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
-        public IWebElement lnkManageYourAccount => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='manage your account']"), true);
+        public IWebElement lnkManageYourAccount => _driver.WaitForElement(By.XPath("//a[@href ='/User/RedirectToExternal']"), true);
         public IWebElement lnkUpdateDetails => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='Update details']"));
         public IWebElement lnkChangePersonalInformation => _driver.WaitForElement(By.XPath("//*[normalize-space(text()) ='Personal Information']/following::a[1]"));
         public IWebElement lnkChangePersonalAddress => _driver.WaitForElement(By.XPath("//*[normalize-space(text()) ='Personal Address']/following::a[1]"));
