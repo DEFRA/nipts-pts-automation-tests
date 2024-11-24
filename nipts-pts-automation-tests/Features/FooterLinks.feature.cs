@@ -77,7 +77,7 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Footer links and pages on Pets")]
-        [NUnit.Framework.TestCaseAttribute("test", "Pet travel scheme privacy notice", "data.protection@defra.gov.uk", "www.legislation.gov.uk", "Cookies", "opt out of Google Analytics cookies", "Accessibility statement for taking a dog", "AbilityNet (opens in new tab)", "contact the Equality Advisory and Support Service (EASS)", "Terms and conditions for taking a dog", "notify us", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Pet travel scheme privacy notice", "data.protection@defra.gov.uk", "www.legislation.gov.uk", "Cookies", "opt out of Google Analytics cookies", "Accessibility statement for taking a dog", "AbilityNet (opens in new tab)", "contact the Equality Advisory and Support Service (EASS)", "Northern Ireland Pet Travel Scheme terms and conditions", "Windsor Framework", null)]
         public void VerifyFooterLinksAndPagesOnPets(string logininfo, string privacyPageTitle, string privacyLink1, string privacyLink2, string cookiesPageTitle, string cookiesLink1, string accessibilityPageTitle, string accessibilityLink1, string accessibilityLink2, string tCsPageTitle, string tCsLink1, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -139,9 +139,6 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
 #line 19
  testRunner.Then(string.Format("verify the page title in Footer page \'{0}\'", cookiesPageTitle), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 20
- testRunner.And(string.Format("verify the link in Footer page details \'{0}\'", cookiesLink1), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 21
  testRunner.And("click on back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");

@@ -14,9 +14,9 @@ namespace nipts_pts_automation_tests.Pages
         #region Page Objects
 
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']"));
-        private IWebElement SendApplicationButton => _driver.WaitForElementExists(By.XPath("//button[contains(@class,'govuk-button')] | //button[@type='submit']"));
+        private IWebElement SendApplicationButton => _driver.WaitForElementExists(By.XPath("//button[@id='submitButton']"));
         private IWebElement chkAgreeToAccuracy => _driver.WaitForElement(By.XPath("//div[@class='govuk-checkboxes__item']/label[@for='AgreedToAccuracy']"));
-        private IWebElement chkAgreeTermsAndPrivacyPolicy => _driver.WaitForElement(By.XPath("//div[@class='govuk-checkboxes__item']/label[@for='AgreedToPrivacyPolicy']"));
+        private IWebElement chkAgreeTermsAndPrivacyPolicy => _driver.WaitForElement(By.XPath("//div[@class='govuk-checkboxes__item']/input[@id='AgreedToDeclaration']"));
         private IWebElement chkAgreesToDeclaration => _driver.WaitForElementExists(By.XPath("//input[@id='AgreedToDeclaration']"));
 
         private IWebElement lnkApplyForAnother => _driver.WaitForElement(By.XPath("//a[contains(text(),'Gwneud cais am ddogfen deithio')]"));
@@ -50,6 +50,7 @@ namespace nipts_pts_automation_tests.Pages
 
         public void ClickSendApplicationButton()
         {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,1000)", "");
             SendApplicationButton.Click();
         }
 

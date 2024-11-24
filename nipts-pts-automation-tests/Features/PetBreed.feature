@@ -16,7 +16,7 @@ Scenario: Select pet breed in WELSH and verify next page in the application
 	And   click on continue
 	Then  I have provided date of PETS microchipped
 	And   click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	And   verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'
@@ -42,7 +42,7 @@ Scenario: Verify error messages for invalid input on pet breed in WELSH
 	And   click on continue
 	Then  I have provided date of PETS microchipped
 	And   click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	And   verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'
@@ -69,7 +69,7 @@ Scenario: Verify select breed page not coming for Ferret in WELSH
 	And   click on continue
 	Then  I have provided date of PETS microchipped
 	And   click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	And   verify next page '<nextPage2>' is loaded
 

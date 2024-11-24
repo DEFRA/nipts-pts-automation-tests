@@ -16,7 +16,7 @@ Scenario: Select pet color in WELSH and verify next page in the application
 	And   click on continue
 	Then  I have provided date of PETS microchipped
 	And   click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	And   verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'
@@ -54,7 +54,7 @@ Scenario: Verify WELSH error message when no color is selected on pet color page
 	And   click on continue
 	Then  I have provided date of PETS microchipped
 	And   click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	And   verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'
@@ -93,7 +93,7 @@ Scenario: Verify WELSH error message for invalid input in Other color option
 	And   click on continue
 	Then  I have provided date of PETS microchipped
 	And   click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	And   verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'
@@ -136,7 +136,7 @@ Scenario: Verify language footer when WELSH language is selected on select pet c
 	And   click on continue
 	Then  I have provided date of PETS microchipped
 	And   click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	And   verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'

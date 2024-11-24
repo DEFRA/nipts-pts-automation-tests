@@ -15,7 +15,7 @@ Scenario: Select pet sex in WELSH and verify next page in the application
 	When  click on continue english
 	Then  I have provided date of PETS microchipped
 	When  click on continue english
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue english
 	And  verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'
@@ -48,7 +48,7 @@ Scenario: Verify WELSH error message when no option is selected on select pet se
 	When  click on continue english
 	Then  I have provided date of PETS microchipped
 	When  click on continue english
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue english
 	And  verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'
@@ -81,7 +81,7 @@ Scenario: Verify language footer when WELSH language is selected on select pet s
 	When  click on continue english
 	Then  I have provided date of PETS microchipped
 	And   click on continue english
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue english
 	Then  verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'

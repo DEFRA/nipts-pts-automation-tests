@@ -23,7 +23,7 @@ namespace nipts_pts_automation_tests.Steps
         }
 
 
-        [Then(@"I have selected an option as '([^']*)' for pet")]
+        [Then(@"I have selected an option as '([^']*)' for pets")]
         public void ThenIHaveSelectedAnOptionAsForPet(string petType)
         {
             enterSpeciesPage.SelectSpecies(petType);

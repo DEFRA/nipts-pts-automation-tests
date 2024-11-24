@@ -23,6 +23,21 @@ namespace nipts_pts_automation_tests.HelperMethods
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(4));
             wait.Until(d => d.FindElement(By.XPath($"//label[contains(text(),'{code}')]")).Text.Contains(code));
         }
+
+        public static void ContinueButton(this IWebDriver driver)
+        {
+            IWebElement? continueLabel = null;
+            try
+            {
+                continueLabel = driver.WaitForElement(By.ClassName("govuk-button"), true);
+            }
+            catch
+            {
+                continueLabel = driver.FindElement(By.ClassName("govuk-button"));
+            }
+
+            continueLabel.Click();
+        }
     }
 
 }

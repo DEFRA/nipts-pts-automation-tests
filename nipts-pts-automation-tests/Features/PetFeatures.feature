@@ -16,7 +16,7 @@ Scenario: Enter valid significant feature and verify next page in the applicatio
 	And   click on continue
 	Then  I have provided date of PETS microchipped
 	When  click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	When  Select breed of your pet '<PetBreed>'
 	Then  click on continue
@@ -51,7 +51,7 @@ Scenario: Select no option on significant feature and verify next page in the ap
 	And   click on continue
 	Then  I have provided date of PETS microchipped
 	When  click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	When  Select breed of your pet '<PetBreed>'
 	Then  click on continue
@@ -85,7 +85,7 @@ Scenario: Validate error messages for not selecting any option on significant fe
 	And   click on continue
 	Then  I have provided date of PETS microchipped
 	When  click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	When  Select breed of your pet '<PetBreed>'
 	Then  click on continue
@@ -118,7 +118,7 @@ Scenario: Validate error messages for not selecting any option on significant fe
 	And   click on continue
 	Then  I have provided date of PETS microchipped
 	When  click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	When  Select breed of your pet '<PetBreed>'
 	Then  click on continue
@@ -154,7 +154,7 @@ Scenario: Validate error messages for not selecting any option on significant fe
 	And   click on continue
 	Then  I have provided date of PETS microchipped
 	When  click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	When  Select breed of your pet '<PetBreed>'
 	Then  click on continue

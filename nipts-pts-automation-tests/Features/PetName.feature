@@ -16,7 +16,7 @@ Scenario: Enter Pet name in WELSH and verify next page in the application
 	When  click on continue
 	Then  I have provided date of PETS microchipped
 	When  click on continue
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue
 	When  Select breed of your pet '<PetBreed>'
 	Then  click on continue
@@ -45,7 +45,7 @@ Scenario: Enter Pet name in WELSH and verify next page in the application
 	And  click on continue
 	Then I have provided date of PETS microchipped
 	When click on continue
-	Then I have selected an option as '<Pet>' for pet
+	Then I have selected an option as '<Pet>' for pets
 	And  click on continue
 	When Select breed of your pet '<PetBreed>'
 	Then click on continue
@@ -72,7 +72,7 @@ Scenario: Verify language footer when WELSH language is selected on enter pet na
 	And  click on continue
 	Then I have provided date of PETS microchipped
 	When click on continue
-	Then I have selected an option as '<Pet>' for pet
+	Then I have selected an option as '<Pet>' for pets
 	And  click on continue
 	When Select breed of your pet '<PetBreed>'
 	Then click on continue
