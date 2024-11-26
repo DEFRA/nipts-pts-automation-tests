@@ -18,6 +18,7 @@ namespace nipts_pts_automation_tests.Configuration
             UiFrameworkConfigurationBinding();
             DataSetupConfigurationBinding();
             DBSetupConfigurationBinding();
+            ServiceBusConfigurationBinding();
         }
 
         private static BaseConfiguration LoadConfigurationFromAppSettings()
@@ -44,7 +45,7 @@ namespace nipts_pts_automation_tests.Configuration
         }
         private static void DataSetupConfigurationBinding()
         {
-            //Test.Data.Configuration.DataSetupConfig.Configuration = BaseConfiguration.BackendSetupConfig;
+            nipts_pts_API_tests.Configuration.DataSetupConfig.Configuration = BaseConfiguration.BackendSetupConfig;
         }
 
         private static void DBSetupConfigurationBinding()
@@ -53,6 +54,11 @@ namespace nipts_pts_automation_tests.Configuration
             //BaseConfiguration.ApplicationCon = BaseConfiguration.ApplicationCon.DBConnect(BaseConfiguration.AppConnectionString.DBConnectionstring);
             //BaseConfiguration.ApplicationCon.DBConnect(BaseConfiguration.AppConnectionString.DBConnectionstring);
         }
+        private static void ServiceBusConfigurationBinding()
+        {
+            nipts_pts_API_tests.Configuration.ServiceBusConnectionData.Configuration = BaseConfiguration.ServiceBusConnectionConfig;
+        }
+
     }
 
 

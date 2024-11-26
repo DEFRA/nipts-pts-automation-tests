@@ -8,6 +8,7 @@ namespace nipts_pts_automation_tests.Configuration
         public UiFrameworkConfiguration UiFrameworkConfiguration { get; set; }
         public BrowserStackConfiguration BrowserStackConfiguration { get; set; }
         public BackendSetupConfig BackendSetupConfig { get; set; }
+        public ServiceBusConnectionConfig ServiceBusConnectionConfig { get; set; }
         public SqlConnection ApplicationCon { get; set; }
         public AppConnectionString AppConnectionString { get; set; }
 
