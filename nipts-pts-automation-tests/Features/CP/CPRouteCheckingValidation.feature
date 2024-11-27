@@ -270,7 +270,7 @@ Scenario Outline: Verify validation for special characters Microchip number
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Microchip number '<MicrochipNumber>' of the application
 	When I click search button
-	Then I should see an error message "Enter 15-digit number" in Find a document page
+	Then I should see an error message "Enter a 15-digit number" in Find a document page
 Examples:
 	| Transportation | FerryRoute                    | MicrochipNumber | ApplicationRadio		    |
 	| Ferry          | Birkenhead to Belfast (Stena) | @@@@@$$&		   | Search by microchip number |
@@ -286,7 +286,7 @@ Scenario Outline: Verify validation for more than 15 Microchip number
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Microchip number '<MicrochipNumber>' of the application
 	When I click search button
-	Then I should see an error message "Enter 15-digit number" in Find a document page
+	Then I should see an error message "Enter a 15-digit number" in Find a document page
 Examples:
 	| Transportation | FerryRoute                    | MicrochipNumber  | ApplicationRadio		    |
 	| Ferry          | Birkenhead to Belfast (Stena) | 1234560890123405 | Search by microchip number |
@@ -303,7 +303,7 @@ Scenario Outline: Verify validation for less than 15 Microchip number
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Microchip number '<MicrochipNumber>' of the application
 	When I click search button
-	Then I should see an error message "Enter 15-digit number" in Find a document page
+	Then I should see an error message "Enter a 15-digit number" in Find a document page
 Examples:
 	| Transportation | FerryRoute                    | MicrochipNumber | ApplicationRadio		    |
 	| Ferry          | Birkenhead to Belfast (Stena) | 12345608901234  | Search by microchip number |
