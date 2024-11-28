@@ -8,7 +8,7 @@ namespace nipts_pts_API_tests.Application
         static string connectionString = ServiceBusConnectionData.Configuration.ServiceBusConnString;
         static string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
 
-        public static async Task SendMessageToQueue(string ApplicationId)
+        public static async Task SendMessageToQueue(string ApplicationId, string Status)
         {
             // Create a ServiceBusClient to connect to the Service Bus namespace
             ServiceBusClient client = new ServiceBusClient(connectionString);
@@ -22,7 +22,7 @@ namespace nipts_pts_API_tests.Application
                 string dynamicId = Guid.NewGuid().ToString();
 
                 // Create a message to send to the queue
-                string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Authorised\", \"Application.DateAuthorised\": \"2024-11-14\" }}";
+                string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"{Status}\", \"Application.DateAuthorised\": \"2024-11-14\" }}";
                 ServiceBusMessage message = new ServiceBusMessage(messageBody);
 
                 // Send the message to the queue

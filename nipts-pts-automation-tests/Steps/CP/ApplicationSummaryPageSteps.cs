@@ -57,15 +57,37 @@ namespace nipts_pts_automation_tests.Steps.CP
 
         [Given(@"Approve an application via backend")]
         [When(@"Approve an application via backend")]
-        public void ThenGetApplicationViaBackend()
+        public void ThenApproveApplicationViaBackend()
         {
             lock (_lock)
             {
-                AppData.GetApplicationToApprove();
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                AppData.GetApplicationToApprove(AppReference);
 
             }
         }
 
+        [When(@"Revoke an application via backend")]
+        public void ThenRevokeApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                AppData.GetApplicationToRevoke(AppReference);
+
+            }
+        }
+
+        [When(@"Reject an application via backend")]
+        public void ThenRejectApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                AppData.GetApplicationToReject(AppReference);
+
+            }
+        }
 
     }
 }

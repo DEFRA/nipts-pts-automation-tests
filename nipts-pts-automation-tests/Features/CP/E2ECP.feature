@@ -52,36 +52,27 @@ Scenario Outline: Check PETS Travel Document details By PTD number - status in A
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
 	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	When Approve an application via backend
+	And I should see the application in 'Approved' status
 	When I have clicked the View hyperlink from home page
-	Then The submitted application should be displayed in summary view
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Pass the Microchip check
-	#And I go back
-	#And I 'Authorise' the application
-	#Then the status is changed to 'Authorised'
-	#And I click on Back button in Pets Application
-	#And I should see the application in 'Approved' status
-	#When I have clicked the View hyperlink from home page
-	#And I captured Application PTD number
-	#And  click on signout button and verify the signout message
-	#When I navigate to the port checker application
-	#And I click signin button on port checker application
-	#Then I should redirected to the Sign in using Government Gateway page
-	#When I have provided the CP credentials and signin
-	#And I have provided the password for prototype research page
-	#Then I should redirected to port route checke page
-	#And I have selected '<Transportation>' radio option
-	#And I select the '<FerryRoute>' radio option
-	#And I have provided Scheduled departure time
-	#When I click save and continue button from route checke page
-	#Then I should navigate to Welcome page
-	#When I click search button from footer
-	#Then I navigate to Find a document page
-	#And I provided the PTD number of the application
-	#When I click search button
-	#And I should see the application status in 'Approved'
+	And I captured Application PTD number
+	And click on signout button and verify the signout message
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	When I have provided the CP credentials and signin
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I provided the PTD number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    |
@@ -126,36 +117,26 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
 	And I should see the application on pets in 'AWAITING VERIFICATION' status
-	When I have clicked the View hyperlink from home page
-	Then The submitted application should be displayed in summary view
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Pass the Microchip check
-	#And I go back
-	#And I 'Authorise' the application
-	#Then the status is changed to 'Authorised'
-	#And I click on Back button in Pets Application
-	#And I should see the application in 'Approved' status
-	#When I have clicked the View hyperlink from home page
-	#And click on signout button and verify the signout message
-	#When I navigate to the port checker application
-	#And I click signin button on port checker application
-	#Then I should redirected to the Sign in using Government Gateway page
-	#When I have provided the CP credentials and signin
-	#And I have provided the password for prototype research page
-	#Then I should redirected to port route checke page
-	#And I have selected '<Transportation>' radio option
-	#And I select the '<FerryRoute>' radio option
-	#And I have provided Scheduled departure time
-	#When I click save and continue button from route checke page
-	#Then I should navigate to Welcome page
-	#When I click search button from footer
-	#Then I navigate to Find a document page
-	#And I click search by '<ApplicationRadio>' radio button
-	#And I provided the Reference number of the application
-	#When I click search button
-	#And I should see the application on pets status in 'Approved'
+	When Approve an application via backend
+	Then I should see the application in 'Approved' status
+	When click on signout button and verify the signout message
+	And I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	When I have provided the CP credentials and signin
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the Reference number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute               |  ApplicationRadio             |
@@ -200,34 +181,25 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
 	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	When Revoke an application via backend
 	And click on signout button and verify the signout message
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Pass the Microchip check
-	#And I go back
-	#And I 'Authorise' the application
-	#Then the status is changed to 'Authorised'
-	#When I assign the application to myself
-	#And I 'Revoke' the application with reason 'Owner Left GB'
-	#Then the status is changed to 'Revoked'
-	#When I navigate to the port checker application
-	#And I click signin button on port checker application
-	#Then I should redirected to the Sign in using Government Gateway page
-	#When I have provided the CP credentials and signin
-	#And I have provided the password for prototype research page
-	#Then I should redirected to port route checke page
-	#And I have selected '<Transportation>' radio option
-	#And I select the '<FerryRoute>' radio option
-	#And I have provided Scheduled departure time
-	#When I click save and continue button from route checke page
-	#Then I should navigate to Welcome page
-	#When I click search button from footer
-	#Then I navigate to Find a document page
-	#And I click search by '<ApplicationRadio>' radio button
-	#And I provided the Reference number of the application
-	#When I click search button
-	#And I should see the application status in 'Revoked'
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	And I have provided the CP credentials and signin
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the Reference number of the application
+	When I click search button
+	And I should see the application status in 'Revoked'
 
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute               |  ApplicationRadio             |
@@ -272,31 +244,25 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
 	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	When Reject an application via backend
 	And click on signout button and verify the signout message
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Fail the Microchip check
-	#And I go back
-	#And I 'Reject' the application with reason 'Invalid Application'
-	#Then the status is changed to 'Rejected'
-	#When I navigate to the port checker application
-	#And I click signin button on port checker application
-	#Then I should redirected to the Sign in using Government Gateway page
-	#When I have provided the CP credentials and signin
-	#And I have provided the password for prototype research page
-	#Then I should redirected to port route checke page
-	#And I have selected '<Transportation>' radio option
-	#And I select the '<FerryRoute>' radio option
-	#And I have provided Scheduled departure time
-	#When I click save and continue button from route checke page
-	#Then I should navigate to Welcome page
-	#When I click search button from footer
-	#Then I navigate to Find a document page
-	#And I click search by '<ApplicationRadio>' radio button
-	#And I provided the Reference number of the application
-	#When I click search button
-	#And I should see the application status in 'Unsuccessful'
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	And I have provided the CP credentials and signin
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the Reference number of the application
+	When I click search button
+	And I should see the application status in 'Unsuccessful'
 
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute               |  ApplicationRadio             |
@@ -341,36 +307,26 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
 	And I should see the application on pets in 'AWAITING VERIFICATION' status
-	When I have clicked the View hyperlink from home page
-	Then The submitted application should be displayed in summary view
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Pass the Microchip check
-	#And I go back
-	#And I 'Authorise' the application
-	#Then the status is changed to 'Authorised'
-	#And I click on Back button in Pets Application
-	#And I should see the application in 'Approved' status
-	#When I have clicked the View hyperlink from home page
-	#And click on signout button and verify the signout message
-	#When I navigate to the port checker application
-	#And I click signin button on port checker application
-	#Then I should redirected to the Sign in using Government Gateway page
-	#When I have provided the CP credentials and signin
-	#And I have provided the password for prototype research page
-	#Then I should redirected to port route checke page
-	#And I have selected '<Transportation>' radio option
-	#And I select the '<FerryRoute>' radio option
-	#And I have provided Scheduled departure time
-	#When I click save and continue button from route checke page
-	#Then I should navigate to Welcome page
-	#When I click search button from footer
-	#Then I navigate to Find a document page
-	#And I click search by '<ApplicationRadio>' radio button
-	#And I provided the Microchip number of the application
-	#When I click search button
-	#And I should see the application status in 'Approved'
+	When Approve an application via backend
+	And I should see the application in 'Approved' status
+	And click on signout button and verify the signout message
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	And I have provided the CP credentials and signin
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the Microchip number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio           |
@@ -416,34 +372,25 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	When I click Accept and Send button from Declaration page
 	Then I should redirected to the Application submitted page
 	And I can see the unique application reference number
+	When Revoke an application via backend
 	And click on signout button and verify the signout message
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Pass the Microchip check
-	#And I go back
-	#And I 'Authorise' the application
-	#Then the status is changed to 'Authorised'
-	#When I assign the application to myself
-	#And I 'Revoke' the application with reason 'Owner Left GB'
-	#Then the status is changed to 'Revoked'
-	#When I navigate to the port checker application
-	#And I click signin button on port checker application
-	#Then I should redirected to the Sign in using Government Gateway page
-	#When I have provided the CP credentials and signin
-	#And I have provided the password for prototype research page
-	#Then I should redirected to port route checke page
-	#And I have selected '<Transportation>' radio option
-	#And I select the '<FerryRoute>' radio option
-	#And I have provided Scheduled departure time
-	#When I click save and continue button from route checke page
-	#Then I should navigate to Welcome page
-	#When I click search button from footer
-	#Then I navigate to Find a document page
-	#And I click search by '<ApplicationRadio>' radio button
-	#And I provided the Microchip number of the application
-	#When I click search button
-	#And I should see the application status in 'Revoked'
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	And I have provided the CP credentials and signin
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the Microchip number of the application
+	When I click search button
+	And I should see the application status in 'Revoked'
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |
@@ -489,31 +436,25 @@ Examples:
 	When I click Accept and Send button from Declaration page
 	Then I should redirected to the Application submitted page
 	And I can see the unique application reference number
+	When Reject an application via backend
 	And click on signout button and verify the signout message
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Fail the Microchip check
-	#And I go back
-	#And I 'Reject' the application with reason 'Invalid Application'
-	#Then the status is changed to 'Rejected'
-	#When I navigate to the port checker application
-	#And I click signin button on port checker application
-	#Then I should redirected to the Sign in using Government Gateway page
-	#When I have provided the CP credentials and signin
-	#And I have provided the password for prototype research page
-	#Then I should redirected to port route checke page
-	#And I have selected '<Transportation>' radio option
-	#And I select the '<FerryRoute>' radio option
-	#And I have provided Scheduled departure time
-	#When I click save and continue button from route checke page
-	#Then I should navigate to Welcome page
-	#When I click search button from footer
-	#Then I navigate to Find a document page
-	#And I click search by '<ApplicationRadio>' radio button
-	#And I provided the Microchip number of the application
-	#When I click search button
-	#And I should see the application status in 'Unsuccessful'
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	And I have provided the CP credentials and signin
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the Microchip number of the application
+	When I click search button
+	And I should see the application status in 'Unsuccessful'
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |
@@ -563,10 +504,9 @@ Scenario Outline: Check PETS Travel Document details By Reference number - statu
 	Then click on signout button and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
-	And I have provided the password for Landing page
-	#Then I should redirected to the Sign in using Government Gateway page
-	#When I have provided the CP credentials and signin
-	#And I have provided the password for prototype research page
+	And I have provided the password for prototype research page
+	And I have provided the CP credentials and signin
+	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
@@ -628,10 +568,9 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	Then click on signout button and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
-	And I have provided the password for Landing page
-	#Then I should redirected to the Sign in using Government Gateway page
-	#When I have provided the CP credentials and signin
-	#And I have provided the password for prototype research page
+	And I have provided the password for prototype research page
+	And I have provided the CP credentials and signin
+	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option

@@ -3,7 +3,7 @@
     public interface ISignInCPPage
     {
         void ClickSignInButton();
-        bool IsSignedIn(string userName, string password);
+        void IsSignedIn(string userName, string password);
         void EnterPassword();
     }
 }
