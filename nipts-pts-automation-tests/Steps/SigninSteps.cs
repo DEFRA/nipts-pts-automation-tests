@@ -67,6 +67,7 @@ namespace nipts_pts_automation_tests.Steps
         public void ThenClickOnSignoutButtonAndVerifyTheSignoutMessage()
         {
             signin.ClickSignedOut();
+            Thread.Sleep(1000);
         }
 
         [Then(@"verify sign out link in displayed in selected language '([^']*)'")]

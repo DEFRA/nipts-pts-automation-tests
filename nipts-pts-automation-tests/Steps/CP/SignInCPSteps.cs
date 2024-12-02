@@ -59,5 +59,18 @@ namespace nipts_pts_automation_tests.Steps.CP
             _signInCPPage?.IsSignedIn(userObject.UserId, userObject.password);
         }
 
+        [When(@"I have provided the CP credentials and signin for user '([^']*)'")]
+        public void WhenIHaveProvidedTheCPCredentialsAndSigninForUser(string userType)
+        {
+            var jsonData = UserObject?.GetUser("CP", userType);
+            var userObject = new User
+            {
+                UserId = jsonData.UserId,
+                password = jsonData.password
+            };
+
+            _signInCPPage?.IsSignedIn(userObject.UserId, userObject.password);
+        }
+
     }
 }

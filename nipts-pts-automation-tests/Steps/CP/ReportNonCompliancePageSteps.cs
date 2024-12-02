@@ -47,6 +47,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.IsTrue(_reportNonCompliancePage?.VerifyTheExpectedStatus(applicationStatus), "The submitted application is not in expected status");
         }
 
+        [When(@"I click '([^']*)' in Passenger details")]
         [Then(@"I click '([^']*)' in Passenger details")]
         public void ThenIClickInPassengerDetails(string passengerType)
         {
@@ -59,5 +60,18 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(_reportNonCompliancePage?.IsError(errorMessage), $"There is no error message found with - {errorMessage}");
         }
 
+        [When(@"I click '([^']*)' on SPS outcome")]
+        [Then(@"I click '([^']*)' on SPS outcome")]
+        public void ThenIClickOnSPSOutcome(string SPSStatus)
+        {
+            _reportNonCompliancePage?.ClickOnSPSOutcome(SPSStatus);
+        }
+
+        [When(@"I click on GB outcome")]
+        [Then(@"I click on GB outcome")]
+        public void ThenIClickOnGBOutcome()
+        {
+            _reportNonCompliancePage?.ClickOnGBOutcome();
+        }
     }
 }

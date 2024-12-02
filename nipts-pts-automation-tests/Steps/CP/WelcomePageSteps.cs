@@ -47,5 +47,11 @@ namespace nipts_pts_automation_tests.Steps.CP
             _welcomePage?.FooterHomeIcon();
         }
 
+        [When(@"I click on view on Checks page")]
+        [Then(@"I click on view on Checks page")]
+        public void ThenIClickOnViewOnChecksPage()
+        {
+            _welcomePage.clickOnView();
+        }
     }
 }

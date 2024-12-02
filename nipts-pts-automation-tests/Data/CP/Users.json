@@ -3,11 +3,22 @@
     {
       "userId": "42 46 25 62 05 97",
       "password": "Cpportal@123",
-      "logininfo": "test",
-      "UserName": "test test",
-      "UserEmail": "",
+      "logininfo": "GBUser",
+      "UserName": "pallavi GB Yewale",
+      "UserEmail": "pallavi.yewale+GBuser3@capgemini.com",
       "Useraddress": "",
-      "UserPhoneNumber": "07833861111",
+      "UserPhoneNumber": "07424047400",
+      "Environment": "tst",
+      "HomePage": true
+    },
+    {
+      "userId": "20 83 54 18 09 17",
+      "password": "Cpportal@123",
+      "logininfo": "SPSUser",
+      "UserName": "pallavi SPS Yewale",
+      "UserEmail": "pallavi.yewale+SPSUser1@capgemini.com",
+      "Useraddress": "",
+      "UserPhoneNumber": "07424047400",
       "Environment": "tst",
       "HomePage": true
     }
