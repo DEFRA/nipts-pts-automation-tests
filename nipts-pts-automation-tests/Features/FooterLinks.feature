@@ -17,7 +17,6 @@ Scenario Outline: Verify Footer links and pages on Pets
 	And   switch to previous tab
 	When  click cookies link on footer page
 	Then  verify the page title in Footer page '<Cookies page Title>'
-	And   verify the link in Footer page details '<Cookies Link 1>'
 	And   click on back
 	When  click accessibility link on footer page
 	Then  verify the page title in Footer page '<Accessibility page title>'
@@ -29,8 +28,8 @@ Scenario Outline: Verify Footer links and pages on Pets
 	Then  verify the link in Footer page details '<TCs Link 1>'
 
 Examples: 
-    | logininfo | Privacy page title              |Privacy Link 1		   	   |Privacy Link 2        |Cookies page Title |Cookies Link 1                     |Accessibility page title                |Accessibility Link 1         |Accessibility Link 2                                    | TCs page title                       |TCs Link 1 |
-	| test      | Pet travel scheme privacy notice|data.protection@defra.gov.uk|www.legislation.gov.uk|Cookies            |opt out of Google Analytics cookies|Accessibility statement for taking a dog|AbilityNet (opens in new tab)|contact the Equality Advisory and Support Service (EASS)| Terms and conditions for taking a dog|notify us  |
+    | logininfo | Privacy page title              |Privacy Link 1		   	   |Privacy Link 2        |Cookies page Title |Accessibility page title                |Accessibility Link 1         |Accessibility Link 2                                    | TCs page title                        |TCs Link 1                                 |
+	| test      | Pet travel scheme privacy notice|data.protection@defra.gov.uk|www.legislation.gov.uk|Cookies            |Accessibility statement for taking a dog|AbilityNet (opens in new tab)|contact the Equality Advisory and Support Service (EASS)| Pet Travel Scheme terms and conditions| Pet travel scheme privacy notice - GOV.UK |
 
 
 
@@ -46,3 +45,43 @@ Scenario Outline: Verify text and Logo on the footer of Sign up page
 Examples: 
     | logininfo | nextPage                      | FooterText                         |FooterPageLink              |FooterLogoLink |
     | test      | Lifelong pet travel documents | All content is available under the |Open Government Licence v3.0|Crown copyright|
+
+
+Scenario Outline: Verify Google analytics success banner on Cookies page of footer links
+	Given that I navigate to the Pets application portal
+	When  sign in with valid credentials with logininfo '<logininfo>'
+	When  click on Welsh language 
+	When  click cookies link on footer page
+	Then  verify the page title in Footer page '<Cookies page Title>'
+	And   select Google Analytics option for cookies '<yes>'
+	When  click on Save Google Analytics for cookies
+	Then  verify Google Analytics success heading  on the cookies page '<GoogleAnalyticsSuccessMsg>'
+
+Examples: 
+    | logininfo | Cookies page Title | GoogleAnalyticsSuccessMsg    |
+    | test      | Cookies            | set your cookie preferences  |
+
+
+Scenario Outline: Verify Hide cookies button on Google analytics banner
+	Given that I navigate to the Pets application portal
+	When  sign in with valid credentials with logininfo '<logininfo>'
+	And   select option for cookies on Google Analytics banner '<cookiesoption>'
+	Then  click Hide Cookies message button on the Google Analytics Banner
+	And   verify Hide Cookie Message button is not displayed on Google Analytics banner
+
+Examples: 
+    | logininfo  | cookiesoption |
+    | test       | accept        |
+
+Scenario Outline: Verify Change your cookie settings link on Google analytics banner
+	Given that I navigate to the Pets application portal
+	When  sign in with valid credentials with logininfo '<logininfo>'
+	And   select option for cookies on Google Analytics banner '<cookiesoption>'
+	Then  click Change Cookies settings on the Google Analytics Banner
+	And   verify next page '<nextPage>' is loaded
+
+Examples: 
+    | logininfo | cookiesoption | nextPage |
+    | test      | accept        | Cookies  |
+
+

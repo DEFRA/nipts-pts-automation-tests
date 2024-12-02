@@ -34,6 +34,7 @@ namespace nipts_pts_automation_tests.Steps
         public void ClickCookiesLinkFooterPage()
         {
             Assert.True(footerPage.ClickOnCookiesFooterLink(), "Cookies link not valid");
+           
         }
 
         [When(@"click accessibility link on footer page")]
@@ -68,6 +69,53 @@ namespace nipts_pts_automation_tests.Steps
             Assert.True(footerPage.VerifyPageTitle(pageTitle), "Page title not matching");
         }
 
+        [When(@"select Google Analytics option for cookies '([^']*)'")]
+        [Then(@"select Google Analytics option for cookies '([^']*)'")]
+        public void WhenSelectGoogleAnalyticsOption(string googleAnalytics)
+        {
+            footerPage.SelectGoogleAnalyticsOption(googleAnalytics);
+        }
 
+        [When(@"click on Save Google Analytics for cookies")]
+        [Then(@"click on Save Google Analytics for cookies")]
+        public void ThenClickOnSavebtn()
+        {
+            footerPage.ClickOnSaveGoogleAnalyticsBtn();
+        }
+
+        [Then(@"verify Google Analytics success heading  on the cookies page '([^']*)'")]
+        public void ThenVerifyGoogleAnalyticsHeading(string GoogleAnalyticsHeading)
+        {
+            Assert.True(footerPage.VerifyGoogleAnalyticsBanner(GoogleAnalyticsHeading), "Google Analytics Success Heading not matching");
+        }
+
+        [Then(@"select option for cookies on Google Analytics banner '([^']*)'")]
+        [When(@"select option for cookies on Google Analytics banner '([^']*)'")]
+        public void WhenSelectCookiesOptionOnBanner(string googleAnalyticsOption)
+        {
+            footerPage.SelectGoogleAnalyticsOptionOnHeader(googleAnalyticsOption);
+        }
+
+        [When(@"click Hide Cookies message button on the Google Analytics Banner")]
+        [Then(@"click Hide Cookies message button on the Google Analytics Banner")]
+        public void ThenClickOnHidebtn()
+        {
+            footerPage.ClickOnHideCookiesBtn();
+        }
+
+        [Then(@"verify Hide Cookie Message button is not displayed on Google Analytics banner")]
+        public void ThenVerifyHideCookieButton()
+        {
+            Assert.False(footerPage.VerifyHideCookieMessageButtonOnGoogleAnalyticsBanner(), "Hide Cookie Message button is displayed");
+        }
+
+        [When(@"click Change Cookies settings on the Google Analytics Banner")]
+        [Then(@"click Change Cookies settings on the Google Analytics Banner")]
+        public void ThenClickChangeCookieSettings()
+        {
+            footerPage.ClickChangeCookieSettingslnk();
+        }
+
+       
     }
 }

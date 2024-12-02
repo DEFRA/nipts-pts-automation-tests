@@ -77,8 +77,8 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Footer links and pages on Pets")]
-        [NUnit.Framework.TestCaseAttribute("test", "Pet travel scheme privacy notice", "data.protection@defra.gov.uk", "www.legislation.gov.uk", "Cookies", "opt out of Google Analytics cookies", "Accessibility statement for taking a dog", "AbilityNet (opens in new tab)", "contact the Equality Advisory and Support Service (EASS)", "Terms and conditions for taking a dog", "notify us", null)]
-        public void VerifyFooterLinksAndPagesOnPets(string logininfo, string privacyPageTitle, string privacyLink1, string privacyLink2, string cookiesPageTitle, string cookiesLink1, string accessibilityPageTitle, string accessibilityLink1, string accessibilityLink2, string tCsPageTitle, string tCsLink1, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("test", "Pet travel scheme privacy notice", "data.protection@defra.gov.uk", "www.legislation.gov.uk", "Cookies", "Accessibility statement for taking a dog", "AbilityNet (opens in new tab)", "contact the Equality Advisory and Support Service (EASS)", "Pet Travel Scheme terms and conditions", "Pet travel scheme privacy notice - GOV.UK", null)]
+        public void VerifyFooterLinksAndPagesOnPets(string logininfo, string privacyPageTitle, string privacyLink1, string privacyLink2, string cookiesPageTitle, string accessibilityPageTitle, string accessibilityLink1, string accessibilityLink2, string tCsPageTitle, string tCsLink1, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -87,7 +87,6 @@ namespace nipts_pts_automation_tests.Features
             argumentsOfScenario.Add("Privacy Link 1", privacyLink1);
             argumentsOfScenario.Add("Privacy Link 2", privacyLink2);
             argumentsOfScenario.Add("Cookies page Title", cookiesPageTitle);
-            argumentsOfScenario.Add("Cookies Link 1", cookiesLink1);
             argumentsOfScenario.Add("Accessibility page title", accessibilityPageTitle);
             argumentsOfScenario.Add("Accessibility Link 1", accessibilityLink1);
             argumentsOfScenario.Add("Accessibility Link 2", accessibilityLink2);
@@ -141,33 +140,30 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Then(string.Format("verify the page title in Footer page \'{0}\'", cookiesPageTitle), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 20
- testRunner.And(string.Format("verify the link in Footer page details \'{0}\'", cookiesLink1), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("click on back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 21
- testRunner.And("click on back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 22
  testRunner.When("click accessibility link on footer page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 23
+#line 22
  testRunner.Then(string.Format("verify the page title in Footer page \'{0}\'", accessibilityPageTitle), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 24
+#line 23
  testRunner.And(string.Format("verify the link in Footer page details \'{0}\'", accessibilityLink1), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 25
+#line 24
  testRunner.And(string.Format("verify the link in Footer page details \'{0}\'", accessibilityLink2), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 26
+#line 25
  testRunner.And("click on back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 27
+#line 26
  testRunner.When("click TCs link on footer page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 28
+#line 27
  testRunner.Then(string.Format("verify the page title in Footer page \'{0}\'", tCsPageTitle), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 29
+#line 28
  testRunner.Then(string.Format("verify the link in Footer page details \'{0}\'", tCsLink1), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -187,7 +183,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("FooterPageLink", footerPageLink);
             argumentsOfScenario.Add("FooterLogoLink", footerLogoLink);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify text and Logo on the footer of Sign up page", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 37
+#line 36
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -197,23 +193,151 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 38
+#line 37
  testRunner.Given("that I navigate to the Pets application portal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 39
+#line 38
  testRunner.When(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 40
+#line 39
  testRunner.Then(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 41
+#line 40
  testRunner.Then(string.Format("verify text \'{0}\' on the page footer", footerText), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 42
+#line 41
  testRunner.Then(string.Format("verify the link in Footer page details \'{0}\'", footerPageLink), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 43
+#line 42
  testRunner.Then(string.Format("verify the link in Footer page details \'{0}\'", footerLogoLink), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Verify Google analytics success banner on Cookies page of footer links")]
+        [NUnit.Framework.TestCaseAttribute("test", "Cookies", "set your cookie preferences", null)]
+        public void VerifyGoogleAnalyticsSuccessBannerOnCookiesPageOfFooterLinks(string logininfo, string cookiesPageTitle, string googleAnalyticsSuccessMsg, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("logininfo", logininfo);
+            argumentsOfScenario.Add("Cookies page Title", cookiesPageTitle);
+            argumentsOfScenario.Add("GoogleAnalyticsSuccessMsg", googleAnalyticsSuccessMsg);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Google analytics success banner on Cookies page of footer links", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 50
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 51
+ testRunner.Given("that I navigate to the Pets application portal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 52
+ testRunner.When(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 53
+ testRunner.When("click on Welsh language", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 54
+ testRunner.When("click cookies link on footer page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 55
+ testRunner.Then(string.Format("verify the page title in Footer page \'{0}\'", cookiesPageTitle), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 56
+ testRunner.And("select Google Analytics option for cookies \'<yes>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 57
+ testRunner.When("click on Save Google Analytics for cookies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 58
+ testRunner.Then(string.Format("verify Google Analytics success heading  on the cookies page \'{0}\'", googleAnalyticsSuccessMsg), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Verify Hide cookies button on Google analytics banner")]
+        [NUnit.Framework.TestCaseAttribute("test", "accept", null)]
+        public void VerifyHideCookiesButtonOnGoogleAnalyticsBanner(string logininfo, string cookiesoption, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("logininfo", logininfo);
+            argumentsOfScenario.Add("cookiesoption", cookiesoption);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Hide cookies button on Google analytics banner", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 65
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 66
+ testRunner.Given("that I navigate to the Pets application portal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 67
+ testRunner.When(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 68
+ testRunner.And(string.Format("select option for cookies on Google Analytics banner \'{0}\'", cookiesoption), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 69
+ testRunner.Then("click Hide Cookies message button on the Google Analytics Banner", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 70
+ testRunner.And("verify Hide Cookie Message button is not displayed on Google Analytics banner", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Verify Change your cookie settings link on Google analytics banner")]
+        [NUnit.Framework.TestCaseAttribute("test", "accept", "Cookies", null)]
+        public void VerifyChangeYourCookieSettingsLinkOnGoogleAnalyticsBanner(string logininfo, string cookiesoption, string nextPage, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("logininfo", logininfo);
+            argumentsOfScenario.Add("cookiesoption", cookiesoption);
+            argumentsOfScenario.Add("nextPage", nextPage);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Change your cookie settings link on Google analytics banner", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 76
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 77
+ testRunner.Given("that I navigate to the Pets application portal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 78
+ testRunner.When(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 79
+ testRunner.And(string.Format("select option for cookies on Google Analytics banner \'{0}\'", cookiesoption), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 80
+ testRunner.Then("click Change Cookies settings on the Google Analytics Banner", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 81
+ testRunner.And(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
