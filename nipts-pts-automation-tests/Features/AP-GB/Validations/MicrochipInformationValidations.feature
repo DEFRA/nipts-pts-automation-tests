@@ -57,7 +57,7 @@ Scenario Outline: Verify microchipped page validations without selection and sho
 	And I should not be redirected to When was your pet microchipped or last scanned? page
 Examples:
 	| FullName |  Are your details correct | MicrochipOption | MicrochipNumber | ErrorMessage                        |
-	| Pet Dog  |  Yes                      |                 |                 | Tell us if your pet is microchipped |
+	| Pet Dog  |  Yes                      |                 |                 | Select if your pet is microchipped |
 
 Scenario Outline: Verify microchipped page validations and should not moves to next page
 	Then I have selected '<Are your details correct>' option

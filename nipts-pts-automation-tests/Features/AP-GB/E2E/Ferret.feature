@@ -52,7 +52,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with details co
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
@@ -123,7 +123,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with details no
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
@@ -203,7 +203,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with enter addr
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page

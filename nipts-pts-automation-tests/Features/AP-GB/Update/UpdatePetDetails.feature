@@ -64,7 +64,7 @@ Scenario Outline: Modify PETS Name By Registered User with details correct - Fer
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified pet details in summary page
@@ -115,7 +115,7 @@ Scenario Outline: Modify Species of the pet By Registered User with details corr
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
@@ -167,7 +167,7 @@ Scenario Outline: Modify breed of the pet By Registered User with details correc
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
@@ -228,7 +228,7 @@ Scenario Outline: Modify PETS Sex By Registered User with details correct - Ferr
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified pet details in summary page
@@ -288,7 +288,7 @@ Scenario Outline: Modify PETS date of birth By Registered User with details corr
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified pet details in summary page
@@ -348,7 +348,7 @@ Scenario Outline: Modify PETS colour By Registered User with details correct - F
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified pet details in summary page
@@ -409,7 +409,7 @@ Scenario Outline: Modify PETS significant features By Registered User with detai
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified pet details in summary page
@@ -472,7 +472,7 @@ Scenario Outline: Modify PETS colour By Registered User with details correct
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified pet details in summary page
@@ -536,7 +536,7 @@ Scenario Outline: Modify PETS date of birth By Registered User with details corr
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified pet details in summary page
@@ -600,7 +600,7 @@ Scenario Outline: Modify PETS Sex By Registered User with details correct
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified pet details in summary page
@@ -664,7 +664,7 @@ Scenario Outline: Modify PETS Name By Registered User with details correct
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified pet details in summary page
@@ -729,7 +729,7 @@ Scenario Outline: Modify PETS significant features By Registered User with detai
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified pet details in summary page
@@ -778,7 +778,7 @@ Scenario Outline: Modify Species of the pet By Registered User with details corr
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page

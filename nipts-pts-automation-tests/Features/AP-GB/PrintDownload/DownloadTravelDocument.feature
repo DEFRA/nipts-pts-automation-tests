@@ -14,7 +14,7 @@ Background:
 	Then I should redirected to the Are your details correct page
 
 
-Scenario Outline: Download PETS Travel Document Dog and Cat - AWAITING VERIFICATION
+Scenario Outline: Download PETS Travel Document Dog and Cat - Pending
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -55,7 +55,7 @@ Scenario Outline: Download PETS Travel Document Dog and Cat - AWAITING VERIFICAT
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
@@ -69,7 +69,7 @@ Examples:
 	| PetCat's  | Yes                      | CV2 4NZ  | 07440345678 | Yes             | 123456789654321 | Cat | Cat     | Female | Tortoiseshell | No                    |
 
 	
-Scenario Outline: Download PETS Travel Document Ferret - AWAITING VERIFICATION
+Scenario Outline: Download PETS Travel Document Ferret - Pending
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -107,7 +107,7 @@ Scenario Outline: Download PETS Travel Document Ferret - AWAITING VERIFICATION
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
@@ -161,7 +161,7 @@ Scenario Outline: Download PETS Travel Document Dog and Cat - Approved
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
@@ -223,7 +223,7 @@ Scenario Outline: Download PETS Travel Document Ferret - Approved
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
