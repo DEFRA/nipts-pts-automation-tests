@@ -64,6 +64,7 @@ Scenario Outline: Modify Name of the pet owner By Registered User with details c
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName  |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | UpdatedFullName | UpdatedPostCode |
@@ -119,6 +120,7 @@ Scenario Outline: Modify Address of the pet owner By Registered User with detail
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName  |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | UpdatedPostCode |
@@ -170,6 +172,7 @@ Scenario Outline: Modify Phone number of the pet owner By Registered User with d
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName  |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | UpdatedPhoneNumber |
@@ -224,6 +227,7 @@ Scenario Outline: Modify Name of the pet owner By Registered User with details c
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName  |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet    | PetName | Gender | Color     | IsSignificantFeatures | UpdatedFullName | UpdatedPostCode |
@@ -272,6 +276,7 @@ Scenario Outline: Modify Phone number of the pet owner By Registered User with d
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName  |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet    | PetName | Gender | Color     | IsSignificantFeatures | UpdatedPhoneNumber |

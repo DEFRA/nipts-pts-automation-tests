@@ -19,6 +19,7 @@ Scenario: Change Phone Number in Manage account
 	When that I navigate to the DEFRA application
 	And I click Create a new pet travel document button
 	Then I verify the updated Phone number
+	And click on signout button and verify the signout message on pets
 
 Scenario: Change Name in Manage account
 	Then I should navigate to Manage account
@@ -37,6 +38,7 @@ Scenario: Change Name in Manage account
 	And I click on Update Details link
 	And I click on Change Personal Information link
 	And I revert the Pet Owner Name to the Original Name
+	And click on signout button and verify the signout message on pets
 
 Scenario Outline: Change Address in Manage account
 	Then I should navigate to Manage account
@@ -52,6 +54,7 @@ Scenario Outline: Change Address in Manage account
 	When that I navigate to the DEFRA application
 	And I click Create a new pet travel document button
 	Then I verify the updated Pet Owner Address
+	And click on signout button and verify the signout message on pets
 	
 Examples:
 	| postcode         |

@@ -14,7 +14,7 @@ Background:
 	Then I should redirected to the Are your details correct page
 
 @Test
-Scenario Outline: Create PETS Travel Document By Registered User with details correct - Ferret - Authorised in Dynamics
+Scenario Outline: Create PETS Travel Document By Registered User with details correct - Ferret - Approved
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -58,22 +58,16 @@ Scenario Outline: Create PETS Travel Document By Registered User with details co
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
-	#When I Login to Dynamics application
-	#When I opens the application
-	#And I assign the application to myself
-	#And I Pass the Microchip check
-	#And I go back
-	#And I Pass the Evidence check
-	#And I go back
-	#And I 'Authorise' the application
-	#Then the status is changed to 'Authorised'
-	#And I click on Back button in Pets Application
-	#And I should see the application in 'APPROVED' status
+	When Approve an application via backend
+	Then I click on Back button in Pets Application
+	And I should see the application in 'Approved' status
+	And click on signout button and verify the signout message on pets
+
 Examples:
 	| FullName    |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet    | PetName | Gender | Color     | IsSignificantFeatures |
 	| PetFerret's |  Yes                      | CV2 4NZ  | 07440345678 | Yes             | 123456789654321 | Ferret | Ferret  | Female | Chocolate | No                    |
 
-Scenario Outline: Create PETS Travel Document By Registered User with details not correct - Ferret - Rejected in Dynamics
+Scenario Outline: Create PETS Travel Document By Registered User with details not correct - Ferret - Rejected
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the What is your full name page
@@ -129,15 +123,10 @@ Scenario Outline: Create PETS Travel Document By Registered User with details no
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page	
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Fail the Microchip check
-	#And I go back
-	#And I 'Reject' the application with reason 'Invalid MC number'
-	#Then the status is changed to 'Rejected'
-	#And I click on Back button in Pets Application
-	#And I should not see the application in the Dashboard
+	When Reject an application via backend
+	Then I click on Back button in Pets Application
+	And I should not see the application in the Dashboard
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName    |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet    | PetName | Gender | Color | IsSignificantFeatures |
@@ -150,12 +139,13 @@ Scenario Outline: Create PETS Travel Document By Registered User with pet is not
 	And I selected the '<MicrochipOption>' option
 	When I click Continue button from microchipped page
 	Then I should redirected to the Get your pet microchipped before applying page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| IsRegisteredUser                | Are your details correct | MicrochipOption |
 	| Yes, I am the registered keeper | Yes                      | No              |
 
-Scenario Outline: Create PETS Travel Document By Registered User with enter address manually - Revoke in Dynamics
+Scenario Outline: Create PETS Travel Document By Registered User with enter address manually - Revoked
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the What is your full name page
@@ -209,18 +199,10 @@ Scenario Outline: Create PETS Travel Document By Registered User with enter addr
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Pass the Microchip check
-	#And I go back
-	#And I 'Authorise' the application
-	#Then the status is changed to 'Authorised'
-	#When I assign the application to myself
-	#And I 'Revoke' the application with reason 'Pet Deceased'
-	#Then the status is changed to 'Revoked'
-	#And I click on Back button in Pets Application
-	#And I should not see the application in the Dashboard
+	When Revoke an application via backend
+	Then I click on Back button in Pets Application
+	And I should not see the application in the Dashboard
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName | IsRegisteredUser                | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet    | PetName | Gender | Color | IsSignificantFeatures |

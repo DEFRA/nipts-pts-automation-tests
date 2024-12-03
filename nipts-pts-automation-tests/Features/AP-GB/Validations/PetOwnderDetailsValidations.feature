@@ -16,6 +16,7 @@ Background:
 Scenario Outline: Verify pet owner details page validations and should not moves to next page
 	When I click on continue button from Are your details correct page
 	Then I should see an error message '<ErrorMessage>' in pet owner details page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	 |  ErrorMessage						 |
@@ -29,6 +30,7 @@ Scenario Outline: Verify full name should not allows exceed limits
 	When I click Continue button from What is your full name page
 	Then I should not be redirected to What is your postcode page
 	And I should see an error message '<ErrorMessage>' in What is your full name page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName                                                                                                                                                                                                                                                                                                                 | Are your details correct | ErrorMessage								       |
@@ -52,6 +54,7 @@ Scenario Outline: Verify pet owner phone number page validations and should not 
 	When I click Continue button from What is your phone number page
 	Then I should see an error message '<ErrorMessage>' in What is your phone number page
 	And I should not be redirected to the Is your pet microchipped page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | PostCode | PhoneNumber                                                        | ErrorMessage                                               |
@@ -69,6 +72,7 @@ Scenario Outline: Verify postcode search page validations and should not moves t
 	And I provided the postcode '<PostCode>'
 	When I click Search button
 	Then I should see an error message '<ErrorMessage>' in What is your postcode page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | PostCode                           | ErrorMessage																|
@@ -89,6 +93,7 @@ Scenario Outline: Verify postcode search page by not selecting an address from d
 	When I click Search button
 	And I click Continue button from What is your postcode page
 	Then I should see an error message '<ErrorMessage>' in What is your postcode page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | PostCode | ErrorMessage                      |
@@ -104,6 +109,7 @@ Scenario Outline: Verify enter address manually validations with all fields blan
 	When I click the link Enter the address manually
 	And I click Continue button from What is your address page
 	Then I should see an error message '<ErrorMessages>' in What is your address page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | Address | ErrorMessages													    |
@@ -120,6 +126,7 @@ Scenario Outline: Verify enter address manually validations with maximum limit c
 	Then I have provided address details as '<Address>' for each field
 	When I click Continue button from What is your address page
 	Then I should see an error message '<ErrorMessages>' in What is your address page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName | Are your details correct | Address                                                                                                                                                                                                                                                            | ErrorMessages                                                                                                                                                                                                                                                                                |
@@ -137,6 +144,7 @@ Scenario Outline: Verify enter address manually validations with invalid postcod
 	Then I provided the postcode '<PostCode>'
 	When I click Continue button from What is your address page
 	Then I should see an error message '<ErrorMessages>' in What is your postcode page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | PostCode                           | ErrorMessages																     					  |

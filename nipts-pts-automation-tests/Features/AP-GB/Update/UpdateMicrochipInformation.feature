@@ -59,6 +59,7 @@ Scenario Outline: Modify PETS Microchip number By Registered User with details c
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | UpdatedMicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures |
@@ -111,6 +112,7 @@ Scenario Outline: Modify PETS Microchip scanned date By Registered User with det
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName  |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures |
@@ -160,6 +162,7 @@ Scenario Outline: Modify PETS Microchip scanned date By Registered User with det
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName  | IsRegisteredUser                | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet    | PetName | Gender | Color     | IsSignificantFeatures |
@@ -208,6 +211,7 @@ Scenario Outline: Modify PETS Microchip number By Registered User with details c
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName  |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | UpdatedMicrochipNumber | Pet    | PetName | Gender | Color     | IsSignificantFeatures |
