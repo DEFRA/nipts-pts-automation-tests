@@ -1,4 +1,5 @@
 ﻿using BoDi;
+using nipts_pts_API_tests.Application;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -9,11 +10,14 @@ namespace nipts_pts_automation_tests.Steps.CP
     [Binding]
     public class ApplicationSummaryPageSteps
     {
+        private readonly object _lock = new object();
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
 
         private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
         private IApplicationSummaryPage? _applicationSummaryPage => _objectContainer.IsRegistered<IApplicationSummaryPage>() ? _objectContainer.Resolve<IApplicationSummaryPage>() : null;
+        private IApplicationData? AppData => _objectContainer.IsRegistered<IApplicationData>() ? _objectContainer.Resolve<IApplicationData>() : null;
+        public ApplicationResponse ApplicationResponse { get; set; }
 
         public ApplicationSummaryPageSteps(ScenarioContext context, IObjectContainer container)
         {
@@ -49,6 +53,40 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenIShouldSeeAnErrorMessageInApplicationStatusPage(string errorMessage)
         {
             Assert.True(_applicationSummaryPage?.IsError(errorMessage), $"There is no error message found with - {errorMessage}");
+        }
+
+        [Given(@"Approve an application via backend")]
+        [When(@"Approve an application via backend")]
+        public void ThenApproveApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                AppData.GetApplicationToApprove(AppReference);
+
+            }
+        }
+
+        [When(@"Revoke an application via backend")]
+        public void ThenRevokeApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                AppData.GetApplicationToRevoke(AppReference);
+
+            }
+        }
+
+        [When(@"Reject an application via backend")]
+        public void ThenRejectApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                AppData.GetApplicationToReject(AppReference);
+
+            }
         }
 
     }

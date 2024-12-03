@@ -2,6 +2,7 @@
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
+using System.Net.NetworkInformation;
 
 namespace nipts_pts_automation_tests.Pages.CP.Pages
 {
@@ -22,6 +23,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement btnFootPassengerRadio => _driver.WaitForElementExists(By.CssSelector("#footPassenger"));
         private IWebElement bntVehicleRadio => _driver.WaitForElementExists(By.CssSelector("#vehiclePassenger"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
+        private IWebElement passangerReferred => _driver.WaitForElementExists(By.XPath("//input[@id ='gbRefersToDAERAOrSPS']"));
+        private IWebElement passangerAdvised => _driver.WaitForElementExists(By.XPath("//input[@id ='gbAdviseNoTravel']"));
+        private IWebElement passangerNotTravel => _driver.WaitForElementExists(By.XPath("//input[@id ='gbPassengerSaysNoTravel']"));
         #endregion
 
         #region Methods
@@ -79,6 +83,21 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
             return false;
         }
+
+        public void ClickOnSPSOutcome(string SPSStatus)
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(100,4000)", "");
+            _driver.ClickRadioButton(SPSStatus);
+        }
+
+        public void ClickOnGBOutcome()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(100,4000)", "");
+            passangerReferred.Click();
+            passangerAdvised.Click();
+            passangerNotTravel.Click();
+        }
+
         #endregion
 
     }

@@ -68,4 +68,8 @@
     <Folder Include="Features\AP-GB\PrintDownload\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\nipts-pts-API-tests\nipts-pts-API-tests.csproj" />
+  </ItemGroup>
+
 </Project>

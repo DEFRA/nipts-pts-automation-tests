@@ -20,6 +20,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement iconSearch => _driver.WaitForElement(By.XPath("//a[@href='/checker/document-search']//*[name()='svg']"));
         private IWebElement iconHome => _driver.WaitForElement(By.XPath("//span[normalize-space()='Home']"));
         private IWebElement lnkHeadersChange => _driver.WaitForElement(By.XPath("//a[normalize-space()='Change']"));
+        private IReadOnlyCollection<IWebElement> viewLinks => _driver.WaitForElements(By.XPath("//button[contains(text(),'View')]"));
         #endregion
 
         #region Methods
@@ -42,6 +43,18 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             iconHome.Click();
         }
-        #endregion
+
+        public void clickOnView()
+        {
+            foreach (WebElement element in viewLinks)
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(100,1000)", "");
+                Thread.Sleep(1000);
+                element.Click();
+                break;
+            }
+        }
+
+    #endregion
     }
 }

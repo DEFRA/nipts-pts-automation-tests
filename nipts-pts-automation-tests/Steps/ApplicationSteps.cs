@@ -128,6 +128,7 @@ namespace nipts_pts_automation_tests.Steps
             applicationPage.ClickOnViewYourPetTravelDoc();
         }
 
+        [When(@"I should see the application in '([^']*)' status")]
         [Then(@"I should see the application in '([^']*)' status")]
         public void ThenIShouldSeeTheApplicationInStatus(string applicationStatus)
         {

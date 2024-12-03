@@ -45,12 +45,12 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             Assert.True(Signin?.IsSignedIn(user?.UserId, user?.password), "Not able to sign in");
         }
 
-        //[When(@"click on signout button and verify the signout message")]
-        //[Then(@"click on signout button and verify the signout message")]
-        //public void ThenClickOnSignoutButtonAndVerifyTheSignoutMessage()
-        //{
-        //    Assert.True(Signin?.IsSignedOut(), "Not able to sign out");
-        //}
+        [When(@"click on signout button and verify the signout message on pets")]
+        [Then(@"click on signout button and verify the signout message on pets")]
+        public void ThenClickOnSignoutButtonAndVerifyTheSignoutMessage()
+        {
+            Assert.True(Signin?.IsSignedOut(), "Not able to sign out");
+        }
 
     }
 }

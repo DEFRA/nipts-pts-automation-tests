@@ -20,6 +20,13 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             _objectContainer = container;
         }
 
+        [When(@"I refresh the page")]
+        [Then(@"I refresh the page")]
+        public void ThenIRefreshThePage()
+        {
+            _driver?.Navigate().Refresh();
+        }
+
         [Then(@"I should navigate to Lifelong pet travel documents page")]
         public void ThenIShouldNavigateToLifelongPetTravelDocumentsPage()
         {

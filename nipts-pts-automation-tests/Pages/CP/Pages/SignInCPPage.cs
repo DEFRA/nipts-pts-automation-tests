@@ -19,6 +19,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
 
         #region Page objects
+        private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']"));
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
         private IWebElement btnSignIn => _driver.WaitForElement(By.XPath("//a[contains(text(),'Sign in')]"));
         private By signInConfirmBy => By.XPath("//h1[contains(@class,'govuk-heading-xl')]");
@@ -35,19 +36,24 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             btnSignIn.Click();
         }
 
-        public bool IsSignedIn(string userName, string password)
+        public void IsSignedIn(string userName, string password)
         {
-            UserId.SendKeys(userName);
-            Password.SendKeys(password);
-            _driver.WaitForElementCondition(ExpectedConditions.ElementToBeClickable(SignIn)).Click();
-            return _driver.WaitForElement(signInConfirmBy).Enabled;
+            if (PageHeading.Text == "Sign in using Government Gateway")
+            {
+                UserId.SendKeys(userName);
+                Password.SendKeys(password);
+                _driver.WaitForElementCondition(ExpectedConditions.ElementToBeClickable(SignIn)).Click();
+            }
         }
 
         public void EnterPassword()
         {
             Thread.Sleep(1000);
-            txtLoging.SendKeys(ConfigSetup.BaseConfiguration.TestConfiguration.EnvPassword);
-            btnContinue.Click();
+            if(PageHeading.Text == "This is a test environment")
+            { 
+                txtLoging.SendKeys(ConfigSetup.BaseConfiguration.TestConfiguration.EnvPassword);
+                btnContinue.Click(); 
+            }
         }
         #endregion
 

@@ -23,6 +23,7 @@ namespace nipts_pts_automation_tests.Data
     {
         public User GetUser(string application);
         public User GetUserById(string info);
+        public User GetUser(string application,string userType);
     }
 
     public class UserObject : IUserObject
@@ -70,6 +71,26 @@ namespace nipts_pts_automation_tests.Data
             }
             return User;
         }
+
+        public User GetUser(string application,string userType)
+        {
+            lock (_lock)
+            {
+                string jsonPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var filePath = Path.Combine(jsonPath, "Data", application.ToUpper(), "Users.json");
+
+                var builder = new ConfigurationBuilder();
+                builder.AddJsonFile(filePath, false, true);
+                var settings = builder.Build();
+                var usersList = settings.GetSection("Users").Get<List<User>>();
+                var filterList = usersList.FindAll(d => d.LoginInfo.Equals(userType));
+                Random rng = new Random();
+                User = filterList[rng.Next(filterList.Count)];
+            }
+            return User;
+        }
+
+
 
     }
 

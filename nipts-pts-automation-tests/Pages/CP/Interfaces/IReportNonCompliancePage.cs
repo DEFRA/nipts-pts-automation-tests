@@ -8,5 +8,7 @@
         bool VerifyTheExpectedStatus(string status);
         void SelectTypeOfPassenger(string radioButtonValue);
         bool IsError(string errorMessage);
+        void ClickOnSPSOutcome(string SPSStatus);
+        void ClickOnGBOutcome();
     }
 }

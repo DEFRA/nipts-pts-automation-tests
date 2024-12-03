@@ -6,5 +6,6 @@
         void FooterSearchButton();
         void HeadersChangeLink();
         void FooterHomeIcon();
+        void clickOnView();
     }
 }
