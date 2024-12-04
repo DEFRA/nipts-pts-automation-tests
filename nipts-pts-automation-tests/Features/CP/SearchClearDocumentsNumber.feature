@@ -21,13 +21,11 @@ Scenario Outline: Port checker Clear documents number from PTD search box
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
-	And I provided the '<PTDNumber>' of the application
-	When I click clear search button
-	And I click search button
+	When I click search button
 	Then I should see an error message "Enter a PTD number" in Find a document page
 Examples:
-	| Transportation | FerryRoute                    | PTDNumber |
-	| Ferry          | Birkenhead to Belfast (Stena) | 12345     |
+	| Transportation | FerryRoute                    | 
+	| Ferry          | Birkenhead to Belfast (Stena) |
 
 	Scenario Outline: Port checker Clear documents number from Application reference search box
 	Then I have selected '<Transportation>' radio option
@@ -38,14 +36,11 @@ Examples:
 	When I click search button from footer
 	Then I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
-	And I provided the Application Number '<ReferenceNumber>' of the application
-	When I click clear search button
-	Then I click search by '<ApplicationRadio>' radio button
 	When I click search button
 	Then I should see an error message "Enter an application number" in Find a document page
 Examples:
-	| Transportation | FerryRoute                    | ReferenceNumber | ApplicationRadio			  |
-	| Ferry          | Birkenhead to Belfast (Stena) | QRWD9DZ	       | Search by application number |
+	| Transportation | FerryRoute                    | ApplicationRadio	     	    |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by application number |
 
 Scenario Outline: Port checker Clear documents number from Microchip search box
 	Then I have selected '<Transportation>' radio option
@@ -56,11 +51,8 @@ Scenario Outline: Port checker Clear documents number from Microchip search box
 	When I click search button from footer
 	Then I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
-	And I provided the Microchip number '<MicrochipNumber>' of the application
-	When I click clear search button
-	Then I click search by '<ApplicationRadio>' radio button
 	When I click search button
 	Then I should see an error message "Enter a microchip number" in Find a document page
 Examples:
-	| Transportation | FerryRoute                    | MicrochipNumber	| ApplicationRadio		     |
-	| Ferry          | Birkenhead to Belfast (Stena) | 123456089012340  | Search by microchip number |
+	| Transportation | FerryRoute                    | ApplicationRadio		      |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |
