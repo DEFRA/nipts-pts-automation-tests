@@ -633,7 +633,7 @@ Scenario Outline: Check PETS Travel Document details By Reference number - statu
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Reference number of the application
 	When I click search button
-	And I should see the application status in 'Pending'
+	And I should see the application status in 'Awaiting verification'
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			    |
@@ -697,7 +697,7 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Microchip number of the application
 	When I click search button
-	And I should see the application status in 'Pending'
+	And I should see the application status in 'Awaiting verification'
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |
