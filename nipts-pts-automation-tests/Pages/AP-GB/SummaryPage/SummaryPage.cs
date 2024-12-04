@@ -22,8 +22,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.SummaryPage
         private IReadOnlyCollection<IWebElement> divMicrochipInformation => _driver.WaitForElements(By.XPath("//div[@id='document-microchip-card']//dl/div"));
         private IReadOnlyCollection<IWebElement> divPetDetails => _driver.WaitForElements(By.XPath("//div[@id='document-pet-card']//dl/div"));
         private IReadOnlyCollection<IWebElement> divPetOwnerDetails => _driver.WaitForElements(By.XPath("//div[@id='document-owner-card']//dl/div"));
-        private IWebElement lnkPDFDownload => _driver.WaitForElement(By.XPath("//a[contains(text(),'Download your application')]"));
-        private IWebElement lnkPrint => _driver.WaitForElement(By.XPath("//a[contains(text(),'Print your application')]"));
+        private IWebElement lnkPDFDownload => _driver.WaitForElement(By.XPath("//a[contains(text(),'Download your application')] | //a[contains(text(),'Download your document')]"));
+        private By lnkPrint => By.XPath("//button[contains(text(),'Print your application')] | //button[contains(text(),'Print your document')]");
         #endregion
 
         #region Methods
@@ -34,13 +34,16 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.SummaryPage
 
         public void ClickPDFDownloadLink()
         {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,4000)", "");
             lnkPDFDownload.Click();
         }
 
         public bool ClickPrintdLink()
         {
-            //lnkPrint.Click();
-            return true;
+            if(_driver.FindElements(lnkPrint).Count > 0)
+                return true;
+            else
+                return false;
         }
 
         public Summary GetSummaryDetails()

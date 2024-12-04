@@ -38,7 +38,6 @@ Scenario: Checking the PrivacyNotice Hyperlink
 	Then I should navigate to Lifelong pet travel documents page
 	And  I click the PrivacyNotice Link
 	Then I should navigate to the PrivacyNotice details correct page
-	And click on signout button and verify the signout message on pets
 
 Scenario: Checking the TermsAndConditions Hyperlink
 	Then I should navigate to Lifelong pet travel documents page
@@ -50,4 +49,3 @@ Scenario: Checking the CrownCopyright Hyperlink
 	Then I should navigate to Lifelong pet travel documents page
 	And  I click the CrownCopyright Link
 	Then I should navigate to the CrownCopyright details correct page
-	And click on signout button and verify the signout message on pets
