@@ -14,7 +14,7 @@ Background:
 	Then I should redirected to the Are your details correct page
 
 @PTSTest
-Scenario Outline: Print PETS Travel Document Dog and Cat - AWAITING VERIFICATION
+Scenario Outline: Print PETS Travel Document Dog and Cat - Pending
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -55,13 +55,14 @@ Scenario Outline: Print PETS Travel Document Dog and Cat - AWAITING VERIFICATION
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
 	And I click print link in summary page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName  | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color         | IsSignificantFeatures |
@@ -69,7 +70,7 @@ Examples:
 	| PetCat's  | Yes                      | CV2 4NZ  | 07440345678 | Yes             | 123456789654321 | Cat | Cat     | Female | Tortoiseshell | No                    |
 
 	@Test
-Scenario Outline: Print PETS Travel Document Ferret - AWAITING VERIFICATION
+Scenario Outline: Print PETS Travel Document Ferret - Pending
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -107,13 +108,14 @@ Scenario Outline: Print PETS Travel Document Ferret - AWAITING VERIFICATION
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
 	And I click print link in summary page
+	And click on signout button and verify the signout message on pets
 	
 Examples:
 	| FullName    |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet    | PetName | Gender | Color     | IsSignificantFeatures |
@@ -161,23 +163,18 @@ Scenario Outline: Print PETS Travel Document Dog and Cat - Approved
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Pass the Microchip check
-	#And I go back
-	#And I 'Authorise' the application
-	#Then the status is changed to 'Authorised'
-	#And I click on Back button in Pets Application
-	#And I should see the application in 'Approved' status
-	#When I have clicked the View hyperlink from home page
-	#Then I click print link in summary page
+	When Approve an application via backend
+	Then I click on Back button in Pets Application
+	And I should see the application in 'Approved' status
+	When I have clicked the View hyperlink from home page
+	Then I click print link in summary page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName  | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color         | IsSignificantFeatures |
@@ -223,23 +220,18 @@ Scenario Outline: Print PETS Travel Document Ferret - Approved
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Pass the Microchip check
-	#And I go back
-	#And I 'Authorise' the application
-	#Then the status is changed to 'Authorised'
-	#And I click on Back button in Pets Application
-	#And I should see the application in 'Approved' status
-	#When I have clicked the View hyperlink from home page
-	#Then I click print link in summary page
+	When Approve an application via backend
+	Then I click on Back button in Pets Application
+	And I should see the application in 'Approved' status
+	When I have clicked the View hyperlink from home page
+	Then I click print link in summary page
+	And click on signout button and verify the signout message on pets
 	
 Examples:
 	| FullName    |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet    | PetName | Gender | Color     | IsSignificantFeatures |

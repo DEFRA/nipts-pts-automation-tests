@@ -15,7 +15,7 @@ Background:
 	Then I should redirected to the Are your details correct page
 
 @PTSTest
-Scenario Outline: Create PETS Travel Document By Registered User with details correct - Authorised in Dynamics
+Scenario Outline: Create PETS Travel Document By Registered User with details correct - Approved
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -56,28 +56,22 @@ Scenario Outline: Create PETS Travel Document By Registered User with details co
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Pass the Microchip check
-	#And I go back
-	#And I 'Authorise' the application
-	#Then the status is changed to 'Authorised'
-	#And I click on Back button in Pets Application
-	#And I should see the application in 'Approved' status
+	When Approve an application via backend
+	Then I click on Back button in Pets Application
+	And I should see the application in 'Approved' status
 
 Examples:
 	| FullName  | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color         | IsSignificantFeatures |
 	| PetDog's  | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black         | Yes                   |
 	| PetCat's  | Yes                      | CV2 4NZ  | 07440345678 | Yes             | 123456789654321 | Cat | Cat     | Female | Tortoiseshell | No                    |
 
-Scenario Outline: Create PETS Travel Document By Registered User with details not correct - Revoked in Dynamics
+Scenario Outline: Create PETS Travel Document By Registered User with details not correct - Revoked
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the What is your full name page
@@ -130,24 +124,16 @@ Scenario Outline: Create PETS Travel Document By Registered User with details no
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Pass the Microchip check
-	#And I go back
-	#And I 'Authorise' the application
-	#Then the status is changed to 'Authorised'
-	#When I assign the application to myself
-	#And I 'Revoke' the application with reason 'Owner Left GB'
-	#Then the status is changed to 'Revoked'
-	#And I click on Back button in Pets Application
-	#And I should not see the application in the Dashboard
+	When Revoke an application via backend
+	Then I click on Back button in Pets Application
+	And I should not see the application in the Dashboard
+	And click on signout button and verify the signout message on pets
 
 
 Examples:
@@ -155,7 +141,7 @@ Examples:
 	| PetCat's |  No                       | CV2 4NZ  | 07440345678 | Yes             | 123456789654321 | Cat | Cat     | Female | White | No                    |
 	| PetDog's |  No                       | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   |
 
-Scenario Outline: Create PETS Travel Document By Registered User with enter address manually - Reject in Dynamics
+Scenario Outline: Create PETS Travel Document By Registered User with enter address manually - Rejected
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the What is your full name page
@@ -206,21 +192,16 @@ Scenario Outline: Create PETS Travel Document By Registered User with enter addr
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Fail the Microchip check
-	#And I go back
-	#And I 'Reject' the application with reason 'Invalid Application'
-	#Then the status is changed to 'Rejected'
-	#And I click on Back button in Pets Application
-	#And I should not see the application in the Dashboard
+	When Reject an application via backend
+	Then I click on Back button in Pets Application
+	And I should not see the application in the Dashboard
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures |
@@ -268,21 +249,16 @@ Scenario Outline: Create PETS Travel Document By Registered User with enter free
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Pass the Microchip check
-	#And I go back
-	#And I 'Authorise' the application
-	#Then the status is changed to 'Authorised'
-	#And I click on Back button in Pets Application
-	#And I should see the application in 'Approved' status
+	When Approve an application via backend
+	Then I click on Back button in Pets Application
+	And I should see the application in 'Approved' status
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Breed                |
@@ -332,21 +308,16 @@ Scenario Outline: Create PETS Travel Document By Registered User with other colo
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
-	#When I Login to Dynamics application
-	#And I opens the application
-	#And I assign the application to myself
-	#And I Pass the Microchip check
-	#And I go back
-	#And I 'Authorise' the application
-	#Then the status is changed to 'Authorised'
-	#And I click on Back button in Pets Application
-	#And I should see the application in 'Approved' status
+	When Approve an application via backend
+	Then I click on Back button in Pets Application
+	And I should see the application in 'Approved' status
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Breed                |
@@ -391,7 +362,7 @@ Scenario Outline: Create PETS Travel Document and navigate to Pets Owner details
 	And I can see the unique application reference number
 	When I click Apply for another lifelong pet travel document link
 	Then I should redirected to the Are your details correct page
-
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Breed                |

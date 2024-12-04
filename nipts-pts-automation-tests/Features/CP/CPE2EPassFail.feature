@@ -30,7 +30,7 @@ Examples:
 	| Transportation | FerryRoute                    | PTDNumber |
 	| Ferry          | Birkenhead to Belfast (Stena) | E6361B    |
 
-Scenario Outline: PTS port checker Fail application by PTD number - status in Awaiting verification
+Scenario Outline: PTS port checker Fail application by PTD number - status in Pending
 	Then I have selected '<Transportation>' radio option
 	Then I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -40,7 +40,7 @@ Scenario Outline: PTS port checker Fail application by PTD number - status in Aw
 	Then I navigate to Find a document page
 	And I provided the '<PTDNumber>' of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	And I select Fail radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
@@ -69,7 +69,7 @@ Examples:
 	| Transportation | FerryRoute                    | ReferenceNumber | ApplicationRadio             | 
 	| Ferry          | Birkenhead to Belfast (Stena) | H0GLMCI3		   | Search by application number | 
 
-Scenario Outline: PTS port checker Fail application by Reference number - status in Awaiting verification
+Scenario Outline: PTS port checker Fail application by Reference number - status in Pending
 	Then I have selected '<Transportation>' radio option
 	Then I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -80,7 +80,7 @@ Scenario Outline: PTS port checker Fail application by Reference number - status
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Reference number '<ReferenceNumber>' of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	And I select Fail radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
@@ -110,7 +110,7 @@ Examples:
 	| Transportation | FerryRoute                    | MicrochipNumber | ApplicationRadio           | 
 	| Ferry          | Birkenhead to Belfast (Stena) | 123456789012345 | Search by microchip number | 
 
-Scenario Outline: PTS port checker Fail application by Microchip number - status in Awaiting verification
+Scenario Outline: PTS port checker Fail application by Microchip number - status in Pending
 	Then I have selected '<Transportation>' radio option
 	Then I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -121,7 +121,7 @@ Scenario Outline: PTS port checker Fail application by Microchip number - status
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Microchip number '<MicrochipNumber>' of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	And I select Fail radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page

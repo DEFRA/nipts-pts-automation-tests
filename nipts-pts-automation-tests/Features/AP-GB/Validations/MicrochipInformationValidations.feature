@@ -25,6 +25,7 @@ Scenario Outline: Verify microchipped date should not allows future date
 	When I click Continue button from When was your pet microchipped page
 	Then I should see an error message "Enter a date that is in the past" in pets microchipped or last scanned page
 	And I should not be redirected to Is your pet a dog, cat or ferret? page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | MicrochipOption | MicrochipNumber |
@@ -42,6 +43,7 @@ Scenario Outline: Verify microchipped date should not allows older than 34 years
 	When I click Continue button from When was your pet microchipped page
 	Then I should not be redirected to Is your pet a dog, cat or ferret? page
 	And I should see an error message "Enter a date that is less than 34 years ago" in pets microchipped or last scanned page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | MicrochipOption | MicrochipNumber |
@@ -55,9 +57,11 @@ Scenario Outline: Verify microchipped page validations without selection and sho
 	When I click Continue button from microchipped page
 	Then I should see an error message '<ErrorMessage>' in microchipped page
 	And I should not be redirected to When was your pet microchipped or last scanned? page
+	And click on signout button and verify the signout message on pets
+
 Examples:
 	| FullName |  Are your details correct | MicrochipOption | MicrochipNumber | ErrorMessage                        |
-	| Pet Dog  |  Yes                      |                 |                 | Tell us if your pet is microchipped |
+	| Pet Dog  |  Yes                      |                 |                 | Select if your pet is microchipped |
 
 Scenario Outline: Verify microchipped page validations and should not moves to next page
 	Then I have selected '<Are your details correct>' option
@@ -68,6 +72,8 @@ Scenario Outline: Verify microchipped page validations and should not moves to n
 	When I click Continue button from microchipped page
 	Then I should see an error message '<ErrorMessage>' in microchipped page
 	And I should not be redirected to When was your pet microchipped or last scanned? page
+	And click on signout button and verify the signout message on pets
+
 Examples:
 	| FullName |  Are your details correct | MicrochipOption | MicrochipNumber | ErrorMessage                                 |
 	| Pet Dog  |  Yes                      | Yes             |                 | Enter your pet’s 15-digit microchip number   |
@@ -82,6 +88,7 @@ Scenario Outline: Verify microchip number should not allows less or more than 15
 	When I click Continue button from microchipped page
 	Then I should not be redirected to When was your pet microchipped or last scanned? page
 	And I should see an error message "Enter your pet’s 15-digit microchip number" in Is your pet microchipped page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | MicrochipOption | MicrochipNumber       |
@@ -115,6 +122,7 @@ Scenario Outline: The date on the microchip should be a future date relative to 
 	When I click on continue button from Do you know your pet's date of birth? page
 	Then I should not be redirected to the What is the main colour of your '<Pet>' page
 	And I should see an error message "Enter a date that is before the pet’s microchip date" in pets date of birth page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName |  Are your details correct | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color         |

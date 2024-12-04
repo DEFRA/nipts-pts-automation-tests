@@ -51,7 +51,7 @@ Scenario Outline: Check PETS Travel Document details By PTD number - status in A
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When Approve an application via backend
 	And I should see the application in 'Approved' status
 	When I have clicked the View hyperlink from home page
@@ -153,7 +153,7 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When Approve an application via backend
 	Then I should see the application in 'Approved' status
 	And click on signout button and verify the signout message on pets
@@ -255,7 +255,7 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When Approve an application via backend
 	And I should see the application in 'Approved' status
 	And click on signout button and verify the signout message on pets
@@ -358,7 +358,7 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When Revoke an application via backend
 	And click on signout button and verify the signout message on pets
 	When I navigate to the port checker application
@@ -485,7 +485,7 @@ Examples:
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
-	And I should see the application on pets in 'AWAITING VERIFICATION' status
+	And I should see the application on pets in 'Pending' status
 	When Reject an application via backend
 	And click on signout button and verify the signout message on pets
 	When I navigate to the port checker application
@@ -576,7 +576,7 @@ Examples:
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |
 
 @CPRegression
-Scenario Outline: Check PETS Travel Document details By Reference number - status in AWAITING VERIFICATION
+Scenario Outline: Check PETS Travel Document details By Reference number - status in Pending
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -633,14 +633,14 @@ Scenario Outline: Check PETS Travel Document details By Reference number - statu
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Reference number of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			    |
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by application number |
 
 @CPRegression
-Scenario Outline: Check PETS Travel Document details By Microchip number - status in AWAITING VERIFICATION
+Scenario Outline: Check PETS Travel Document details By Microchip number - status in Pending
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -697,7 +697,7 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Microchip number of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |

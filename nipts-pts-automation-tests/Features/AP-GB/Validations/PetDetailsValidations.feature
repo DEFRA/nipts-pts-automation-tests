@@ -89,8 +89,9 @@ Scenario Outline: Verify if the pet type is not selected then should not move to
 	When I click Continue button from When was your pet microchipped page
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should see an error message "Tell us if you are taking a pet dog, cat or ferret" in Is your pet a dog, cat or ferret page
+	Then I should see an error message "Select if you are taking a pet dog, cat or ferret" in Is your pet a dog, cat or ferret page
 	And I should not be redirected to What breed is your '<Pet>' page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName | Are your details correct | MicrochipOption | MicrochipNumber |
@@ -117,6 +118,7 @@ Scenario Outline: Verify pet name for validations and should not move to next pa
 	When I click on continue button from What is your pet's name page
 	Then I should see an error message '<ErrorMessage>' in What is your pets name page
 	And I should not be redirected to What sex is your pet page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName | Are your details correct | MicrochipOption | MicrochipNumber | Pet | Gender | ErrorMessage                                        | PetName                                                                                                                                                                                                                                                                                                                  |
@@ -144,8 +146,9 @@ Scenario Outline: Verify if the pets sex is not selected then should not move to
 	When I click on continue button from What is your pet's name page
 	Then I should redirected to the What sex is your pet page
 	When I click on continue button from What sex is your pet page
-	Then I should see an error message "Tell us if your pet is male or female" in What sex is your pet page
+	Then I should see an error message "Select if your pet is male or female" in What sex is your pet page
 	And I should not redirected to the Do you know your pet's date of birth page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName | Are your details correct | MicrochipOption | MicrochipNumber | Pet | PetName |
@@ -181,6 +184,7 @@ Scenario Outline: Verify pet colour page validations by not selecting any color
 	When I click on continue button from What is the main colour of your pet page
 	Then I should see an error message '<ErrorMessage>' in What is the main colour of your pet page
 	And I should not be redirected to the Does your pet have any significant features page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName | Are your details correct | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | ErrorMessage                       |
@@ -217,6 +221,7 @@ Scenario Outline: Verify pet colour page validations and should not moves to nex
 	When I click on continue button from What is the main colour of your pet page
 	Then I should see an error message '<ErrorMessage>' in What is the main colour of your pet page
 	And I should not be redirected to the Does your pet have any significant features page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName | Are your details correct | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | ErrorMessage                                                       | OtherColor                                                                                                                                                   |
@@ -255,10 +260,11 @@ Scenario Outline: Verify pet's significant features page validations by no selec
 	When I click on continue button from Does your pet have any significant features page
 	Then I should see an error message '<ErrorMessage>' in Does your pet have any significant features page
 	And I should not be redirected to the Check your answers and sign the declaration page
+	And click on signout button and verify the signout message on pets
 
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | ErrorMessage                                     |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black |                       | Tell us if your pet has any significant features |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | ErrorMessage                                    |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black |                       | Select if your pet has any significant features |
 
 Scenario Outline: Verify pet's significant features page validations and should not moves to next page
 	Then I have selected '<Are your details correct>' option
@@ -295,6 +301,7 @@ Scenario Outline: Verify pet's significant features page validations and should 
 	When I click on continue button from Does your pet have any significant features page
 	Then I should see an error message '<ErrorMessage>' in Does your pet have any significant features page
 	And I should not be redirected to the Check your answers and sign the declaration page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | SignificantFeatures                                                                                                                                                                                                                                                                                                      | ErrorMessage                                                          |
@@ -319,6 +326,7 @@ Scenario Outline: Verify pet's breed maximum characters limit validations and sh
 	When I click on continue button from What is your pet's breed page
 	Then I should see an error message '<ErrorMessage>' in What breed is your pet page
 	And I should not be redirected to the What is your pet's name page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Breed                                                                                                                                                      | ErrorMessage                               |
@@ -341,6 +349,7 @@ Scenario Outline: Verify pet's breed not selected validations and should not mov
 	When I click on continue button from What is your pet's breed page
 	Then I should see an error message '<ErrorMessage>' in What breed is your pet page
 	And I should not be redirected to the What is your pet's name page
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | ErrorMessage                          |

@@ -39,6 +39,7 @@ Scenario Outline: Create PETS Travel Document for PETS with or without Significa
 	When I click Send Application button in Declaration page
 	Then I should redirect to the Application submitted page
 	And I can see the application reference number
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| PetsOwnerDetails |  MicroChipNumberOn | MicroChipNumber | Pet		|	Breed		 |  PetName	   | Gender	| PetColor	| IsSignificanteFeatures|

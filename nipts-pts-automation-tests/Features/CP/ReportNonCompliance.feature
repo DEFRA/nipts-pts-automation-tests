@@ -32,7 +32,7 @@ Examples:
 	| Transportation | FerryRoute                    | PTDNumber |
 	| Ferry          | Birkenhead to Belfast (Stena) | E6361B    |
 
-Scenario Outline: PTS port checker Fail application status in non-compliance page - status in Awaiting verification
+Scenario Outline: PTS port checker Fail application status in non-compliance page - status in Pending
 	Then I have selected '<Transportation>' radio option
 	Then I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -43,12 +43,12 @@ Scenario Outline: PTS port checker Fail application status in non-compliance pag
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Microchip number '<MicrochipNumber>' of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	And I select Fail radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And I click Pet Travel Document details link dropdown
-	And I Verify status 'Awaiting verification' on Report non-compliance page
+	And I Verify status 'Pending' on Report non-compliance page
 	
 Examples:
 	| Transportation | FerryRoute                    | MicrochipNumber | ApplicationRadio           | 
