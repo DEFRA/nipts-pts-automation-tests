@@ -142,8 +142,7 @@ Scenario Outline: PTS port checker Fail application status in non-compliance pag
 	And I provided the Microchip number of the application
 	When I click search button
 	And I should see the application status in 'Awaiting verification'
-	And I select Fail radio button
-	When I click save and continue button from application status page
+	And click on continue
 	Then I should navigate to Report non-compliance page
 	And I click Pet Travel Document details link dropdown
 	And I Verify status 'Awaiting verification' on Report non-compliance page
