@@ -17,7 +17,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerDetailsPage
         private IWebElement PetOwnerDetailsPageHeading => _driver.WaitForElement(By.ClassName("govuk-fieldset__heading"), true);
         private IWebElement DetailsRadioButtonYes => _driver.WaitForElementExists(By.CssSelector("#Yes"));
         private IWebElement DetailsRadioButtonNo => _driver.WaitForElementExists(By.CssSelector("#No"));
-        public IWebElement petOwnersPhoneNumber => _driver.WaitForElement(By.XPath("//*[normalize-space(text())='Phone Number']/following-sibling::dd"), true);
+        public IWebElement petOwnersPhoneNumber => _driver.WaitForElement(By.XPath("//*[normalize-space(text())='Phone number']/following-sibling::dd"), true);
         public IWebElement petOwnerName => _driver.WaitForElement(By.XPath("//*[normalize-space(text())='Name']/following-sibling::dd"));
         public IWebElement updatedPetOwnerAddress => _driver.WaitForElement(By.XPath("//*[normalize-space(text())='Address']//following-sibling::dd"), true);
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
