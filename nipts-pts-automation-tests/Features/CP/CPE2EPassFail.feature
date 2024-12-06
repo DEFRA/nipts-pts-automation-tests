@@ -215,7 +215,7 @@ Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio           | 
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number | 
 
-Scenario Outline: PTS port checker Fail application by Reference number - status in Pending
+Scenario Outline: PTS port checker continue application by Reference number - status in Pending
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -273,15 +273,14 @@ Scenario Outline: PTS port checker Fail application by Reference number - status
 	And I provided the Reference number of the application
 	When I click search button
 	And I should see the application status in 'Awaiting verification'
-	And I select Fail radio button
-	When I click save and continue button from application status page
+	And click on continue
 	Then I should navigate to Report non-compliance page
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio             | 
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by application number |
 
-Scenario Outline: PTS port checker Fail application by Microchip number - status in Pending
+Scenario Outline: PTS port checker continue application by Microchip number - status in Pending
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -339,8 +338,7 @@ Scenario Outline: PTS port checker Fail application by Microchip number - status
 	And I provided the Microchip number of the application
 	When I click search button
 	And I should see the application status in 'Awaiting verification'
-	And I select Fail radio button
-	When I click save and continue button from application status page
+	And click on continue
 	Then I should navigate to Report non-compliance page
 	
 Examples:
