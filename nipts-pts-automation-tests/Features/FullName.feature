@@ -3,7 +3,6 @@ Feature: FullName
 
 Update and verify Full Name on Pets application Portal
 
-@CrossBrowser2
 Scenario: Enter Full Name on Pets 
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
