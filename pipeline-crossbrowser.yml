@@ -60,21 +60,6 @@ stages:
         dependsOn: ''
         targetBrowserName: ${{parameters.Target}}
 
-  - stage: AndroidSamsungRun
-    displayName: AndroidSamsungRun
-    jobs:
-    - template: run-test-template.yml
-      parameters:
-        jobName: AndroidSamsungRun
-        envConfigParam: ${{ parameters.Environment}}
-        apiEndPoint: ${{ parameters.ApiEndpoint}}
-        branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'Samsung Galaxy S23'
-        BSOSVersion: '13.0'
-        dependsOn: ''
-        targetBrowserName: 'samsung'
-
         
   - stage: ChromeBrowserRun
     displayName: ChromeBrowserRun
