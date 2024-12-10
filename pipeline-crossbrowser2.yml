@@ -61,21 +61,6 @@ stages:
         targetBrowserName: ${{parameters.Target}}
 
         
-  - stage: IOSIphoneSafari14Run
-    displayName: IOSIphoneSafari14Run
-    jobs:
-    - template: run-test-template.yml
-      parameters:
-        jobName: IOSIphoneSafari14Run
-        envConfigParam: ${{ parameters.Environment}}
-        apiEndPoint: ${{ parameters.ApiEndpoint}}
-        branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'iPhone 14'
-        BSOSVersion: '18'
-        dependsOn: ''
-        targetBrowserName: 'safari'
-
   - stage: AndroidSamsungRun
     displayName: AndroidSamsungRun
     jobs:
@@ -105,3 +90,18 @@ stages:
         BSOSVersion: 'Ventura'
         dependsOn: ''
         targetBrowserName: 'Safari'
+
+  - stage: IOSIphoneSafari14Run
+    displayName: IOSIphoneSafari14Run
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: IOSIphoneSafari14Run
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        DeviceName: 'iPhone 14'
+        BSOSVersion: '18'
+        dependsOn: ''
+        targetBrowserName: 'safari'
