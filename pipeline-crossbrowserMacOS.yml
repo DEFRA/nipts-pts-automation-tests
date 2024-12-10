@@ -24,7 +24,7 @@ parameters:
     default: 'Edge'
   
 schedules:
-- cron: "0 14 * * Mon,Tue,Wed,Thu,Fri"
+- cron: "0 12 * * Mon,Tue,Wed,Thu,Fri"
   displayName: Daily CrossBrowser build
   branches:
     include:
@@ -60,28 +60,12 @@ stages:
         dependsOn: ''
         targetBrowserName: ${{parameters.Target}}
 
-        
-  - stage: AndroidSamsungRun
-    displayName: AndroidSamsungRun
-    jobs:
-    - template: run-test-template.yml
-      parameters:
-        jobName: AndroidSamsungRun
-        envConfigParam: ${{ parameters.Environment}}
-        apiEndPoint: ${{ parameters.ApiEndpoint}}
-        branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'Samsung Galaxy S23'
-        BSOSVersion: '13.0'
-        dependsOn: ''
-        targetBrowserName: 'samsung'
-
   - stage: MacOSSafariBrowserRun
     displayName: MacOSSafariBrowserRun
     jobs:
     - template: run-test-template.yml
       parameters:
-        jobName: MacOSSafariBrowserRun
+        jobName: macOSSafariBrowserRun
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
@@ -91,17 +75,17 @@ stages:
         dependsOn: ''
         targetBrowserName: 'Safari'
 
-  - stage: IOSIphoneSafari14Run
-    displayName: IOSIphoneSafari14Run
+  - stage: MacOSChromeBrowserRun
+    displayName: MacOSChromeBrowserRun
     jobs:
     - template: run-test-template.yml
       parameters:
-        jobName: IOSIphoneSafari14Run
+        jobName: MacOSChromeBrowserRun
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'iPhone 14'
-        BSOSVersion: '18'
+        DeviceName: 'OS X'
+        BSOSVersion: 'Ventura'
         dependsOn: ''
-        targetBrowserName: 'Safari'
+        targetBrowserName: 'Chrome'

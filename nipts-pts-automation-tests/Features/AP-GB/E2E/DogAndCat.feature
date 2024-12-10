@@ -14,7 +14,7 @@ Background:
 	When I click Create a new pet travel document button
 	Then I should redirected to the Are your details correct page
 
-@PTSTest @CrossBrowser
+@CrossBrowser
 Scenario Outline: Create PETS Travel Document By Registered User with details correct - Approved
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
@@ -70,7 +70,7 @@ Examples:
 	| FullName  | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color         | IsSignificantFeatures |
 	| PetDog's  | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black         | Yes                   |
 
-@PTSTest
+@CrossBrowser2
 Scenario Outline: Create CAT PETS Travel Document By Registered User with details correct - Approved
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
