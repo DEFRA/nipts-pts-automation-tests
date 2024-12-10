@@ -14,7 +14,7 @@ Background:
 	When I click Create a new pet travel document button
 	Then I should redirected to the Are your details correct page
 
-@PTSTest
+@PTSTest @CrossBrowser
 Scenario Outline: Create PETS Travel Document By Registered User with details correct - Approved
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
