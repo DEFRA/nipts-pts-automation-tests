@@ -6,6 +6,7 @@ using OpenQA.Selenium.Safari;
 using OpenQA.Selenium;
 using nipts_pts_automation_tests.Configuration;
 using TechTalk.SpecFlow;
+using OpenQA.Selenium.Internal;
 
 namespace nipts_pts_automation_tests.Capabilities
 {
@@ -57,6 +58,8 @@ namespace nipts_pts_automation_tests.Capabilities
                 driverOptions = new SafariOptions();
             else if (_target.Contains("Firefox"))
                 driverOptions = new FirefoxOptions();
+            else if (_target.Contains("samsung"))
+                driverOptions = new ChromeOptions();
 
             AddDictionaryValuesInDriverOptions(driverOptions, _capDictionary);
             driverOptions.AddAdditionalOption("bstack:options", _browserstackOptions);

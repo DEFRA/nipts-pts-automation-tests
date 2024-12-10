@@ -104,4 +104,4 @@ stages:
         DeviceName: 'iPhone 14'
         BSOSVersion: '18'
         dependsOn: ''
-        targetBrowserName: 'safari'
+        targetBrowserName: 'Safari'
