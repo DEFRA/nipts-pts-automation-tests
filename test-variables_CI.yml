@@ -44,6 +44,12 @@ variables:
     value: 'TestCategory=CrossBrowser'
   ${{ if eq(parameters.jobNameParam, 'IOSIphone14Run') }}:
     value: 'TestCategory=CrossBrowser'
+  ${{ if eq(parameters.jobNameParam, 'IOSIphoneSafari14Run') }}:
+    value: 'TestCategory=CrossBrowser2'
+  ${{ if eq(parameters.jobNameParam, 'AndroidSamsungRun') }}:
+    value: 'TestCategory=CrossBrowser2'
+  ${{ if eq(parameters.jobNameParam, 'MacOSSafariBrowserRun') }}:
+    value: 'TestCategory=CrossBrowser2'
   ${{ if eq(parameters.jobNameParam, 'APGBRegression') }}:
     value: 'TestCategory=APGBRegression'
   ${{ if eq(parameters.jobNameParam, 'CPRegression') }}:
