@@ -72,8 +72,9 @@ stages:
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
         DeviceName: 'Samsung Galaxy S23'
         BSOSVersion: '13.0'
+        BSBrowserVersion: ''
         dependsOn: ''
-        targetBrowserName: 'samsung'
+        targetBrowserName: 'chrome'
 
   - stage: AndroidSamsungChromeRun
     displayName: AndroidSamsungChromeRun
@@ -87,5 +88,6 @@ stages:
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
         DeviceName: 'Samsung Galaxy S23'
         BSOSVersion: '13.0'
+        BSBrowserVersion: ''
         dependsOn: ''
-        targetBrowserName: 'Chrome'
+        targetBrowserName: 'samsung'

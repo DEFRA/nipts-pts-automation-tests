@@ -72,8 +72,9 @@ stages:
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
         DeviceName: 'OS X'
         BSOSVersion: 'Ventura'
+        BSBrowserVersion: 'latest'
         dependsOn: ''
-        targetBrowserName: 'Safari'
+        targetBrowserName: 'Chrome'
 
   - stage: MacOSChromeBrowserRun
     displayName: MacOSChromeBrowserRun
@@ -87,5 +88,6 @@ stages:
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
         DeviceName: 'OS X'
         BSOSVersion: 'Ventura'
+        BSBrowserVersion: '16.5'
         dependsOn: ''
-        targetBrowserName: 'Chrome'
+        targetBrowserName: 'Safari'

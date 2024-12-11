@@ -61,22 +61,6 @@ stages:
         targetBrowserName: ${{parameters.Target}}
 
 
-  - stage: IOSIphoneSafari14Run
-    displayName: IOSIphoneSafari14Run
-    jobs:
-    - template: run-test-template.yml
-      parameters:
-        jobName: IOSIphoneSafari14Run
-        envConfigParam: ${{ parameters.Environment}}
-        apiEndPoint: ${{ parameters.ApiEndpoint}}
-        branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'iPhone 14'
-        BSOSVersion: '18'
-        dependsOn: ''
-        targetBrowserName: 'Safari'
-
-
   - stage: IOSIphone14ChromeRun
     displayName: IOSIphone14ChromeRun
     jobs:
@@ -89,6 +73,7 @@ stages:
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
         DeviceName: 'iPhone 14'
         BSOSVersion: '18'
+        BSBrowserVersion: ''
         dependsOn: ''
         targetBrowserName: 'Chrome'
 
@@ -104,8 +89,25 @@ stages:
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
         DeviceName: 'iPad Pro 12.9 2022'
         BSOSVersion: '16'
+        BSBrowserVersion: ''
         dependsOn: ''
         targetBrowserName: 'Chrome'
+
+  - stage: IOSIphoneSafari14Run
+    displayName: IOSIphoneSafari14Run
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: IOSIphoneSafari14Run
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        DeviceName: 'iPhone 14'
+        BSOSVersion: '18'
+        BSBrowserVersion: ''
+        dependsOn: ''
+        targetBrowserName: 'safari'
 
   - stage: IOSIpad12SafariRun
     displayName: IOSIpad12SafariRun
@@ -119,5 +121,6 @@ stages:
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
         DeviceName: 'iPad Pro 12.9 2022'
         BSOSVersion: '16'
+        BSBrowserVersion: ''
         dependsOn: ''
-        targetBrowserName: 'Safari'
+        targetBrowserName: 'safari'

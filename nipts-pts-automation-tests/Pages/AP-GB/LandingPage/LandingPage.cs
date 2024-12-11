@@ -16,6 +16,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LandingPage
         private IWebElement txtLoging => _driver.WaitForElement(By.XPath("//input[@id='password'] | //input[@id='EnteredPassword']"));
 
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
+        private IWebElement AcceptAdditionalCookies => _driver.WaitForElement(By.XPath("//button[contains(text(),'Accept additional cookies')]"));
+        private IWebElement HideCookieMessage => _driver.WaitForElement(By.XPath("//div[@id='govuk-cookie-banner-accepted'] //button[contains(text(),'Hide cookie message')]"));
 
         #endregion Page Objects
 
@@ -30,6 +32,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LandingPage
 
         public bool IsPageLoaded(string pageName)
         {
+            AcceptAdditionalCookies.Click();
+            HideCookieMessage.Click();
             return PageHeading.Text.Contains(pageName);
         }
 

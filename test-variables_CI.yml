@@ -20,7 +20,7 @@ variables:
 - name: Environment
   value:  ${{ parameters.env }}
 - name: Build
-  value: ReMos_UI_Tests_$(Build.BuildNumber)
+  value: Pets_UI_Tests_$(Build.BuildNumber)
 - name: Target
   value: ${{ parameters.targerBrowser }}
 - name: Where
