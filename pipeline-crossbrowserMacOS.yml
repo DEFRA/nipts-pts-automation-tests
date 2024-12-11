@@ -19,6 +19,9 @@ parameters:
   - name: BSOSVersion
     type: string
     default: '11'
+  - name: BSBrowserVersion
+    type: string
+    default: ''
   - name: Target
     type: string
     default: 'Edge'
@@ -57,6 +60,7 @@ stages:
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
         DeviceName: ${{parameters.DeviceName}}
         BSOSVersion: ${{parameters.BSOSVersion}}
+        BSBrowserVersion: ''
         dependsOn: ''
         targetBrowserName: ${{parameters.Target}}
 
