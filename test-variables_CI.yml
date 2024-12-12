@@ -15,6 +15,8 @@ variables:
   value: 'Windows'
 - name: BSOSVersion
   value: '11'
+- name: BSBrowserVersion
+  value: 'latest'
 - name: runTrigger
   value: 'devpipeline'
 - name: Environment

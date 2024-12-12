@@ -13,6 +13,8 @@ parameters:
     type: string
   - name: BSOSVersion
     type: string
+  - name: BSBrowserVersion
+    type: string
   - name: dependsOn
     type: string
   - name: targetBrowserName
