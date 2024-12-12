@@ -19,6 +19,9 @@ parameters:
   - name: BSOSVersion
     type: string
     default: '11'
+  - name: BSBrowserVersion
+    type: string
+    default: 'latest'
   - name: Target
     type: string
     default: 'Edge'
