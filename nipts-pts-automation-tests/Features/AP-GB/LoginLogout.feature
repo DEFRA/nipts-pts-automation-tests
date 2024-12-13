@@ -12,7 +12,6 @@ Background:
 Scenario: SignIn
 	Then sign in with valid credentials with logininfo
 
-@CrossBrowser3
 Scenario: SignOut
 	Then sign in with valid credentials with logininfo
 	And  click on signout button and verify the signout message
