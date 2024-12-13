@@ -9,11 +9,11 @@ parameters:
     type: string
   - name: SeleniumGrid
     type: string
-  - name: DeviceName
+  - name: TestDeviceName
     type: string
-  - name: BSOSVersion
+  - name: OSVersionName
     type: string
-  - name: BSBrowserVersion
+  - name: BrowserVersionName
     type: string
   - name: dependsOn
     type: string
@@ -35,9 +35,9 @@ jobs:
         env: ${{parameters.envConfigParam}}
         jobNameParam: ${{parameters.jobName}}
         targetBrowsertargetBrowser: ${{parameters.targetBrowserName}}
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: ${{parameters.BSOSVersion}}
-        BSBrowserVersion: ${{parameters.BSBrowserVersion}}
+        DeviceNameParam: ${{parameters.TestDeviceName}}
+        BSOSVersionParam: ${{parameters.OSVersionName}}
+        BSBrowserVersionParam: ${{parameters.BrowserVersionName}}
 
   steps:
     

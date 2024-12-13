@@ -58,9 +58,9 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: ${{parameters.BSOSVersion}}
-        BSBrowserVersion: ''
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: ${{parameters.Target}}
 
@@ -74,9 +74,9 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'OS X'
-        BSOSVersion: 'Ventura'
-        BSBrowserVersion: 'latest'
+        TestDeviceName: 'OS X'
+        OSVersionName: 'Ventura'
+        BrowserVersionName: 'latest'
         dependsOn: ''
         targetBrowserName: 'Chrome'
 
@@ -90,8 +90,8 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'OS X'
-        BSOSVersion: 'Ventura'
-        BSBrowserVersion: '16.5'
+        TestDeviceName: 'OS X'
+        OSVersionName: 'Ventura'
+        BrowserVersionName: '16.5'
         dependsOn: ''
         targetBrowserName: 'Safari'

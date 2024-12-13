@@ -9,10 +9,10 @@ Background:
 	When I click Continue button from Landing page
 	Then I should redirected to the Sign in using Government Gateway page
 
-@CrossBrowser3
 Scenario: SignIn
 	Then sign in with valid credentials with logininfo
 
+@CrossBrowser3
 Scenario: SignOut
 	Then sign in with valid credentials with logininfo
 	And  click on signout button and verify the signout message

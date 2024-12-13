@@ -3,11 +3,11 @@ parameters:
     type: string
   - name: env
     type: string
-  - name: DeviceName
+  - name: TestDevice
     type: string
-  - name: BSOSVersion
+  - name: OSVersion
     type: string
-  - name: BSBrowserVersion
+  - name: BrowserVersion
     type: string
   - name: targetBrowser
     type: string
@@ -18,11 +18,11 @@ variables:
 - name: SeleniumGrid
   value: 'https://hub.browserstack.com/wd/hub/'
 - name: DeviceName
-  value: ${{ parameters.DeviceName }}
+  value: ${{ parameters.TestDevice }}
 - name: BSOSVersion
-  value: ${{ parameters.BSOSVersion }}
+  value: ${{ parameters.OSVersion }}
 - name: BSBrowserVersion
-  value: ${{ parameters.BSBrowserVersion }}
+  value: ${{ parameters.BrowserVersion }}
 - name: runTrigger
   value: 'devpipeline'
 - name: Environment
