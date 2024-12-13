@@ -39,12 +39,14 @@ namespace nipts_pts_automation_tests.Capabilities
 
             _capDictionary.Add("autoGrantPermission:", true);
             _capDictionary.Add("osVersion", _bs_os_version);
+            _browserstackOptions.Add("osVersion", _bs_os_version);
 
             if (_osList.Contains(_deviceName.ToUpper()))
             {
                 _capDictionary.Add("os", _deviceName);
                 _browserstackOptions.Add("os", _deviceName);
-                _browserstackOptions.Add("browser", _target);
+                _browserstackOptions.Add("browserName", _target);
+                _capDictionary.Add("browserVersion", _bs_browser_version);
                 _browserstackOptions.Add("browserVersion", _bs_browser_version);
             }
             else
