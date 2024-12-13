@@ -58,9 +58,9 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: ${{parameters.BSOSVersion}}
-        BSBrowserVersion: ''
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ${{parameters.BSBrowserVersion}}
         dependsOn: ''
         targetBrowserName: ${{parameters.Target}}
 
@@ -75,9 +75,9 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'iPhone 14'
-        BSOSVersion: '18'
-        BSBrowserVersion: ''
+        TestDeviceName: 'iPhone 14'
+        OSVersionName: '18'
+        BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'Chrome'
 
@@ -91,9 +91,9 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'iPad Pro 12.9 2022'
-        BSOSVersion: '16'
-        BSBrowserVersion: ''
+        TestDeviceName: 'iPad Pro 12.9 2022'
+        OSVersionName: '16'
+        BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'Chrome'
 
@@ -107,9 +107,9 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'iPhone 14'
-        BSOSVersion: '18'
-        BSBrowserVersion: ''
+        TestDeviceName: 'iPhone 14'
+        OSVersionName: '18'
+        BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'safari'
 
@@ -123,8 +123,8 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'iPad Pro 12.9 2022'
-        BSOSVersion: '16'
-        BSBrowserVersion: ''
+        TestDeviceName: 'iPad Pro 12.9 2022'
+        OSVersionName: '16'
+        BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'safari'

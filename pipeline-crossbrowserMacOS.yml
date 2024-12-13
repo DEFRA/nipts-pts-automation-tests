@@ -60,7 +60,7 @@ stages:
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
         TestDeviceName: ${{parameters.DeviceName}}
         OSVersionName: ${{parameters.BSOSVersion}}
-        BrowserVersionName: ''
+        BrowserVersionName: ${{parameters.BSBrowserVersion}}
         dependsOn: ''
         targetBrowserName: ${{parameters.Target}}
 

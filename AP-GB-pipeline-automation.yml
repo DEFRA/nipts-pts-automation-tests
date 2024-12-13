@@ -58,11 +58,11 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ''  
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: ${{parameters.BSOSVersion}}
-        BSBrowserVersion: ${{parameters.BSBrowserVersion}}
-        targetBrowserName: ${{parameters.Target}}
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ${{parameters.BSBrowserVersion}}
         dependsOn: ''
+        targetBrowserName: ${{parameters.Target}}
         
   - stage: APGBRegression
     displayName: APGBRegression
@@ -74,8 +74,8 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: '' 
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: ${{parameters.BSOSVersion}}
-        BSBrowserVersion: ${{parameters.BSBrowserVersion}}
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ${{parameters.BSBrowserVersion}}
         targetBrowserName: ${{parameters.Target}}
         dependsOn: 'EnvironmentCheck'

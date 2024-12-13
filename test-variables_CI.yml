@@ -43,23 +43,23 @@ variables:
   ${{ if eq(parameters.jobNameParam, 'SmokeTest') }}:
     value: 'TestCategory=SmokeTest'
   ${{ if eq(parameters.jobNameParam, 'FirefoxBrowserRun') }}:
-    value: 'TestCategory=CrossBrowser'
+    value: 'TestCategory=CrossBrowser3'
   ${{ if eq(parameters.jobNameParam, 'ChromeBrowserRun') }}:
-    value: 'TestCategory=CrossBrowser'
+    value: 'TestCategory=CrossBrowser3'
   ${{ if eq(parameters.jobNameParam, 'EdgeBrowserRun') }}:
-    value: 'TestCategory=CrossBrowser'
+    value: 'TestCategory=CrossBrowser3'
   ${{ if eq(parameters.jobNameParam, 'IOSIpad12ChromeRun') }}:
-    value: 'TestCategory=CrossBrowser'
+    value: 'TestCategory=CrossBrowser3'
   ${{ if eq(parameters.jobNameParam, 'IOSIpad12SafariRun') }}:
-    value: 'TestCategory=CrossBrowser'
+    value: 'TestCategory=CrossBrowser3'
   ${{ if eq(parameters.jobNameParam, 'IOSIphoneSafari14Run') }}:
-    value: 'TestCategory=CrossBrowser2'
+    value: 'TestCategory=CrossBrowser3'
   ${{ if eq(parameters.jobNameParam, 'IOSIphone14ChromeRun') }}:
-    value: 'TestCategory=CrossBrowser2'
+    value: 'TestCategory=CrossBrowser3'
   ${{ if eq(parameters.jobNameParam, 'AndroidSamsungRun') }}:
-    value: 'TestCategory=CrossBrowser2'
+    value: 'TestCategory=CrossBrowser3'
   ${{ if eq(parameters.jobNameParam, 'AndroidSamsungChromeRun') }}:
-    value: 'TestCategory=CrossBrowser2'
+    value: 'TestCategory=CrossBrowser3'
   ${{ if eq(parameters.jobNameParam, 'MacOSSafariBrowserRun') }}:
     value: 'TestCategory=CrossBrowser3'
   ${{ if eq(parameters.jobNameParam, 'MacOSChromeBrowserRun') }}:

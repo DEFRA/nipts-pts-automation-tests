@@ -58,9 +58,9 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: ${{parameters.BSOSVersion}}
-        BSBrowserVersion: ''
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ${{parameters.BSBrowserVersion}}
         dependsOn: ''
         targetBrowserName: ${{parameters.Target}}
 
@@ -74,9 +74,9 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'Samsung Galaxy S23'
-        BSOSVersion: '13.0'
-        BSBrowserVersion: ''
+        TestDeviceName: 'Samsung Galaxy S23'
+        OSVersionName: '13.0'
+        BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'chrome'
 
@@ -90,8 +90,8 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'Samsung Galaxy S23'
-        BSOSVersion: '13.0'
-        BSBrowserVersion: ''
+        TestDeviceName: 'Samsung Galaxy S23'
+        OSVersionName: '13.0'
+        BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'samsung'

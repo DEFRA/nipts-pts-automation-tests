@@ -58,9 +58,9 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: ${{parameters.BSOSVersion}}
-        BSBrowserVersion: ''
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ${{parameters.BSBrowserVersion}}
         dependsOn: ''
         targetBrowserName: ${{parameters.Target}}
 
@@ -74,9 +74,9 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: ${{parameters.BSOSVersion}}
-        BSBrowserVersion: ''
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ''
         dependsOn: 'EnvironmentCheck'
         targetBrowserName: 'Chrome'
 
@@ -91,9 +91,9 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: '11'
-        BSBrowserVersion: ''
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: '11'
+        BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'Edge'
 
@@ -107,8 +107,8 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: '11'
-        BSBrowserVersion: ''
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: '11'
+        BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'Firefox'
