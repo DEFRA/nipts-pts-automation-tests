@@ -18,7 +18,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[@class='govuk-heading-xl'] | //h1[@class='govuk-heading-l'] | //h1[@class='govuk-fieldset__heading']"), true);
         private IWebElement UserId => _driver.FindElement(By.Id("user_id"));
         private IWebElement Password => _driver.FindElement(By.Id("password"));
-        private IWebElement SignIn => _driver.WaitForElement(By.Id("continue"));
+        private IWebElement SignIn => _driver.WaitForElement(By.XPath("//button[contains(text(),'Sign in')]"));
         private IWebElement SignInConfirm => _driver.WaitForElement(By.Id("Link-SignOut"));
         private By SignInConfirmBy => By.XPath("//a[@href='/User/OSignOut']");
         private IWebElement CreateSignInDetails => _driver.WaitForElement(By.XPath("//a[contains(text(),'Create sign in')]"));
@@ -49,6 +49,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         {
             UserId.SendKeys(userName);
             Password.SendKeys(password);
+            Thread.Sleep(1000);
             _driver.WaitForElementCondition(ExpectedConditions.ElementToBeClickable(SignIn)).Click();
             return _driver.WaitForElement(SignInConfirmBy).Enabled;
         }
