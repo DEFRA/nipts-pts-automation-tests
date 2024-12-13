@@ -34,7 +34,10 @@ jobs:
       parameters:
         env: ${{parameters.envConfigParam}}
         jobNameParam: ${{parameters.jobName}}
-        targerBrowser: ${{parameters.targetBrowserName}}
+        targetBrowsertargetBrowser: ${{parameters.targetBrowserName}}
+        DeviceName: ${{parameters.DeviceName}}
+        BSOSVersion: ${{parameters.BSOSVersion}}
+        BSBrowserVersion: ${{parameters.BSBrowserVersion}}
 
   steps:
     

@@ -3,7 +3,13 @@ parameters:
     type: string
   - name: env
     type: string
-  - name: targerBrowser
+  - name: DeviceName
+    type: string
+  - name: BSOSVersion
+    type: string
+  - name: BSBrowserVersion
+    type: string
+  - name: targetBrowser
     type: string
 
 
@@ -12,11 +18,11 @@ variables:
 - name: SeleniumGrid
   value: 'https://hub.browserstack.com/wd/hub/'
 - name: DeviceName
-  value: 'Windows'
+  value: ${{ parameters.DeviceName }}
 - name: BSOSVersion
-  value: '11'
+  value: ${{ parameters.BSOSVersion }}
 - name: BSBrowserVersion
-  value: 'latest'
+  value: ${{ parameters.BSBrowserVersion }}
 - name: runTrigger
   value: 'devpipeline'
 - name: Environment
@@ -24,7 +30,7 @@ variables:
 - name: Build
   value: Pets_UI_Tests_$(Build.BuildNumber)
 - name: Target
-  value: ${{ parameters.targerBrowser }}
+  value: ${{ parameters.targetBrowser }}
 - name: Where
   ${{ if eq(parameters.jobNameParam, 'EnvironmentCheck') }}:
     value: 'TestCategory=EnvCheck'
