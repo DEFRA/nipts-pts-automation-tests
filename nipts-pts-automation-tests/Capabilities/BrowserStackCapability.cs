@@ -46,7 +46,6 @@ namespace nipts_pts_automation_tests.Capabilities
                 _capDictionary.Add("os", _deviceName);
                 _browserstackOptions.Add("os", _deviceName);
                 _browserstackOptions.Add("browserName", _target);
-                _capDictionary.Add("browserVersion", _bs_browser_version);
                 _browserstackOptions.Add("browserVersion", _bs_browser_version);
             }
             else
