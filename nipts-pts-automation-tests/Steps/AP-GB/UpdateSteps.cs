@@ -61,14 +61,14 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         public void WhenIClickContinueButtonFromMicrochipNumberTillDeclarationPage()
         {
             petMicrochipPage?.ClickContinueButton();
-            petMicrochipDatePage?.ClickContinueButton();
-            petsCategoryPage?.ClickContinueButton();
-            ClickContinueButtonBreedPage();
-            petNamePage?.ClickContinueButton();
-            petSexPage?.ClickContinueButton();
-            petsDOBPage?.ClickContinueButton();
-            petColourPage?.ClickContinueButton();
-            significantFeaturesPage?.ClickContinueButton();
+            //petMicrochipDatePage?.ClickContinueButton();
+            //petsCategoryPage?.ClickContinueButton();
+            //ClickContinueButtonBreedPage();
+            //petNamePage?.ClickContinueButton();
+            //petSexPage?.ClickContinueButton();
+            //petsDOBPage?.ClickContinueButton();
+            //petColourPage?.ClickContinueButton();
+            //significantFeaturesPage?.ClickContinueButton();
         }
 
         [Then(@"I have modified the microchip scanned date by adding '(.*)' days")]
@@ -86,23 +86,23 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         public void WhenIClickContinueButtonFromMicrochipScannedDateTillReachingDeclarationPage()
         {
             petMicrochipDatePage?.ClickContinueButton();
-            petsCategoryPage?.ClickContinueButton();
-            ClickContinueButtonBreedPage();
-            petNamePage?.ClickContinueButton();
-            petSexPage?.ClickContinueButton();
-            petsDOBPage?.ClickContinueButton();
-            petColourPage?.ClickContinueButton();
-            significantFeaturesPage?.ClickContinueButton();
+            //petsCategoryPage?.ClickContinueButton();
+            //ClickContinueButtonBreedPage();
+            //petNamePage?.ClickContinueButton();
+            //petSexPage?.ClickContinueButton();
+            //petsDOBPage?.ClickContinueButton();
+            //petColourPage?.ClickContinueButton();
+            //significantFeaturesPage?.ClickContinueButton();
         }
 
         [When(@"I click on continue button from What is your pet's name page till reaching declaration page")]
         public void WhenIClickOnContinueButtonFromWhatIsYourPetsNamePageTillReachingDeclarationPage()
         {
             petNamePage?.ClickContinueButton();
-            petSexPage?.ClickContinueButton();
-            petsDOBPage?.ClickContinueButton();
-            petColourPage?.ClickContinueButton();
-            significantFeaturesPage?.ClickContinueButton();
+            //petSexPage?.ClickContinueButton();
+            //petsDOBPage?.ClickContinueButton();
+            //petColourPage?.ClickContinueButton();
+            //significantFeaturesPage?.ClickContinueButton();
         }
 
         [Then(@"I have clicked the change option for the '(.*)' from Pet details section")]
@@ -145,16 +145,16 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             _scenarioContext.Add("Breed", breed);
 
             breedPage?.ClickContinueButton();
-            petNamePage?.ClickContinueButton();
-            petSexPage?.ClickContinueButton();
-            petsDOBPage?.ClickContinueButton();
+            //petNamePage?.ClickContinueButton();
+            //petSexPage?.ClickContinueButton();
+            //petsDOBPage?.ClickContinueButton();
 
             _scenarioContext.Remove("Color");
             petColourPage?.SelectColorOption(color);
             _scenarioContext.Add("Color", color);
 
             petColourPage?.ClickContinueButton();
-            significantFeaturesPage?.ClickContinueButton();
+            //significantFeaturesPage?.ClickContinueButton();
         }
 
         [Then(@"I have modified the pets breed with the index value of '(.*)'")]
@@ -169,12 +169,12 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         public void WhenIClickContinueButtonFromWhatBreedIsYourDogPageTillReachingDeclarationPage()
         {
             breedPage?.ClickContinueButton();
-            petNamePage?.ClickContinueButton();
-            petSexPage?.ClickContinueButton();
-            petsDOBPage?.ClickContinueButton();
-            petColourPage?.ClickContinueButton();
-            significantFeaturesPage?.ClickContinueButton();
-            significantFeaturesPage?.ClickContinueButton();
+            //petNamePage?.ClickContinueButton();
+            //petSexPage?.ClickContinueButton();
+            //petsDOBPage?.ClickContinueButton();
+            //petColourPage?.ClickContinueButton();
+            //significantFeaturesPage?.ClickContinueButton();
+            //significantFeaturesPage?.ClickContinueButton();
         }
 
         [Then(@"I have modified the pets sex as '(.*)'")]
@@ -189,9 +189,9 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         public void WhenIClickOnContinueButtonFromWhatSexIsYourPetPageTillReachingDeclarationPage()
         {
             petSexPage?.ClickContinueButton();
-            petsDOBPage?.ClickContinueButton();
-            petColourPage?.ClickContinueButton();
-            significantFeaturesPage?.ClickContinueButton();
+            //petsDOBPage?.ClickContinueButton();
+            //petColourPage?.ClickContinueButton();
+            //significantFeaturesPage?.ClickContinueButton();
         }
 
         [Then(@"I have modified the pets date of birth by adding '(.*)' days")]
@@ -209,8 +209,8 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         public void WhenIClickContinueButtonFromWhatIsYourPetsDateOfBirthPageTillReachingDeclarationPage()
         {
             petsDOBPage?.ClickContinueButton();
-            petColourPage?.ClickContinueButton();
-            significantFeaturesPage?.ClickContinueButton();
+            //petColourPage?.ClickContinueButton();
+            //significantFeaturesPage?.ClickContinueButton();
         }
 
         [Then(@"I have modified the pets colour as '(.*)'")]
@@ -225,7 +225,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         public void WhenIClickContinueButtonFromWhatIsTheMainColorOfYourPetPageTillReachingDeclarationPage()
         {
             petColourPage?.ClickContinueButton();
-            significantFeaturesPage?.ClickContinueButton();
+            //significantFeaturesPage?.ClickContinueButton();
         }
 
         [Then(@"I have modified the pets significant feature as '(.*)'")]
@@ -269,18 +269,18 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         {
             petOwnerAddressPage?.ClickContinueButton();
 
-            var phoneNumber = _scenarioContext.Get<string>("PhoneNumber");
-            petOwnerPhoneNumberPage?.EnterPetOwnerPNumber(phoneNumber);
-            petOwnerPhoneNumberPage?.ClickContinueButton();
-            petMicrochipPage?.ClickContinueButton();
-            petMicrochipDatePage?.ClickContinueButton();
-            petsCategoryPage?.ClickContinueButton();
-            ClickContinueButtonBreedPage();
-            petNamePage?.ClickContinueButton();
-            petSexPage?.ClickContinueButton();
-            petsDOBPage?.ClickContinueButton();
-            petColourPage?.ClickContinueButton();
-            significantFeaturesPage?.ClickContinueButton();
+            //var phoneNumber = _scenarioContext.Get<string>("PhoneNumber");
+            //petOwnerPhoneNumberPage?.EnterPetOwnerPNumber(phoneNumber);
+            //petOwnerPhoneNumberPage?.ClickContinueButton();
+            //petMicrochipPage?.ClickContinueButton();
+            //petMicrochipDatePage?.ClickContinueButton();
+            //petsCategoryPage?.ClickContinueButton();
+            //ClickContinueButtonBreedPage();
+            //petNamePage?.ClickContinueButton();
+            //petSexPage?.ClickContinueButton();
+            //petsDOBPage?.ClickContinueButton();
+            //petColourPage?.ClickContinueButton();
+            //significantFeaturesPage?.ClickContinueButton();
         }
 
         [Then(@"I have modified the pet owner postcode and address with the value of '(.*)' and phone number '(.*)'")]
@@ -303,15 +303,15 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         public void WhenIClickContinueButtonFromWhatIsYourPhoneNumberPageTillReachingDeclarationPage()
         {
             petOwnerPhoneNumberPage?.ClickContinueButton();
-            petMicrochipPage?.ClickContinueButton();
-            petMicrochipDatePage?.ClickContinueButton();
-            petsCategoryPage?.ClickContinueButton();
-            ClickContinueButtonBreedPage();
-            petNamePage?.ClickContinueButton();
-            petSexPage?.ClickContinueButton();
-            petsDOBPage?.ClickContinueButton();
-            petColourPage?.ClickContinueButton();
-            significantFeaturesPage?.ClickContinueButton();
+            //petMicrochipPage?.ClickContinueButton();
+            //petMicrochipDatePage?.ClickContinueButton();
+            //petsCategoryPage?.ClickContinueButton();
+            //ClickContinueButtonBreedPage();
+            //petNamePage?.ClickContinueButton();
+            //petSexPage?.ClickContinueButton();
+            //petsDOBPage?.ClickContinueButton();
+            //petColourPage?.ClickContinueButton();
+            //significantFeaturesPage?.ClickContinueButton();
         }
 
         private void ClickContinueButtonBreedPage()

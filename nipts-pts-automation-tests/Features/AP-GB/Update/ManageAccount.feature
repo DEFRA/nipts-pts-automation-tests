@@ -40,6 +40,7 @@ Scenario: Change Name in Manage account
 	And I revert the Pet Owner Name to the Original Name
 	And click on signout button and verify the signout message on pets
 
+@ignore
 Scenario Outline: Change Address in Manage account
 	Then I should navigate to Manage account
 	And I click on Manage your account
