@@ -48,11 +48,6 @@ Scenario Outline: Modify Name of the pet owner By Registered User with details c
 	And I have clicked the change option for the 'Name' from Pet owner details section
 	And I have modified the pet owner name with the value of '<UpdatedFullName>'
 	When I click continue button from pet owner name page till reaching declaration page
-	Then I have modified the pet owner postcode and address with the value of '<UpdatedPostCode>' and phone number '<PhoneNumber>'
-	When I click Search button
-	Then I should see a list of address in dropdownlist
-	And I select the index 2 from address list
-	When I click continue button from postcode search page till reaching declaration page
 	Then I have verified microchip details in declaration page
 	And I have ticked the I agree to the declaration checkbox
 	When I click Accept and Send button from Declaration page
@@ -211,11 +206,6 @@ Scenario Outline: Modify Name of the pet owner By Registered User with details c
 	And I have clicked the change option for the 'Name' from Pet owner details section
 	And I have modified the pet owner name with the value of '<UpdatedFullName>'
 	When I click continue button from pet owner name page till reaching declaration page
-	Then I have modified the pet owner postcode and address with the value of '<UpdatedPostCode>' and phone number '<PhoneNumber>'
-	When I click Search button
-	Then I should see a list of address in dropdownlist
-	And I select the index 2 from address list
-	When I click continue button from postcode search page till reaching declaration page
 	Then I have verified microchip details in declaration page
 	And I have ticked the I agree to the declaration checkbox
 	When I click Accept and Send button from Declaration page
