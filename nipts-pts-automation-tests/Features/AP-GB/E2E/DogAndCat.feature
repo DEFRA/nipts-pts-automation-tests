@@ -85,7 +85,7 @@ Scenario Outline: Create CAT PETS Travel Document By Registered User with detail
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
 	Then I should redirected to the What breed is your '<Pet>'? page
-	And I have selected 1 as breed index from breed dropdownlist
+	And I have selected 5 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
 	And I provided the Pets name as '<PetName>'
