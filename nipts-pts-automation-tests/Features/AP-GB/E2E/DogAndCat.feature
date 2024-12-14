@@ -65,6 +65,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with details co
 	When Approve an application via backend
 	Then I click on Back button in Pets Application
 	And I should see the application in 'Approved' status
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName  | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color         | IsSignificantFeatures |
@@ -119,6 +120,7 @@ Scenario Outline: Create CAT PETS Travel Document By Registered User with detail
 	When Approve an application via backend
 	Then I click on Back button in Pets Application
 	#And I should see the application in 'Approved' status
+	And click on signout button and verify the signout message on pets
 
 Examples:
 	| FullName  | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color         | IsSignificantFeatures |
