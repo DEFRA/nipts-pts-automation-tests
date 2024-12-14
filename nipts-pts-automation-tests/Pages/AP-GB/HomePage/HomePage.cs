@@ -90,7 +90,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
         public void ClickApplyForPetTravelDocument()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,300)", "");
-            btnApplyForDocument.Click();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", btnApplyForDocument);
+            //btnApplyForDocument.Click();
         }
 
         public bool VerifyTheExpectedStatus(string petName, string status)
