@@ -43,7 +43,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerDetailsPage
         public void ClickContinueButton()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,500)", "");
-            btnContinue.Click();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", btnContinue);
+            //btnContinue.Click();
             //_driver.ContinueButton();
         }
         public bool VerifyUpdatedPhoneNumber(String phoneNumber)

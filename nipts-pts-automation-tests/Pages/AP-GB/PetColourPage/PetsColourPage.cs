@@ -37,7 +37,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetColourPage
         public void ClickContinueButton()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,500)", "");
-            btnContinue.Click();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", btnContinue);
+            //btnContinue.Click();
             //_driver.ContinueButton();
         }
 

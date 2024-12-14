@@ -50,7 +50,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             UserId.SendKeys(userName);
             Password.SendKeys(password);
             Thread.Sleep(1000);
-            _driver.WaitForElementCondition(ExpectedConditions.ElementToBeClickable(SignIn)).Click();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", SignIn);
+            //_driver.WaitForElementCondition(ExpectedConditions.ElementToBeClickable(SignIn)).Click();
             return _driver.WaitForElement(SignInConfirmBy).Enabled;
         }
 
