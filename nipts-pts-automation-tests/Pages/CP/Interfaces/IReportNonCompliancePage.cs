@@ -10,5 +10,8 @@
         bool IsError(string errorMessage);
         void ClickOnSPSOutcome(string SPSStatus);
         void ClickOnGBOutcome();
+        public void TickMicrochipNoDoesNotMatchPTD();
+        public void EnterMichrochipNoDoesNotMatchPTD(string michrochipNo);
+        public void ClickOnSaveOutcome();
     }
 }
