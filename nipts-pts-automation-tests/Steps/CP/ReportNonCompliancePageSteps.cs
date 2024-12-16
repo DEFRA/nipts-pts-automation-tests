@@ -1,4 +1,5 @@
 ﻿using BoDi;
+using nipts_pts_automation_tests.Pages;
 using nipts_pts_automation_tests.Pages.AP_GB.SummaryPage;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using NUnit.Framework;
@@ -54,7 +55,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             _reportNonCompliancePage?.SelectTypeOfPassenger(passengerType);
         }
 
-        [Then(@"I should see an error message ""([^""]*)"" in Report non-compliance page")]
+        [Then(@"I should see an error message '([^']*)' in Report non-compliance page")]
         public void ThenIShouldSeeAnErrorMessageInReportNon_CompliancePage(string errorMessage)
         {
             Assert.True(_reportNonCompliancePage?.IsError(errorMessage), $"There is no error message found with - {errorMessage}");
@@ -72,6 +73,27 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenIClickOnGBOutcome()
         {
             _reportNonCompliancePage?.ClickOnGBOutcome();
+        }
+
+        [When(@"select Michrochip does not match the PTD checkbox")]
+        [Then(@"select Michrochip does not match the PTD checkbox")]
+        public void ThenIHaveTickedTheMicrochipDoesNotMatchThePTD()
+        {
+            _reportNonCompliancePage.TickMicrochipNoDoesNotMatchPTD();
+        }
+
+        [When(@"Enter michrochip Number in Michrochip Does not match PTD field '([^']*)'")]
+        [Then(@"Enter michrochip Number in Michrochip Does not match PTD field '([^']*)'")]
+        public void WhenEnterMichrochipNo(string michrochipNo)
+        {
+            _reportNonCompliancePage.EnterMichrochipNoDoesNotMatchPTD(michrochipNo);
+        }
+
+        [When(@"click on Save outcome")]
+        [Then(@"click on Save outcome")]
+        public void ThenClickOnSaveOutcome()
+        {
+            _reportNonCompliancePage.ClickOnSaveOutcome();
         }
     }
 }

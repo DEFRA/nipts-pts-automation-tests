@@ -23,9 +23,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement btnFootPassengerRadio => _driver.WaitForElementExists(By.CssSelector("#footPassenger"));
         private IWebElement bntVehicleRadio => _driver.WaitForElementExists(By.CssSelector("#vehiclePassenger"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
-        private IWebElement passangerReferred => _driver.WaitForElementExists(By.XPath("//input[@id ='gbRefersToDAERAOrSPS']"));
+        private IWebElement passangerReferred => _driver.WaitForElementExists(By.XPath("//input[@id ='isGBCheck']"));
         private IWebElement passangerAdvised => _driver.WaitForElementExists(By.XPath("//input[@id ='gbAdviseNoTravel']"));
         private IWebElement passangerNotTravel => _driver.WaitForElementExists(By.XPath("//input[@id ='gbPassengerSaysNoTravel']"));
+        private IWebElement chkMicrochipNoDoesNotMatchPTD => _driver.WaitForElementExists(By.XPath("(//div[@class='govuk-checkboxes__item']/input[@class='govuk-checkboxes__input'])[1]"));
+        private IWebElement txtMichrochipNo => _driver.WaitForElement(By.Id("mcNotMatchActual"));
+        private IWebElement btnSaveOutcome => _driver.WaitForElement(By.XPath("//button[contains(text(),'Save outcome')]"));
         #endregion
 
         #region Methods
@@ -92,12 +95,28 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void ClickOnGBOutcome()
         {
-            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(100,4000)", "");
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", passangerReferred);
             passangerReferred.Click();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", passangerAdvised);
             passangerAdvised.Click();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", passangerNotTravel);
             passangerNotTravel.Click();
         }
-
+        public void TickMicrochipNoDoesNotMatchPTD()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", chkMicrochipNoDoesNotMatchPTD);
+            chkMicrochipNoDoesNotMatchPTD.Click();
+        }
+        public void EnterMichrochipNoDoesNotMatchPTD(string michrochipNo)
+        {
+            txtMichrochipNo.Clear();
+            txtMichrochipNo.SendKeys(michrochipNo);
+        }
+        public void ClickOnSaveOutcome()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", btnSaveOutcome);
+            btnSaveOutcome.Click();
+        }
         #endregion
 
     }
