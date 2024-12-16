@@ -105,5 +105,26 @@ namespace nipts_pts_automation_tests.Steps.CP
             _routeCheckingPage?.SelectScheduledDepartureDate(departureDay, departureMonth, departureYear);
         }
 
+        [Then(@"I have provided Invalid Day '([^']*)''([^']*)'Date option")]
+        public void ThenIHaveProvidedInvalidDayDateOption(string departureMonth, string departureYear)
+        {
+            var departureDay = "'-'";
+            _routeCheckingPage?.SelectScheduledDepartureDate(departureDay, departureMonth, departureYear);
+        }
+
+        [Then(@"I have provided Invalid Month '([^']*)''([^']*)'Date option")]
+        public void ThenIHaveProvidedInvalidMonthDateOption(string departureDay, string departureYear)
+        {
+            var departureMonth = "'-'";
+            _routeCheckingPage?.SelectScheduledDepartureDate(departureDay, departureMonth, departureYear);
+        }
+
+        [Then(@"I have provided Invalid Year '([^']*)''([^']*)'Date option")]
+        public void ThenIHaveProvidedInvalidYearDateOption(string departureDay, string departureMonth)
+        {
+            var departureYear = "'-'";
+            _routeCheckingPage?.SelectScheduledDepartureDate(departureDay, departureMonth, departureYear);
+        }
+
     }
 }

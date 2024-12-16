@@ -101,5 +101,27 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(_searchDocumentPage?.IsError(errorMessage), $"There is no error message found with - {errorMessage}");
         }
 
+        [Then(@"I provided the Invalid PTD number of the application")]
+        public void ThenIProvidedTheInvalidPTDNumberOfTheApplication()
+        {
+            var ptdNumber1 = "'-'";
+            //   var ptdNumber1 = ptdNumber.Substring(5);
+            _searchDocumentPage?.EnterPTDNumber(ptdNumber1);
+        }
+
+        [Then(@"I provided the Invalid Reference number of the application")]
+        public void ThenIProvidedTheInvalidReferenceNumberOfTheApplication()
+        {
+            var referenceNumber = "'-'";
+            _searchDocumentPage?.EnterApplicationNumber(referenceNumber);
+        }
+
+        [Then(@"I provided the Invalid Microchip number of the application")]
+        public void ThenIProvidedTheInvalidMicrochipNumberOfTheApplication()
+        {
+            var microchipNumber = "'-'";
+            _searchDocumentPage?.EnterMicrochipNumber(microchipNumber);
+        }
+
     }
 }

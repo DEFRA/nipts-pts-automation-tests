@@ -122,6 +122,11 @@ Scenario Outline: The date on the microchip should be a future date relative to 
 	When I click on continue button from Do you know your pet's date of birth? page
 	Then I should not be redirected to the What is the main colour of your '<Pet>' page
 	And I should see an error message "Enter a date that is before the pet’s microchip date" in pets date of birth page
+	And I should redirected to the Do you know your pet's date of birth page
+	When I have provided same date of birth as microchip scanned date
+	And I click on continue button from Do you know your pet's date of birth? page
+	Then I should not be redirected to the What is the main colour of your '<Pet>' page
+	And I should see an error message "Enter a date that is before the pet’s microchip date" in pets date of birth page
 	And click on signout button and verify the signout message on pets
 
 Examples:

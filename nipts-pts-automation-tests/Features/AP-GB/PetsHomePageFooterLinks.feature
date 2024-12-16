@@ -49,3 +49,5 @@ Scenario: Checking the CrownCopyright Hyperlink
 	Then I should navigate to Lifelong pet travel documents page
 	And  I click the CrownCopyright Link
 	Then I should navigate to the CrownCopyright details correct page
+	When that I navigate to the DEFRA application
+	Then click on signout button and verify the signout message on pets
