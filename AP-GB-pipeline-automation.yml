@@ -19,12 +19,15 @@ parameters:
   - name: BSOSVersion
     type: string
     default: '11'
+  - name: BSBrowserVersion
+    type: string
+    default: 'latest'
   - name: Target
     type: string
     default: 'Edge'
 
 schedules:
-- cron: "0 4 * * Mon,Tue,Wed,Thu,Fri"
+- cron: "0 2 * * Mon,Tue,Wed,Thu,Fri"
   displayName: Daily midnight build
   branches:
     include:
@@ -55,10 +58,11 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ''  
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: ${{parameters.BSOSVersion}}
-        targetBrowserName: ${{parameters.Target}}
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ${{parameters.BSBrowserVersion}}
         dependsOn: ''
+        targetBrowserName: ${{parameters.Target}}
         
   - stage: APGBRegression
     displayName: APGBRegression
@@ -70,7 +74,8 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: '' 
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: ${{parameters.BSOSVersion}}
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ${{parameters.BSBrowserVersion}}
         targetBrowserName: ${{parameters.Target}}
         dependsOn: 'EnvironmentCheck'

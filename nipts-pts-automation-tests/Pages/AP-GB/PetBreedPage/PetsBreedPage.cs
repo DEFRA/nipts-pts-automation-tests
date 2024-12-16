@@ -42,7 +42,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetBreedPage
                 if (index.Equals(breedIndex))
                 {
                     selectedBread = breadList[index].Text;
-                    breadList[index].Click();
+                    //breadList[index].Click();
+                    ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", breadList[index]);
                     break;
                 }
             }
@@ -53,9 +54,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetBreedPage
         public void ClickContinueButton()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,500)", "");
-            btnContinue.Click();
-            //Thread.Sleep(2000);
-            //((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", btnContinue);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", btnContinue);
+            //btnContinue.Click();
         }
 
         public void EnterFreeTextBreed(string breed)

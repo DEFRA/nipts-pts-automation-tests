@@ -8,10 +8,8 @@ Background:
 	And I have provided the password for Landing page
 	When I click Continue button from Landing page
 	Then I should redirected to the Sign in using Government Gateway page
-Scenario: SignIn
-	Then sign in with valid credentials with logininfo
 
-Scenario: SignOut
+Scenario: SignInAndSignOut
 	Then sign in with valid credentials with logininfo
 	And  click on signout button and verify the signout message
 

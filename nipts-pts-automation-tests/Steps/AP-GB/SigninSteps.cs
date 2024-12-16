@@ -1,11 +1,15 @@
 ﻿using BoDi;
+using Microsoft.Azure.Amqp.Transaction;
+using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.Data;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.AP_GB.LogInPage;
 using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace nipts_pts_automation_tests.Steps.AP_GB
 {
@@ -27,6 +31,35 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         {
             _scenarioContext = context;
             _objectContainer = container;
+        }
+
+        [When(@"Clear Database for user '([^']*)'")]
+        [Given(@"Clear Database for user '([^']*)'")]
+        public void ThenClearDatabase(string userType)
+        {
+            var user = UserObject.GetUser(userType);
+            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+
+            //string query = "DELETE FROM AuthorisedSignatory;DELETE FROM LogisticsLocation;DELETE FROM TradeContacts;DELETE FROM TradeParties;DELETE FROM TradeAddresses;";
+            //string query = "EXEC DeleteOrganisationById '" + user.OrgID + "' ";
+
+            //string deleteQuery = "DECLARE    @return_value int
+            //                      EXEC    @return_value = [dbo].[ClearPetApplicationDataByUserEmail]
+
+            //                      @userEmail = N'ptsdefra@gmail.com',
+		          //                @IsDelete = 1
+            //                      SELECT  'Return Value' = @return_value
+            //                      GO
+
+
+            //                      SELECT* FROM User Where[Email] IN('ptsdefra@gmail.com,')
+            //                      SELECT* FROM Application WHere[UserId] IN(SELECT Id FROM[dbo].[User]  Where[Email] IN('ptsdefra@gmail.com'))
+            //                      Select COUNT(*) FROM Application
+
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                //dataHelperConnections.ExecuteQuery(connectionString, query);
+            }
         }
 
         [When(@"that I navigate to the DEFRA application")]

@@ -57,7 +57,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.SignificantFeaturesPage
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,1000)", "");
             By continueBy = By.XPath("//button[contains(text(),'Continue')]");
             if(_driver.FindElements(continueBy).Count > 0)
-            btnContinue.Click();
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", btnContinue);
+            //btnContinue.Click();
         }
 
         public void EnterSignificantFeatures(string significantFeatures)

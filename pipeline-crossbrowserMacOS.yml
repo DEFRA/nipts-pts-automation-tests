@@ -25,10 +25,10 @@ parameters:
   - name: Target
     type: string
     default: 'Edge'
-
+  
 schedules:
-- cron: "0 6 * * Mon,Tue,Wed,Thu,Fri"
-  displayName: Daily midnight build
+- cron: "0 20 * * Mon,Tue,Wed,Thu,Fri"
+  displayName: Daily CrossBrowser build
   branches:
     include:
     - dev
@@ -57,25 +57,41 @@ stages:
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ''  
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
         TestDeviceName: ${{parameters.DeviceName}}
         OSVersionName: ${{parameters.BSOSVersion}}
         BrowserVersionName: ${{parameters.BSBrowserVersion}}
         dependsOn: ''
         targetBrowserName: ${{parameters.Target}}
-        
-  - stage: CPRegression
-    displayName: CPRegression
+
+  - stage: MacOSSafariBrowserRun
+    displayName: MacOSSafariBrowserRun
     jobs:
     - template: run-test-template.yml
       parameters:
-        jobName: CPRegression
+        jobName: macOSSafariBrowserRun
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
-        SeleniumGrid: '' 
-        TestDeviceName: ${{parameters.DeviceName}}
-        OSVersionName: ${{parameters.BSOSVersion}}
-        BrowserVersionName: ${{parameters.BSBrowserVersion}}
-        targetBrowserName: ${{parameters.Target}}
-        dependsOn: 'EnvironmentCheck'
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: 'OS X'
+        OSVersionName: 'Ventura'
+        BrowserVersionName: 'latest'
+        dependsOn: ''
+        targetBrowserName: 'Chrome'
+
+  - stage: MacOSChromeBrowserRun
+    displayName: MacOSChromeBrowserRun
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: MacOSChromeBrowserRun
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: 'OS X'
+        OSVersionName: 'Ventura'
+        BrowserVersionName: '16.5'
+        dependsOn: ''
+        targetBrowserName: 'Safari'

@@ -51,6 +51,15 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             petDOBPage?.EnterDateMonthYear(Utils.ConvertToDate(microchippedDate).AddDays(1));
         }
 
+        [When(@"I have provided same date of birth as microchip scanned date")]
+        [Then(@"I have provided same date of birth as microchip scanned date")]
+        public void ThenIHaveProvidedSameDateOfBirthAsMicrochipScannedDate()
+        {
+            var microchippedDate = _scenarioContext.Get<string>("MicrochippedDate");
+            petDOBPage?.EnterDateMonthYear(Utils.ConvertToDate(microchippedDate));
+        }
+
+
         [Then(@"I should not be redirected to the What is the main colour of your '([^']*)' page")]
         public void ThenIShouldNotBeRedirectedToTheWhatIsTheMainColourOfYourPage(string petCategory)
         {

@@ -11,12 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI", "CI", "{8655DED8-0432-
 		build-automation-pipeline.yml = build-automation-pipeline.yml
 		CP-pipeline-automation.yml = CP-pipeline-automation.yml
 		pipeline-automation.yml = pipeline-automation.yml
-		pipeline-crossbrowser.yml = pipeline-crossbrowser.yml
+		pipeline-crossbrowserAndroid.yml = pipeline-crossbrowserAndroid.yml
+		pipeline-crossbrowserIOS.yml = pipeline-crossbrowserIOS.yml
+		pipeline-crossbrowserMacOS.yml = pipeline-crossbrowserMacOS.yml
+		pipeline-crossbrowserWindows.yml = pipeline-crossbrowserWindows.yml
 		run-test-template.yml = run-test-template.yml
 		test-variables_CI.yml = test-variables_CI.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nipts-pts-API-tests", "nipts-pts-API-tests\nipts-pts-API-tests.csproj", "{6B03543F-F769-49F8-AD31-B37E7455D1A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nipts-pts-API-tests", "nipts-pts-API-tests\nipts-pts-API-tests.csproj", "{6B03543F-F769-49F8-AD31-B37E7455D1A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
