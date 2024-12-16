@@ -27,7 +27,7 @@ parameters:
     default: 'Edge'
   
 schedules:
-- cron: "0 10 * * Mon,Tue,Wed,Thu,Fri"
+- cron: "0 21 * * Mon,Tue,Wed,Thu,Fri"
   displayName: Daily CrossBrowser build
   branches:
     include:
