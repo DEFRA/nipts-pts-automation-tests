@@ -52,7 +52,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public bool VerifyTheExpectedStatus(string status)
         {
-            return _driver.WaitForElement(By.XPath($"//dd[@class='govuk-summary-list__value']//strong[contains(text(), '{status}')]")).Text.Trim().Equals(status);
+            //return _driver.WaitForElement(By.XPath($"//dd[@class='govuk-summary-list__value']//strong[contains(text(), '{status}')]")).Text.Trim().Equals(status);
+            return _driver.WaitForElement(By.XPath("//h1[contains(text(), '{status}')]")).Text.Trim().Equals(status);
         }
 
         public void SelectTypeOfPassenger(string radioButtonValue)
@@ -63,11 +64,11 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", btnFootPassengerRadio);
                 btnFootPassengerRadio.Click();
             }
-            else if (radioButtonValue.Equals("Airline"))
-            {
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", bntAirlineRadio);
-                bntAirlineRadio.Click();
-            }
+            //else if (radioButtonValue.Equals("Airline"))
+            //{
+            //    ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", bntAirlineRadio);
+            //    bntAirlineRadio.Click();
+            //}
             else
             {
                 try
