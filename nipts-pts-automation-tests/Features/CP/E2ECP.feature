@@ -13,6 +13,7 @@ Background:
 	When I click Create a new pet travel document button
 	Then I should redirected to the Are your details correct page
 
+	@RunOnly
 Scenario Outline: Check PETS Travel Document details By PTD number - status in Approved
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
