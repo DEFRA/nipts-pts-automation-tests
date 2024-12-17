@@ -15,5 +15,5 @@ Scenario: SignOut
 	Then I should redirected to port route checke page
 	Then click on signout button on CP and verify the signout message
 
-#Scenario: Database check
-#	When Clear Database for user 'Test'
+Scenario: Database check
+	When Clear Database for user 'Test'

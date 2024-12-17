@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[5.2.2, )"
+            },
             "RestSharp": {
               "target": "Package",
               "version": "[112.1.0, )"
@@ -132,6 +136,10 @@
             "Defra.Ui.Automation.Framework": {
               "target": "Package",
               "version": "[2.0.7, )"
+            },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[5.2.2, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",

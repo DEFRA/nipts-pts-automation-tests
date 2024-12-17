@@ -37,7 +37,9 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         [Given(@"Clear Database for user '([^']*)'")]
         public void ThenClearDatabase(string userType)
         {
-            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+            //string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+
+            string connectionString = "Server=tcp:tsttrsdbssq1001.database.windows.net,1433;Initial Catalog=pet-travel;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=Active Directory Default;";
 
             //string deleteQuery = "DECLARE    @return_value int " +
             //                     "EXEC    @return_value = [dbo].[ClearPetApplicationDataByUserEmail] " +
@@ -51,11 +53,11 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             //                      "SELECT* FROM Application WHere[UserId] IN(SELECT Id FROM[dbo].[User]  Where[Email] IN('ptsdefra@gmail.com')) " +
             //                      "Select COUNT(*) FROM Application ";
 
-            //string deleteQuery = "Select COUNT(*) FROM Application ";
-            //if (ConfigSetup.BaseConfiguration != null)
-            //{
-            //    dataHelperConnections.ExecuteQuery(connectionString, deleteQuery);
-            //}
+            string deleteQuery = "Select COUNT(*) FROM Application ";
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                dataHelperConnections.ExecuteQuery(connectionString, deleteQuery);
+            }
         }
 
         [When(@"that I navigate to the DEFRA application")]
