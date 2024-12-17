@@ -18,14 +18,14 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
         private IWebElement pageHeading => _driver.WaitForElement(By.XPath("//h1[normalize-space()='Report non-compliance']"));
-        private IWebElement btnReportNonCompliance => _driver.WaitForElement(By.XPath("//button[normalize-space()='Save outcome']"));
+        private IWebElement btnReportNonCompliance => _driver.WaitForElement(By.XPath("//button[normalize-space()='Report non-compliance']"));
         private IWebElement lnkPetTravelDocumentDetails => _driver.WaitForElement(By.XPath("//span[normalize-space()='Pet Travel Document details']"));
-        private IWebElement btnFootPassengerRadio => _driver.WaitForElementExists(By.CssSelector("#passengerType"));
+        private IWebElement btnFootPassengerRadio => _driver.WaitForElementExists(By.CssSelector("#footPassenger"));
         private IWebElement bntVehicleRadio => _driver.WaitForElementExists(By.CssSelector("#vehiclePassenger"));
         private IWebElement bntAirlineRadio => _driver.WaitForElementExists(By.CssSelector("#airlinePassenger"));
         private IWebElement microchipNotFound => _driver.WaitForElementExists(By.XPath("//input[@id ='mcNotFound']"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
-        private IWebElement passangerReferred => _driver.WaitForElementExists(By.XPath("//input[@id ='isGBCheck']"));
+        private IWebElement passangerReferred => _driver.WaitForElementExists(By.XPath("//input[@id ='gbRefersToDAERAOrSPS']"));
         private IWebElement passangerAdvised => _driver.WaitForElementExists(By.XPath("//input[@id ='gbAdviseNoTravel']"));
         private IWebElement passangerNotTravel => _driver.WaitForElementExists(By.XPath("//input[@id ='gbPassengerSaysNoTravel']"));
         private IWebElement chkMicrochipNoDoesNotMatchPTD => _driver.WaitForElementExists(By.XPath("(//div[@class='govuk-checkboxes__item']/input[@class='govuk-checkboxes__input'])[1]"));
@@ -58,7 +58,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         public void SelectTypeOfPassenger(string radioButtonValue)
         {
 
-            if (radioButtonValue.Equals("Ferry foot passenger"))
+            if (radioButtonValue.Equals("Foot passenger"))
             {
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", btnFootPassengerRadio);
                 btnFootPassengerRadio.Click();
