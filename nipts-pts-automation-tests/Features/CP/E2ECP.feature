@@ -112,8 +112,8 @@ Scenario Outline: Check PETS Travel Document details By PTD number - status in A
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger | nextPage        | SPSOutcome |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Foot passenger  | Referred to SPS | Allowed    |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    |
 
 Scenario Outline: Check PETS Travel Document details By Application number - status in Approved
 	Then I have selected '<Are your details correct>' option
@@ -280,6 +280,7 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
 	And I click on GB outcome
 	When I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
@@ -308,6 +309,7 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
 	And I click 'Allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page

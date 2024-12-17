@@ -55,6 +55,13 @@ namespace nipts_pts_automation_tests.Steps.CP
             _reportNonCompliancePage?.SelectTypeOfPassenger(passengerType);
         }
 
+        [When(@"I select '([^']*)' as non compliance reason")]
+        [Then(@"I select '([^']*)' as non compliance reason")]
+        public void ThenISelectNonComplianceReason(string nonComplianceReason)
+        {
+            _reportNonCompliancePage?.SelectNonComplianceReason(nonComplianceReason);
+        }
+
         [Then(@"I should see an error message '([^']*)' in Report non-compliance page")]
         public void ThenIShouldSeeAnErrorMessageInReportNon_CompliancePage(string errorMessage)
         {

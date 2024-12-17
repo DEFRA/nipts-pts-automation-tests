@@ -359,7 +359,7 @@ Scenario Outline: Verify validation for not selecting type of passenger on Repor
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click Report non-compliance button from Report non-compliance page
-	Then I should see an error message "Select the type of passenger" in Report non-compliance page
+	Then I should see an error message 'Select the type of passenger' in Report non-compliance page
 	
 Examples:
 	| Transportation | FerryRoute                    | PTDNumber |

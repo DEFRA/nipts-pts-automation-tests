@@ -13,5 +13,6 @@
         public void TickMicrochipNoDoesNotMatchPTD();
         public void EnterMichrochipNoDoesNotMatchPTD(string michrochipNo);
         public void ClickOnSaveOutcome();
+        public void SelectNonComplianceReason(string nonComplianceReason);
     }
 }

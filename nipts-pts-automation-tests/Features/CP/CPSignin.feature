@@ -9,13 +9,11 @@ Background:
 	And I click signin button on port checker application
 	Then I should redirected to the Sign in using Government Gateway page
 	
-
-Scenario: SignIn
-	When I have provided the CP credentials and signin
-	And I have provided the password for prototype research page
-	Then I should redirected to port route checke page
-
 Scenario: SignOut
 	When I have provided the CP credentials and signin
 	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
 	Then click on signout button on CP and verify the signout message
+
+#Scenario: Database check
+#	When Clear Database for user 'Test'

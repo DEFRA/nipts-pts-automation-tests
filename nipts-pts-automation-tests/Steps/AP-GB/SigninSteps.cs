@@ -37,29 +37,25 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         [Given(@"Clear Database for user '([^']*)'")]
         public void ThenClearDatabase(string userType)
         {
-            var user = UserObject.GetUser(userType);
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
 
-            //string query = "DELETE FROM AuthorisedSignatory;DELETE FROM LogisticsLocation;DELETE FROM TradeContacts;DELETE FROM TradeParties;DELETE FROM TradeAddresses;";
-            //string query = "EXEC DeleteOrganisationById '" + user.OrgID + "' ";
+            //string deleteQuery = "DECLARE    @return_value int " +
+            //                     "EXEC    @return_value = [dbo].[ClearPetApplicationDataByUserEmail] " +
 
-            //string deleteQuery = "DECLARE    @return_value int
-            //                      EXEC    @return_value = [dbo].[ClearPetApplicationDataByUserEmail]
-
-            //                      @userEmail = N'ptsdefra@gmail.com',
-		          //                @IsDelete = 1
-            //                      SELECT  'Return Value' = @return_value
-            //                      GO
+            //                      " @userEmail = N'ptsdefra@gmail.com',@IsDelete = 1 " +
+            //                      " SELECT  'Return Value' = @return_value" +
+            //                      "GO" +
 
 
-            //                      SELECT* FROM User Where[Email] IN('ptsdefra@gmail.com,')
-            //                      SELECT* FROM Application WHere[UserId] IN(SELECT Id FROM[dbo].[User]  Where[Email] IN('ptsdefra@gmail.com'))
-            //                      Select COUNT(*) FROM Application
+            //                      "SELECT* FROM User Where[Email] IN('ptsdefra@gmail.com,')" +
+            //                      "SELECT* FROM Application WHere[UserId] IN(SELECT Id FROM[dbo].[User]  Where[Email] IN('ptsdefra@gmail.com')) " +
+            //                      "Select COUNT(*) FROM Application ";
 
-            if (ConfigSetup.BaseConfiguration != null)
-            {
-                //dataHelperConnections.ExecuteQuery(connectionString, query);
-            }
+            //string deleteQuery = "Select COUNT(*) FROM Application ";
+            //if (ConfigSetup.BaseConfiguration != null)
+            //{
+            //    dataHelperConnections.ExecuteQuery(connectionString, deleteQuery);
+            //}
         }
 
         [When(@"that I navigate to the DEFRA application")]
