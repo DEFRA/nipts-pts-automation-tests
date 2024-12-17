@@ -57,6 +57,7 @@ Examples:
 	| Transportation | FerryRoute                    | MicrochipNumber	| ApplicationRadio		     |
 	| Ferry          | Birkenhead to Belfast (Stena) | 123456789012345  | Search by microchip number |
 
+@RunOnly
 Scenario Outline: Port checker navigate to Welcome page by clicking footer home icon
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
