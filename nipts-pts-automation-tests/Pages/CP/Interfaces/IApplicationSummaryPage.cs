@@ -7,5 +7,6 @@
         void SelectFailRadioButton();
         void SelectSaveAndContinue();
         bool IsError(string errorMessage);
+        void SelectContinue();
     }
 }

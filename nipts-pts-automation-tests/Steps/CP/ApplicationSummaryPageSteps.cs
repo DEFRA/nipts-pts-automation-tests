@@ -49,6 +49,12 @@ namespace nipts_pts_automation_tests.Steps.CP
             _applicationSummaryPage?.SelectSaveAndContinue();
         }
 
+        [When(@"I click continue button from application status page")]
+        public void WhenIClickContinueButtonFromApplicationStatusPage()
+        {
+            _applicationSummaryPage?.SelectContinue();
+        }
+
         [Then(@"I should see an error message ""([^""]*)"" in application status page")]
         public void ThenIShouldSeeAnErrorMessageInApplicationStatusPage(string errorMessage)
         {

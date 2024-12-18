@@ -112,6 +112,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void ClickOnGBOutcome()
         {
+            Thread.Sleep(1000);
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", passangerReferred);
             passangerReferred.Click();
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", passangerAdvised);

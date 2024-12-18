@@ -31,12 +31,6 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(_routeCheckingPage?.IsPageLoaded(), "Port route checker Application page not loaded");
         }
 
-        [Then(@"click on signout button on CP and verify the signout message")]
-        public void ThenClickOnSignoutButtonOnCPAndVerifyTheSignoutMessage()
-        {
-            Assert.True(_routeCheckingPage?.IsSignedOut(), "Not able to sign out");
-        }
-
         [Given(@"I have selected '([^']*)' radio option")]
         [Then(@"I have selected '([^']*)' radio option")]
         public void ThenIHaveSelectedRadioOption(string transportType)

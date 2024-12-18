@@ -28,6 +28,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement SignIn => _driver.WaitForElement(By.Id("continue"));
         private IWebElement txtLoging => _driver.WaitForElement(By.XPath("//input[@id='password']"));
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Continue']"));
+        private IWebElement signOutBy => _driver.WaitForElement(By.XPath("//a[@href='/signout']//*[name()='svg']"));
         #endregion
 
         #region Methods
@@ -44,6 +45,14 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 Password.SendKeys(password);
                 _driver.WaitForElementCondition(ExpectedConditions.ElementToBeClickable(SignIn)).Click();
             }
+        }
+
+        public bool IsSignedOut()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", signOutBy);
+            signOutBy.Click();
+            Thread.Sleep(1000);
+            return PageHeading.Text.Contains("You have signed out") || PageHeading.Text.Contains("Your Defra account");
         }
 
         public void EnterPassword()

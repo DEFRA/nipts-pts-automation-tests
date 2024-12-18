@@ -3,7 +3,6 @@
     public interface IRouteCheckingPage
     {
         bool IsPageLoaded();
-        bool IsSignedOut();
         void SelectTransportationOption(string option);
         void SelectFerryRouteOption(string routeOption);
         void SelectDropDownDepartureTime();
