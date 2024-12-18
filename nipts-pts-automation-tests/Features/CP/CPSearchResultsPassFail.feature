@@ -1,7 +1,7 @@
 ﻿@CPRegression
 Feature: CP E2E Pass Fail
 
-As a PTS port checker I want ot Change Route Checking Details from all pages
+Check Pass fail status on PTS port checker 
 
 Background:
 	Given I navigate to PETS a travel document URL
@@ -343,4 +343,24 @@ Scenario Outline: PTS port checker continue application by Microchip number - st
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio           | 
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number | 
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |
+
+
+Scenario Outline: Verify validation for not selecting radio button on Application status page
+	Then I have selected '<Transportation>' radio option
+	Then I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the Microchip number '<MicrochipNumber>' of the application
+	When I click search button
+	And I should see the application status in 'Approved'
+	When I click save and continue button from application status page
+	Then I should see an error message "Select an option" in application status page
+	
+Examples:
+	| Transportation | FerryRoute                    | MicrochipNumber | ApplicationRadio           | 
+	| Ferry          | Birkenhead to Belfast (Stena) | 123456789012345 | Search by microchip number | 

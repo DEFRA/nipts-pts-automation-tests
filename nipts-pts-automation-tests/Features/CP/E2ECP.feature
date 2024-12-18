@@ -76,6 +76,7 @@ Scenario Outline: Check PETS Travel Document details By PTD number - status in A
 	And I select Fail radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
+	And I select 'Cannot find microchip' as non compliance reason
 	And I click '<TypeOfPassenger>' in Passenger details
 	And I click on GB outcome
 	When I click Report non-compliance button from Report non-compliance page
@@ -104,6 +105,7 @@ Scenario Outline: Check PETS Travel Document details By PTD number - status in A
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
 	And I click 'Allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
@@ -177,6 +179,7 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	And I select Fail radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
+	And I select 'Cannot find microchip' as non compliance reason
 	And I click '<TypeOfPassenger>' in Passenger details
 	And I click on GB outcome
 	When I click Report non-compliance button from Report non-compliance page
@@ -206,7 +209,8 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details
-	And I click 'Allowed' on SPS outcome
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click 'Not allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
