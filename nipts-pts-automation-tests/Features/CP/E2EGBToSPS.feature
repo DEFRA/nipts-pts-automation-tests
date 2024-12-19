@@ -76,6 +76,7 @@ Scenario Outline: Check PETS Travel Document details By PTD number - status in A
 	And I select Fail radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
+	And I select 'Cannot find microchip' as non compliance reason
 	And I click '<TypeOfPassenger>' in Passenger details
 	And I click on GB outcome
 	When I click Report non-compliance button from Report non-compliance page
@@ -95,6 +96,8 @@ Scenario Outline: Check PETS Travel Document details By PTD number - status in A
 	And I have provided Scheduled departure time
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
 	When I click search button from footer
 	Then I navigate to Find a document page
 	And I provided the PTD number of the application
@@ -104,6 +107,7 @@ Scenario Outline: Check PETS Travel Document details By PTD number - status in A
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
 	And I click 'Allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
@@ -177,6 +181,7 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	And I select Fail radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
+	And I select 'Cannot find microchip' as non compliance reason
 	And I click '<TypeOfPassenger>' in Passenger details
 	And I click on GB outcome
 	When I click Report non-compliance button from Report non-compliance page
@@ -206,7 +211,8 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details
-	And I click 'Allowed' on SPS outcome
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click 'Not allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
@@ -214,8 +220,8 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute               |  ApplicationRadio             |nextPage        | SPSOutcome |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Allowed    |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute               |  ApplicationRadio             |nextPage        | SPSOutcome  |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Not allowed |
 
 Scenario Outline: Check PETS Travel Document details By Microchip number - status in Approved
 	Then I have selected '<Are your details correct>' option
@@ -366,7 +372,7 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	When I navigate to the port checker application
 	And I click signin button on port checker application
 	And I have provided the password for prototype research page
-	And I have provided the CP credentials and signin
+	And I have provided the CP credentials and signin for user 'GBUser'
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
@@ -380,10 +386,48 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	And I provided the Reference number of the application
 	When I click search button
 	And I should see the application status in 'Revoked'
+	When I click continue button from application status page
+	Then I should navigate to Report non-compliance page
+	And I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click on GB outcome
+	When I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify Referred to SPS details
+	And click on signout button on CP and verify the signout message
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	When I have provided the CP credentials and signin for user 'SPSUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the Reference number of the application
+	When I click search button
+	And I should see the application status in 'Revoked'
+	When I click continue button from application status page
+	Then I should navigate to Report non-compliance page
+	When I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click 'Allowed' on SPS outcome
+	And I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute               |  ApplicationRadio             |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Cairnryan to Larne (P&O) |  Search by application number |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute               |  ApplicationRadio             | nextPage        | SPSOutcome |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Cairnryan to Larne (P&O) |  Search by application number | Referred to SPS | Allowed    |
 
 Scenario Outline: Check PETS Travel Document details By Microchip number - status in Revoked
 	Then I have selected '<Are your details correct>' option
@@ -430,7 +474,7 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	When I navigate to the port checker application
 	And I click signin button on port checker application
 	And I have provided the password for prototype research page
-	And I have provided the CP credentials and signin
+	And I have provided the CP credentials and signin for user 'GBUser'
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
@@ -444,10 +488,48 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	And I provided the Microchip number of the application
 	When I click search button
 	And I should see the application status in 'Revoked'
+	When I click continue button from application status page
+	Then I should navigate to Report non-compliance page
+	And I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click on GB outcome
+	When I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify Referred to SPS details
+	And click on signout button on CP and verify the signout message
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	When I have provided the CP credentials and signin for user 'SPSUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the Microchip number of the application
+	When I click search button
+	And I should see the application status in 'Revoked'
+	When I click continue button from application status page
+	Then I should navigate to Report non-compliance page
+	When I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click 'Allowed' on SPS outcome
+	And I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  | nextPage        | SPSOutcome |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number | Referred to SPS | Allowed    |
 
 	Scenario Outline: Check PETS Travel Document details By Application number - status in Unsuccessful
 	Then I have selected '<Are your details correct>' option
@@ -493,7 +575,7 @@ Examples:
 	When I navigate to the port checker application
 	And I click signin button on port checker application
 	And I have provided the password for prototype research page
-	And I have provided the CP credentials and signin
+	And I have provided the CP credentials and signin for user 'GBUser'
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
@@ -507,10 +589,48 @@ Examples:
 	And I provided the Reference number of the application
 	When I click search button
 	And I should see the application status in 'Unsuccessful'
+	When I click continue button from application status page
+	Then I should navigate to Report non-compliance page
+	And I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click on GB outcome
+	When I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify Referred to SPS details
+	And click on signout button on CP and verify the signout message
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	When I have provided the CP credentials and signin for user 'SPSUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the Reference number of the application
+	When I click search button
+	And I should see the application status in 'Unsuccessful'
+	When I click continue button from application status page
+	Then I should navigate to Report non-compliance page
+	When I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click 'Allowed' on SPS outcome
+	And I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute               |  ApplicationRadio             |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Cairnryan to Larne (P&O) |  Search by application number |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute               |  ApplicationRadio             |nextPage        | SPSOutcome |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Allowed    |
 
 
 	Scenario Outline: Check PETS Travel Document details By Microchip number - status in Unsuccessful
@@ -558,7 +678,7 @@ Examples:
 	When I navigate to the port checker application
 	And I click signin button on port checker application
 	And I have provided the password for prototype research page
-	And I have provided the CP credentials and signin
+	And I have provided the CP credentials and signin for user 'GBUser'
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
@@ -572,12 +692,50 @@ Examples:
 	And I provided the Microchip number of the application
 	When I click search button
 	And I should see the application status in 'Unsuccessful'
+	When I click continue button from application status page
+	Then I should navigate to Report non-compliance page
+	And I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click on GB outcome
+	When I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify Referred to SPS details
+	And click on signout button on CP and verify the signout message
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	When I have provided the CP credentials and signin for user 'SPSUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the Microchip number of the application
+	When I click search button
+	And I should see the application status in 'Unsuccessful'
+	When I click continue button from application status page
+	Then I should navigate to Report non-compliance page
+	When I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click 'Allowed' on SPS outcome
+	And I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |nextPage        | SPSOutcome |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Allowed    |
 
-@CPRegression
+
 Scenario Outline: Check PETS Travel Document details By Reference number - status in Pending
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
@@ -622,7 +780,7 @@ Scenario Outline: Check PETS Travel Document details By Reference number - statu
 	When I navigate to the port checker application
 	And I click signin button on port checker application
 	And I have provided the password for prototype research page
-	And I have provided the CP credentials and signin
+	And I have provided the CP credentials and signin for user 'GBUser'
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
@@ -636,12 +794,49 @@ Scenario Outline: Check PETS Travel Document details By Reference number - statu
 	And I provided the Reference number of the application
 	When I click search button
 	And I should see the application status in 'Awaiting verification'
+	When I click continue button from application status page
+	Then I should navigate to Report non-compliance page
+	And I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click on GB outcome
+	When I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify Referred to SPS details
+	And click on signout button on CP and verify the signout message
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	When I have provided the CP credentials and signin for user 'SPSUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the Reference number of the application
+	When I click search button
+	And I should see the application status in 'Awaiting verification'
+	When I click continue button from application status page
+	Then I should navigate to Report non-compliance page
+	When I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click 'Allowed' on SPS outcome
+	And I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			    |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by application number |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			    |nextPage        | SPSOutcome |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by application number |Referred to SPS | Allowed    |
 
-@CPRegression
 Scenario Outline: Check PETS Travel Document details By Microchip number - status in Pending
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
@@ -686,7 +881,7 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	When I navigate to the port checker application
 	And I click signin button on port checker application
 	And I have provided the password for prototype research page
-	And I have provided the CP credentials and signin
+	And I have provided the CP credentials and signin for user 'GBUser'
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
@@ -700,7 +895,45 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	And I provided the Microchip number of the application
 	When I click search button
 	And I should see the application status in 'Awaiting verification'
+	When I click continue button from application status page
+	Then I should navigate to Report non-compliance page
+	And I click '<TypeOfPassenger>' in Passenger details
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click on GB outcome
+	When I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify Referred to SPS details
+	And click on signout button on CP and verify the signout message
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	When I have provided the CP credentials and signin for user 'SPSUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the Microchip number of the application
+	When I click search button
+	And I should see the application status in 'Awaiting verification'
+	When I click continue button from application status page
+	Then I should navigate to Report non-compliance page
+	When I click '<TypeOfPassenger>' in Passenger details
+	And I click 'Allowed' on SPS outcome
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |nextPage        | SPSOutcome     |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Allowed    |

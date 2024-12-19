@@ -1,7 +1,7 @@
 ﻿@CPRegression
 Feature: Report Non Compliance
 
-As a PTS port checker I want ot Check application and Route Details
+As a PTS port checker I want ot Check application Report non compliance page
 
 Background:
 	Given I navigate to PETS a travel document URL
@@ -78,7 +78,9 @@ Scenario Outline: PTS port checker Fail application status in non-compliance pag
 	Then I should navigate to Report non-compliance page
 	And I click Pet Travel Document details link dropdown
 	And I Verify status 'Approved' on Report non-compliance page
-	
+	When I click Report non-compliance button from Report non-compliance page
+	Then I should see an error message 'Select the type of passenger' in Report non-compliance page
+
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | 
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) |
@@ -363,3 +365,23 @@ Examples:
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Airline       |   123@           |  Enter the 15-digit microchip number, using only numbers                                   |
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Airline       |   wwqw           |  Enter the 15-digit microchip number, using only numbers                                   |
 
+#Scenario Outline: Verify validation for not selecting type of passenger on Report non-compliance page
+#	Then I have selected '<Transportation>' radio option
+#	Then I select the '<FerryRoute>' radio option
+#	And I have provided Scheduled departure time
+#	When I click save and continue button from route checke page
+#	Then I should navigate to Welcome page
+#	When I click search button from footer
+#	Then I navigate to Find a document page
+#	And I provided the '<PTDNumber>' of the application
+#	When I click search button
+#	And I should see the application status in 'Approved'
+#	And I select Fail radio button
+#	When I click save and continue button from application status page
+#	Then I should navigate to Report non-compliance page
+#	When I click Report non-compliance button from Report non-compliance page
+#	Then I should see an error message 'Select the type of passenger' in Report non-compliance page
+#	
+#Examples:
+#	| Transportation | FerryRoute                    | PTDNumber |
+#	| Ferry          | Birkenhead to Belfast (Stena) | E6361B    |

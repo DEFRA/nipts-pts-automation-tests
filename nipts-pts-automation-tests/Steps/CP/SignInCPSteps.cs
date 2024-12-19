@@ -2,6 +2,7 @@
 using nipts_pts_automation_tests.Data;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using nipts_pts_automation_tests.Tools;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
@@ -38,6 +39,12 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void GivenIClickSigninButtonOnPortCheckerApplication()
         {
             _signInCPPage?.ClickSignInButton();
+        }
+
+        [Then(@"click on signout button on CP and verify the signout message")]
+        public void ThenClickOnSignoutButtonOnCPAndVerifyTheSignoutMessage()
+        {
+            Assert.True(_signInCPPage?.IsSignedOut(), "Not able to sign out");
         }
 
         [When(@"I have provided the password for prototype research page")]
