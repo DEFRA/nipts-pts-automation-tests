@@ -34,9 +34,9 @@ namespace nipts_pts_automation_tests.Steps.CP
         [Then(@"I provided the PTD number of the application")]
         public void ThenIProvidedThePTDNumberOfTheApplication()
         {
-            var ptdNumber = _scenarioContext.Get<string>("PTDNumber");
-            var ptdNumber1 = ptdNumber.Substring(5);
-            _searchDocumentPage?.EnterPTDNumber(ptdNumber1);
+            //var ptdNumber = _scenarioContext.Get<string>("PTDNumber");
+            //var ptdNumber1 = ptdNumber.Substring(5);
+            _searchDocumentPage?.EnterPTDNumber("7BDE08");
         }
 
         [Then(@"I provided the Reference number of the application")]
