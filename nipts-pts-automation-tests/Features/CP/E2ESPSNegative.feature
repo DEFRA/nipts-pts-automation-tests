@@ -1,4 +1,5 @@
-﻿Feature: E2ESPSNegative
+﻿@CPRegression
+Feature: E2ESPSNegative
 
 As a PTS port checker I want ot check E2E journey for SPS negative scenario
 
