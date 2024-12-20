@@ -1,7 +1,7 @@
 ﻿@CPRegression
 Feature: E2ECP
 
-As a PTS port checker I want ot check pet travel document applications Status details
+As a PTS port checker I want ot check E2E journey for GB to NI
 
 Background:
 	Given I navigate to PETS a travel document URL
@@ -13,7 +13,7 @@ Background:
 	When I click Create a new pet travel document button
 	Then I should redirected to the Are your details correct page
 
-Scenario Outline: Check PETS Travel Document details By PTD number - status in Approved
+Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - status in Approved
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -93,10 +93,10 @@ Scenario Outline: Check PETS Travel Document details By PTD number - status in A
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
-	And I have provided Scheduled departure time
+	And I have provided Scheduled departure time with SPS user
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
-	When I click on view on Checks page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	When I click search button from footer
 	Then I navigate to Find a document page
@@ -111,7 +111,7 @@ Scenario Outline: Check PETS Travel Document details By PTD number - status in A
 	And I click 'Allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
-	When I click on view on Checks page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
@@ -119,7 +119,7 @@ Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome |
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    |
 
-Scenario Outline: Check PETS Travel Document details By Application number - status in Approved
+Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Approved
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -198,9 +198,10 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
-	And I have provided Scheduled departure time
+	And I have provided Scheduled departure time with SPS user
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	When I click search button from footer
 	Then I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
@@ -215,7 +216,7 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	And I click 'Not allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
-	When I click on view on Checks page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
@@ -223,7 +224,7 @@ Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute               |  ApplicationRadio             |nextPage        | SPSOutcome  |
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Not allowed |
 
-Scenario Outline: Check PETS Travel Document details By Microchip number - status in Approved
+Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip number - status in Approved
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -302,9 +303,10 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
-	And I have provided Scheduled departure time
+	And I have provided Scheduled departure time with SPS user
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	When I click search button from footer
 	Then I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
@@ -319,16 +321,16 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	And I click 'Allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
-	When I click on view on Checks page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio           |nextPage        | SPSOutcome |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Loch Ryan to Belfast (Stena)  | Search by microchip number |Referred to SPS | Allowed    |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                   | ApplicationRadio           | nextPage        | SPSOutcome | TypeOfPassenger      |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Loch Ryan to Belfast (Stena) | Search by microchip number | Referred to SPS | Allowed    | Ferry foot passenger |
 
 
-Scenario Outline: Check PETS Travel Document details By Application number - status in Revoked
+Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Revoked
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -405,9 +407,10 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
-	And I have provided Scheduled departure time
+	And I have provided Scheduled departure time with SPS user
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	When I click search button from footer
 	Then I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
@@ -421,7 +424,7 @@ Scenario Outline: Check PETS Travel Document details By Application number - sta
 	And I click 'Allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
-	When I click on view on Checks page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
@@ -429,7 +432,7 @@ Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute               |  ApplicationRadio             | nextPage        | SPSOutcome |
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Cairnryan to Larne (P&O) |  Search by application number | Referred to SPS | Allowed    |
 
-Scenario Outline: Check PETS Travel Document details By Microchip number - status in Revoked
+Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip number - status in Revoked
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -507,9 +510,10 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
-	And I have provided Scheduled departure time
+	And I have provided Scheduled departure time with SPS user
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	When I click search button from footer
 	Then I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
@@ -523,7 +527,7 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	And I click 'Allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
-	When I click on view on Checks page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
@@ -531,7 +535,7 @@ Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  | nextPage        | SPSOutcome |
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number | Referred to SPS | Allowed    |
 
-	Scenario Outline: Check PETS Travel Document details By Application number - status in Unsuccessful
+	Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Unsuccessful
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -608,9 +612,10 @@ Examples:
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
-	And I have provided Scheduled departure time
+	And I have provided Scheduled departure time with SPS user
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	When I click search button from footer
 	Then I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
@@ -624,7 +629,7 @@ Examples:
 	And I click 'Allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
-	When I click on view on Checks page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
@@ -633,7 +638,7 @@ Examples:
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Allowed    |
 
 
-	Scenario Outline: Check PETS Travel Document details By Microchip number - status in Unsuccessful
+	Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip number - status in Unsuccessful
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -711,9 +716,10 @@ Examples:
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
-	And I have provided Scheduled departure time
+	And I have provided Scheduled departure time with SPS user
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	When I click search button from footer
 	Then I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
@@ -727,7 +733,7 @@ Examples:
 	And I click 'Allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
-	When I click on view on Checks page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
@@ -736,7 +742,7 @@ Examples:
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Allowed    |
 
 
-Scenario Outline: Check PETS Travel Document details By Reference number - status in Pending
+Scenario Outline: Check GB to SPS PETS Travel Document details By Reference number - status in Pending
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -813,9 +819,10 @@ Scenario Outline: Check PETS Travel Document details By Reference number - statu
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
-	And I have provided Scheduled departure time
+	And I have provided Scheduled departure time with SPS user
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	When I click search button from footer
 	Then I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
@@ -829,7 +836,7 @@ Scenario Outline: Check PETS Travel Document details By Reference number - statu
 	And I click 'Allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
-	When I click on view on Checks page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
@@ -837,7 +844,7 @@ Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			    |nextPage        | SPSOutcome |
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by application number |Referred to SPS | Allowed    |
 
-Scenario Outline: Check PETS Travel Document details By Microchip number - status in Pending
+Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip number - status in Pending
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -914,9 +921,10 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	Then I should redirected to port route checke page
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
-	And I have provided Scheduled departure time
+	And I have provided Scheduled departure time with SPS user
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	When I click search button from footer
 	Then I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
@@ -926,14 +934,14 @@ Scenario Outline: Check PETS Travel Document details By Microchip number - statu
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details
-	And I click 'Allowed' on SPS outcome
+	And I click 'Not allowed' on SPS outcome
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
-	When I click on view on Checks page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |nextPage        | SPSOutcome     |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Allowed    |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Not allowed    |
