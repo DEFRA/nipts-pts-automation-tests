@@ -83,7 +83,7 @@ Scenario Outline: Verify validation of special characters with PTD number
 	Then I navigate to Find a document page
 	And I provided the '<PTDNumber>' of the application
 	When I click search button
-	Then I should see an error message "Enter 6 characters after 'GB826', using only the letters and numbers" in Find a document page
+	Then I should see an error message "Enter 6 characters after 'GB826'" in Find a document page
 Examples:
 	| Transportation | FerryRoute                    | PTDNumber |
 	| Ferry          | Birkenhead to Belfast (Stena) | @@@@@$$&  |

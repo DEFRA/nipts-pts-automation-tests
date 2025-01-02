@@ -7,5 +7,8 @@
         void HeadersChangeLink();
         void FooterHomeIcon();
         void clickOnView();
+        bool DepartureDateTimeCheck();
+        bool DepartureDateTimeCheckForFlight();
+        void clickOnViewWithSPSUser(string departureRoute);
     }
 }

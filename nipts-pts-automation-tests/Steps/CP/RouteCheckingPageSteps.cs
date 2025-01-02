@@ -46,10 +46,19 @@ namespace nipts_pts_automation_tests.Steps.CP
         }
 
         [Given(@"I have provided Scheduled departure time")]
+        [When(@"I have provided Scheduled departure time")]
         [Then(@"I have provided Scheduled departure time")]
         public void ThenIHaveProvidedScheduledDepartureTime()
         {
-            _routeCheckingPage?.SelectDropDownDepartureTime();
+            string departureTime = _routeCheckingPage?.SelectDropDownDepartureTime();
+            _scenarioContext.Add("DepartureTime", departureTime);
+        }
+
+        [When(@"I have provided Scheduled departure time with SPS user")]
+        [Then(@"I have provided Scheduled departure time with SPS user")]
+        public void ThenIHaveProvidedScheduledDepartureTimeSPS()
+        {
+            _routeCheckingPage?.SelectDropDownDepartureTimeWithSPS();
         }
 
         [When(@"I click save and continue button from route checke page")]
@@ -58,6 +67,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             _routeCheckingPage?.SelectSaveAndContinue();
         }
 
+        [When(@"I provide the '([^']*)' in the box")]
         [Then(@"I provide the '([^']*)' in the box")]
         public void ThenIProvideTheInTheBox(string routeFlightNumber)
         {

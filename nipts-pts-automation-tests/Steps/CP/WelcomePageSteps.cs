@@ -53,5 +53,26 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             _welcomePage.clickOnView();
         }
+
+        [When(@"I click on view on Checks page with SPS user for '([^']*)'")]
+        [Then(@"I click on view on Checks page with SPS user for '([^']*)'")]
+        public void ThenIClickOnViewOnChecksPageWithSPSUser(string departureRoute)
+        {
+            _welcomePage.clickOnViewWithSPSUser(departureRoute);
+        }
+
+        [When(@"I should see departure date and time is not matching with latest referred to SPS")]
+        [Then(@"I should see departure date and time is not matching with latest referred to SPS")]
+        public void ThenDepartureDateTimeCheck()
+        {
+            Assert.True(_welcomePage?.DepartureDateTimeCheck(), "Departure time matching");
+        }
+
+        [When(@"I should see for Flights departure date and time is not matching with latest referred to SPS")]
+        [Then(@"I should see for Flights departure date and time is not matching with latest referred to SPS")]
+        public void ThenFlightDepartureDateTimeCheck()
+        {
+            Assert.True(_welcomePage?.DepartureDateTimeCheckForFlight(), "Departure time matching");
+        }
     }
 }

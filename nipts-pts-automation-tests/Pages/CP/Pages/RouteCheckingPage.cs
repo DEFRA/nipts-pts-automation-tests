@@ -3,6 +3,7 @@ using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
+using TechTalk.SpecFlow;
 
 namespace nipts_pts_automation_tests.Pages.CP.Pages
 {
@@ -75,13 +76,29 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
         }
 
-        public void SelectDropDownDepartureTime()
+        public string SelectDropDownDepartureTime()
         {
+            var hour = DateTime.Now.ToString("HH");
+            var minutes = DateTime.Now.ToString("mm");
+            string departureTime = $"'{hour}':'{minutes}'";
 
             SelectElement selectHour = new SelectElement(hourDropdown);
-            selectHour.SelectByValue("10");
+            selectHour.SelectByValue(hour);
             SelectElement selectMinute = new SelectElement(minuteDropdown);
-            selectMinute.SelectByValue("30");
+            selectMinute.SelectByValue(minutes);
+
+            return departureTime;
+        }
+
+        public void SelectDropDownDepartureTimeWithSPS()
+        {
+            var hour = DateTime.Now.ToString("HH");
+            var minutes = DateTime.Now.ToString("mm");
+
+            SelectElement selectHour = new SelectElement(hourDropdown);
+            selectHour.SelectByValue(hour);
+            SelectElement selectMinute = new SelectElement(minuteDropdown);
+            selectMinute.SelectByValue(minutes);
         }
 
         public void SelectSaveAndContinue()

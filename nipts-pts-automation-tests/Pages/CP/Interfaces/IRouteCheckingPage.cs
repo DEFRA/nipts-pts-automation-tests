@@ -5,11 +5,12 @@
         bool IsPageLoaded();
         void SelectTransportationOption(string option);
         void SelectFerryRouteOption(string routeOption);
-        void SelectDropDownDepartureTime();
+        string SelectDropDownDepartureTime();
         void SelectSaveAndContinue();
         bool IsError(string errorMessage);
         void SelectFlightNumber(string routeFlight);
         void SelectScheduledDepartureDate(string departureDay, string departureMonth, string departureYear);
         void SelectDropDownDepartureTimeMinuteOnly();
+        void SelectDropDownDepartureTimeWithSPS();
     }
 }
