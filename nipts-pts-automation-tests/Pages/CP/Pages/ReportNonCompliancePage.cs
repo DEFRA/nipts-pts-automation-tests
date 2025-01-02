@@ -31,6 +31,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement chkMicrochipNoDoesNotMatchPTD => _driver.WaitForElementExists(By.XPath("(//div[@class='govuk-checkboxes__item']/input[@class='govuk-checkboxes__input'])[1]"));
         private IWebElement txtMichrochipNo => _driver.WaitForElement(By.Id("mcNotMatchActual"));
         private IWebElement btnSaveOutcome => _driver.WaitForElement(By.XPath("//button[contains(text(),'Save outcome')]"));
+        private IWebElement txtOtherReasonHintTxt => _driver.WaitForElement(By.Id("somethingRadio-item-hint"));
+        private IWebElement txtGBOutcomeHintTxt => _driver.WaitForElement(By.Id("gb-item-hint"));
+        private IWebElement txtNIOutcomeHintTxt => _driver.WaitForElement(By.Id("sps-item-hint"));
+
         #endregion
 
         #region Methods
@@ -134,6 +138,18 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", btnSaveOutcome);
             btnSaveOutcome.Click();
+        }
+        public bool VerifyOtherReasonHintTxt(string otherReasonHintTxt)
+        {
+            return txtOtherReasonHintTxt.Text.Contains(otherReasonHintTxt);
+        }
+        public bool VerifyGBOutcomeHintTxt(string GBOutcomeMsg)
+        {
+            return txtGBOutcomeHintTxt.Text.Contains(GBOutcomeMsg);
+        }
+        public bool VerifyNIOutcomeHintTxt(string NIOutcomeMsg)
+        {
+            return txtNIOutcomeHintTxt.Text.Contains(NIOutcomeMsg);
         }
         #endregion
 
