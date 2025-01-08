@@ -14,5 +14,8 @@
         public void EnterMichrochipNoDoesNotMatchPTD(string michrochipNo);
         public void ClickOnSaveOutcome();
         public void SelectNonComplianceReason(string nonComplianceReason);
+        public bool VerifyOtherReasonHintTxt(string otherReasonHintTxt);
+        public bool VerifyGBOutcomeHintTxt(string GBOutcomeMsg);
+        public bool VerifyNIOutcomeHintTxt(string NIOutcomeMsg);
     }
 }

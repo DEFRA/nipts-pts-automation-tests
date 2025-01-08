@@ -58,6 +58,21 @@ Examples:
 	| Transportation | FerryRoute                    | PTDNumber |
 	| Ferry          | Birkenhead to Belfast (Stena) | 1234567   |
 
+Scenario Outline: Verify validation of alphabets other than A-F PTD Number format
+	Then I have selected '<Transportation>' radio option
+	Then I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I provided the '<PTDNumber>' of the application
+	When I click search button
+	Then I should see an error message "Enter 6 characters after 'GB826', using only letters A to F and numbers" in Find a document page
+Examples:
+	| Transportation | FerryRoute                    | PTDNumber |
+	| Ferry          | Birkenhead to Belfast (Stena) | C9321G	 |
+
 Scenario Outline: Verify validation provide invalid 6 PTD Number format and navigate to Document not found page 
 	Then I have selected '<Transportation>' radio option
 	Then I select the '<FerryRoute>' radio option

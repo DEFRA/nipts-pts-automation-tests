@@ -102,5 +102,20 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             _reportNonCompliancePage.ClickOnSaveOutcome();
         }
+        [Then(@"verify hint text '([^']*)' for Other reason")]
+        public void ThenVerifyOtherReasonHintText(string OtherReasonhintText)
+        {
+            Assert.True(_reportNonCompliancePage.VerifyOtherReasonHintTxt(OtherReasonhintText), "Invalid hint Text for Other reason on Report Non Compliance page");
+        }
+        [Then(@"verify hint text '([^']*)' for GB outcome")]
+        public void ThenVerifyGBOutcomeMsg(string gbOutcomeMsg)
+        {
+            Assert.True(_reportNonCompliancePage.VerifyGBOutcomeHintTxt(gbOutcomeMsg), "Invalid GB Outcome Message on Report Non Compliance page");
+        }
+        [Then(@"verify hint text '([^']*)' for NI outcome")]
+        public void ThenVerifyNIOutcomeMsg(string niOutcomeMsg)
+        {
+            Assert.True(_reportNonCompliancePage.VerifyNIOutcomeHintTxt(niOutcomeMsg), "Invalid NI Outcome Message on Report Non Compliance page");
+        }
     }
 }
