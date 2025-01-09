@@ -10,5 +10,6 @@
         bool DepartureDateTimeCheck();
         bool DepartureDateTimeCheckForFlight();
         void clickOnViewWithSPSUser(string departureRoute);
+        bool VerifySubmiitedMessage();
     }
 }

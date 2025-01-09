@@ -1,12 +1,6 @@
 ﻿using BoDi;
-using nipts_pts_API_tests.Application;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace nipts_pts_automation_tests.Steps.CP
@@ -32,6 +26,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         [When(@"I verify Referred to SPS details")]
         public void WhenIVerifyReferredToSPSDetails()
         {
+            var ptdNumber = _scenarioContext.Get<string>("PTDNumber");
             refferedToSPSPage?.VerifyReferredToSPSDetails();
         }
 
@@ -40,6 +35,15 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void WhenIVerifySPSOutcome(string outcome)
         {
             refferedToSPSPage?.VerifySPSOutcome(outcome);
+        }
+
+        [Then(@"I click on PTD number of the application")]
+        [When(@"I click on PTD number of the application")]
+        public void WhenIClickOnPTDNumberOfTheApplication()
+        {
+            var ptdNumber = _scenarioContext.Get<string>("PTDNumber");
+            var ptdNumberNew = ptdNumber.Substring(0,5) + " " + ptdNumber.Substring(5,3) + " " + ptdNumber.Substring(8,3);
+            refferedToSPSPage?.ClickOnPTDNumberOfTheApplication(ptdNumberNew);
         }
 
     }

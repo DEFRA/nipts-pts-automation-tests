@@ -25,30 +25,42 @@ namespace nipts_pts_automation_tests.Steps.CP
             _objectContainer = container;
         }
 
+        [Then(@"I should see the application status in '([^']*)'")]
         [When(@"I should see the application status in '([^']*)'")]
         public void ThenIShouldSeeTheApplicationStatusIn(string applicationStatus)
         {
             Assert.IsTrue(_applicationSummaryPage?.VerifyTheExpectedStatus(applicationStatus), "The submitted application is not in expected status");
         }
 
+        [Then(@"I should see the application subtitle '([^']*)'")]
+        [When(@"I should see the application subtitle '([^']*)'")]
+        public void ThenIShouldSeeTheApplicationSubtitle(string applicationSubtitle)
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyTheExpectedSubtitle(applicationSubtitle), "The submitted application is not in expected subtitle");
+        }
+
+        [Then(@"I select Pass radio button")]
         [When(@"I select Pass radio button")]
         public void WhenISelectPassRadioButton()
         {
             _applicationSummaryPage?.SelectPassRadioButton();
         }
 
+        [Then(@"I select Fail radio button")]
         [When(@"I select Fail radio button")]
         public void WhenISelectFailRadioButton()
         {
             _applicationSummaryPage?.SelectFailRadioButton();
         }
 
+        [Then(@"I click save and continue button from application status page")]
         [When(@"I click save and continue button from application status page")]
         public void WhenIClickSaveAndContinueButtonFromApplicationStatusPage()
         {
             _applicationSummaryPage?.SelectSaveAndContinue();
         }
 
+        [Then(@"I click continue button from application status page")]
         [When(@"I click continue button from application status page")]
         public void WhenIClickContinueButtonFromApplicationStatusPage()
         {

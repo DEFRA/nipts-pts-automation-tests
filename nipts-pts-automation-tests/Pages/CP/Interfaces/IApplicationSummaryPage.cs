@@ -8,5 +8,6 @@
         void SelectSaveAndContinue();
         bool IsError(string errorMessage);
         void SelectContinue();
+        bool VerifyTheExpectedSubtitle(string applicationSubtitle);
     }
 }

@@ -73,6 +73,7 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
+	And I should see the application subtitle 'Lifelong pet travel document and declaration'
 	And I click save and continue button from application status page
 	Then I should see an error message "Select an option" in application status page
 	And I select Pass radio button
@@ -142,6 +143,7 @@ Scenario Outline: PTS port checker Pass application by Reference number - status
 	And I provided the Reference number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
+	And I should see the application subtitle 'Lifelong pet travel document and declaration'
 	And I select Pass radio button
 	When I click save and continue button from application status page
 	Then I navigate to Find a document page
@@ -209,10 +211,12 @@ Scenario Outline: PTS port checker Pass application by Microchip number - status
 	And I provided the Microchip number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
+	And I should see the application subtitle 'Lifelong pet travel document and declaration'
 	And I select Pass radio button
 	When I click save and continue button from application status page
-	Then I navigate to Find a document page
-	
+	Then I should navigate to Welcome page
+	And I verify submiited message
+
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio           | 
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number | 
@@ -275,6 +279,7 @@ Scenario Outline: PTS port checker continue application by Reference number - st
 	And I provided the Reference number of the application
 	When I click search button
 	And I should see the application status in 'Awaiting verification'
+	And I should see the application subtitle 'Your application summary'
 	And click on continue
 	Then I should navigate to Report non-compliance page
 	

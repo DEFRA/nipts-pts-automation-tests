@@ -1,5 +1,7 @@
 ﻿using BoDi;
+using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
+using OpenQA.Selenium;
 
 namespace nipts_pts_automation_tests.Pages.CP.Pages
 {
@@ -13,6 +15,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         }
 
         #region Page objects
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+
 
         #endregion
 
@@ -26,6 +30,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         public void VerifySPSOutcome(string outcome)
         { 
         
+        }
+
+        public void ClickOnPTDNumberOfTheApplication(string ptdNumber)
+        {
+            var clickPTD = _driver.WaitForElement(By.XPath($"//button[contains(text(),'{ ptdNumber }')]"));
+            clickPTD.Click();
         }
 
         #endregion
