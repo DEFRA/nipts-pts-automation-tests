@@ -102,20 +102,41 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             _reportNonCompliancePage.ClickOnSaveOutcome();
         }
+
         [Then(@"verify hint text '([^']*)' for Other reason")]
         public void ThenVerifyOtherReasonHintText(string OtherReasonhintText)
         {
             Assert.True(_reportNonCompliancePage.VerifyOtherReasonHintTxt(OtherReasonhintText), "Invalid hint Text for Other reason on Report Non Compliance page");
         }
+
         [Then(@"verify hint text '([^']*)' for GB outcome")]
         public void ThenVerifyGBOutcomeMsg(string gbOutcomeMsg)
         {
             Assert.True(_reportNonCompliancePage.VerifyGBOutcomeHintTxt(gbOutcomeMsg), "Invalid GB Outcome Message on Report Non Compliance page");
         }
+
         [Then(@"verify hint text '([^']*)' for NI outcome")]
         public void ThenVerifyNIOutcomeMsg(string niOutcomeMsg)
         {
             Assert.True(_reportNonCompliancePage.VerifyNIOutcomeHintTxt(niOutcomeMsg), "Invalid NI Outcome Message on Report Non Compliance page");
+        }
+
+        [When(@"I Verify PTD number on Report non-compliance page")]
+        [Then(@"I Verify PTD number on Report non-compliance page")]
+        public void ThenVerifyPTDNumber()
+        {
+            var ptdNumber = _scenarioContext.Get<string>("PTDNumber");
+            var ptdNumberNew = ptdNumber.Substring(0, 5) + " " + ptdNumber.Substring(5, 3) + " " + ptdNumber.Substring(8, 3);
+            Assert.True(_reportNonCompliancePage.VerifyPTDNumber(ptdNumberNew), "Invalid PTD Number on Report Non Compliance page");
+        }
+
+
+        [When(@"I Verify Application Reference number on Report non-compliance page")]
+        [Then(@"I Verify Application Reference number on Report non-compliance page")]
+        public void ThenVerifyApplRefNumber()
+        {
+            var applRefNum = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_reportNonCompliancePage.VerifyApplicationReferenceNumber(applRefNum), "Invalid Application Reference Number on Report Non Compliance page");
         }
     }
 }

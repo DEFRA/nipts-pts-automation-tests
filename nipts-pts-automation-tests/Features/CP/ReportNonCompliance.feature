@@ -78,6 +78,7 @@ Scenario Outline: PTS port checker Fail application status in non-compliance pag
 	Then I should navigate to Report non-compliance page
 	And I click Pet Travel Document details link dropdown
 	And I Verify status 'Approved' on Report non-compliance page
+	And I Verify PTD number on Report non-compliance page
 	When I click Report non-compliance button from Report non-compliance page
 	Then I should see an error message 'Select the type of passenger' in Report non-compliance page
 
@@ -148,6 +149,7 @@ Scenario Outline: PTS port checker Fail application status in non-compliance pag
 	Then I should navigate to Report non-compliance page
 	And I click Pet Travel Document details link dropdown
 	And I Verify status 'Awaiting verification' on Report non-compliance page
+	And I Verify Application Reference number on Report non-compliance page
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio           | 
