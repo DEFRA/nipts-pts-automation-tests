@@ -26,7 +26,6 @@ namespace nipts_pts_automation_tests.Steps.CP
         [When(@"I verify Referred to SPS details")]
         public void WhenIVerifyReferredToSPSDetails()
         {
-            var ptdNumber = _scenarioContext.Get<string>("PTDNumber");
             refferedToSPSPage?.VerifyReferredToSPSDetails();
         }
 

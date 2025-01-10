@@ -78,7 +78,8 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 	Then I should see an error message "Select an option" in application status page
 	And I select Pass radio button
 	When I click save and continue button from application status page
-	Then I navigate to Find a document page
+	Then I should navigate to Welcome page
+	And I verify submiited message
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures |Transportation | FerryRoute                    | 
@@ -146,7 +147,8 @@ Scenario Outline: PTS port checker Pass application by Reference number - status
 	And I should see the application subtitle 'Lifelong pet travel document and declaration'
 	And I select Pass radio button
 	When I click save and continue button from application status page
-	Then I navigate to Find a document page
+	Then I should navigate to Welcome page
+	And I verify submiited message
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures |Transportation | FerryRoute                    | ApplicationRadio             | 
