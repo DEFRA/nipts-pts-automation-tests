@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI", "CI", "{8655DED8-0432-
 		pipeline-crossbrowserIOS.yml = pipeline-crossbrowserIOS.yml
 		pipeline-crossbrowserMacOS.yml = pipeline-crossbrowserMacOS.yml
 		pipeline-crossbrowserWindows.yml = pipeline-crossbrowserWindows.yml
+		pipeline-RunOnlyScenario.yml = pipeline-RunOnlyScenario.yml
 		run-test-template.yml = run-test-template.yml
 		test-variables_CI.yml = test-variables_CI.yml
 	EndProjectSection
