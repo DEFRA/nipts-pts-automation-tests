@@ -45,5 +45,13 @@ namespace nipts_pts_automation_tests.Steps.CP
             refferedToSPSPage?.ClickOnPTDNumberOfTheApplication(ptdNumberNew);
         }
 
+        [Then(@"I click on PTD '([^']*)' of the application")]
+        [When(@"I click on PTD '([^']*)' of the application")]
+        public void WhenIClickOnPTDNumberOfTheApplication(string ptdNumber)
+        {
+            var ptdNumberNew = "GB826" + " " + ptdNumber.Substring(0, 3) + " " + ptdNumber.Substring(3, 3);
+            refferedToSPSPage?.ClickOnPTDNumberOfTheApplication(ptdNumberNew);
+        }
+
     }
 }
