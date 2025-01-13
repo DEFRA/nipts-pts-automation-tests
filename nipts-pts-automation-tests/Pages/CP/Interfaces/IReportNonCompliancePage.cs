@@ -17,5 +17,7 @@
         public bool VerifyOtherReasonHintTxt(string otherReasonHintTxt);
         public bool VerifyGBOutcomeHintTxt(string GBOutcomeMsg);
         public bool VerifyNIOutcomeHintTxt(string NIOutcomeMsg);
+        bool VerifyPTDNumber(string ptdNumberNew);
+        bool VerifyApplicationReferenceNumber(string AppRefNumber);
     }
 }

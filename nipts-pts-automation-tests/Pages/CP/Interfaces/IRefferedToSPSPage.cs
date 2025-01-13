@@ -2,6 +2,7 @@
 {
     public interface IRefferedToSPSPage
     {
+        void ClickOnPTDNumberOfTheApplication(string ptdNumber);
         void VerifyReferredToSPSDetails();
         void VerifySPSOutcome(string outcome);
     }

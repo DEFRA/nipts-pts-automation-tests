@@ -34,6 +34,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement txtOtherReasonHintTxt => _driver.WaitForElement(By.Id("somethingRadio-item-hint"));
         private IWebElement txtGBOutcomeHintTxt => _driver.WaitForElement(By.Id("gb-item-hint"));
         private IWebElement txtNIOutcomeHintTxt => _driver.WaitForElement(By.Id("sps-item-hint"));
+        private IWebElement PTDNumber => _driver.WaitForElement(By.XPath("//dt[contains(text(),'PTD number')]/./following-sibling::dd"));
+        private IWebElement ApplicationRefNumber => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Application reference number')]/./following-sibling::dd"));
 
         #endregion
 
@@ -150,6 +152,16 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         public bool VerifyNIOutcomeHintTxt(string NIOutcomeMsg)
         {
             return txtNIOutcomeHintTxt.Text.Contains(NIOutcomeMsg);
+        }
+
+        public bool VerifyPTDNumber(string ptdNumberNew)
+        {
+            return PTDNumber.Text.Contains(ptdNumberNew);
+        }
+
+        public bool VerifyApplicationReferenceNumber(string AppRefNumber)
+        {
+            return ApplicationRefNumber.Text.Contains(AppRefNumber);
         }
         #endregion
 

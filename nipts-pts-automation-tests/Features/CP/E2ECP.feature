@@ -73,6 +73,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
+	And I should see the application subtitle 'Lifelong pet travel document and declaration'
 	And I select Fail radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
@@ -98,13 +99,13 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
-	When I click search button from footer
-	Then I navigate to Find a document page
-	And I provided the PTD number of the application
-	When I click search button
-	And I should see the application status in 'Approved'
-	And I select Fail radio button
-	When I click save and continue button from application status page
+	When I click on PTD number of the application
+	Then verify next page '<nextPage1>' is loaded
+	And I verify GB check report
+	When I click on Conduct an SPS check
+	Then I should see the application status in 'Approved'
+	When I select Fail radio button
+	And I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details
 	And I select 'Cannot find microchip' as non compliance reason
@@ -116,8 +117,8 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Approved
 	Then I have selected '<Are your details correct>' option
@@ -491,6 +492,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	And I provided the Microchip number of the application
 	When I click search button
 	And I should see the application status in 'Revoked'
+	And I should see the application subtitle 'Lifelong pet travel document and declaration'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And I click '<TypeOfPassenger>' in Passenger details
@@ -593,6 +595,7 @@ Examples:
 	And I provided the Reference number of the application
 	When I click search button
 	And I should see the application status in 'Unsuccessful'
+	And I should see the application subtitle 'Your application summary'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And I click '<TypeOfPassenger>' in Passenger details

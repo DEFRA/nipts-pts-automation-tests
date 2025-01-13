@@ -29,6 +29,11 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return _driver.WaitForElement(By.XPath($"(//h1[normalize-space()='{status}'])[1]")).Text.Trim().Equals(status);
         }
 
+        public bool VerifyTheExpectedSubtitle(string applicationSubtitle)
+        {
+            return _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-panel__title')]/../following-sibling::h1")).Text.Trim().Equals(applicationSubtitle);
+        }
+
         public void SelectPassRadioButton()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", rdoPass);

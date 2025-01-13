@@ -74,5 +74,12 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             Assert.True(_welcomePage?.DepartureDateTimeCheckForFlight(), "Departure time matching");
         }
+
+        [When(@"I verify submiited message")]
+        [Then(@"I verify submiited message")]
+        public void ThenIVerifySubmiitedMessage()
+        {
+            Assert.True(_welcomePage?.VerifySubmiitedMessage(), "Submitted message not matching");
+        }
     }
 }
