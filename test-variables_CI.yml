@@ -68,3 +68,25 @@ variables:
     value: 'TestCategory=APGBRegression'
   ${{ if eq(parameters.jobNameParam, 'CPRegression') }}:
     value: 'TestCategory=CPRegression'
+  ${{ if eq(parameters.jobNameParam, 'FirefoxBrowserRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'ChromeBrowserRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'EdgeBrowserRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'IOSIpad12ChromeRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'IOSIpad12SafariRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'IOSIphoneSafari14RunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'IOSIphone14ChromeRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'AndroidSamsungRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'AndroidSamsungChromeRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'MacOSSafariBrowserRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'MacOSChromeBrowserRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'

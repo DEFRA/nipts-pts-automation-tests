@@ -15,7 +15,7 @@ Scenario: SignOut
 	Then I should redirected to port route checke page
 	Then click on signout button on CP and verify the signout message
 
-@RunOnly
+@CrossBrowserCP
 Scenario: CPE2ECrossBrowser
 	When I have provided the password for prototype research page
 	And I have provided the CP credentials and signin for user 'GBUser'
