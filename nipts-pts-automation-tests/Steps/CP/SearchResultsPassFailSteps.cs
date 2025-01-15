@@ -56,6 +56,13 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.IsTrue(_searchResultsPassFailPage?.VerifyOtherClrOption(petClr), $"Pet Color mismatch on view results page");
 
         }
+        [Then(@"verify Pet Breed option '([^']*)' on Search Pass Fail Results Page")]
+        public void ThenVerifyPetBreedOption(string petBreed)
+        {
+            
+            Assert.IsTrue(_searchResultsPassFailPage?.VerifyPetBreedOption(petBreed), $"Pet Breed mismatch on view results page");
+
+        }
     }
 }
 

@@ -19,9 +19,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
 
         private IWebElement PTDNumberEle => _driver.WaitForElement(By.XPath("(//dl[contains(@class,'govuk-summary-list')]/div[1]/dd)[1]"));
-
         private IWebElement SigFeaturesEle => _driver.WaitForElementExists(By.XPath("(//dl[contains(@class,'govuk-summary-list')]/div[7]/dd)[1]"));
         private IWebElement PetClrEle => _driver.WaitForElementExists(By.XPath("(//dl[contains(@class,'govuk-summary-list')]/div[6]/dd)[1]"));
+        private IWebElement PetBreedEle => _driver.WaitForElementExists(By.XPath("(//dl[contains(@class,'govuk-summary-list')]/div[3]/dd)[1]"));
 
         #endregion
 
@@ -38,8 +38,11 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public bool VerifyOtherClrOption(string otherClr)
         {
-
             return PetClrEle.Text.Contains(otherClr);
+        }
+        public bool VerifyPetBreedOption(string petBreed)
+        {
+            return PetBreedEle.Text.Contains(petBreed);
         }
         #endregion
 
