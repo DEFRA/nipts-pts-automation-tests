@@ -114,6 +114,7 @@ namespace nipts_pts_automation_tests.Hooks
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<DocumentNotFoundPage, IDocumentNotFoundPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<RefferedToSPSPage, IRefferedToSPSPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<GBCheckReportPage, IGBCheckReportPage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<SearchResultsPassFailPage, ISearchResultsPassFail>());
 
         }
 
