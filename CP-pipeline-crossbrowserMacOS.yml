@@ -83,3 +83,20 @@ stages:
         BrowserVersionName: '16.5'
         dependsOn: ''
         targetBrowserName: 'Safari'
+
+
+  - stage: MacOSFirefoxBrowserRunCP
+    displayName: MacOSFirefoxBrowserRunCP
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: MacOSFirefoxBrowserRunCP
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: 'OS X'
+        OSVersionName: 'Ventura'
+        BrowserVersionName: 'latest'
+        dependsOn: ''
+        targetBrowserName: 'Firefox'

@@ -26,18 +26,6 @@ parameters:
     type: string
     default: 'Edge'
   
-schedules:
-- cron: "0 18 * * Mon,Tue,Wed,Thu,Fri"
-  displayName: Daily CrossBrowser build
-  branches:
-    include:
-    - dev
-    exclude:
-    - feature/*
-    - task/*
-    - master
-    
-
 resources:
   repositories:
     - repository: clientautomationreponew
