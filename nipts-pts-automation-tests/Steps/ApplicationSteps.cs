@@ -22,12 +22,6 @@ namespace nipts_pts_automation_tests.Steps
             _objectContainer = container;
         }
 
-        //[Then(@"verify next page '([^']*)' is loaded")]
-        //public void ThenVerifyNextPageIsLoaded(string pageName)
-        //{
-        //    Assert.True(applicationPage.VerifyNextPageIsLoaded(pageName), "Expected page not loaded");
-        //}
-
         [When(@"click on Welsh language")]
         [Then(@"click on Welsh language")]
         public void ThenClickOnWelshLang()
@@ -109,18 +103,6 @@ namespace nipts_pts_automation_tests.Steps
         {
             applicationPage.ClickOnContinueEng();
         }
-
-        //[Then(@"I should navigate to Manage account")]
-        //public void ThenIShouldNavigateToManageAccount()
-        //{
-        //    applicationPage.ClickOnManageAccountLink();
-        //}
-
-        //[Then(@"I click on Manage your account")]
-        //public void ThenIClickOnManageYourAccount()
-        //{
-        //    applicationPage.ClickOnManageYourAccountLink();
-        //}
 
         [Then(@"click on View your pet travel documents or apply new one")]
         public void ClickOnViewYourPetDocumentFromManageYourAccount()

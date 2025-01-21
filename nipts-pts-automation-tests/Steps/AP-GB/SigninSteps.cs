@@ -1,15 +1,12 @@
 ﻿using BoDi;
-using Microsoft.Azure.Amqp.Transaction;
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.Data;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.AP_GB.LogInPage;
 using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace nipts_pts_automation_tests.Steps.AP_GB
 {
@@ -51,11 +48,11 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             //                      "SELECT* FROM Application WHere[UserId] IN(SELECT Id FROM[dbo].[User]  Where[Email] IN('ptsdefra@gmail.com')) " +
             //                      "Select COUNT(*) FROM Application ";
 
-            //string deleteQuery = "Select COUNT(*) FROM Application ";
-            //if (ConfigSetup.BaseConfiguration != null)
-            //{
-            //    dataHelperConnections.ExecuteQuery(connectionString, deleteQuery);
-            //}
+            string deleteQuery = "Select COUNT(*) FROM Application ";
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                dataHelperConnections.ExecuteQuery(connectionString, deleteQuery);
+            }
         }
 
         [When(@"that I navigate to the DEFRA application")]

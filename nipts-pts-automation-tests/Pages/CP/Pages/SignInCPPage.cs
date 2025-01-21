@@ -32,12 +32,20 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Continue']"));
         private IWebElement signOutBy => _driver.WaitForElement(By.XPath("//a[@href='/signout']//*[name()='svg']"));
         private IWebElement SignOut => _driver.WaitForElement(By.XPath("//a[@href='/signout']"));
+        private IWebElement AcceptAdditionalCookies => _driver.WaitForElement(By.XPath("//button[contains(text(),'Accept analytics cookies')]"));
+        private IWebElement HideCookieMessage => _driver.WaitForElement(By.XPath("//a[contains(text(),'Hide cookie message')]"));
         #endregion
 
         #region Methods
         public void ClickSignInButton()
         {
             btnSignIn.Click();
+            Thread.Sleep(1000);
+            if (_driver.FindElements(By.XPath("//button[contains(text(),'Accept analytics cookies')]")).Count() > 0)
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", AcceptAdditionalCookies);
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", HideCookieMessage);
+            }
         }
 
         public void IsSignedIn(string userName, string password)
@@ -45,6 +53,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             if (PageHeading.Text == "Sign in using Government Gateway")
             {
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", SignIn);
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", UserId);
                 UserId.SendKeys(userName);
                 Password.SendKeys(password);
                 //_driver.WaitForElementCondition(ExpectedConditions.ElementToBeClickable(SignIn)).Click();
@@ -82,9 +91,6 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 Thread.Sleep(3000);
                 jsExecutor.ExecuteScript("arguments[0].click();", btnContinue);
                 Thread.Sleep(5000);
-
-                //IAlert alert = _driver.SwitchTo().Alert();
-                //alert.Dismiss();
             }
         }
         #endregion
