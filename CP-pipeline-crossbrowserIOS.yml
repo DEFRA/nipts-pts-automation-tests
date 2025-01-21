@@ -1,0 +1,119 @@
+trigger: none
+
+parameters:
+  - name: branchName
+    type: string
+    default: 'refs/heads/dev'
+  - name: Environment
+    type: string
+    default: 'tst'
+  - name: ApiEndpoint
+    type: string
+    default: 'dev'
+  - name: SeleniumGrid
+    type: string
+    default: 'https://hub.browserstack.com/wd/hub/'
+  - name: DeviceName
+    type: string
+    default: 'Windows'
+  - name: BSOSVersion
+    type: string
+    default: '11'
+  - name: BSBrowserVersion
+    type: string
+    default: 'latest'
+  - name: Target
+    type: string
+    default: 'Edge'
+     
+
+resources:
+  repositories:
+    - repository: clientautomationreponew
+      type: github
+      name: DEFRA/nipts-pts-automation-tests
+      ref: $(Build.SourceBranch)
+      endpoint: DEFRA
+
+stages:
+  
+  - stage: EnvironmentCheck
+    displayName: EnvironmentCheck
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: EnvironmentCheck
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ${{parameters.BSBrowserVersion}}
+        dependsOn: ''
+        targetBrowserName: ${{parameters.Target}}
+
+
+  - stage: IOSIphone14ChromeRunCP
+    displayName: IOSIphone14ChromeRunCP
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: IOSIphone14ChromeRunCP
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: 'iPhone 14'
+        OSVersionName: '18'
+        BrowserVersionName: ''
+        dependsOn: ''
+        targetBrowserName: 'Chrome'
+
+  - stage: IOSIpad12ChromeRunCP
+    displayName: IOSIpad12ChromeRunCP
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: IOSIpad12ChromeRunCP
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: 'iPad Pro 12.9 2022'
+        OSVersionName: '16'
+        BrowserVersionName: ''
+        dependsOn: ''
+        targetBrowserName: 'Chrome'
+
+  - stage: IOSIphoneSafari14RunCP
+    displayName: IOSIphoneSafari14RunCP
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: IOSIphoneSafari14RunCP
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: 'iPhone 14'
+        OSVersionName: '18'
+        BrowserVersionName: ''
+        dependsOn: ''
+        targetBrowserName: 'safari'
+
+  - stage: IOSIpad12SafariRunCP
+    displayName: IOSIpad12SafariRunCP
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: IOSIpad12SafariRunCP
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: 'iPad Pro 12.9 2022'
+        OSVersionName: '16'
+        BrowserVersionName: ''
+        dependsOn: ''
+        targetBrowserName: 'safari'

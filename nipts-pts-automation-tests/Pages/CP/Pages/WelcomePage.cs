@@ -1,4 +1,5 @@
 ﻿using BoDi;
+using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
@@ -53,12 +54,21 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string departureDate = "";
             string departureTime = "";
             string headerTime = headerDepartureTime.Text.Trim();
-            string route = headerTime.Substring(7,29).Trim();
+            string route = headerTime.Substring(7, 29).Trim();
             if (route.Contains("Birkenhead to Belfast (Stena)"))
             {
-                departureDate = headerTime.Substring(53, 10);
-                departureTime = headerTime.Substring(64, 5);
-                departTime = headerTime.Substring(64, 5);
+                if (ConfigSetup.BaseConfiguration.TestConfiguration.BSBrowserVersion == "16.5")
+                {
+                    departureDate = headerTime.Substring(60, 10);
+                    departureTime = headerTime.Substring(71, 5);
+                    departTime = headerTime.Substring(71, 5);
+                }
+                else
+                {
+                    departureDate = headerTime.Substring(53, 10);
+                    departureTime = headerTime.Substring(64, 5);
+                    departTime = headerTime.Substring(64, 5);
+                }
             }
             else if (route.Contains("Cairnryan to Larne (P&O)"))
             {
@@ -88,7 +98,14 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string departureDate = "";
             if (departureRoute.Contains("Birkenhead to Belfast (Stena)"))
             {
-                departureDate = headerTime.Substring(53, 10);
+                if (ConfigSetup.BaseConfiguration.TestConfiguration.BSBrowserVersion == "16.5")
+                {
+                    departureDate = headerTime.Substring(60, 10);
+                }
+                else
+                {
+                    departureDate = headerTime.Substring(53, 10);
+                }
             }
             else if (departureRoute.Contains("Cairnryan to Larne (P&O)"))
             {
@@ -117,8 +134,16 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string route = headerTime.Substring(7,29).Trim();
             if (route.Contains("Birkenhead to Belfast (Stena)"))
             {
-                departureDate = headerTime.Substring(53, 10);
-                departureTime = headerTime.Substring(64, 5);
+                if (ConfigSetup.BaseConfiguration.TestConfiguration.BSBrowserVersion == "16.5")
+                {
+                    departureDate = headerTime.Substring(60, 10);
+                    departureTime = headerTime.Substring(71, 5);
+                }
+                else
+                {
+                    departureDate = headerTime.Substring(53, 10);
+                    departureTime = headerTime.Substring(64, 5);
+                }
             }
             else if (route.Contains("Cairnryan to Larne (P&O)"))
             {

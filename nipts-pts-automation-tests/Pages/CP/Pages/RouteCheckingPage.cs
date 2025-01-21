@@ -45,17 +45,21 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             if (radioButtonValue == "Ferry")
             {
 
-                if (!rdoFerry.Selected)
-                {
-                    rdoFerry.Click();
-                }
+                //if (!rdoFerry.Selected)
+                //{
+                    //rdoFerry.Click();
+                    IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
+                    jsExecutor.ExecuteScript("arguments[0].click();", rdoFerry);
+                //}
             }
             else if (radioButtonValue == "Flight")
             {
 
                 if (!rdoFlight.Selected)
                 {
-                    rdoFlight.Click();
+                    //rdoFlight.Click();
+                    IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
+                    jsExecutor.ExecuteScript("arguments[0].click();", rdoFlight);
                 }
             }
         }
@@ -81,6 +85,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var hour = DateTime.Now.ToString("HH");
             var minutes = DateTime.Now.ToString("mm");
             string departureTime = $"'{hour}':'{minutes}'";
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourDropdown);
 
             SelectElement selectHour = new SelectElement(hourDropdown);
             selectHour.SelectByValue(hour);
@@ -95,6 +100,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var hour = DateTime.Now.ToString("HH");
             var minutes = DateTime.Now.ToString("mm");
 
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourDropdown);
             SelectElement selectHour = new SelectElement(hourDropdown);
             selectHour.SelectByValue(hour);
             SelectElement selectMinute = new SelectElement(minuteDropdown);
