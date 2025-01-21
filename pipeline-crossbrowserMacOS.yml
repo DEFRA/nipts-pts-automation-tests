@@ -96,6 +96,6 @@ stages:
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
         TestDeviceName: 'OS X'
         OSVersionName: 'Ventura'
-        BrowserVersionName: '16.5'
+        BrowserVersionName: 'latest'
         dependsOn: ''
         targetBrowserName: 'Firefox'
