@@ -26,18 +26,6 @@ parameters:
     type: string
     default: 'Edge'
   
-schedules:
-- cron: "0 20 * * Mon,Tue,Wed,Thu,Fri"
-  displayName: Daily CrossBrowser build
-  branches:
-    include:
-    - dev
-    exclude:
-    - feature/*
-    - task/*
-    - master
-    
-
 resources:
   repositories:
     - repository: clientautomationreponew
@@ -95,3 +83,19 @@ stages:
         BrowserVersionName: '16.5'
         dependsOn: ''
         targetBrowserName: 'Safari'
+
+  - stage: MacOSFirefoxBrowserRun
+    displayName: MacOSFirefoxBrowserRun
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: MacOSFirefoxBrowserRun
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: 'OS X'
+        OSVersionName: 'Ventura'
+        BrowserVersionName: '16.5'
+        dependsOn: ''
+        targetBrowserName: 'Firefox'

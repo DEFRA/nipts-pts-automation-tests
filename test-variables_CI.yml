@@ -64,6 +64,8 @@ variables:
     value: 'TestCategory=CrossBrowser2'
   ${{ if eq(parameters.jobNameParam, 'MacOSChromeBrowserRun') }}:
     value: 'TestCategory=CrossBrowser2'
+  ${{ if eq(parameters.jobNameParam, 'MacOSFirefoxBrowserRun') }}:
+    value: 'TestCategory=CrossBrowser2'
   ${{ if eq(parameters.jobNameParam, 'APGBRegression') }}:
     value: 'TestCategory=APGBRegression'
   ${{ if eq(parameters.jobNameParam, 'CPRegression') }}:
@@ -89,4 +91,6 @@ variables:
   ${{ if eq(parameters.jobNameParam, 'MacOSSafariBrowserRunCP') }}:
     value: 'TestCategory=CrossBrowserCP'
   ${{ if eq(parameters.jobNameParam, 'MacOSChromeBrowserRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'MacOSFirefoxBrowserRunCP') }}:
     value: 'TestCategory=CrossBrowserCP'
