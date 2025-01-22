@@ -63,7 +63,7 @@ namespace nipts_pts_automation_tests.Pages
 
         public void EnterPassword()
         {
-            if (PageHeading.Text.Contains("This is for testing use only"))
+            if (PageHeading.Text.Contains("Private beta testing login"))
             {
                 EnvPassword.SendKeys(ConfigSetup.BaseConfiguration.TestConfiguration.EnvPassword);
                 Continue.Click();
