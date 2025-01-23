@@ -15,7 +15,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetNamePage
         #region Page objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
-        public IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[@for='PetName']"), true);
+        public IWebElement PageHeading => _driver.WaitForElement(By.XPath("//label[@for='PetName']"), true);
         private IWebElement txtPetsName => _driver.WaitForElement(By.Id("PetName"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
