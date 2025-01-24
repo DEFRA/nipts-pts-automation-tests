@@ -35,7 +35,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         public void ClickOnPTDNumberOfTheApplication(string ptdNumber)
         {
             var clickPTD = _driver.WaitForElement(By.XPath($"//button[contains(text(),'{ ptdNumber }')]"));
-            clickPTD.Click();
+           // clickPTD.Click();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,2000)", "");
+            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
+            jsExecutor.ExecuteScript("arguments[0].click();", clickPTD);
         }
 
         #endregion
