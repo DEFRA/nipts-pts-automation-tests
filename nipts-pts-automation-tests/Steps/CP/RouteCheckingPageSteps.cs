@@ -130,5 +130,30 @@ namespace nipts_pts_automation_tests.Steps.CP
             _routeCheckingPage?.SelectScheduledDepartureDate(departureDay, departureMonth, departureYear);
         }
 
+        [Then(@"I provided time that exceeds 24 hours from the current time")]
+        public void ThenIProvidedTimeThatExceeds24HoursFromTheCurrentTime()
+        {
+            string departureTime = _routeCheckingPage?.SelectfutureDropDownDepartureTime();
+            _scenarioContext.Add("DepartureTime", departureTime);
+        }
+
+        [Then(@"I provided date that exceeds 24 hours from the current date")]
+        public void ThenIProvidedDateThatExceeds24HoursFromTheCurrentDate()
+        {
+            _routeCheckingPage?.EnterDateMonthYear(DateTime.Now.AddDays(1));
+        }
+
+        [Then(@"I provided date more than 24 hours from the current date")]
+        public void ThenIProvidedDateMoreThan24HoursFromTheCurrentDate()
+        {
+            _routeCheckingPage?.EnterDateMonthYear(DateTime.Now.AddDays(2));
+        }
+
+        [Then(@"I provided date less than 48 hours from the current date")]
+        public void ThenIProvidedDateLessThan48HoursFromTheCurrentDate()
+        {
+            _routeCheckingPage?.EnterDateMonthYear(DateTime.Now.AddDays(-3));
+        }
+
     }
 }

@@ -36,10 +36,20 @@ Scenario Outline: Verify validation text for empty text box checking a flight
 	Then I provide the '<Flight number>' in the box
 	And I have provided Scheduled departure time
 	When I click save and continue button from route checke page
-	Then I should see an error message "Enter the flight number you are checking" in route checking page
+	Then I should see an error message "Enter the flight number. For example, RK 103" in route checking page
 Examples:
 	| Transportation | Flight number |
-	| Flight         |               |		  
+	| Flight         |               |		
+	
+Scenario Outline: Verify validation text when user enter More or less than 8 alphanumeric values
+	Then I have selected '<Transportation>' radio option
+	Then I provide the '<Flight number>' in the box
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should see an error message "Enter the flight number using up to 8 letters and numbers (for example, RK 103)" in route checking page
+Examples:
+	| Transportation | Flight number |
+	| Flight         | abc 123456    |	
 	
 Scenario Outline: Verify validation text for special character text box checking a flight
 	Then I have selected '<Transportation>' radio option
@@ -84,6 +94,28 @@ Examples:
 	| ScheduledDepartureDay | ScheduledDepartureMonth | ScheduledDepartureYear | Transportation | Flight number |
 	|                       |  01                     | 29876987               | Flight         | 1234          |
 
+Scenario Outline: Verify validation text  for date field when user enter the date field that exceeds 48 hours before
+	Then I have selected '<Transportation>' radio option
+	Then I provided date less than 48 hours from the current date
+	Then I provide the '<Flight number>' in the box
+	And  I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should see an error message "The flight or ferry must have departed in the past 48 hours or departs within the next 24 hours" in route checking page
+Examples:
+	| Transportation | Flight number |
+	| Flight         | 1234          |
+
+Scenario Outline: Verify validation text  for date field when user enter the date field that exceeds 24 hours after
+	Then I have selected '<Transportation>' radio option
+	Then I provided date more than 24 hours from the current date
+	Then I provide the '<Flight number>' in the box
+	And  I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should see an error message "The flight or ferry must have departed in the past 48 hours or departs within the next 24 hours" in route checking page
+Examples:
+	| Transportation | Flight number |
+	| Flight         | 1234          |
+
 Scenario Outline: Verify validation text for blank Schedule Departure Time
 	Then I have selected '<Transportation>' radio option
 	Then I have selected '<ScheduledDepartureDay>''<ScheduledDepartureMonth>''<ScheduledDepartureYear>'Date option
@@ -103,3 +135,14 @@ Scenario Outline: Verify validation text for blank hour field and enter value in
 Examples:
 	| ScheduledDepartureDay | ScheduledDepartureMonth | ScheduledDepartureYear | Transportation | Flight number |
 	| 19                    | 10                      | 2024                   | Flight         | 1234          |
+
+Scenario Outline: Verify validation text  for date field when user enter the time field that exceeds 24 hours after
+	Then I have selected '<Transportation>' radio option
+	Then I provided date that exceeds 24 hours from the current date
+	Then I provided time that exceeds 24 hours from the current time
+	Then I provide the '<Flight number>' in the box
+	When I click save and continue button from route checke page
+	Then I should see an error message "The flight or ferry must have departed in the past 48 hours or departs within the next 24 hours" in route checking page
+Examples:
+	| Transportation | Flight number |
+	| Flight         | 1234          |
