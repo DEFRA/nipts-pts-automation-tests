@@ -74,3 +74,6 @@ Examples:
 
 #Scenario: Database check
 #	When Clear Database for user 'Test'
+#
+#Scenario: API check
+#	When Create an application via backend

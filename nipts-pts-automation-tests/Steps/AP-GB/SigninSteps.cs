@@ -6,6 +6,7 @@ using nipts_pts_automation_tests.Pages.AP_GB.LogInPage;
 using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using System.Data;
 using TechTalk.SpecFlow;
 
 namespace nipts_pts_automation_tests.Steps.AP_GB
@@ -51,7 +52,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             string deleteQuery = "Select COUNT(*) FROM Application ";
             if (ConfigSetup.BaseConfiguration != null)
             {
-                dataHelperConnections.ExecuteQuery(connectionString, deleteQuery);
+                string SQLOutput =  dataHelperConnections.ExecuteQuery(connectionString, deleteQuery);
             }
         }
 

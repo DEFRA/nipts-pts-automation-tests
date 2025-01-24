@@ -1,0 +1,15 @@
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "addressLineOne": "Create Automation Addressline One",
+  "addressLineTwo": "Create Automation Addressline Two",
+  "townOrCity": "Create Automation Town",
+  "county": "Create Automation County",
+  "postCode": "RM6 4FB",
+  "countryName": "Create Automation UK",
+  "addressType": "2",
+  "isActive": true,
+  "createdBy": "7B2F71FA-BCF1-EE11-904C-6045BD9057B4",
+  "createdOn": "2025-01-21T11:54:22.265Z",
+  "updatedBy": "7B2F71FA-BCF1-EE11-904C-6045BD9057B4",
+  "updatedOn": "2025-01-21T11:54:22.265Z"
+}

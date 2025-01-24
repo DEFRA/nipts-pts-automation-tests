@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using nipts_pts_API_tests.Configuration;
 using RestSharp;
 
 namespace nipts_pts_API_tests.Application
@@ -9,9 +10,15 @@ namespace nipts_pts_API_tests.Application
         private readonly object _lock = new object();
         public string ApplicationId { get; set; }
         public string PTDNumber { get; set; }
+        public string UserId { get; set; }
+        public string OwnerId { get; set; }
+        public string AddressId { get; set; }
+        public string PetId { get; set; }
+        public string QueueId { get; set; }
+        public string AppReferenceNumber { get; set; }
 
 
-        public void GetApplicationToApprove(string AppReference)
+        public string GetApplicationToApprove(string AppReference)
         {
             Task<RestResponse> response = GetApplication(AppReference);
             var responseString = response.Result.Content.ToString();
@@ -22,6 +29,7 @@ namespace nipts_pts_API_tests.Application
             var responseString2 = response.Result.Content.ToString();
             var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString2.ToString())!;
             PTDNumber = dynamicObject2.travelDocument.travelDocumentReferenceNumber;
+            return PTDNumber;
         }
 
         public void ApproveApplication(string ApplicationId)
@@ -30,7 +38,7 @@ namespace nipts_pts_API_tests.Application
         }
 
 
-        public void GetApplicationToReject(string AppReference)
+        public string GetApplicationToReject(string AppReference)
         {
             Task<RestResponse> response = GetApplication(AppReference);
             var responseString = response.Result.Content.ToString();
@@ -41,6 +49,7 @@ namespace nipts_pts_API_tests.Application
             var responseString2 = response.Result.Content.ToString();
             var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString2.ToString())!;
             PTDNumber = dynamicObject2.travelDocument.travelDocumentReferenceNumber;
+            return PTDNumber;
         }
 
 
@@ -49,7 +58,7 @@ namespace nipts_pts_API_tests.Application
             ServiceBusConnection.SendMessageToQueue(ApplicationId, "Rejected");
         }
 
-        public void GetApplicationToRevoke(string AppReference)
+        public string GetApplicationToRevoke(string AppReference)
         {
             Task<RestResponse> response = GetApplication(AppReference);
             var responseString = response.Result.Content.ToString();
@@ -60,6 +69,7 @@ namespace nipts_pts_API_tests.Application
             var responseString2 = response.Result.Content.ToString();
             var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString2.ToString())!;
             PTDNumber = dynamicObject2.travelDocument.travelDocumentReferenceNumber;
+            return PTDNumber;
         }
 
         public void RevokeApplication(string ApplicationId)
@@ -72,7 +82,8 @@ namespace nipts_pts_API_tests.Application
             Task<RestResponse> response = null;
             lock (_lock)
             {
-                var client = SetUrl("api/Checker/checkApplicationNumber");
+                string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint5;
+                var client = SetUrl("api/Checker/checkApplicationNumber", APIEndPoint);
                 var file = Path.Combine(RequestFolder, "ApplRequest.json");
                 var requestJson = File.ReadAllText(file);
                 var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
@@ -82,6 +93,110 @@ namespace nipts_pts_API_tests.Application
             }
             return response;
         }
-    }
 
+        public string CreateApplicationAPI(string AppId)
+        {
+            updateUser();
+            createOwner();
+            createAddress();
+            createPet();
+            return createApplication(AppId);
+        }
+
+        public void updateUser()
+        {
+            Task<RestResponse> response = null;
+            string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint3;
+            var client = SetUrl("updateuser", APIEndPoint);
+            var file = Path.Combine(RequestFolder, "UpdateUser.json");
+            var requestJson = File.ReadAllText(file);
+            var request = CreatePostRequest(requestJson);
+            response = GetResponseAsync(client, request);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            UserId = dynamicObject2;
+        }
+
+        public void createOwner()
+        {
+            Task<RestResponse> response = null;
+            string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint3;
+            var client = SetUrl("createowner", APIEndPoint);
+            var file = Path.Combine(RequestFolder, "CreateOwner.json");
+            var requestJson = File.ReadAllText(file);
+            var request = CreatePostRequest(requestJson);
+            response = GetResponseAsync(client, request);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            OwnerId = dynamicObject;
+        }
+
+        public void createAddress()
+        {
+            Task<RestResponse> response = null;
+            string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint3;
+            var client = SetUrl("createaddress", APIEndPoint);
+            var file = Path.Combine(RequestFolder, "CreateAddress.json");
+            var requestJson = File.ReadAllText(file);
+            var request = CreatePostRequest(requestJson);
+            response = GetResponseAsync(client, request);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            AddressId = dynamicObject;
+        }
+
+        public void createPet()
+        {
+            Task<RestResponse> response = null;
+            string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint2;
+            var client = SetUrl("createpet", APIEndPoint);
+            var file = Path.Combine(RequestFolder, "CreatePet.json");
+            var requestJson = File.ReadAllText(file);
+            var request = CreatePostRequest(requestJson);
+            response = GetResponseAsync(client, request);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            PetId = dynamicObject;
+        }
+
+        public string createApplication(string AppId)
+        {
+            Task<RestResponse> response = null;
+            string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint1;
+            var client = SetUrl("application", APIEndPoint);
+            var file = Path.Combine(RequestFolder, "CreateApplication.json");
+            var requestJson = File.ReadAllText(file);
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
+            dynamicObject.id = AppId;
+            dynamicObject.petId = PetId;
+            dynamicObject.userId = UserId;
+            dynamicObject.ownerId = OwnerId;
+            dynamicObject.ownerAddressId = AddressId;
+            var request = CreatePostRequest(JsonConvert.SerializeObject(dynamicObject));
+            response = GetResponseAsync(client, request);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            QueueId = dynamicObject2.id;
+            AppReferenceNumber = dynamicObject2.referenceNumber;
+            return AppReferenceNumber;
+        }
+
+        public bool writeApplicationToQueue()
+        {
+            Task<RestResponse> response = null;
+            string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint4;
+            var client = SetUrl("writetoqueue", APIEndPoint);
+            var file = Path.Combine(RequestFolder, "ApplicationToQueue.json");
+            var requestJson = File.ReadAllText(file);
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
+            dynamicObject.applicationId = QueueId;
+            var request = CreatePostRequest(JsonConvert.SerializeObject(dynamicObject));
+            response = GetResponseAsync(client, request);
+            var responseString = response.Result.Content.ToString();
+            if (responseString.Contains("Added Message to Queue Successfully"))
+                return true;
+            else
+                return false;
+        }
+    }
 }
