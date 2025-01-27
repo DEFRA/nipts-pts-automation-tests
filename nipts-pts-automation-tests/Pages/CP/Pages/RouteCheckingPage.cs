@@ -148,6 +148,36 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             selectMinute.SelectByValue("30");
         }
 
+        public string SelectfutureDropDownDepartureTime()
+        {
+            var hour = DateTime.Now.AddHours(1).ToString("HH");
+            var minutes = DateTime.Now.ToString("mm");
+            string departureTime = $"'{hour}':'{minutes}'";
+
+            SelectElement selectHour = new SelectElement(hourDropdown);
+            selectHour.SelectByValue(hour);
+            SelectElement selectMinute = new SelectElement(minuteDropdown);
+            selectMinute.SelectByValue(minutes);
+
+            return departureTime;
+        }
+
+        public void EnterDateMonthYear(DateTime dateTime)
+        {
+            var day = dateTime.ToString("dd");
+            var month = dateTime.ToString("MM");
+            var year = dateTime.ToString("yyyy");
+
+            txtScheduleDepartureDay.Clear();
+            txtScheduleDepartureMonth.Clear();
+            txtScheduleDepartureYear.Clear();
+
+            txtScheduleDepartureDay.SendKeys(day);
+            txtScheduleDepartureMonth.SendKeys(month);
+            txtScheduleDepartureYear.SendKeys(year);
+        }
+
+
         #endregion
 
     }
