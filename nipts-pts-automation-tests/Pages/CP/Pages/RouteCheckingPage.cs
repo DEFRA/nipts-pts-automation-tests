@@ -156,7 +156,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return departureTime;
         }
 
-        public string EnterDateMonthYear(DateTime dateTime)
+        public void EnterDateMonthYear(DateTime dateTime)
         {
             var day = dateTime.ToString("dd");
             var month = dateTime.ToString("MM");
@@ -169,8 +169,6 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             txtScheduleDepartureDay.SendKeys(day);
             txtScheduleDepartureMonth.SendKeys(month);
             txtScheduleDepartureYear.SendKeys(year);
-
-            return $"{day}/{month}/{year}";
         }
 
 

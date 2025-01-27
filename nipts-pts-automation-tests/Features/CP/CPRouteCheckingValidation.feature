@@ -56,7 +56,7 @@ Scenario Outline: Verify validation text for special character text box checking
 	Then I provide the '<FlightNumber>' in the box
 	And I have provided Scheduled departure time
 	When I click save and continue button from route checke page
-	Then I should navigate to Welcome page
+	Then I should see an error message "Enter the flight number using up to 8 letters and numbers (for example, RK 103)" in route checking page
 Examples:
 	| Transportation | FlightNumber |
 	| Flight         | $$£@lk       |

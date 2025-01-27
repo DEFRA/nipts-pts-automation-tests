@@ -13,6 +13,6 @@
         void SelectDropDownDepartureTimeMinuteOnly();
         void SelectDropDownDepartureTimeWithSPS();
         string SelectfutureDropDownDepartureTime();
-        string EnterDateMonthYear(DateTime dateTime);
+        void EnterDateMonthYear(DateTime dateTime);
     }
 }
