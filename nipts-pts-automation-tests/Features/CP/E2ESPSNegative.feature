@@ -34,8 +34,8 @@ Scenario Outline: Check SPS to GB PETS Travel Document details By PTD number - s
 	Then I should navigate to Welcome page
 	And I should see departure date and time is not matching with latest referred to SPS
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    |
 
 
 Scenario Outline: Check SPS behaviour PETS Travel Document details By PTD number - status in Approved
@@ -60,5 +60,5 @@ Scenario Outline: Check SPS behaviour PETS Travel Document details By PTD number
 	Then I should navigate to Welcome page
 	And I should see for Flights departure date and time is not matching with latest referred to SPS
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | Flight number | TypeOfPassenger | nextPage        | SPSOutcome  |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Flight         | AI 123        | Airline         | Referred to SPS | Not allowed |
+	| Transportation | Flight number | TypeOfPassenger | nextPage        | SPSOutcome  |
+	| Flight         | AI 123        | Airline         | Referred to SPS | Not allowed |
