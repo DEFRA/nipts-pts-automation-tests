@@ -4,7 +4,7 @@ Feature: Pets WAF rule validation
 Validate WAF rule validation page
 
 Scenario Outline: Verify validation page for WAF rule on Flight Number
-	Given that I navigate to the port checker application
+	Given I navigate to the port checker application
 	And I click signin button on port checker application
 	Then I should redirected to the Sign in using Government Gateway page
 	When I have provided the CP credentials and signin
@@ -21,7 +21,7 @@ Examples:
 	| Flight         | You cannot access this page or perform this action |
 
 Scenario Outline: Verify validation page for WAF rule on Day Field
-	Given that I navigate to the port checker application
+	Given I navigate to the port checker application
 	And I click signin button on port checker application
 	Then I should redirected to the Sign in using Government Gateway page
 	When I have provided the CP credentials and signin
@@ -38,7 +38,7 @@ Examples:
 	| Ferry          | You cannot access this page or perform this action | Birkenhead to Belfast (Stena)  | 12                      | 2024                   |
 
 Scenario Outline: Verify validation page for WAF rule on Month Field
-	Given that I navigate to the port checker application
+	Given I navigate to the port checker application
 	And I click signin button on port checker application
 	Then I should redirected to the Sign in using Government Gateway page
 	When I have provided the CP credentials and signin
@@ -55,7 +55,7 @@ Examples:
 	| Ferry          | You cannot access this page or perform this action | Birkenhead to Belfast (Stena)  | 3                       | 2024                   |
 
 Scenario Outline: Verify validation page for WAF rule on Year Field
-	Given that I navigate to the port checker application
+	Given I navigate to the port checker application
 	And I click signin button on port checker application
 	Then I should redirected to the Sign in using Government Gateway page
 	When I have provided the CP credentials and signin
@@ -72,7 +72,7 @@ Examples:
 	| Ferry          | You cannot access this page or perform this action | Birkenhead to Belfast (Stena)  | 4                       | 12                      |
 
 Scenario Outline: Verify validation page for WAF rule on Search PTD number Field
-	Given that I navigate to the port checker application
+	Given I navigate to the port checker application
 	And I click signin button on port checker application
 	Then I should redirected to the Sign in using Government Gateway page
 	When I have provided the CP credentials and signin
@@ -93,7 +93,7 @@ Examples:
 	| Ferry          | You cannot access this page or perform this action | Birkenhead to Belfast (Stena)  |
 
 Scenario Outline: Verify validation page for WAF rule on Search Application number Field
-	Given that I navigate to the port checker application
+	Given I navigate to the port checker application
 	And I click signin button on port checker application
 	Then I should redirected to the Sign in using Government Gateway page
 	When I have provided the CP credentials and signin
@@ -115,7 +115,7 @@ Examples:
 	| Ferry          | You cannot access this page or perform this action | Birkenhead to Belfast (Stena)  |  Search by application number |
 
 Scenario Outline: Verify validation page for WAF rule on Search Microchip number Field
-	Given that I navigate to the port checker application
+	Given I navigate to the port checker application
 	And I click signin button on port checker application
 	Then I should redirected to the Sign in using Government Gateway page
 	When I have provided the CP credentials and signin
