@@ -72,8 +72,5 @@ Examples:
 	| Transportation | FerryRoute                    | PTDNumber | TypeOfPassenger      | SPSOutcome |
 	| Ferry          | Birkenhead to Belfast (Stena) | 7BDE08    | Ferry foot passenger | Allowed    |
 
-#Scenario: Database check
-#	When Clear Database for user 'Test'
-#
 #Scenario: API check
 #	When Create an application via backend

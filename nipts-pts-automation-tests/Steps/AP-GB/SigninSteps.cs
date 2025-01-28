@@ -37,19 +37,11 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
 
-            //string deleteQuery = "DECLARE    @return_value int " +
-            //                     "EXEC    @return_value = [dbo].[ClearPetApplicationDataByUserEmail] " +
+            string deleteQuery = "DECLARE @return_value int " +
+                                 "EXEC @return_value = [dbo].[ClearPetApplicationDataByUserEmail] " +
+                                 "@userEmail = N'ptsdefra@gmail.com',@IsDelete = 1 " +
+                                 "SELECT  'Return Value' = @return_value";
 
-            //                      " @userEmail = N'ptsdefra@gmail.com',@IsDelete = 1 " +
-            //                      " SELECT  'Return Value' = @return_value" +
-            //                      "GO" +
-
-
-            //                      "SELECT* FROM User Where[Email] IN('ptsdefra@gmail.com,')" +
-            //                      "SELECT* FROM Application WHere[UserId] IN(SELECT Id FROM[dbo].[User]  Where[Email] IN('ptsdefra@gmail.com')) " +
-            //                      "Select COUNT(*) FROM Application ";
-
-            string deleteQuery = "Select COUNT(*) FROM Application ";
             if (ConfigSetup.BaseConfiguration != null)
             {
                 string SQLOutput =  dataHelperConnections.ExecuteQuery(connectionString, deleteQuery);

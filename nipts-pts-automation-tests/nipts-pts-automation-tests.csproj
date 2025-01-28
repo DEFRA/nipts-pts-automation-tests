@@ -64,6 +64,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\AP-GB\Database\" />
     <Folder Include="Features\AP-GB\Validations\" />
     <Folder Include="Features\AP-GB\Update\" />
     <Folder Include="Features\AP-GB\PrintDownload\" />

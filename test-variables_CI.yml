@@ -94,3 +94,5 @@ variables:
     value: 'TestCategory=CrossBrowserCP'
   ${{ if eq(parameters.jobNameParam, 'MacOSFirefoxBrowserRunCP') }}:
     value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'DatabaseCheck') }}:
+    value: 'TestCategory=DatabaseQuery'
