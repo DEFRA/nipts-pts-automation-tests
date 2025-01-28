@@ -56,11 +56,6 @@ namespace nipts_pts_automation_tests.Pages
             SignOut.Click();
         }
 
-        public bool IsSignedOut()
-        {
-            return true;
-        }
-
         public void EnterPassword()
         {
             if (PageHeading.Text.Contains("Private beta testing login"))

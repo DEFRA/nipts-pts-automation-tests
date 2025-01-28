@@ -2,6 +2,10 @@
 {
     public interface IDataSetupConfig
     {
-        string ApiEndPoint { get; set; }
+        string ApiEndPoint1 { get; set; }
+        string ApiEndPoint2 { get; set; }
+        string ApiEndPoint3 { get; set; }
+        string ApiEndPoint4 { get; set; }
+        string ApiEndPoint5 { get; set; }
     }
 }

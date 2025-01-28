@@ -1,7 +1,9 @@
 ﻿using BoDi;
+using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
+using System.Data;
 
 namespace nipts_pts_automation_tests.Pages.CP.Pages
 {
@@ -21,6 +23,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement btnSaveAndContinue => _driver.WaitForElement(By.XPath("//*[@id='saveAndContinue']"));
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
+        private IDataHelperConnections? dataHelperConnections => _objectContainer.IsRegistered<IDataHelperConnections>() ? _objectContainer.Resolve<IDataHelperConnections>() : null;
         #endregion
 
         #region Methods
@@ -68,6 +71,19 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
             return false;
         }
+
+        public string getNewID()
+        {
+            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+            string getNewId = "SELECT NEWID()";
+            string NewIdString = "";
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                NewIdString = dataHelperConnections.ExecuteQuery(connectionString, getNewId);
+            }
+            return NewIdString;
+        }
+
         #endregion
     }
 }

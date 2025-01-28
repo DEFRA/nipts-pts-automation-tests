@@ -80,8 +80,8 @@ namespace nipts_pts_automation_tests.Steps.CP
             lock (_lock)
             {
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
-                AppData.GetApplicationToApprove(AppReference);
-
+                string PTDNumber = AppData.GetApplicationToApprove(AppReference);
+                _scenarioContext.Add("PTDNumber", PTDNumber);
             }
         }
 
@@ -91,8 +91,8 @@ namespace nipts_pts_automation_tests.Steps.CP
             lock (_lock)
             {
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
-                AppData.GetApplicationToRevoke(AppReference);
-
+                string PTDNumber = AppData.GetApplicationToRevoke(AppReference);
+                _scenarioContext.Add("PTDNumber", PTDNumber);
             }
         }
 
@@ -102,8 +102,33 @@ namespace nipts_pts_automation_tests.Steps.CP
             lock (_lock)
             {
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
-                AppData.GetApplicationToReject(AppReference);
+                string PTDNumber = AppData.GetApplicationToReject(AppReference);
+                _scenarioContext.Add("PTDNumber", PTDNumber);
+            }
+        }
 
+        [Given(@"Get an application via backend")]
+        [When(@"Get an application via backend")]
+        public void ThenGetApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                AppData.GetApplication(AppReference);
+
+            }
+        }
+
+        [Given(@"Create an application via backend")]
+        [When(@"Create an application via backend")]
+        public void ThenCreateApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppId = _applicationSummaryPage.getNewID();
+                string APIAppReference = AppData.CreateApplicationAPI(AppId);
+                _scenarioContext.Add("ReferenceNumber", APIAppReference);
+                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
             }
         }
 

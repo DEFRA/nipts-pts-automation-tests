@@ -27,7 +27,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         }
 
         [When(@"I navigate to the port checker application")]
-        [Given(@"that I navigate to the port checker application")]
+        [Given(@"I navigate to the port checker application")]
         public void GivenThatINavigateToThePortCheckerApplication()
         {
             var url = urlBuilder.Default("Com").Build();

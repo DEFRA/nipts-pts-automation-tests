@@ -9,5 +9,6 @@
         bool IsError(string errorMessage);
         void SelectContinue();
         bool VerifyTheExpectedSubtitle(string applicationSubtitle);
+        string getNewID();
     }
 }

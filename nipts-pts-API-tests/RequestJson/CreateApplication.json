@@ -1,0 +1,19 @@
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "petId": "63b23c89-91fe-4c5e-999b-08dd3a149b4d",
+  "userId": "fd912366-b4aa-4349-2fb4-08dc5d3f88a8",
+  "ownerId": "02aa0784-ae8c-4f37-bab7-08dd3a076f59",
+  "ownerNewName": "Automation New Name",
+  "ownerNewTelephone": "07515174177",
+  "ownerAddressId": "52f0729d-d90c-4b50-ef46-08dd39ff7673",
+  "status": "AWAITING VERIFICATION",
+  "referenceNumber": "A84TORJK",
+  "isDeclarationSigned": true,
+  "isConsentAgreed": true,
+  "isPrivacyPolicyAgreed": true,
+  "dateOfApplication": "2025-01-21T14:29:59.941Z",
+  "createdBy": "7B2F71FA-BCF1-EE11-904C-6045BD9057B4",
+  "createdOn": "2025-01-21T14:29:59.941Z",
+  "updatedBy": "7B2F71FA-BCF1-EE11-904C-6045BD9057B4",
+  "updatedOn": "2025-01-21T14:29:59.941Z"
+}
