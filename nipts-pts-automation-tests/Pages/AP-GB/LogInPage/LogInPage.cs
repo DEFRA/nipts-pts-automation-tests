@@ -19,7 +19,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         private By SignInConfirmBy => By.XPath("//a[@href='/User/OSignOut']");
         private IWebElement CreateSignInDetails => _driver.WaitForElement(By.XPath("//a[contains(text(),'Create sign in')]"));
         private By Accept_Cookies => By.XPath("//button[text()='Accept analytics cookies'] | //button[contains(text(),'Accept additional cookies')]");
-        private IWebElement Hide_Cookies => _driver.WaitForElement(By.XPath("//a[text()='Hide cookie message']"));
+        private IWebElement Hide_Cookies => _driver.WaitForElement(By.XPath("//a[text()='Hide cookie message'] | //button[contains(text(),'Hide cookie message')]"));
         #endregion
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -48,6 +48,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             Thread.Sleep(1000);
             if (_driver.FindElements(Accept_Cookies).Count > 0)
             {
+                Thread.Sleep(1000);
                 _driver.FindElement(Accept_Cookies).Click();
                 Hide_Cookies.Click();
             }
