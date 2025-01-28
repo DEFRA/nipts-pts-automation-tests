@@ -12,5 +12,7 @@
         void SelectScheduledDepartureDate(string departureDay, string departureMonth, string departureYear);
         void SelectDropDownDepartureTimeMinuteOnly();
         void SelectDropDownDepartureTimeWithSPS();
+        string SelectfutureDropDownDepartureTime();
+        void EnterDateMonthYear(DateTime dateTime);
     }
 }

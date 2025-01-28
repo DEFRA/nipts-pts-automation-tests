@@ -948,3 +948,185 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |nextPage        | SPSOutcome     |
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Not allowed    |
+
+Scenario Outline: Verify navigation of back links in the application for GB user
+Then I have selected '<Are your details correct>' option
+	When I click on continue button from Are your details correct page
+	Then I should redirected to the Is your pet microchipped page
+	And I selected the '<MicrochipOption>' option on pets
+	And I provided microchip number as '<MicrochipNumber>' on pets
+	When I click Continue button from microchipped page
+	Then I should redirected to When was your pet microchipped or last scanned page
+	And I have provided date of PETS microchipped on pets
+	When I click Continue button from When was your pet microchipped page
+	Then I should redirected to the Is your pet a cat, dog or ferret page
+	And I have selected an option as '<Pet>' for pets
+	When I click on continue button from Is your pet a cat, dog or ferret page
+	Then I should redirected to the What breed is your '<Pet>'? page
+	And I have selected 1 as breed index from breed dropdownlist
+	When I click on continue button from What is your pet's breed page
+	Then I should redirected to the What is your pet's name page
+	And I provided the Pets name as '<PetName>'
+	When I click on continue button from What is your pet's name page
+	Then I should redirected to the What sex is your pet page
+	And I have selected the option as '<Gender>' for sex
+	When I click on continue button from What sex is your pet page
+	Then I should redirected to the Do you know your pet's date of birth page
+	And I have provided date of birth
+	When I click on continue button from Do you know your pet's date of birth? page
+	Then I should redirected to the What is the main colour of your '<Pet>' page
+	And I have selected the option as '<Color>' for color
+	When I click on continue button from What is the main colour of your pet page
+	Then I should redirected to the Does your pet have any significant features page
+	And I have selected an option as '<IsSignificantFeatures>' for significant features
+	When I click on continue button from Does your pet have any significant features page
+	Then I should redirected to the Check your answers and sign the declaration page
+	And I have ticked the I agree to the declaration checkbox
+	When I click Accept and Send button from Declaration page
+	Then I should redirected to the Application submitted page
+	And I can see the unique application reference number
+	When I have clicked the View all your lifelong pet travel documents link
+	Then I should redirected to Apply for a pet travel document page
+	And I should see the application on pets in 'Pending' status
+	When Approve an application via backend
+	And I should see the application in 'Approved' status
+	When I have clicked the View hyperlink from home page
+	And I captured Application PTD number
+	And click on signout button and verify the signout message on pets
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	When I have provided the CP credentials and signin for user 'GBUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I provided the PTD number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
+	And I should see the application subtitle 'Lifelong pet travel document and declaration'
+	And I select Fail radio button
+	When I click save and continue button from application status page
+	Then I should navigate to Report non-compliance page
+	And I click on Back button
+	Then I should see the application status in 'Approved'
+	And I click on Back button
+	Then I navigate to Find a document page
+	And click on signout button on CP and verify the signout message
+	
+Examples:
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
+
+
+Scenario Outline: Verify back link navigation for SPS user
+	Then I have selected '<Are your details correct>' option
+	When I click on continue button from Are your details correct page
+	Then I should redirected to the Is your pet microchipped page
+	And I selected the '<MicrochipOption>' option on pets
+	And I provided microchip number as '<MicrochipNumber>' on pets
+	When I click Continue button from microchipped page
+	Then I should redirected to When was your pet microchipped or last scanned page
+	And I have provided date of PETS microchipped on pets
+	When I click Continue button from When was your pet microchipped page
+	Then I should redirected to the Is your pet a cat, dog or ferret page
+	And I have selected an option as '<Pet>' for pets
+	When I click on continue button from Is your pet a cat, dog or ferret page
+	Then I should redirected to the What breed is your '<Pet>'? page
+	And I have selected 1 as breed index from breed dropdownlist
+	When I click on continue button from What is your pet's breed page
+	Then I should redirected to the What is your pet's name page
+	And I provided the Pets name as '<PetName>'
+	When I click on continue button from What is your pet's name page
+	Then I should redirected to the What sex is your pet page
+	And I have selected the option as '<Gender>' for sex
+	When I click on continue button from What sex is your pet page
+	Then I should redirected to the Do you know your pet's date of birth page
+	And I have provided date of birth
+	When I click on continue button from Do you know your pet's date of birth? page
+	Then I should redirected to the What is the main colour of your '<Pet>' page
+	And I have selected the option as '<Color>' for color
+	When I click on continue button from What is the main colour of your pet page
+	Then I should redirected to the Does your pet have any significant features page
+	And I have selected an option as '<IsSignificantFeatures>' for significant features
+	When I click on continue button from Does your pet have any significant features page
+	Then I should redirected to the Check your answers and sign the declaration page
+	And I have ticked the I agree to the declaration checkbox
+	When I click Accept and Send button from Declaration page
+	Then I should redirected to the Application submitted page
+	And I can see the unique application reference number
+	When I have clicked the View all your lifelong pet travel documents link
+	Then I should redirected to Apply for a pet travel document page
+	And I should see the application on pets in 'Pending' status
+	When Approve an application via backend
+	And I should see the application in 'Approved' status
+	When I have clicked the View hyperlink from home page
+	And I captured Application PTD number
+	And click on signout button and verify the signout message on pets
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	When I have provided the CP credentials and signin for user 'GBUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I provided the PTD number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
+	And I should see the application subtitle 'Lifelong pet travel document and declaration'
+	And I select Fail radio button
+	When I click save and continue button from application status page
+	Then I should navigate to Report non-compliance page
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click '<TypeOfPassenger>' in Passenger details
+	And I click on GB outcome
+	When I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify Referred to SPS details
+	And click on signout button on CP and verify the signout message
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	When I have provided the CP credentials and signin for user 'SPSUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time with SPS user
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
+	Then verify next page '<nextPage>' is loaded
+	When I click on PTD number of the application
+	Then verify next page '<nextPage1>' is loaded
+	And I verify GB check report
+	When I click on Conduct an SPS check
+	Then I should see the application status in 'Approved'
+	When I select Fail radio button
+	And I click save and continue button from application status page
+	Then I should navigate to Report non-compliance page
+	And I click on Back button
+	Then I should see the application status in 'Approved'
+	And I click on Back button
+	Then verify next page '<nextPage1>' is loaded
+	 
+
+Examples:
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
+
+
+	
