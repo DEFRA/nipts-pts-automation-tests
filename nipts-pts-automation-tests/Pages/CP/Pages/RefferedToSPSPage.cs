@@ -74,10 +74,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         }
         public bool VerifySPSOutcome(string outcome)
         {
-            Thread.Sleep(2000);
             return SPSOutcomeEle.Text.Contains(outcome); 
         }
-
 
         public void ClickOnPTDNumberOfTheApplication(string ptdNumber)
         {
