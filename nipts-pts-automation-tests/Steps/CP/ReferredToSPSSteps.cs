@@ -1,5 +1,6 @@
 ﻿using BoDi;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
@@ -26,7 +27,12 @@ namespace nipts_pts_automation_tests.Steps.CP
         [When(@"I verify Referred to SPS details")]
         public void WhenIVerifyReferredToSPSDetails()
         {
-            refferedToSPSPage?.VerifyReferredToSPSDetails();
+            var ptdNumber = _scenarioContext.Get<string>("PTDNumber");
+            var ptdNumberNew = ptdNumber.Substring(0, 5) + " " + ptdNumber.Substring(5, 3) + " " + ptdNumber.Substring(8, 3);
+            var petType = _scenarioContext.Get<string>("PetType");
+            var michrochipNo = _scenarioContext.Get<string>("MicrochipNumber");
+            refferedToSPSPage?.VerifyReferredToSPSDetails(ptdNumberNew, petType, michrochipNo);
+            Assert.True(refferedToSPSPage?.VerifyDepartureDetailsSPSPage(), "Departure details not matching");
         }
 
         [Then(@"I verify SPS outcome '([^']*)' on referred SPS page")]
