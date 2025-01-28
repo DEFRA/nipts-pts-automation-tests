@@ -27,24 +27,24 @@ namespace nipts_pts_automation_tests.Pages
 
         #region Page Methods
 
-        public string SelectSignificantFeaturesOption(string hasSignificantFeatures)
+        public void SelectSignificantFeaturesOption(string hasSignificantFeatures)
         {
-            var significantFeatures = "Black Mark on Shoulder";
-
-            if (hasSignificantFeatures.ToLower().Equals("yes"))
+            if (hasSignificantFeatures.ToLower().Equals("yes") | hasSignificantFeatures.ToLower().Equals("oes"))
             {
                 SignificantFeaturesRadioButtonYes.Click();
-                SignificantFeaturesTextBox.SendKeys(significantFeatures);
-                return significantFeatures;
             }
-            else if (hasSignificantFeatures.ToLower().Equals("no"))
+            else if (hasSignificantFeatures.ToLower().Equals("no") | hasSignificantFeatures.ToLower().Equals("nac oes"))
             {
                 SignificantFeaturesRadioButtonNo.Click();
-                return "No";
             }
-
-            return "No";
         }
+
+        public void EnterSignificantFeature(string SignificantFeature)
+        {
+            SignificantFeaturesTextBox.SendKeys(SignificantFeature);
+        }
+
+
 
         #endregion Page Methods
 

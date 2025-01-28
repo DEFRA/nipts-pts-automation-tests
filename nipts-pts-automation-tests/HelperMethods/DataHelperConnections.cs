@@ -1,5 +1,5 @@
 ﻿using BoDi;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace nipts_pts_automation_tests.HelperMethods

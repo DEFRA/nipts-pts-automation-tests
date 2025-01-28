@@ -43,7 +43,17 @@ namespace nipts_pts_automation_tests.Pages
 
             return $"{day}/{month}/{year}";
         }
+        public void EnterPetsDateOfBirth(string PetDOBDay, string PetDOBMonth, string PetDOBYear)
+        {
+            txtDay.Clear();
+            txtMonth.Clear();
+            txtYear.Clear();
 
+            txtDay.SendKeys(PetDOBDay);
+            txtMonth.SendKeys(PetDOBMonth);
+            txtYear.SendKeys(PetDOBYear);
+
+        }
 
         #endregion Page Methods
 

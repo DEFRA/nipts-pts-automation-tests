@@ -36,7 +36,7 @@ namespace nipts_pts_automation_tests.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,2000)", "");
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             jsExecutor.ExecuteScript("arguments[0].click();", CookiesLink);
-            return CookiesLink.Text.Contains("Cwcis");
+            return PageHeading.Text.Contains("Cookies");
         }
 
         public bool ClickOnAccessibilityFooterLink()

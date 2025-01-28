@@ -9,21 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <SpecFlowFeatureFiles Remove="Features\PetBreed.feature" />
-    <SpecFlowFeatureFiles Remove="Features\PetName.feature" />
-  </ItemGroup>
-
-  <ItemGroup>
     <UpToDateCheckInput Remove="features\PetSex.feature" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Features\PetBreed.feature" />
-    <Compile Include="Features\PetName.feature" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Defra.Ui.Automation.Framework" Version="2.0.7" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
@@ -31,7 +22,7 @@
     <PackageReference Include="Microsoft.NETCore.App" Version="2.2.8" />
     <PackageReference Include="NUnit" Version="3.13.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="126.0.6478.5500" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="131.0.6778.6900" />
     <PackageReference Include="SpecFlow" Version="3.9.74" />
     <PackageReference Include="SpecFlow.ExternalData" Version="3.9.74" />
     <PackageReference Include="SpecFlow.NUnit" Version="3.9.74" />
@@ -49,6 +40,12 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\AP-GB\Users.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\CP\Users.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Users.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -64,6 +61,16 @@
     <None Update="testrun.runsettings">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\AP-GB\Validations\" />
+    <Folder Include="Features\AP-GB\Update\" />
+    <Folder Include="Features\AP-GB\PrintDownload\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\nipts-pts-API-tests\nipts-pts-API-tests.csproj" />
   </ItemGroup>
 
 </Project>

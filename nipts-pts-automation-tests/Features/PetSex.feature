@@ -15,7 +15,7 @@ Scenario: Select pet sex in WELSH and verify next page in the application
 	When  click on continue english
 	Then  I have provided date of PETS microchipped
 	When  click on continue english
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue english
 	And  verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'
@@ -32,8 +32,8 @@ Scenario: Select pet sex in WELSH and verify next page in the application
 	And  verify next page '<nextPage5>' is loaded
 
 	Examples: 
-	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3         | PetSex | nextPage4    | nextPage5     |
-	| test      | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | sex is your pet   | Gwryw  | Beth yw rhyw | date of birth |
+	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3         | PetSex | nextPage4    | nextPage5                       |
+	| test      | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | sex is your pet   | Gwryw  | Beth yw rhyw | dyddiad geni eich anifail anwes |
 
 
 Scenario: Verify WELSH error message when no option is selected on select pet sex page
@@ -48,7 +48,7 @@ Scenario: Verify WELSH error message when no option is selected on select pet se
 	When  click on continue english
 	Then  I have provided date of PETS microchipped
 	When  click on continue english
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue english
 	And  verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'
@@ -81,7 +81,7 @@ Scenario: Verify language footer when WELSH language is selected on select pet s
 	When  click on continue english
 	Then  I have provided date of PETS microchipped
 	And   click on continue english
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue english
 	Then  verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'

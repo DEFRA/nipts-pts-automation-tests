@@ -15,7 +15,7 @@ Scenario: View Pet travel documents in WELSH
 	When  click on continue english
 	Then  I have provided date of PETS microchipped
 	When  click on continue english
-	Then  I have selected an option as '<Pet>' for pet
+	Then  I have selected an option as '<Pet>' for pets
 	And   click on continue english
 	And  verify next page '<nextPage1>' is loaded
 	When  Select breed of your pet '<PetBreed>'
@@ -36,11 +36,9 @@ Scenario: View Pet travel documents in WELSH
 	Then Select pet color as '<color>'
 	And click on continue
 	And  verify next page '<nextPage7>' is loaded
-	Then enter Pets significant features '<features>'
+	Then select Pets significant features '<featureOption>'
 	And click on continue
 	And  verify next page '<nextPage8>' is loaded
-	Then confirm By sending this application, you confirm that you've given accurate and truthful information about your pet checkbox
-	And confirm Defra's privacy policy checkbox
 	And confirm the declaration checkbox
 	Then click Accept and Send button from Declaration page
 	Then click on Apply for another lifelong pet travel document link
@@ -51,5 +49,5 @@ Scenario: View Pet travel documents in WELSH
 	
 		
 	Examples: 
-	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3       | PetSex | nextPage4    | nextPage5     | nextPage6      | color | nextPage7            | features | nextPage8           | nextPage10                    | FooterLang1 | FooterLang2 | nextPage9	 |
-	| test2     | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | sex is your pet | Gwryw  | Beth yw rhyw | date of birth | colour of your | Black | significant features | No       | Check your answers  | Lifelong pet travel documents | English     | Cymraeg     | manylion chi |
+	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3       | PetSex | nextPage4    | nextPage5					    | nextPage6			       | color | nextPage7                     | featureOption | nextPage8              | nextPage10                    | FooterLang1 | FooterLang2 | nextPage9	 |
+	| test2     | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | sex is your pet | Gwryw  | Beth yw rhyw | dyddiad geni eich anifail anwes | Beth yw prif liw eich ci | Du    | unrhyw nodweddion arwyddocaol | Nac oes       | Gwiriwch eich atebion  | Lifelong pet travel documents | English     | Cymraeg     | manylion chi |

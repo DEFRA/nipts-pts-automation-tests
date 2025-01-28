@@ -46,5 +46,10 @@ namespace nipts_pts_automation_tests.Steps
             postcodeAddressPage.ClickChangePostcode();
         }
 
+        [Then(@"verify total address found on select address page")]
+        public void ThenVerifyTotalAddressFoundOnSelectAddressPage()
+        {
+            Assert.True(postcodeAddressPage.VerifyTotalAddressFoundOnSelectAddressPage(), "Total address string not matching");
+        }
     }
 }

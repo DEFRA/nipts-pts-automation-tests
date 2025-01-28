@@ -25,7 +25,7 @@ Scenario: Select species on Pets Application Portal Page in the WELSH language
 	When  click on continue
 	Then  verify error message '<errorMessage>' on Pets
 	Then  verify displayed language at page footer '<DisplayedLang2>'
-	And   I have selected an option as '<Pet>' for pet
+	And   I have selected an option as '<Pet>' for pets
 	When  click on continue
 	Then  verify next page '<nextPage5>' is loaded
 

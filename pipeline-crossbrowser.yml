@@ -19,6 +19,9 @@ parameters:
   - name: BSOSVersion
     type: string
     default: '11'
+  - name: BSBrowserVersion
+    type: string
+    default: 'latest'
   - name: Target
     type: string
     default: 'Edge'
@@ -55,12 +58,14 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: ${{parameters.BSOSVersion}}
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ${{parameters.BSBrowserVersion}}
         dependsOn: ''
         targetBrowserName: ${{parameters.Target}}
 
-        
+
+
   - stage: ChromeBrowserRun
     displayName: ChromeBrowserRun
     jobs:
@@ -71,8 +76,9 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: ${{parameters.BSOSVersion}}
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ''
         dependsOn: 'EnvironmentCheck'
         targetBrowserName: 'Chrome'
 
@@ -87,37 +93,40 @@ stages:
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: ${{parameters.DeviceName}}
-        BSOSVersion: '10'
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: '10'
+        BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'Edge'
 
-  - stage: IOSIphone14Run
-    displayName: IOSIphone14Run
+  - stage: IOSIphone14ChromeRun
+    displayName: IOSIphone14ChromeRun
     jobs:
     - template: run-test-template.yml
       parameters:
-        jobName: IOSIphone14Run
+        jobName: IOSIphone14ChromeRun
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'iPhone 14'
-        BSOSVersion: '16'
+        TestDeviceName: 'iPhone 14'
+        OSVersionName: '16'
+        BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'Chrome'
 
-  - stage: IOSIpad12Run
-    displayName: IOSIpad12Run
+  - stage: IOSIpad12ChromeRun
+    displayName: IOSIpad12ChromeRun
     jobs:
     - template: run-test-template.yml
       parameters:
-        jobName: IOSIpad12Run
+        jobName: IOSIpad12ChromeRun
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        DeviceName: 'iPad Pro 12.9 2022'
-        BSOSVersion: '16'
+        TestDeviceName: 'iPad Pro 12.9 2022'
+        OSVersionName: '16'
+        BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'Chrome'

@@ -3,7 +3,13 @@ parameters:
     type: string
   - name: env
     type: string
-  - name: targerBrowser
+  - name: TestDevice
+    type: string
+  - name: OSVersion
+    type: string
+  - name: BrowserVersion
+    type: string
+  - name: targetBrowser
     type: string
 
 
@@ -12,17 +18,19 @@ variables:
 - name: SeleniumGrid
   value: 'https://hub.browserstack.com/wd/hub/'
 - name: DeviceName
-  value: 'Windows'
+  value: ${{ parameters.TestDevice }}
 - name: BSOSVersion
-  value: '11'
+  value: ${{ parameters.OSVersion }}
+- name: BSBrowserVersion
+  value: ${{ parameters.BrowserVersion }}
 - name: runTrigger
   value: 'devpipeline'
 - name: Environment
   value:  ${{ parameters.env }}
 - name: Build
-  value: ReMos_UI_Tests_$(Build.BuildNumber)
+  value: Pets_UI_Tests_$(Build.BuildNumber)
 - name: Target
-  value: ${{ parameters.targerBrowser }}
+  value: ${{ parameters.targetBrowser }}
 - name: Where
   ${{ if eq(parameters.jobNameParam, 'EnvironmentCheck') }}:
     value: 'TestCategory=EnvCheck'
@@ -40,9 +48,49 @@ variables:
     value: 'TestCategory=CrossBrowser'
   ${{ if eq(parameters.jobNameParam, 'EdgeBrowserRun') }}:
     value: 'TestCategory=CrossBrowser'
-  ${{ if eq(parameters.jobNameParam, 'IOSIpad12Run') }}:
-    value: 'TestCategory=CrossBrowser'
-  ${{ if eq(parameters.jobNameParam, 'IOSIphone14Run') }}:
-    value: 'TestCategory=CrossBrowser'
-  ${{ if eq(parameters.jobNameParam, 'SelfServeRegression') }}:
-    value: 'TestCategory=SelfServeRegression'
+  ${{ if eq(parameters.jobNameParam, 'IOSIpad12ChromeRun') }}:
+    value: 'TestCategory=CrossBrowser2'
+  ${{ if eq(parameters.jobNameParam, 'IOSIpad12SafariRun') }}:
+    value: 'TestCategory=CrossBrowser2'
+  ${{ if eq(parameters.jobNameParam, 'IOSIphoneSafari14Run') }}:
+    value: 'TestCategory=CrossBrowser2'
+  ${{ if eq(parameters.jobNameParam, 'IOSIphone14ChromeRun') }}:
+    value: 'TestCategory=CrossBrowser2'
+  ${{ if eq(parameters.jobNameParam, 'AndroidSamsungRun') }}:
+    value: 'TestCategory=CrossBrowser2'
+  ${{ if eq(parameters.jobNameParam, 'AndroidSamsungChromeRun') }}:
+    value: 'TestCategory=CrossBrowser2'
+  ${{ if eq(parameters.jobNameParam, 'MacOSSafariBrowserRun') }}:
+    value: 'TestCategory=CrossBrowser2'
+  ${{ if eq(parameters.jobNameParam, 'MacOSChromeBrowserRun') }}:
+    value: 'TestCategory=CrossBrowser2'
+  ${{ if eq(parameters.jobNameParam, 'MacOSFirefoxBrowserRun') }}:
+    value: 'TestCategory=CrossBrowser2'
+  ${{ if eq(parameters.jobNameParam, 'APGBRegression') }}:
+    value: 'TestCategory=APGBRegression'
+  ${{ if eq(parameters.jobNameParam, 'CPRegression') }}:
+    value: 'TestCategory=CPRegression'
+  ${{ if eq(parameters.jobNameParam, 'FirefoxBrowserRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'ChromeBrowserRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'EdgeBrowserRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'IOSIpad12ChromeRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'IOSIpad12SafariRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'IOSIphoneSafari14RunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'IOSIphone14ChromeRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'AndroidSamsungRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'AndroidSamsungChromeRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'MacOSSafariBrowserRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'MacOSChromeBrowserRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'
+  ${{ if eq(parameters.jobNameParam, 'MacOSFirefoxBrowserRunCP') }}:
+    value: 'TestCategory=CrossBrowserCP'

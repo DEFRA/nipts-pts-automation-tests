@@ -1,7 +1,5 @@
 ﻿using BoDi;
-using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages;
-using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
@@ -22,12 +20,14 @@ namespace nipts_pts_automation_tests.Steps
             _objectContainer = container;
         }
 
+        [When(@"I selected the '([^']*)' option")]
         [Then(@"I selected the '([^']*)' option")]
         public void ThenISelectedTheOption(string option)
         {
             microchipNumberPage?.SelectMicrochippedOption(option);
         }
 
+        [When(@"provided microchip number as (.*)")]
         [Then(@"provided microchip number as (.*)")]
         public void ThenProvidedMicrochipNumberAs(string microchipNumber)
         {

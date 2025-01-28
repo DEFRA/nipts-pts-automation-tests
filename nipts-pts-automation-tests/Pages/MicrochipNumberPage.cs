@@ -1,7 +1,6 @@
 ﻿using BoDi;
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
-using NUnit.Framework;
 using OpenQA.Selenium;
 
 
@@ -33,11 +32,11 @@ namespace nipts_pts_automation_tests.Pages
         {
             var microChipOrTattoOption = option.ToLower();
 
-            if (microChipOrTattoOption.Equals("yes"))
+            if (microChipOrTattoOption.Equals("yes") | microChipOrTattoOption.Equals("oes"))
             {
                 rdoYes.Click();
             }
-            else if (microChipOrTattoOption.Equals("no"))
+            else if (microChipOrTattoOption.Equals("no") | microChipOrTattoOption.Equals("nac oes"))
             {
                 rdoNo.Click();
             }

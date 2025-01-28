@@ -1,0 +1,103 @@
+trigger: none
+
+parameters:
+  - name: branchName
+    type: string
+    default: 'refs/heads/dev'
+  - name: Environment
+    type: string
+    default: 'tst'
+  - name: ApiEndpoint
+    type: string
+    default: 'dev'
+  - name: SeleniumGrid
+    type: string
+    default: 'https://hub.browserstack.com/wd/hub/'
+  - name: DeviceName
+    type: string
+    default: 'Windows'
+  - name: BSOSVersion
+    type: string
+    default: '11'
+  - name: BSBrowserVersion
+    type: string
+    default: 'latest'
+  - name: Target
+    type: string
+    default: 'Edge'
+     
+
+resources:
+  repositories:
+    - repository: clientautomationreponew
+      type: github
+      name: DEFRA/nipts-pts-automation-tests
+      ref: $(Build.SourceBranch)
+      endpoint: DEFRA
+
+stages:
+  
+  - stage: EnvironmentCheck
+    displayName: EnvironmentCheck
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: EnvironmentCheck
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ${{parameters.BSBrowserVersion}}
+        dependsOn: ''
+        targetBrowserName: ${{parameters.Target}}
+
+  - stage: ChromeBrowserRunCP
+    displayName: ChromeBrowserRunCP
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: ChromeBrowserRunCP
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: ${{parameters.BSOSVersion}}
+        BrowserVersionName: ''
+        dependsOn: 'EnvironmentCheck'
+        targetBrowserName: 'Chrome'
+
+  
+  - stage: EdgeBrowserRunCP
+    displayName: EdgeBrowserRunCP
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: EdgeBrowserRunCP
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: '11'
+        BrowserVersionName: ''
+        dependsOn: ''
+        targetBrowserName: 'Edge'
+
+  - stage: FirefoxBrowserRunCP
+    displayName: FirefoxBrowserRunCP
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: FirefoxBrowserRunCP
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: ${{parameters.DeviceName}}
+        OSVersionName: '11'
+        BrowserVersionName: ''
+        dependsOn: ''
+        targetBrowserName: 'Firefox'

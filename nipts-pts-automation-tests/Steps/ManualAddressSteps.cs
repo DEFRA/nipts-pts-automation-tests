@@ -40,5 +40,10 @@ namespace nipts_pts_automation_tests.Steps
             Assert.True(manualAddressPage.VerifyErrorMessageOnManualAddressPage(errorMessage), "Invalid error on manual address page");
         }
 
+        [When(@"click on I cannot find the address in the list")]
+        public void WhenClickOnCannotFindTheAddressInTheList()
+        {
+            manualAddressPage.ClickOnCannotFindTheAddressInTheList();
+        }
     }
 }

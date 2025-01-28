@@ -34,7 +34,7 @@ namespace nipts_pts_automation_tests.Pages
 
         public bool VerifyPersonalDetails(string userType)
         {
-            var user = UserObject.GetUser(userType);
+            var user = UserObject.GetUserById(userType);
             _objectContainer.RegisterInstanceAs(user);
 
             if (UserNameEle.Text.Contains(user.UserName) && UserEmailEle.Text.Contains(user.UserEmail) && UserAddressEle.Text.Contains(user.Useraddress) && UserPhoneNumEle.Text.Contains(user.UserPhoneNumber))

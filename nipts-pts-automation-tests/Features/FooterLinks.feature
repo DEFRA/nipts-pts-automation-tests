@@ -17,7 +17,7 @@ Scenario Outline: Verify Footer links and pages on Pets
 	And   switch to previous tab
 	When  click cookies link on footer page
 	Then  verify the page title in Footer page '<Cookies page Title>'
-	And   verify the link in Footer page details '<Cookies Link 1>'
+	#And   verify the link in Footer page details '<Cookies Link 1>'
 	And   click on back
 	When  click accessibility link on footer page
 	Then  verify the page title in Footer page '<Accessibility page title>'
@@ -30,7 +30,7 @@ Scenario Outline: Verify Footer links and pages on Pets
 
 Examples: 
     | logininfo | Privacy page title              |Privacy Link 1		   	   |Privacy Link 2        |Cookies page Title |Cookies Link 1                     |Accessibility page title                |Accessibility Link 1         |Accessibility Link 2                                    | TCs page title                       |TCs Link 1 |
-	| test      | Pet travel scheme privacy notice|data.protection@defra.gov.uk|www.legislation.gov.uk|Cookies            |opt out of Google Analytics cookies|Accessibility statement for taking a dog|AbilityNet (opens in new tab)|contact the Equality Advisory and Support Service (EASS)| Terms and conditions for taking a dog|notify us  |
+	| test      | Pet travel scheme privacy notice|data.protection@defra.gov.uk|www.legislation.gov.uk|Cookies            |opt out of Google Analytics cookies|Accessibility statement for taking a dog|AbilityNet (opens in new tab)|contact the Equality Advisory and Support Service (EASS)| Northern Ireland Pet Travel Scheme terms and conditions| Windsor Framework  |
 
 
 

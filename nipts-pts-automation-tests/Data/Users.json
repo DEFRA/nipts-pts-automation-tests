@@ -26,6 +26,15 @@
       "UserEmail": "nikita.phatak+1901@capgemini.com",
       "Useraddress": "THE JET 67 BRUNSWICK STREET",
       "UserPhoneNumber": "07833861118"
+    },
+    {
+      "userId": "39 00 47 15 80 74",
+      "password": "Test@12345",
+      "logininfo": "test3",
+      "UserName": "Nikita P",
+      "UserEmail": "nikita.phatak+1811@capgemini.com",
+      "Useraddress": "Leamignton spa, warwickshire",
+      "UserPhoneNumber": "07833861119"
     }
   ]
 }

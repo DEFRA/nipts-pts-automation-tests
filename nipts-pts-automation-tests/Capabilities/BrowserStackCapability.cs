@@ -1,8 +1,5 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Edge;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Safari;
 using OpenQA.Selenium;
 using nipts_pts_automation_tests.Configuration;
 using TechTalk.SpecFlow;
@@ -11,17 +8,16 @@ namespace nipts_pts_automation_tests.Capabilities
 {
     public class BrowserStackCapability : IDriverOptions
     {
-
-
         private static ScenarioContext _scenarioContext;
-
         private BaseConfiguration _configuration => ConfigSetup.BaseConfiguration;
-        private Dictionary<string, object> _capDictionary;
-        private readonly Dictionary<string, object> _browserstackOptions = new();
+        private readonly Dictionary<string, object> _capDictionary = [];
+        private readonly Dictionary<string, object> _browserstackOptions = [];
+        private static readonly string[] _osList = ["WINDOWS", "OS X"];
 
         private readonly string _target;
         private readonly string _deviceName;
         private readonly string _bs_os_version;
+        private readonly string _bs_browser_version;
 
         public BrowserStackCapability(BaseConfiguration baseConfiguration, ScenarioContext context)
         {
@@ -29,43 +25,45 @@ namespace nipts_pts_automation_tests.Capabilities
             _target = _configuration.UiFrameworkConfiguration.Target;
             _deviceName = _configuration.TestConfiguration.DeviceName;
             _bs_os_version = _configuration.TestConfiguration.BSOSVersion;
+            _bs_browser_version = _configuration.TestConfiguration.BSBrowserVersion;
         }
 
 
         public DriverOptions GetDriverOptions(Dictionary<string, string> capDictionary = null)
         {
-            _capDictionary = new Dictionary<string, object>();
-
             GetBrowserStackConfig();
             GetProjectDriverOptions();
             GetTestNameDriverOptions();
 
-            _capDictionary.Add("browser:", _target);
-            _capDictionary.Add("browser_version:", "latest");
-            _capDictionary.Add("os:", _deviceName);
-            _capDictionary.Add("os_version:", _bs_os_version);
-            _capDictionary.Add("autoGrantPermission:", true);
-
             _browserstackOptions.Add("acceptInsecureCerts", true);
 
-            DriverOptions driverOptions = null;
-            if (_target.Contains("Chrome"))
-                driverOptions = new ChromeOptions();
-            else if (_target.Contains("Edge"))
-                driverOptions = new EdgeOptions();
-            else if (_target.Contains("Safari"))
-                driverOptions = new SafariOptions();
-            else if (_target.Contains("Firefox"))
-                driverOptions = new FirefoxOptions();
+            _capDictionary.Add("autoGrantPermission:", true);
+            _capDictionary.Add("osVersion", _bs_os_version);
+            _browserstackOptions.Add("osVersion", _bs_os_version);
 
+            if (_osList.Contains(_deviceName.ToUpper()))
+            {
+                _capDictionary.Add("os", _deviceName);
+                _browserstackOptions.Add("os", _deviceName);
+                _browserstackOptions.Add("browserName", _target);
+                _browserstackOptions.Add("browserVersion", _bs_browser_version);
+            }
+            else
+            {
+                _capDictionary.Add("deviceName", _deviceName);
+                _browserstackOptions.Add("deviceName", _deviceName);
+                _browserstackOptions.Add("browserName", _target);
+                _browserstackOptions.Add("deviceOrientation", "portrait");
+            }
+
+            _browserstackOptions.Add("local", "false");
+
+            var driverOptions = new ChromeOptions();
             AddDictionaryValuesInDriverOptions(driverOptions, _capDictionary);
             driverOptions.AddAdditionalOption("bstack:options", _browserstackOptions);
 
             return driverOptions;
-
         }
-
-
 
         private void GetBrowserStackConfig()
         {
