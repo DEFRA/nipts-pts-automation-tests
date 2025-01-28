@@ -4,14 +4,14 @@ Feature: PetsOwnerAddress
 Create a PETS travel document to provide address when PETS Owner details are incorrect
 
 Background: 
-	Given that I navigate to the DEFRA application
+	Given I navigate to PETS a travel document URL
 	And I have provided the password for Landing page
 	When I click Continue button from Landing page
 	Then I should redirected to the Sign in using Government Gateway page
-	And sign in with valid credentials with logininfo
+	When I have provided the credentials and signin
+	Then I should redirected to Apply for a pet travel document page
 
 Scenario Outline: Create PETS Travel Document By PostCode Address User
-	Then I should navigate to Lifelong pet travel documents page
 	When I click Apply for a document button
 	Then I should navigate to the Pets Owner details correct page
 	When I selected the radio button '<PetsOwnerDetails>' option and continue
@@ -54,7 +54,6 @@ Scenario Outline: Create PETS Travel Document By PostCode Address User
 	| No               | DEFRA PTS Service  | RM10 8DP	| 07401659856	 | Yes               | 123456789123456 | Dog | Afghan Hound | The Dog | Male   | Black    | Yes                    |
 
 Scenario Outline: Create PETS Travel Document By Manually Address User
-	Then I should navigate to Lifelong pet travel documents page
 	When I click Apply for a document button
 	Then I should navigate to the Pets Owner details correct page
 	When I selected the radio button '<PetsOwnerDetails>' option and continue
