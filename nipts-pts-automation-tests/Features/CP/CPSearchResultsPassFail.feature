@@ -78,3 +78,48 @@ Scenario Outline: PTS port checker continue application by Reference number - st
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio             | 
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by application number |
+
+Scenario Outline: Verify format of PTD number and significant features option	
+  When Approve an application via backend
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I provided the PTD number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
+	Then verify format of PTD number on search results page
+	Then verify significant features option 'No' on Search Pass Fail Results Page
+	Then verify Pet color option 'Unique Color' on Search Pass Fail Results Page
+	
+
+Examples:
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | 
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Other | No                    | Ferry          | Birkenhead to Belfast (Stena) |
+
+
+Scenario Outline: Verify breed selection with significant option as Yes on search results page
+	When Approve an application via backend
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I provided the PTD number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
+	Then verify format of PTD number on search results page
+	Then verify significant features option 'Black Mark on Shoulder' on Search Pass Fail Results Page
+	Then verify Pet Breed option 'Afghan Hound' on Search Pass Fail Results Page
+	
+
+Examples:
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | 
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Other | Yes                   | Ferry          | Birkenhead to Belfast (Stena) |
+
+

@@ -300,3 +300,86 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Reference numb
 Examples:
 	| Transportation | FerryRoute                    | ApplicationRadio			    |nextPage        | SPSOutcome |
 	| Ferry          | Birkenhead to Belfast (Stena) | Search by application number |Referred to SPS | Allowed    |
+
+Scenario Outline: Verify navigation of back links in the application for GB user
+	When Approve an application via backend
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I provided the PTD number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
+	And I should see the application subtitle 'Lifelong pet travel document and declaration'
+	And I select Fail radio button
+	When I click save and continue button from application status page
+	Then I should navigate to Report non-compliance page
+	And I click on Back button
+	Then I should see the application status in 'Approved'
+	And I click on Back button
+	Then I navigate to Find a document page
+	And click on signout button on CP and verify the signout message
+	
+Examples:
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
+
+Scenario Outline: Verify back link navigation for SPS user
+	When Approve an application via backend
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I provided the PTD number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
+	And I should see the application subtitle 'Lifelong pet travel document and declaration'
+	And I select Fail radio button
+	When I click save and continue button from application status page
+	Then I should navigate to Report non-compliance page
+	And I select 'Cannot find microchip' as non compliance reason
+	And I click '<TypeOfPassenger>' in Passenger details
+	And I click on GB outcome
+	When I click Report non-compliance button from Report non-compliance page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page
+	Then verify next page '<nextPage>' is loaded
+	And I verify Referred to SPS details
+	And click on signout button on CP and verify the signout message
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	When I have provided the CP credentials and signin for user 'SPSUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time with SPS user
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click on view on Checks page with SPS user for '<FerryRoute>'
+	Then verify next page '<nextPage>' is loaded
+	When I click on PTD number of the application
+	Then verify next page '<nextPage1>' is loaded
+	And I verify GB check report
+	When I click on Conduct an SPS check
+	Then I should see the application status in 'Approved'
+	When I select Fail radio button
+	And I click save and continue button from application status page
+	Then I should navigate to Report non-compliance page
+	And I click on Back button
+	Then I should see the application status in 'Approved'
+	And I click on Back button
+	Then verify next page '<nextPage1>' is loaded
+	 
+
+Examples:
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
+
