@@ -324,8 +324,8 @@ Scenario Outline: Verify navigation of back links in the application for GB user
 	And click on signout button on CP and verify the signout message
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
 
 Scenario Outline: Verify back link navigation for SPS user
 	When Approve an application via backend
@@ -380,6 +380,6 @@ Scenario Outline: Verify back link navigation for SPS user
 	 
 
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
 

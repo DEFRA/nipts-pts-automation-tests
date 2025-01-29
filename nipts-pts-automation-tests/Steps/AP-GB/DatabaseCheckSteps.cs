@@ -33,9 +33,21 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
                                  "@userEmail = N'ptsdefra@gmail.com',@IsDelete = 1 " +
                                  "SELECT  'Return Value' = @return_value";
 
+            //if (ConfigSetup.BaseConfiguration != null)
+            //{
+            //    string SQLOutput =  dataHelperConnections.ExecuteQuery(connectionString, deleteQuery);
+            //}
             if (ConfigSetup.BaseConfiguration != null)
             {
-                string SQLOutput =  dataHelperConnections.ExecuteQuery(connectionString, deleteQuery);
+                try
+                {
+                    string SQLOutput = dataHelperConnections.ExecuteQuery(connectionString, deleteQuery);
+                    Console.WriteLine($"SQL Output: {SQLOutput}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error executing query: {ex.Message}");
+                }
             }
         }
 
