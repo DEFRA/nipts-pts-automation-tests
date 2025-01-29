@@ -30,7 +30,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
 
             string deleteQuery = "DECLARE @return_value INT; " +
                                  "EXEC @return_value = [dbo].[ClearPetApplicationDataByUserEmail] " +
-                                 "@userEmail = N'ptsdefra@gmail.com', " +
+                                 "@userEmail = 'ptsdefra@gmail.com', " +
                                  "@IsDelete = 1; " +
                                  "SELECT 'Return Value' = @return_value";
 
