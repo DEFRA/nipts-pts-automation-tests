@@ -1,0 +1,25 @@
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "fullName": "Automation Test",
+  "email": "automation.test@gmail.com",
+  "telephone": "07515174177",
+  "createdBy": "e831d57b-4014-ef11-9f89-6045bd9a2cf7",
+  "createdOn": "2025-01-21T09:57:02.796Z",
+  "updatedBy": "e831d57b-4014-ef11-9f89-6045bd9a2cf7",
+  "updatedOn": "2025-01-21T09:57:02.796Z",
+  "address": {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "addressLineOne": "Automation Addressline One",
+    "addressLineTwo": "Automation Addressline Two",
+    "townOrCity": "Automation Town",
+    "county": "Automation County",
+    "postCode": "RM6 4FB",
+    "countryName": "United Kingdom",
+    "addressType": "2",
+    "isActive": true,
+    "createdBy": "e831d57b-4014-ef11-9f89-6045bd9a2cf7",
+    "createdOn": "2025-01-21T09:57:02.796Z",
+    "updatedBy": "e831d57b-4014-ef11-9f89-6045bd9a2cf7",
+    "updatedOn": "2025-01-21T09:57:02.796Z"
+  }
+}

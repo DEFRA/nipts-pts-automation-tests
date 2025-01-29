@@ -2,6 +2,7 @@
 using nipts_pts_API_tests.Configuration;
 using System.Reflection;
 using RestSharp;
+using System.Net;
 
 namespace nipts_pts_API_tests
 {
@@ -13,7 +14,7 @@ namespace nipts_pts_API_tests
 
         protected string RequestFolder { get; set; }
 
-        private string ApiEndpoint { get; set; }
+        //private string ApiEndpoint { get; set; }
 
         public BaseClient()
         {
@@ -21,9 +22,8 @@ namespace nipts_pts_API_tests
             RequestFolder = Path.Combine(jsonPath, "RequestJson");
         }
 
-        public RestClient SetUrl(string endpoint)
+        public RestClient SetUrl(string endpoint, string ApiEndpoint)
         {
-            ApiEndpoint = DataSetupConfig.Configuration.ApiEndPoint;
             var url = Path.Combine(ApiEndpoint, endpoint);
             client = new RestClient(url);
             return client;
@@ -47,7 +47,7 @@ namespace nipts_pts_API_tests
             {
                 Method = Method.Post
             };
-            request.AddHeader("Accept", "application/json");
+            request.AddHeader("accept", "application/json");
             request.AddHeader("x-api-version", "1");
             request.AddBody(payload);
             request.RequestFormat = DataFormat.Json;
