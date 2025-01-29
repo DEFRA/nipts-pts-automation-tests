@@ -32,7 +32,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
                                  "EXEC @return_value = [dbo].[ClearPetApplicationDataByUserEmail] " +
                                  "@userEmail = N'ptsdefra@gmail.com', " +
                                  "@IsDelete = 1; " +
-                                 "SELECT 'Return Value' = @return_value;";
+                                 "SELECT 'Return Value' = @return_value";
 
             //if (ConfigSetup.BaseConfiguration != null)
             //{
