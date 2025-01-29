@@ -40,6 +40,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             //}
             if (ConfigSetup.BaseConfiguration != null)
             {
+                Console.WriteLine($"configuration set");
                 try
                 {
                     string SQLOutput = dataHelperConnections.ExecuteQuery(connectionString, deleteQuery);
@@ -50,6 +51,8 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
                     Console.WriteLine($"Error executing query: {ex.Message}");
                 }
             }
+
+            Console.WriteLine($"Error executing query: No configuration set");
         }
 
         //[Then(@"sign in with valid credentials with logininfo")]
