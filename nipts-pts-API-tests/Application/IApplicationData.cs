@@ -13,5 +13,7 @@ namespace nipts_pts_API_tests.Application
         public Task<RestResponse> GetApplication(string AppReference);
         public string CreateApplicationAPI(string AppId);
         public bool writeApplicationToQueue();
+        public string CreateApplicationSigFNoAPI(string AppId);
+
     }
 }

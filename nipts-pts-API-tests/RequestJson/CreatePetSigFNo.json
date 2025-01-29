@@ -21,7 +21,7 @@
   },
   "petBreed": {
     "petSpecies": 1,
-    "breedType": 2,
+    "breedType": 1,
     "breedName": "Automation Breed Name",
     "breedId": 1,
     "breedAdditionalInfo": "Automation Breed Additional Info",

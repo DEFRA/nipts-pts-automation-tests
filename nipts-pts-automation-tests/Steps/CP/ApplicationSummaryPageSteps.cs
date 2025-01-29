@@ -132,5 +132,18 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [Given(@"Create an application via backend with significant features option as No")]
+        [When(@"Create an application via backend with significant features option as No")]
+        public void ThenCreateApplicationViaBackendSigFeaturesNo()
+        {
+            lock (_lock)
+            {
+                string AppId = _applicationSummaryPage.getNewID();
+                string APIAppReference = AppData.CreateApplicationSigFNoAPI(AppId);
+                _scenarioContext.Add("ReferenceNumber", APIAppReference);
+                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
+            }
+        }
+
     }
 }

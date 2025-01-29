@@ -10,9 +10,10 @@ Background:
 	And I have provided the CP credentials and signin for user 'GBUser'
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
-	When Create an application via backend
+
 
 Scenario Outline: PTS port checker Pass application by PTD number - status in Approved
+	When Create an application via backend
 	When Approve an application via backend
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
@@ -37,6 +38,7 @@ Examples:
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   |Ferry          | Birkenhead to Belfast (Stena) |
 
 Scenario Outline: PTS port checker Pass application by Reference number - status in Approved
+	When Create an application via backend
 	When Approve an application via backend
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
@@ -60,6 +62,7 @@ Examples:
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   |Ferry          | Birkenhead to Belfast (Stena) | Search by application number | 
 
 Scenario Outline: PTS port checker continue application by Reference number - status in Pending
+	When Create an application via backend
 	When I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -80,7 +83,8 @@ Examples:
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by application number |
 
 Scenario Outline: Verify format of PTD number and significant features option	
-  When Approve an application via backend
+	When Create an application via backend with significant features option as No
+    When Approve an application via backend
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -93,7 +97,7 @@ Scenario Outline: Verify format of PTD number and significant features option
 	And I should see the application status in 'Approved'
 	Then verify format of PTD number on search results page
 	Then verify significant features option 'No' on Search Pass Fail Results Page
-	Then verify Pet color option 'Unique Color' on Search Pass Fail Results Page
+	Then verify Pet color option 'Automation Black' on Search Pass Fail Results Page
 	
 
 Examples:
@@ -102,6 +106,7 @@ Examples:
 
 
 Scenario Outline: Verify breed selection with significant option as Yes on search results page
+	When Create an application via backend
 	When Approve an application via backend
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
@@ -114,8 +119,8 @@ Scenario Outline: Verify breed selection with significant option as Yes on searc
 	When I click search button
 	And I should see the application status in 'Approved'
 	Then verify format of PTD number on search results page
-	Then verify significant features option 'Black Mark on Shoulder' on Search Pass Fail Results Page
-	Then verify Pet Breed option 'Afghan Hound' on Search Pass Fail Results Page
+	Then verify significant features option 'Automation Feature Descrition' on Search Pass Fail Results Page
+	Then verify Pet Breed option 'Chihuahua' on Search Pass Fail Results Page
 	
 
 Examples:
