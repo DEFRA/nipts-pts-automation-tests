@@ -43,7 +43,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             }
             UserId.SendKeys(userName);
             Password.SendKeys(password);
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", SignIn);
             Thread.Sleep(1000);
             if (_driver.FindElements(Accept_Cookies).Count > 0)
@@ -59,6 +59,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
 
         public void ClickSignedOut()
         {
+            Thread.Sleep(1000);
             _driver.WaitForElement(SignInConfirmBy).Click();
         }
 

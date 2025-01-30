@@ -13,5 +13,6 @@ Background:
 @DatabaseQuery
 Scenario: Delete data for Automation user
 	When Clear Database for user 'Test'
+	When that I navigate to the DEFRA application
 	Then click on signout button and verify the signout message on pets
 
