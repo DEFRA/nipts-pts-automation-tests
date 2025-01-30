@@ -36,6 +36,30 @@ namespace nipts_pts_API_tests.Application
         {
             ServiceBusConnection.SendMessageToQueue(ApplicationId, "Authorised");
         }
+        public string CreateApplicationSigFNoAPI(string AppId)
+        {
+            updateUser();
+            createOwner();
+            createAddress();
+            createPetSigFNo();
+            return createApplication(AppId);
+        }
+
+
+        public void createPetSigFNo()
+        {
+            Task<RestResponse> response = null;
+            string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint2;
+            var client = SetUrl("createpet", APIEndPoint);
+            var file = Path.Combine(RequestFolder, "CreatePetSigFNo.json");
+            var requestJson = File.ReadAllText(file);
+            var request = CreatePostRequest(requestJson);
+            response = GetResponseAsync(client, request);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            PetId = dynamicObject;
+        }
+
 
 
         public string GetApplicationToReject(string AppReference)
