@@ -1,5 +1,6 @@
 ﻿using BoDi;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
@@ -34,5 +35,27 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             gBCheckReportPage.ClickOnConductAnSPSCheck();
         }
+
+        [When(@"I verify GB check report with MicrochipReason '([^']*)'")]
+        [Then(@"I verify GB check report with MicrochipReason '([^']*)'")]
+        public void ThenIVerifyMicrochipReason(string MicrochipReason)
+        {
+            Assert.True(gBCheckReportPage.VerifyMicrochipReason(MicrochipReason), "Microchip Reason does not match");
+        }
+
+        [When(@"I verify GB check report with relevent comment '([^']*)'")]
+        [Then(@"I verify GB check report with relevent comment '([^']*)'")]
+        public void ThenIVerifyAdditionalComment(string AdditionalComment)
+        {
+            Assert.True(gBCheckReportPage.VerifyAdditionalComment(AdditionalComment), "Additional Comment does not match");
+        }
+
+        [When(@"I verify GB check report with GB Outcome '([^']*)'")]
+        [Then(@"I verify GB check report with GB Outcome '([^']*)'")]
+        public void ThenIVerifyGBOutcome(string GBOutcome)
+        {
+            Assert.True(gBCheckReportPage.VerifyGBOutcome(GBOutcome), "GB Outcome does not match");
+        }
+
     }
 }

@@ -138,5 +138,27 @@ namespace nipts_pts_automation_tests.Steps.CP
             var applRefNum = _scenarioContext.Get<string>("ReferenceNumber");
             Assert.True(_reportNonCompliancePage.VerifyApplicationReferenceNumber(applRefNum), "Invalid Application Reference Number on Report Non Compliance page");
         }
+
+        [When(@"I select MicrochipReason '([^']*)' on Report non-compliance page")]
+        [Then(@"I select MicrochipReason '([^']*)' on Report non-compliance page")]
+        public void ThenSelectMicrochipReason(string MicrochipReason)
+        {
+            _reportNonCompliancePage.SelectMicrochipReason(MicrochipReason);
+        }
+
+        [When(@"I enter relevant comment '([^']*)'")]
+        [Then(@"I enter relevant comment '([^']*)'")]
+        public void ThenEnterAdditionalComment(string AdditionalComment)
+        {
+            _reportNonCompliancePage.EnterAdditionalComment(AdditionalComment);
+        }
+
+        [When(@"I select GB Outcome '([^']*)' on Report non-compliance page")]
+        [Then(@"I select GB Outcome '([^']*)' on Report non-compliance page")]
+        public void ThenSelectGBOutcome(string GBOutcome)
+        {
+            _reportNonCompliancePage.SelectGBOutcome(GBOutcome);
+        }
+
     }
 }

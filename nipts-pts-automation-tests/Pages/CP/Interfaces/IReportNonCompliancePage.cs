@@ -19,5 +19,8 @@
         public bool VerifyNIOutcomeHintTxt(string NIOutcomeMsg);
         bool VerifyPTDNumber(string ptdNumberNew);
         bool VerifyApplicationReferenceNumber(string AppRefNumber);
+        void SelectMicrochipReason(string microchipReason);
+        void EnterAdditionalComment(string additionalComment);
+        void SelectGBOutcome(string gBOutcome);
     }
 }

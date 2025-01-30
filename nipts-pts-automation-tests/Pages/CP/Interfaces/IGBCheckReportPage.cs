@@ -4,5 +4,8 @@
     {
         void VerifyGBCheckReport();
         void ClickOnConductAnSPSCheck();
+        bool VerifyMicrochipReason(string microchipReason);
+        bool VerifyAdditionalComment(string additionalComment);
+        bool VerifyGBOutcome(string gBOutcome);
     }
 }
