@@ -270,7 +270,6 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Reference numb
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	Then verify next page '<nextPage>' is loaded
-	#And I verify Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
