@@ -2,7 +2,6 @@
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
-using System.Net.NetworkInformation;
 
 namespace nipts_pts_automation_tests.Pages.CP.Pages
 {
@@ -36,6 +35,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement txtNIOutcomeHintTxt => _driver.WaitForElement(By.Id("sps-item-hint"));
         private IWebElement PTDNumber => _driver.WaitForElement(By.XPath("//dt[contains(text(),'PTD number')]/./following-sibling::dd"));
         private IWebElement ApplicationRefNumber => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Application reference number')]/./following-sibling::dd"));
+        private IWebElement RelevantComment => _driver.WaitForElement(By.Id("relevant-comments"));
 
         #endregion
 
@@ -163,6 +163,48 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             return ApplicationRefNumber.Text.Contains(AppRefNumber);
         }
+
+        public void SelectMicrochipReason(string microchipReason)
+        { 
+            if (microchipReason.Contains("MicrochipNumberNoMatch"))
+            {
+                TickMicrochipNoDoesNotMatchPTD();
+                EnterMichrochipNoDoesNotMatchPTD("123456789123456");
+            }
+            else if (microchipReason.Contains("CannotFindMicrochip"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", microchipNotFound);
+                microchipNotFound.Click();
+            }
+        }
+
+        public void EnterAdditionalComment(string additionalComment)
+        {
+            if (!additionalComment.Contains("None"))
+            {
+                RelevantComment.SendKeys(additionalComment);
+            }
+        }
+
+        public void SelectGBOutcome(string gBOutcome)
+        {
+            if (gBOutcome.Contains("PassengerRefferedDAERA"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", passangerReferred);
+                passangerReferred.Click();
+            }
+            else if (gBOutcome.Contains("PassengerAdvisedNoTravel"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", passangerAdvised);
+                passangerAdvised.Click();
+            }
+            else if (gBOutcome.Contains("PassengerWillNotTravel"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", passangerNotTravel);
+                passangerNotTravel.Click();
+            }
+        }
+
         #endregion
 
     }

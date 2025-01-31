@@ -18,6 +18,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
         private IWebElement pageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')]"));
         private IWebElement clickSPSConduct => _driver.WaitForElement(By.XPath("//button[contains(text(),'Conduct an SPS check')]"));
+        private IWebElement PassangerRefToDAERA => _driver.WaitForElement(By.XPath("//li[contains(text(),'Passenger referred to DAERA/SPS at NI port')] | //p[contains(text(),'Passenger referred to DAERA/SPS at NI port')]"));
+        private IWebElement PassengerAdvised => _driver.WaitForElement(By.XPath("//li[contains(text(),'Passenger advised not to travel')] | //p[contains(text(),'Passenger advised not to travel')]"));
+        private IWebElement PassengerNoTravel => _driver.WaitForElement(By.XPath("//li[contains(text(),'Passenger says they will not travel')] | //p[contains(text(),'Passenger says they will not travel')]"));
+        private IWebElement MicrochipDoesNotMatch => _driver.WaitForElement(By.XPath("//li[contains(text(),'Microchip number does not match the PTD')] | //p[contains(text(),'Microchip number does not match the PTD')]"));
+        private IWebElement MicrochipNotFound => _driver.WaitForElement(By.XPath("//li[contains(text(),'Cannot find microchip')] | //p[contains(text(),'Cannot find microchip')]"));
+        private IWebElement AdditionalComment => _driver.WaitForElement(By.XPath("//dt[text()='Additional comments']/..//p"));
         #endregion
 
         #region Methods
@@ -32,6 +38,52 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,3000)", "");
             Thread.Sleep(1000);
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", clickSPSConduct);
+        }
+
+        public bool VerifyMicrochipReason(string microchipReason)
+        {
+            bool status = true; 
+            if (microchipReason.Contains("MicrochipNumberNoMatch"))
+            {
+                if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
+                    status = false;
+            }
+            else if (microchipReason.Contains("CannotFindMicrochip"))
+            {
+                if (!MicrochipNotFound.Text.Contains("Cannot find microchip"))
+                    status = false;
+            }
+            return status;               
+        }
+
+        public bool VerifyAdditionalComment(string additionalComment)
+        {
+            if (AdditionalComment.Text.Contains(additionalComment))
+                return true;
+            else 
+                return false;
+        }
+
+        public bool VerifyGBOutcome(string gBOutcome)
+        {
+            bool status = true;
+
+            if (gBOutcome.Contains("PassengerRefferedDAERA"))
+            {
+                if (!PassangerRefToDAERA.Text.Contains("Passenger referred to DAERA/SPS at NI port"))
+                    status = false;
+            }
+            else if (gBOutcome.Contains("PassengerAdvisedNoTravel"))
+            {
+                if (!PassengerAdvised.Text.Contains("Passenger advised not to travel"))
+                    status = false;
+            }
+            else if (gBOutcome.Contains("PassengerWillNotTravel"))
+            {
+                if (!PassengerNoTravel.Text.Contains("Passenger says they will not travel"))
+                    status = false;
+            }
+            return status;
         }
 
         #endregion
