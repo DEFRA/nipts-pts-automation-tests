@@ -36,11 +36,11 @@ namespace nipts_pts_automation_tests.Steps.CP
             gBCheckReportPage.ClickOnConductAnSPSCheck();
         }
 
-        [When(@"I verify GB check report with MicrochipReason '([^']*)'")]
-        [Then(@"I verify GB check report with MicrochipReason '([^']*)'")]
-        public void ThenIVerifyMicrochipReason(string MicrochipReason)
+        [When(@"I verify GB check report with MicrochipReason '([^']*)','([^']*)'")]
+        [Then(@"I verify GB check report with MicrochipReason '([^']*)','([^']*)'")]
+        public void ThenIVerifyMicrochipReason(string NumberMicrochipReason,string MicrochipReason)
         {
-            Assert.True(gBCheckReportPage.VerifyMicrochipReason(MicrochipReason), "Microchip Reason does not match");
+            Assert.True(gBCheckReportPage.VerifyMicrochipReason(NumberMicrochipReason,MicrochipReason), "Microchip Reason does not match");
         }
 
         [When(@"I verify GB check report with relevent comment '([^']*)'")]
@@ -50,11 +50,11 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(gBCheckReportPage.VerifyAdditionalComment(AdditionalComment), "Additional Comment does not match");
         }
 
-        [When(@"I verify GB check report with GB Outcome '([^']*)'")]
-        [Then(@"I verify GB check report with GB Outcome '([^']*)'")]
-        public void ThenIVerifyGBOutcome(string GBOutcome)
+        [When(@"I verify GB check report with GB Outcome '([^']*)','([^']*)'")]
+        [Then(@"I verify GB check report with GB Outcome '([^']*)','([^']*)'")]
+        public void ThenIVerifyGBOutcome(string NumberGBOutcome, string GBOutcome)
         {
-            Assert.True(gBCheckReportPage.VerifyGBOutcome(GBOutcome), "GB Outcome does not match");
+            Assert.True(gBCheckReportPage.VerifyGBOutcome(NumberGBOutcome,GBOutcome), "GB Outcome does not match");
         }
 
     }

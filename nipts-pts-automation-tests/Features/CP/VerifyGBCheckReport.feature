@@ -38,16 +38,16 @@ Scenario Outline: Validate GB Check Report page fields
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	And I click on PTD number of the application
-	Then I verify GB check report with MicrochipReason '<MicrochipNumberNoMatch>'
-	And I verify GB check report with MicrochipReason '<CannotFindMicrochip>'
+	Then I verify GB check report with MicrochipReason '<NumberMicrochipReasons>','<MicrochipNumberNoMatch>'
+	And I verify GB check report with MicrochipReason '<NumberMicrochipReasons>','<CannotFindMicrochip>'
 	And I verify GB check report with relevent comment '<AdditionalComment>'
-	And I verify GB check report with GB Outcome '<PassengerRefferedDAERA>'
-	And I verify GB check report with GB Outcome '<PassengerAdvisedNoTravel>'
-	And I verify GB check report with GB Outcome '<PassengerWillNotTravel>'
+	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerRefferedDAERA>'
+	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerAdvisedNoTravel>'
+	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerWillNotTravel>'
 
 Examples:
-	| Transportation | FerryRoute                    | MicrochipNumberNoMatch | CannotFindMicrochip | PassengerType        | AdditionalComment        | PassengerRefferedDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel |
-	| Ferry          | Birkenhead to Belfast (Stena) | MicrochipNumberNoMatch | CannotFindMicrochip | Ferry foot passenger | Verify Additonal Comment | PassengerRefferedDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel |
-	| Ferry          | Birkenhead to Belfast (Stena) | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | PassengerRefferedDAERA | No                       | PassengerWillNotTravel |
-	| Ferry          | Birkenhead to Belfast (Stena) | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | PassengerRefferedDAERA | No                       | No                     |
+	| Transportation | FerryRoute                    | NumberMicrochipReasons | MicrochipNumberNoMatch | CannotFindMicrochip | PassengerType        | AdditionalComment        | NumberGBOutcome | PassengerRefferedDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel |
+	| Ferry          | Birkenhead to Belfast (Stena) | 2                      | MicrochipNumberNoMatch | CannotFindMicrochip | Ferry foot passenger | Verify Additonal Comment | 3               | PassengerRefferedDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel |
+	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 2               | PassengerRefferedDAERA | No                       | PassengerWillNotTravel |
+	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 1               | PassengerRefferedDAERA | No                       | No                     |
 
