@@ -57,6 +57,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string departureTime = "";
             string headerTime = headerDepartureTime.Text.Trim();
             string route = headerTime.Substring(7, 29).Trim();
+            Thread.Sleep(1000);
             if (route.Contains("Birkenhead to Belfast (Stena)"))
             {
                 if (ConfigSetup.BaseConfiguration.TestConfiguration.BSBrowserVersion == "16.5")
@@ -98,6 +99,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var GBDepartureTime = departTime;
             string headerTime = headerDepartureTime.Text.Trim();
             string departureDate = "";
+            Thread.Sleep(1000);
             if (departureRoute.Contains("Birkenhead to Belfast (Stena)"))
             {
                 if (ConfigSetup.BaseConfiguration.TestConfiguration.BSBrowserVersion == "16.5")

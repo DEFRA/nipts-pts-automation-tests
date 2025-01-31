@@ -36,6 +36,9 @@
     <None Update="RequestJson\CreatePet.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="RequestJson\CreatePetSigFNo.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="RequestJson\UpdateUser.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

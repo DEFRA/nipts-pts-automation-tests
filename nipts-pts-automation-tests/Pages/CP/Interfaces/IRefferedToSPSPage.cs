@@ -5,5 +5,7 @@
         void ClickOnPTDNumberOfTheApplication(string ptdNumber);
         void VerifyReferredToSPSDetails();
         void VerifySPSOutcome(string outcome);
+        void ClickOnPage(string pageNumber);
+        bool VerifyReferredToSPSRecordCount(int count);
     }
 }

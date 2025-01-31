@@ -1,5 +1,6 @@
 ﻿using BoDi;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
@@ -53,5 +54,18 @@ namespace nipts_pts_automation_tests.Steps.CP
             refferedToSPSPage?.ClickOnPTDNumberOfTheApplication(ptdNumberNew);
         }
 
+        [Then(@"I verify referred to SPS record count '([^']*)' on page")]
+        [When(@"I verify referred to SPS record count '([^']*)' on page")]
+        public void WhenIVerifyReferredToSPSRecordCount(int count)
+        {
+            Assert.True(refferedToSPSPage?.VerifyReferredToSPSRecordCount(count), "Count not match on Referred to SPS page");
+        }
+
+        [Then(@"I click on page '([^']*)'")]
+        [When(@"I click on page '([^']*)'")]
+        public void WhenIClickOnPage(string pageNumber)
+        {
+            refferedToSPSPage?.ClickOnPage(pageNumber);
+        }
     }
 }
