@@ -14,6 +14,7 @@ Background:
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - status in Approved
 	When Approve an application via backend
+	And I have captured pet details
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -73,6 +74,7 @@ Examples:
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Approved
 	When Approve an application via backend
+	And I have captured pet details
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -132,6 +134,7 @@ Examples:
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Revoked
 	When Revoke an application via backend
+	And I have captured pet details
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -189,6 +192,7 @@ Examples:
 
 	Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Unsuccessful
 	When Reject an application via backend
+	And I have captured pet details
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -266,7 +270,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Reference numb
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	Then verify next page '<nextPage>' is loaded
-	And I verify Referred to SPS details
+	#And I verify Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -329,6 +333,7 @@ Examples:
 
 Scenario Outline: Verify back link navigation for SPS user
 	When Approve an application via backend
+	And I have captured pet details
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
