@@ -34,8 +34,8 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 	And I verify submiited message
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures |Transportation | FerryRoute                    | 
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   |Ferry          | Birkenhead to Belfast (Stena) |
+	|Transportation | FerryRoute                    | 
+	|Ferry          | Birkenhead to Belfast (Stena) |
 
 Scenario Outline: PTS port checker Pass application by Reference number - status in Approved
 	When Create an application via backend
@@ -58,8 +58,8 @@ Scenario Outline: PTS port checker Pass application by Reference number - status
 	And I verify submiited message
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures |Transportation | FerryRoute                    | ApplicationRadio             | 
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   |Ferry          | Birkenhead to Belfast (Stena) | Search by application number | 
+	|Transportation | FerryRoute                    | ApplicationRadio             | 
+	|Ferry          | Birkenhead to Belfast (Stena) | Search by application number | 
 
 Scenario Outline: PTS port checker continue application by Reference number - status in Pending
 	When Create an application via backend
@@ -79,8 +79,8 @@ Scenario Outline: PTS port checker continue application by Reference number - st
 	Then I should navigate to Report non-compliance page
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio             | 
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by application number |
+	| Transportation | FerryRoute                    | ApplicationRadio             | 
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by application number |
 
 
 
@@ -103,8 +103,8 @@ Scenario Outline: Verify format of PTD number and significant features option
 	
 
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | 
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Other | No                    | Ferry          | Birkenhead to Belfast (Stena) |
+	| Transportation | FerryRoute                    | 
+	| Ferry          | Birkenhead to Belfast (Stena) |
 
 
 Scenario Outline: Verify breed selection with significant option as Yes on search results page
@@ -124,8 +124,18 @@ Scenario Outline: Verify breed selection with significant option as Yes on searc
 	Then verify significant features option 'Automation Feature Descrition' on Search Pass Fail Results Page
 	Then verify Pet Breed option 'Chihuahua' on Search Pass Fail Results Page
 	
-
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | 
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Other | Yes                   | Ferry          | Birkenhead to Belfast (Stena) |
+	| Transportation | FerryRoute                    | 
+	| Ferry          | Birkenhead to Belfast (Stena) |
+
+Scenario Outline: Verify no entries on checker page after 24 hours and before 48 hours
+	When I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	And I verify no entries on checker page after 24 hours and before 48 hours	
+Examples:
+	|Transportation | FerryRoute                    | 
+	|Ferry          | Birkenhead to Belfast (Stena) |
 

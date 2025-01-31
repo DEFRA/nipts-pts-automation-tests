@@ -81,5 +81,12 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             Assert.True(_welcomePage?.VerifySubmiitedMessage(), "Submitted message not matching");
         }
+
+        [When(@"I verify no entries on checker page after 24 hours and before 48 hours")]
+        [Then(@"I verify no entries on checker page after 24 hours and before 48 hours")]
+        public void ThenIVerifyEntriesOnCheckerPage()
+        {
+            Assert.True(_welcomePage?.VerifyEntriesOnCheckerPage(), "Checker page entries are either after 24 hours or before 48 hours");
+        }
     }
 }

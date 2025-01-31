@@ -3,6 +3,7 @@ using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
+using System.Globalization;
 using TechTalk.SpecFlow;
 
 namespace nipts_pts_automation_tests.Pages.CP.Pages
@@ -26,6 +27,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement lnkHeadersChange => _driver.WaitForElement(By.XPath("//a[normalize-space()='Change']"));
         private IReadOnlyCollection<IWebElement> viewLinks => _driver.WaitForElements(By.XPath("//button[contains(text(),'View')]"));
         private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//header[@class='pts-location-bar']//p"));
+        private IReadOnlyCollection<IWebElement> DepartureDateTime => _driver.WaitForElements(By.XPath("//h2//b[contains(text(),'Departure:')]/.."));
         #endregion
 
         #region Methods
@@ -189,6 +191,26 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return submittedMessage.Text.Contains("Information has been successfully submitted");
         }
 
+        public bool VerifyEntriesOnCheckerPage()
+        {
+            CultureInfo enGB = new CultureInfo("en-GB");
+            DateTime Hour24LaterDateTime = DateTime.Now.AddDays(1);
+            DateTime Hours48BeforeDateTime = DateTime.Now.AddDays(-2);
+            bool status = false;
+            for (int i = 0; i < DepartureDateTime.Count; i++)
+            {
+                var dateTime = DepartureDateTime.ElementAt(i).Text.Substring(11,16).Trim();
+                DateTime dateTimeRecord = DateTime.ParseExact(dateTime, "g", enGB);
+                if (dateTimeRecord > Hour24LaterDateTime && dateTimeRecord < Hours48BeforeDateTime)
+                {
+                    status = false;
+                    break;
+                }
+                else
+                    status = true;   
+            }
+            return status;
+        }
         #endregion
     }
 }
