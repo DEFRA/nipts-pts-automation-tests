@@ -145,6 +145,19 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [When(@"I have captured pet details")]
+        public void ThenIHaveCapturedPetDetails()
+        {
+            lock (_lock)
+            {
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                string PetType = AppData.GetPetDetails(AppReference);
+                _scenarioContext.Add("PetType", PetType);
+                string MicrochipNumber = AppData.GetMicrochipDetails(AppReference);
+                _scenarioContext.Add("MicrochipNumber", MicrochipNumber);
+            }
+        }
+
 
     }
 }

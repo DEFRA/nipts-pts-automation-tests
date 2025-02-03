@@ -16,6 +16,10 @@ namespace nipts_pts_API_tests.Application
         public string PetId { get; set; }
         public string QueueId { get; set; }
         public string AppReferenceNumber { get; set; }
+        public string PetSpecies { get; set; }
+        public string MicrochipNo { get; set; }
+
+
 
 
         public string GetApplicationToApprove(string AppReference)
@@ -222,5 +226,24 @@ namespace nipts_pts_API_tests.Application
             else
                 return false;
         }
+        public string GetPetDetails(string AppReference)
+        {
+
+            Task<RestResponse> response = GetApplication(AppReference);
+            var responseString2 = response.Result.Content.ToString();
+            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString2.ToString())!;
+            PetSpecies = dynamicObject2.pet.species;
+            return PetSpecies;
+
+        }
+        public string GetMicrochipDetails(string AppReference)
+        {
+            Task<RestResponse> response = GetApplication(AppReference);
+            var responseString2 = response.Result.Content.ToString();
+            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString2.ToString())!;
+            MicrochipNo = dynamicObject2.pet.microchipNumber;
+            return MicrochipNo;
+        }
+
     }
 }
