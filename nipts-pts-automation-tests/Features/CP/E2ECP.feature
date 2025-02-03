@@ -130,6 +130,7 @@ Examples:
 	| Transportation | FerryRoute               |  ApplicationRadio             |nextPage        | SPSOutcome  |
 	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Not allowed |
 
+@RunOnly
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Revoked
 	When Revoke an application via backend
 	And I have selected '<Transportation>' radio option
