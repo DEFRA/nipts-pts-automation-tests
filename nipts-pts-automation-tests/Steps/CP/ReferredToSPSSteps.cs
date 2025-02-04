@@ -23,11 +23,33 @@ namespace nipts_pts_automation_tests.Steps.CP
             _objectContainer = container;
         }
 
-        [Then(@"I verify Referred to SPS details")]
-        [When(@"I verify Referred to SPS details")]
-        public void WhenIVerifyReferredToSPSDetails()
+        [Then(@"I verify Pet document details on Referred to SPS details")]
+        [When(@"I verify Pet document details on Referred to SPS details")]
+        public void WhenIVerifyPetDocumentDetailsReferredToSPSPage()
         {
-            refferedToSPSPage?.VerifyReferredToSPSDetails();
+            var ptdNumber = _scenarioContext.Get<string>("PTDNumber");
+            var ptdNumberNew = ptdNumber.Substring(0, 5) + " " + ptdNumber.Substring(5, 3) + " " + ptdNumber.Substring(8, 3);
+            var petType = _scenarioContext.Get<string>("PetType");
+            var michrochipNo = _scenarioContext.Get<string>("MicrochipNumber");
+            Assert.True(refferedToSPSPage?.VerifyPetDocumentDetailsOnReferredToSPSPage(ptdNumberNew, petType, michrochipNo), "Pet document details not matching on Reffered to SPS Page");
+        }
+
+        [Then(@"I verify Pet document detailsfor Pending and Unsuccessful Appl on Referred to SPS details")]
+        [When(@"I verify Pet document detailsfor Pending and Unsuccessful Appl on Referred to SPS details")]
+        public void WhenIVerifyPetDocumentDetailsPendingUnsuccessfulReferredToSPSPage()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            var petType = _scenarioContext.Get<string>("PetType");
+            var michrochipNo = _scenarioContext.Get<string>("MicrochipNumber");
+            Assert.True(refferedToSPSPage?.VerifyPetDocumentDetailsOnReferredToSPSPage(AppReference, petType, michrochipNo), "Pet document details not matching on Reffered to SPS Page");
+        }
+
+
+        [Then(@"I verify Pet departure details on Referred to SPS details")]
+        [When(@"I verify Pet departure details on Referred to SPS details")]
+        public void WhenIVerifyPetDepartureDetailsOnReferredToSPSPage()
+        {
+            Assert.True(refferedToSPSPage?.VerifyDepartureDetailsOnRefferedToSPSPage(), "Pet Departure details not matching on Reffered to SPS Page");
         }
 
         [Then(@"I verify SPS outcome '([^']*)' on referred SPS page")]

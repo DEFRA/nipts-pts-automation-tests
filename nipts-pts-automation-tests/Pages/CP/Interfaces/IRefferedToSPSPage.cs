@@ -3,8 +3,9 @@
     public interface IRefferedToSPSPage
     {
         void ClickOnPTDNumberOfTheApplication(string ptdNumber);
-        void VerifyReferredToSPSDetails();
-        void VerifySPSOutcome(string outcome);
+        public bool VerifyPetDocumentDetailsOnReferredToSPSPage(string ptdNumberNew, string petType, string michrochipNo);
+        public bool VerifySPSOutcome(string outcome);
+        public bool VerifyDepartureDetailsOnRefferedToSPSPage();
         void ClickOnPage(string pageNumber);
         bool VerifyReferredToSPSRecordCount(int count);
     }

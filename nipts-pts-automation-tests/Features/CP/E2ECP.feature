@@ -36,7 +36,8 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	Then verify next page '<nextPage>' is loaded
-	And I verify Referred to SPS details
+	And I verify Pet document details on Referred to SPS details
+	And I verify Pet departure details on Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -96,7 +97,8 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	Then verify next page '<nextPage>' is loaded
-	And I verify Referred to SPS details
+	And I verify Pet document details on Referred to SPS details
+	And I verify Pet departure details on Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -155,7 +157,8 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	Then verify next page '<nextPage>' is loaded
-	And I verify Referred to SPS details
+	And I verify Pet document details on Referred to SPS details
+	And I verify Pet departure details on Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -214,7 +217,8 @@ Examples:
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	Then verify next page '<nextPage>' is loaded
-	And I verify Referred to SPS details
+	And I verify Pet document detailsfor Pending and Unsuccessful Appl on Referred to SPS details
+	And I verify Pet departure details on Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -250,6 +254,7 @@ Examples:
 	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Allowed    |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Reference number - status in Pending
+	When I have captured pet details
 	When I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -270,6 +275,8 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Reference numb
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	Then verify next page '<nextPage>' is loaded
+	And I verify Pet document detailsfor Pending and Unsuccessful Appl on Referred to SPS details
+	And I verify Pet departure details on Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -354,7 +361,8 @@ Scenario Outline: Verify back link navigation for SPS user
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	Then verify next page '<nextPage>' is loaded
-	And I verify Referred to SPS details
+	And I verify Pet document details on Referred to SPS details
+	And I verify Pet departure details on Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
