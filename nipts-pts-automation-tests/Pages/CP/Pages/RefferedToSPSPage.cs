@@ -18,7 +18,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
-        private IReadOnlyCollection<IWebElement> recordCount => _driver.WaitForElements(By.XPath("//tbody[@class='govuk-table__body']//tr[contains(@class,'govuk-table__row')]"));
+        private IReadOnlyCollection<IWebElement> recordCount => _driver.WaitForElements(By.XPath("//td//strong[contains(text(),'Check needed')]"));
         private IReadOnlyCollection<IWebElement> PTDRefNumbers => _driver.WaitForElements(By.XPath("//button[contains(@data-identifier,'referred')]"));
         private IWebElement PTDRefNumber => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Application reference number')]/following-sibling::dd | //dt[contains(text(),'PTD number')]/following-sibling::dd"));
         List<string> PTDRefCollection = new List<string>();
@@ -121,11 +121,6 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                         break;
                 }
             }
-            //foreach (var item in PTDRefCollection.Where(i => PTDRefCollection.Contains(i)))
-            //{
-            //    Console.WriteLine($"Match found: {item}");
-            //    status = true;
-            //}
             return status;
         }
             #endregion
