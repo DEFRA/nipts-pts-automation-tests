@@ -54,7 +54,6 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	Then verify next page '<nextPage>' is loaded
 	When I click on PTD number of the application
 	Then verify next page '<nextPage1>' is loaded
-	And I verify GB check report
 	When I click on Conduct an SPS check
 	Then I should see the application status in 'Approved'
 	When I select Fail radio button
@@ -112,11 +111,8 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	When I click search button from footer
-	Then I navigate to Find a document page
-	And I click search by '<ApplicationRadio>' radio button
-	And I provided the Reference number of the application
-	When I click search button
+	And I click on PTD number of the application
+	And I click on Conduct an SPS check
 	And I should see the application status in 'Approved'
 	And I select Fail radio button
 	When I click save and continue button from application status page
@@ -172,11 +168,8 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	When I click search button from footer
-	Then I navigate to Find a document page
-	And I click search by '<ApplicationRadio>' radio button
-	And I provided the Reference number of the application
-	When I click search button
+	And I click on PTD number of the application
+	And I click on Conduct an SPS check
 	And I should see the application status in 'Revoked'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
@@ -232,11 +225,8 @@ Examples:
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	When I click search button from footer
-	Then I navigate to Find a document page
-	And I click search by '<ApplicationRadio>' radio button
-	And I provided the Reference number of the application
-	When I click search button
+	And I click on Reference number of the application
+	And I click on Conduct an SPS check
 	And I should see the application status in 'Unsuccessful'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
@@ -290,11 +280,8 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Reference numb
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	When I click search button from footer
-	Then I navigate to Find a document page
-	And I click search by '<ApplicationRadio>' radio button
-	And I provided the Reference number of the application
-	When I click search button
+	And I click on Reference number of the application
+	And I click on Conduct an SPS check
 	And I should see the application status in 'Awaiting verification'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
@@ -334,8 +321,8 @@ Scenario Outline: Verify navigation of back links in the application for GB user
 	And click on signout button on CP and verify the signout message
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
 
 Scenario Outline: Verify back link navigation for SPS user
 	When Approve an application via backend
@@ -376,11 +363,8 @@ Scenario Outline: Verify back link navigation for SPS user
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	Then verify next page '<nextPage>' is loaded
-	When I click on PTD number of the application
-	Then verify next page '<nextPage1>' is loaded
-	And I verify GB check report
-	When I click on Conduct an SPS check
+	And I click on PTD number of the application
+	And I click on Conduct an SPS check
 	Then I should see the application status in 'Approved'
 	When I select Fail radio button
 	And I click save and continue button from application status page
@@ -392,6 +376,6 @@ Scenario Outline: Verify back link navigation for SPS user
 	 
 
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
 

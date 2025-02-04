@@ -6,11 +6,11 @@ using OpenQA.Selenium;
 
 namespace nipts_pts_automation_tests.Pages.CP.Pages
 {
-    public class RefferedToSPSPage : IRefferedToSPSPage
+    public class ReferredToSPSPage : IReferredToSPSPage
     {
         private readonly IObjectContainer _objectContainer;
 
-        public RefferedToSPSPage(IObjectContainer container)
+        public ReferredToSPSPage(IObjectContainer container)
         {
             _objectContainer = container;
         }
@@ -33,7 +33,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return PTDNoEle.Text.Contains(ptdNumberNew) && PetTypeEle.Text.Contains(petType) && MichrochipNoEle.Text.Contains(michrochipNo);
         }
 
-        public bool VerifyDepartureDetailsOnRefferedToSPSPage()
+        public bool VerifyDepartureDetailsOnReferredToSPSPage()
         {
             bool status = true;
             string departureDate = "";

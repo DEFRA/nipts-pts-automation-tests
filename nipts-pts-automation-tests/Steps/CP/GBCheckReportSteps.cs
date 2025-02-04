@@ -22,13 +22,6 @@ namespace nipts_pts_automation_tests.Steps.CP
             _objectContainer = container;
         }
 
-        [When(@"I verify GB check report")]
-        [Then(@"I verify GB check report")]
-        public void ThenIVerifyGBCheckReport()
-        {
-            gBCheckReportPage.VerifyGBCheckReport();
-        }
-
         [When(@"I click on Conduct an SPS check")]
         [Then(@"I click on Conduct an SPS check")]
         public void ThenIClickOnConductAnSPSCheck()

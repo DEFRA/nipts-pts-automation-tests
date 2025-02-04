@@ -15,7 +15,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         private readonly ScenarioContext _scenarioContext;
 
         private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IRefferedToSPSPage? refferedToSPSPage => _objectContainer.IsRegistered<IRefferedToSPSPage>() ? _objectContainer.Resolve<IRefferedToSPSPage>() : null;
+        private IReferredToSPSPage? referredToSPSPage => _objectContainer.IsRegistered<IReferredToSPSPage>() ? _objectContainer.Resolve<IReferredToSPSPage>() : null;
 
         public ReferredToSPSSteps(ScenarioContext context, IObjectContainer container)
         {
@@ -31,7 +31,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             var ptdNumberNew = ptdNumber.Substring(0, 5) + " " + ptdNumber.Substring(5, 3) + " " + ptdNumber.Substring(8, 3);
             var petType = _scenarioContext.Get<string>("PetType");
             var michrochipNo = _scenarioContext.Get<string>("MicrochipNumber");
-            Assert.True(refferedToSPSPage?.VerifyPetDocumentDetailsOnReferredToSPSPage(ptdNumberNew, petType, michrochipNo), "Pet document details not matching on Reffered to SPS Page");
+            Assert.True(referredToSPSPage?.VerifyPetDocumentDetailsOnReferredToSPSPage(ptdNumberNew, petType, michrochipNo), "Pet document details not matching on Referred to SPS Page");
         }
 
         [Then(@"I verify Pet document detailsfor Pending and Unsuccessful Appl on Referred to SPS details")]
@@ -41,7 +41,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
             var petType = _scenarioContext.Get<string>("PetType");
             var michrochipNo = _scenarioContext.Get<string>("MicrochipNumber");
-            Assert.True(refferedToSPSPage?.VerifyPetDocumentDetailsOnReferredToSPSPage(AppReference, petType, michrochipNo), "Pet document details not matching on Reffered to SPS Page");
+            Assert.True(referredToSPSPage?.VerifyPetDocumentDetailsOnReferredToSPSPage(AppReference, petType, michrochipNo), "Pet document details not matching on Referred to SPS Page");
         }
 
 
@@ -49,14 +49,14 @@ namespace nipts_pts_automation_tests.Steps.CP
         [When(@"I verify Pet departure details on Referred to SPS details")]
         public void WhenIVerifyPetDepartureDetailsOnReferredToSPSPage()
         {
-            Assert.True(refferedToSPSPage?.VerifyDepartureDetailsOnRefferedToSPSPage(), "Pet Departure details not matching on Reffered to SPS Page");
+            Assert.True(referredToSPSPage?.VerifyDepartureDetailsOnReferredToSPSPage(), "Pet Departure details not matching on Referred to SPS Page");
         }
 
         [Then(@"I verify SPS outcome '([^']*)' on referred SPS page")]
         [When(@"I verify SPS outcome '([^']*)' on referred SPS page")]
         public void WhenIVerifySPSOutcome(string outcome)
         {
-            refferedToSPSPage?.VerifySPSOutcome(outcome);
+            referredToSPSPage?.VerifySPSOutcome(outcome);
         }
 
         [Then(@"I click on PTD number of the application")]
@@ -65,29 +65,38 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             var ptdNumber = _scenarioContext.Get<string>("PTDNumber");
             var ptdNumberNew = ptdNumber.Substring(0,5) + " " + ptdNumber.Substring(5,3) + " " + ptdNumber.Substring(8,3);
-            refferedToSPSPage?.ClickOnPTDNumberOfTheApplication(ptdNumberNew);
+            referredToSPSPage?.ClickOnPTDNumberOfTheApplication(ptdNumberNew);
         }
+
+        [Then(@"I click on Reference number of the application")]
+        [When(@"I click on Reference number of the application")]
+        public void WhenIClickOnReferenceNumberOfTheApplication()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            referredToSPSPage?.ClickOnPTDNumberOfTheApplication(AppReference);
+        }
+
 
         [Then(@"I click on PTD '([^']*)' of the application")]
         [When(@"I click on PTD '([^']*)' of the application")]
         public void WhenIClickOnPTDNumberOfTheApplication(string ptdNumber)
         {
             var ptdNumberNew = "GB826" + " " + ptdNumber.Substring(0, 3) + " " + ptdNumber.Substring(3, 3);
-            refferedToSPSPage?.ClickOnPTDNumberOfTheApplication(ptdNumberNew);
+            referredToSPSPage?.ClickOnPTDNumberOfTheApplication(ptdNumberNew);
         }
 
         [Then(@"I verify referred to SPS record count '([^']*)' on page")]
         [When(@"I verify referred to SPS record count '([^']*)' on page")]
         public void WhenIVerifyReferredToSPSRecordCount(int count)
         {
-            Assert.True(refferedToSPSPage?.VerifyReferredToSPSRecordCount(count), "Count not match on Referred to SPS page");
+            Assert.True(referredToSPSPage?.VerifyReferredToSPSRecordCount(count), "Count not match on Referred to SPS page");
         }
 
         [Then(@"I click on page '([^']*)'")]
         [When(@"I click on page '([^']*)'")]
         public void WhenIClickOnPage(string pageNumber)
         {
-            refferedToSPSPage?.ClickOnPage(pageNumber);
+            referredToSPSPage?.ClickOnPage(pageNumber);
         }
     }
 }
