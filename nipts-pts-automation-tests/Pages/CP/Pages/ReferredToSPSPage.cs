@@ -1,24 +1,29 @@
 ﻿using BoDi;
+using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
-using TechTalk.SpecFlow;
 
 namespace nipts_pts_automation_tests.Pages.CP.Pages
 {
-    public class RefferedToSPSPage : IRefferedToSPSPage
+    public class ReferredToSPSPage : IReferredToSPSPage
     {
         private readonly IObjectContainer _objectContainer;
-        private readonly ScenarioContext _scenarioContext;
 
-        public RefferedToSPSPage(IObjectContainer container)
+        public ReferredToSPSPage(IObjectContainer container)
         {
             _objectContainer = container;
         }
 
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
-        private IReadOnlyCollection<IWebElement> recordCount => _driver.WaitForElements(By.XPath("//td//strong[contains(text(),'Check needed')]"));
+        private IReadOnlyCollection<IWebElement> recordCount => _driver.WaitForElements(By.XPath("//tbody[@class='govuk-table__body']//tr[contains(@class,'govuk-table__row')]"));
+        private IWebElement SPSOutcomeEle => _driver.WaitForElement(By.XPath("//tr[contains(@class,'govuk-table__row')]/td[4]"));
+        private IWebElement PTDNoEle => _driver.WaitForElement(By.XPath("//button[contains(@type,'submit')]"));
+        private IWebElement PetTypeEle => _driver.WaitForElement(By.XPath("//tr[contains(@class,'govuk-table__row')]/td[1]"));
+        private IWebElement MichrochipNoEle => _driver.WaitForElement(By.XPath("//tr[contains(@class,'govuk-table__row')]/td[2]"));
+        private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//header[@class='pts-location-bar']//p"));
+        private IWebElement spsDetails => _driver.WaitForElement(By.XPath("//caption[contains(@class, 'govuk-table__caption govuk-table__caption--m')]"));
         private IReadOnlyCollection<IWebElement> PTDRefNumbers => _driver.WaitForElements(By.XPath("//button[contains(@data-identifier,'referred')]"));
         private IWebElement PTDRefNumber => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Application reference number')]/following-sibling::dd | //dt[contains(text(),'PTD number')]/following-sibling::dd"));
         List<string> PTDRefCollection = new List<string>();
@@ -26,14 +31,53 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         #region Methods
 
-        public void VerifyReferredToSPSDetails()
+        public bool VerifyPetDocumentDetailsOnReferredToSPSPage(string ptdNumberNew, string petType, string michrochipNo)
         {
-
+            return PTDNoEle.Text.Contains(ptdNumberNew) && PetTypeEle.Text.Contains(petType) && MichrochipNoEle.Text.Contains(michrochipNo);
         }
 
-        public void VerifySPSOutcome(string outcome)
+        public bool VerifyDepartureDetailsOnReferredToSPSPage()
         {
+            bool status = true;
+            string departureDate = "";
+            string departureTime = "";
+            string headerTime = headerDepartureTime.Text.Trim();
+            string route = headerTime.Substring(7, 29).Trim();
+            if (route.Contains("Birkenhead to Belfast (Stena)"))
+            {
+                if (ConfigSetup.BaseConfiguration.TestConfiguration.BSBrowserVersion == "16.5")
+                {
+                    departureDate = headerTime.Substring(60, 10);
+                    departureTime = headerTime.Substring(71, 5);
+                }
+                else
+                {
+                    departureDate = headerTime.Substring(53, 10);
+                    departureTime = headerTime.Substring(64, 5);
+                }
+            }
+            else if (route.Contains("Cairnryan to Larne (P&O)"))
+            {
+                departureDate = headerTime.Substring(48, 10);
+                departureTime = headerTime.Substring(59, 5);
+            }
+            else if (route.Contains("Loch Ryan to Belfast (Stena)"))
+            {
+                departureDate = headerTime.Substring(52, 10);
+                departureTime = headerTime.Substring(63, 5);
+            }
 
+            if (spsDetails.Text.Contains(route) && spsDetails.Text.Contains(departureDate) && spsDetails.Text.Contains(departureTime))
+                status = true;
+            else
+                status = false;
+
+            return status;
+        }
+
+        public bool VerifySPSOutcome(string outcome)
+        {
+            return SPSOutcomeEle.Text.Contains(outcome);
         }
 
         public void ClickOnPTDNumberOfTheApplication(string ptdNumber)
@@ -123,6 +167,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
             return status;
         }
-            #endregion
+        #endregion
+
     }
 }

@@ -82,7 +82,6 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	Then verify next page '<nextPage>' is loaded
-	And I verify Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -96,11 +95,8 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	When I click search button from footer
-	Then I navigate to Find a document page
-	And I click search by '<ApplicationRadio>' radio button
-	And I provided the Microchip number of the application
-	When I click search button
+	And I click on PTD number of the application
+	And I click on Conduct an SPS check
 	And I should see the application status in 'Approved'
 	And I select Fail radio button
 	When I click save and continue button from application status page
@@ -187,7 +183,6 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	Then verify next page '<nextPage>' is loaded
-	And I verify Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -201,12 +196,9 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	When I click search button from footer
-	Then I navigate to Find a document page
-	And I click search by '<ApplicationRadio>' radio button
-	And I provided the Microchip number of the application
-	When I click search button
-	And I should see the application status in 'Revoked'
+	And I click on PTD number of the application
+	And I click on Conduct an SPS check
+	Then I should see the application status in 'Revoked'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details
@@ -290,7 +282,6 @@ Examples:
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	Then verify next page '<nextPage>' is loaded
-	And I verify Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -304,12 +295,9 @@ Examples:
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	When I click search button from footer
-	Then I navigate to Find a document page
-	And I click search by '<ApplicationRadio>' radio button
-	And I provided the Microchip number of the application
-	When I click search button
-	And I should see the application status in 'Unsuccessful'
+	And I click on Reference number of the application
+	And I click on Conduct an SPS check
+	Then I should see the application status in 'Unsuccessful'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details
@@ -392,7 +380,6 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	Then verify next page '<nextPage>' is loaded
-	And I verify Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -406,12 +393,9 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	When I click search button from footer
-	Then I navigate to Find a document page
-	And I click search by '<ApplicationRadio>' radio button
-	And I provided the Microchip number of the application
-	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I click on Reference number of the application
+	And I click on Conduct an SPS check
+	Then I should see the application status in 'Awaiting verification'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details

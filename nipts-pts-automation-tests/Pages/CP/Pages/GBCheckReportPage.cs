@@ -91,7 +91,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
             if (Int32.Parse(NumberGBOutcome) > 1)
             {
-                if (gBOutcome.Contains("PassengerRefferedDAERA"))
+                if (gBOutcome.Contains("PassengerReferredDAERA"))
                 {
                     if (!BulletPassangerRefToDAERA.Text.Contains("Passenger referred to DAERA/SPS at NI port"))
                         status = false;
@@ -109,7 +109,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
             else
             {
-                if (gBOutcome.Contains("PassengerRefferedDAERA"))
+                if (gBOutcome.Contains("PassengerReferredDAERA"))
                 {
                     if (!PassangerRefToDAERA.Text.Contains("Passenger referred to DAERA/SPS at NI port"))
                         status = false;
