@@ -8,5 +8,9 @@
         public bool VerifyDepartureDetailsOnReferredToSPSPage();
         void ClickOnPage(string pageNumber);
         bool VerifyReferredToSPSRecordCount(int count);
+        void ClickOnNextPage(string nextPage);
+        void GetPTDReferenceAndAddInCollection();
+        void ArrangePTDRefNumberInAscendingOrder();
+        bool VerifyAscendingOderOfPTDReference();
     }
 }

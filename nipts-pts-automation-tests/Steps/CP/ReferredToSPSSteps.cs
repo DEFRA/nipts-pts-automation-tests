@@ -98,5 +98,40 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             referredToSPSPage?.ClickOnPage(pageNumber);
         }
+
+        [Then(@"I click on '([^']*)' page")]
+        [When(@"I click on '([^']*)' page")]
+        public void WhenIClickOnNextPage(string nextPage)
+        {
+            referredToSPSPage?.ClickOnNextPage(nextPage);
+        }
+
+        [Then(@"I get PTD or reference number and add it in collection")]
+        [When(@"I get PTD or reference number and add it in collection")]
+        public void ThenGetPTDReferenceAndAddInCollection()
+        {
+            referredToSPSPage?.GetPTDReferenceAndAddInCollection();
+        }
+
+        [Then(@"I arrange PTD or reference number in ascending order")]
+        [When(@"I arrange PTD or reference number in ascending order")]
+        public void ThenArrangePTDRefNumberInAscendingOrder()
+        {
+            referredToSPSPage?.ArrangePTDRefNumberInAscendingOrder();
+        }
+
+        [Then(@"I verify PTD and reference number are displayed in ascending order")]
+        [When(@"I verify PTD and reference number are displayed in ascending order")]
+        public void WhenIVerifyAscendingOderOfPTDReference()
+        {
+            Assert.True(referredToSPSPage?.VerifyAscendingOderOfPTDReference(),"PTD or reference number not in ascending order");
+        }
+
+        [Then(@"I verify wrong PTD and reference number are displayed in ascending order")]
+        [When(@"I verify wrong PTD and reference number are displayed in ascending order")]
+        public void WhenIVerifyWrongAscendingOderOfPTDReference()
+        {
+            Assert.False(referredToSPSPage?.VerifyAscendingOderOfPTDReference(), "Wrong PTD or reference number in ascending order");
+        }
     }
 }
