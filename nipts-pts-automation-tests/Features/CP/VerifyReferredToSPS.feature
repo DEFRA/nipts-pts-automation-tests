@@ -1,7 +1,7 @@
 ﻿@CPRegression
-Feature: VerifyRefferedToSPS
+Feature: VerifyReferredToSPS
 
-Validate Reffered to SPS page
+Validate Referred to SPS page
 
 Background:
 	Given I navigate to the port checker application
@@ -13,7 +13,7 @@ Background:
 	When Create an application via backend
 	When Approve an application via backend
 
-Scenario Outline: Validate pagination on Reffered to SPS page
+Scenario Outline: Validate pagination on Referred to SPS page
 	When I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time

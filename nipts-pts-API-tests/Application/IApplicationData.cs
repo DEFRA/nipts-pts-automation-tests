@@ -15,5 +15,8 @@ namespace nipts_pts_API_tests.Application
         public string CreateApplicationWithMandatoryAddressFieldsAPI(string AppId);
         public bool writeApplicationToQueue();
         public string CreateApplicationSigFNoAPI(string AppId);
+        public string GetPetDetails(string AppReference);
+        public string GetMicrochipDetails(string AppReference);
+
     }
 }

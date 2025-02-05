@@ -188,7 +188,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void SelectGBOutcome(string gBOutcome)
         {
-            if (gBOutcome.Contains("PassengerRefferedDAERA"))
+            if (gBOutcome.Contains("PassengerReferredDAERA"))
             {
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", passangerReferred);
                 passangerReferred.Click();
