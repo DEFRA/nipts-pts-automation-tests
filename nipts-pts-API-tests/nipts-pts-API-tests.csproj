@@ -27,6 +27,9 @@
     <None Update="RequestJson\CreateAddress.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="RequestJson\CreateAddressMandatoryOnly.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="RequestJson\CreateApplication.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

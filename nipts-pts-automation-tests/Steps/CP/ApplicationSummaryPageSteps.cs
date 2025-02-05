@@ -145,6 +145,19 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [Given(@"Create an application with Mandatory address only via backend")]
+        [When(@"Create an application with Mandatory address only via backend")]
+        public void ThenCreateApplicationWithMandatoryAddressViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppId = _applicationSummaryPage.getNewID();
+                string APIAppReference = AppData.CreateApplicationWithMandatoryAddressFieldsAPI(AppId);
+                _scenarioContext.Add("ReferenceNumber", APIAppReference);
+                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
+            }
+        }
+
         [When(@"I have captured pet details")]
         public void ThenIHaveCapturedPetDetails()
         {
@@ -157,7 +170,5 @@ namespace nipts_pts_automation_tests.Steps.CP
                 _scenarioContext.Add("MicrochipNumber", MicrochipNumber);
             }
         }
-
-
     }
 }

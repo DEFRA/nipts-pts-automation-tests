@@ -1,0 +1,15 @@
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "addressLineOne": "Create Automation Manual Address One",
+  "addressLineTwo": null,
+  "townOrCity": "Create Automation Town Manual",
+  "county": null,
+  "postCode": "RM6 4FB",
+  "countryName": "Create Automation Manual UK",
+  "addressType": "2",
+  "isActive": true,
+  "createdBy": "7B2F71FA-BCF1-EE11-904C-6045BD9057B4",
+  "createdOn": "2025-01-21T11:54:22.265Z",
+  "updatedBy": "7B2F71FA-BCF1-EE11-904C-6045BD9057B4",
+  "updatedOn": "2025-01-21T11:54:22.265Z"
+}

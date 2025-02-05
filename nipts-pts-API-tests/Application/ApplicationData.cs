@@ -131,6 +131,15 @@ namespace nipts_pts_API_tests.Application
             return createApplication(AppId);
         }
 
+        public string CreateApplicationWithMandatoryAddressFieldsAPI(string AppId)
+        {
+            updateUser();
+            createOwner();
+            createAddressWithMandatoryFieldsOnly();
+            createPet();
+            return createApplication(AppId);
+        }
+
         public void updateUser()
         {
             Task<RestResponse> response = null;
@@ -165,6 +174,20 @@ namespace nipts_pts_API_tests.Application
             string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint3;
             var client = SetUrl("createaddress", APIEndPoint);
             var file = Path.Combine(RequestFolder, "CreateAddress.json");
+            var requestJson = File.ReadAllText(file);
+            var request = CreatePostRequest(requestJson);
+            response = GetResponseAsync(client, request);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            AddressId = dynamicObject;
+        }
+
+        public void createAddressWithMandatoryFieldsOnly()
+        {
+            Task<RestResponse> response = null;
+            string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint3;
+            var client = SetUrl("createaddress", APIEndPoint);
+            var file = Path.Combine(RequestFolder, "CreateAddressMandatoryOnly.json");
             var requestJson = File.ReadAllText(file);
             var request = CreatePostRequest(requestJson);
             response = GetResponseAsync(client, request);
