@@ -10,10 +10,10 @@ Background:
 	And I have provided the CP credentials and signin for user 'GBUser'
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
-	When Create an application via backend
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - status in Approved
-	When Approve an application via backend
+	When Create an application via backend
+	And Approve an application via backend
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -72,7 +72,8 @@ Examples:
 	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Approved
-	When Approve an application via backend
+	When Create an application with Mandatory address only via backend
+	And Approve an application via backend
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -131,7 +132,8 @@ Examples:
 	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Not allowed |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Revoked
-	When Revoke an application via backend
+	When Create an application via backend
+	And Revoke an application via backend
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -187,8 +189,9 @@ Examples:
 	| Transportation | FerryRoute               |  ApplicationRadio             | nextPage        | SPSOutcome |
 	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number | Referred to SPS | Allowed    |
 
-	Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Unsuccessful
-	When Reject an application via backend
+Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Unsuccessful
+	When Create an application via backend
+	And Reject an application via backend
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -246,7 +249,8 @@ Examples:
 	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Allowed    |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Reference number - status in Pending
-	When I have selected '<Transportation>' radio option
+	When Create an application via backend
+	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
 	When I click save and continue button from route checke page
@@ -302,7 +306,8 @@ Examples:
 	| Ferry          | Birkenhead to Belfast (Stena) | Search by application number |Referred to SPS | Allowed    |
 
 Scenario Outline: Verify navigation of back links in the application for GB user
-	When Approve an application via backend
+	When Create an application via backend
+	And Approve an application via backend
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -328,7 +333,8 @@ Examples:
 	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
 
 Scenario Outline: Verify back link navigation for SPS user
-	When Approve an application via backend
+	When Create an application via backend
+	And Approve an application via backend
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
