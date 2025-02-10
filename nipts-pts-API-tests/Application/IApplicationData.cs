@@ -12,7 +12,7 @@ namespace nipts_pts_API_tests.Application
         public void RevokeApplication(string ApplicationId);
         public Task<RestResponse> GetApplication(string AppReference);
         public string CreateApplicationAPI(string AppId);
-        public string CreateApplicationWithMandatoryAddressFieldsAPI(string AppId);
+        string CreateApplicationWithMandatoryAddressFieldsAPI(string appId);
         public bool writeApplicationToQueue();
         public string CreateApplicationSigFNoAPI(string AppId);
         public string GetPetDetails(string AppReference);

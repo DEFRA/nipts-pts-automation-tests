@@ -158,6 +158,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [Then(@"I have captured pet details")]
         [When(@"I have captured pet details")]
         public void ThenIHaveCapturedPetDetails()
         {
@@ -170,5 +171,22 @@ namespace nipts_pts_automation_tests.Steps.CP
                 _scenarioContext.Add("MicrochipNumber", MicrochipNumber);
             }
         }
+
+        [Then(@"I verify backend SQL entries for GB Outcome")]
+        [When(@"I verify backend SQL entries for GB Outcome")]
+        public void ThenIVerifySQLEntriesForGBOutcome()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifyGBOutcomeWithSQLBackend(AppReference), "GB Outcome not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for SPS Outcome '([^']*)'")]
+        [When(@"I verify backend SQL entries for SPS Outcome '([^']*)'")]
+        public void ThenIVerifySQLEntriesForSPSOutcome(string SPSOutcome)
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifySPSOutcomeWithSQLBackend(AppReference, SPSOutcome), "SPS Outcome not matching with SQL Backend data");
+        }
+
     }
 }

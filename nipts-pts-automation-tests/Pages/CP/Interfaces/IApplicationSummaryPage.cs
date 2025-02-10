@@ -10,5 +10,7 @@
         void SelectContinue();
         bool VerifyTheExpectedSubtitle(string applicationSubtitle);
         string getNewID();
+        public bool VerifyGBOutcomeWithSQLBackend(string AppReference);
+        public bool VerifySPSOutcomeWithSQLBackend(string AppReference,string SPSOutcome);
     }
 }
