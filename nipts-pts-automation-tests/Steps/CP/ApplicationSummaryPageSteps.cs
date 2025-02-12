@@ -180,12 +180,28 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(_applicationSummaryPage.VerifyGBOutcomeWithSQLBackend(AppReference), "GB Outcome not matching with SQL Backend data");
         }
 
-        [Then(@"I verify backend SQL entries for SPS Outcome '([^']*)'")]
-        [When(@"I verify backend SQL entries for SPS Outcome '([^']*)'")]
-        public void ThenIVerifySQLEntriesForSPSOutcome(string SPSOutcome)
+        [Then(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)'")]
+        [When(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)'")]
+        public void ThenIVerifySQLEntriesForSPSOutcome(string TypeOfPassenger, string SPSOutcome)
         {
             string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
-            Assert.True(_applicationSummaryPage.VerifySPSOutcomeWithSQLBackend(AppReference, SPSOutcome), "SPS Outcome not matching with SQL Backend data");
+            Assert.True(_applicationSummaryPage.VerifySPSOutcomeWithSQLBackend(AppReference, TypeOfPassenger, SPSOutcome), "SPS Outcome not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for GB Summary Table")]
+        [When(@"I verify backend SQL entries for GB Summary Table")]
+        public void ThenIVerifySQLEntriesForGBSummary()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifyGBSummaryOutputWithSQLBackend(AppReference), "GB Summary not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for SPS Summary Table")]
+        [When(@"I verify backend SQL entries for SPS Summary Table")]
+        public void ThenIVerifySQLEntriesForSPSSummary()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifySPSSummaryOutputWithSQLBackend(AppReference), "SPS Summary not matching with SQL Backend data");
         }
 
     }

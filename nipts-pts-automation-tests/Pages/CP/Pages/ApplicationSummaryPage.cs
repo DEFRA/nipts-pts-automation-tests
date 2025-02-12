@@ -30,6 +30,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement MicrochipDoesNotMatch => _driver.WaitForElement(By.XPath("//li[contains(text(),'Microchip number does not match the PTD')] | //p[contains(text(),'Microchip number does not match the PTD')]"));
         private IWebElement MicrochipNotFound => _driver.WaitForElement(By.XPath("//li[contains(text(),'Cannot find microchip')] | //p[contains(text(),'Cannot find microchip')]"));
         private IWebElement AdditionalComment => _driver.WaitForElement(By.XPath("//dt[text()='Additional comments']/..//p"));
+        private IWebElement Route => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Route')]/following-sibling::dd"));
+        private IWebElement ScheduledDepartureDate => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Scheduled departure date')]/..//dd//p"));
+        private IWebElement ScheduledDepartureTime => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Scheduled departure time')]/..//dd//p"));
 
         #endregion
 
@@ -207,7 +210,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return status;
         }
 
-        private bool ValidateSPSOutcomeWithSQLBackend(string checkOutcomeId,string SPSOutcome)
+        private bool ValidateSPSOutcomeWithSQLBackend(string checkOutcomeId,string TypeOfPassenger, string SPSOutcome)
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery = $"SELECT MCNotFound,MCNotMatch,MCNotMatchActual,PassengerTypeId,SPSOutcome FROM [dbo].[CheckOutcome]  Where Id = '{checkOutcomeId}'";
@@ -236,6 +239,31 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                         if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
                             status = false;
                     }
+                    else if (i == 3)
+                    {
+                        if (TypeOfPassenger.Contains("Ferry foot passenger"))
+                        { 
+                            if (row[3].Equals(1))
+                                status = true;
+                            else
+                                status = false;
+                        }
+                        else if (TypeOfPassenger.Contains("Vehicle on ferry"))
+                        {
+                            if (row[3].Equals(2))
+                                status = true;
+                            else
+                                status = false;
+                        }
+
+                        else if (TypeOfPassenger.Contains("Airline"))
+                        {
+                            if (row[3].Equals(3))
+                                status = true;
+                            else
+                                status = false;
+                        }
+                    }
                     else if (i == 4 && row[4].Equals(true))
                     {
                         if (SPSOutcome.Contains("Allowed"))
@@ -256,6 +284,101 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return status;
         }
 
+        private bool ValidateGBSummaryWithSQLBackend(string applicationId, string travelDocumentId, string gBCheckerId)
+        {
+            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+            string sqlQuery = $"SELECT GBCheck,LinkedCheckId,RouteId,Date,ScheduledSailingTime,CheckOutcome FROM [dbo].[CheckSummary]  Where ApplicationId = '{applicationId}' and TravelDocumentId = '{travelDocumentId}' and [CheckerId]  = '{gBCheckerId}'";
+            DataTable sqlData = null;
+            bool status = false;
+            int i = 0;
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery);
+            }
+
+            foreach (DataRow row in sqlData.Rows)
+            {
+                for (i = 0; i < sqlData.Columns.Count; i++)
+
+                {
+                    Console.WriteLine($"Row: {row[i]}");
+
+                    if (i == 0 && row[0].Equals(true))
+                    {
+                        status = true;
+                    }
+                    else if (i == 1 && !row[1].Equals(null))
+                    {
+                        status = true;
+                    }
+                    else if (i == 2)
+                    {
+                        if(row[1].Equals(1) && Route.Text.Contains("Birkenhead to Belfast (Stena)"))
+                            status = true;
+                        else if (row[1].Equals(2) && Route.Text.Contains("Cairnryan to Larne (P&O)"))
+                            status = true;
+                        else if (row[1].Equals(3) && Route.Text.Contains("Loch Ryan to Belfast (Stena)"))
+                            status = true;
+                    }
+                    else if (i == 3)
+                    {
+                        status = true;
+                    }
+                    else if (i == 4)
+                    {
+                        status = true;
+                    }
+                }
+            }
+
+            return status;
+        }
+
+        private bool ValidateSPSSummaryWithSQLBackend(string applicationId, string travelDocumentId, string SPSCheckerId)
+        {
+            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+            string sqlQuery = $"SELECT GBCheck,LinkedCheckId,RouteId,Date,ScheduledSailingTime,CheckOutcome FROM [dbo].[CheckSummary]  Where ApplicationId = '{applicationId}' and TravelDocumentId = '{travelDocumentId}' and [CheckerId]  = '{SPSCheckerId}'";
+            DataTable sqlData = null;
+            bool status = false;
+            int i = 0;
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery);
+            }
+
+            foreach (DataRow row in sqlData.Rows)
+            {
+                for (i = 0; i < sqlData.Columns.Count; i++)
+
+                {
+                    Console.WriteLine($"Row: {row[i]}");
+
+                    if (i == 0 && row[0].Equals(false))
+                    {
+                        status = true;
+                    }
+                }
+            }
+
+            return status;
+        }
+
+        public bool VerifyGBSummaryOutputWithSQLBackend(string AppReference)
+        {
+            string ApplicationId = GetApplId(AppReference);
+            string TravelDocumentId = GetTravelDocumentId(ApplicationId);
+            string GBCheckerId = GetGBCheckerId();
+            return ValidateGBSummaryWithSQLBackend(ApplicationId, TravelDocumentId, GBCheckerId);
+        }
+
+        public bool VerifySPSSummaryOutputWithSQLBackend(string AppReference)
+        {
+            string ApplicationId = GetApplId(AppReference);
+            string TravelDocumentId = GetTravelDocumentId(ApplicationId);
+            string SPSCheckerId = GetSPSCheckerId();
+            return ValidateSPSSummaryWithSQLBackend(ApplicationId, TravelDocumentId, SPSCheckerId);
+        }
+
         public bool VerifyGBOutcomeWithSQLBackend(string AppReference)
         {
             string ApplicationId = GetApplId(AppReference);
@@ -265,13 +388,13 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return ValidateGBOutcomeWithSQLBackend(CheckOutcomeId);
         }
 
-        public bool VerifySPSOutcomeWithSQLBackend(string AppReference,string SPSOutcome)
+        public bool VerifySPSOutcomeWithSQLBackend(string AppReference,string TypeOfPassenger, string SPSOutcome)
         {
             string ApplicationId = GetApplId(AppReference);
             string TravelDocumentId = GetTravelDocumentId(ApplicationId);
             string SPSCheckerId = GetSPSCheckerId();
             string CheckOutcomeId = GetCheckOutcomeId(ApplicationId, TravelDocumentId, SPSCheckerId);
-            return ValidateSPSOutcomeWithSQLBackend(CheckOutcomeId, SPSOutcome);
+            return ValidateSPSOutcomeWithSQLBackend(CheckOutcomeId, TypeOfPassenger, SPSOutcome);
         }
         #endregion
     }
