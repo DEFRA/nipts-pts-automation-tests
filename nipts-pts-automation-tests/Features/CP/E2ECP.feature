@@ -11,6 +11,7 @@ Background:
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 
+	@RunOnly
 Scenario Outline: Veirfy backend entries for GB and SPS Outcome
 	When Create an application via backend
 	When I have selected '<Transportation>' radio option
