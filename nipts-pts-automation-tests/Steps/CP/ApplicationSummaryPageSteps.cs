@@ -158,6 +158,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [Then(@"I have captured pet details")]
         [When(@"I have captured pet details")]
         public void ThenIHaveCapturedPetDetails()
         {
@@ -169,6 +170,46 @@ namespace nipts_pts_automation_tests.Steps.CP
                 string MicrochipNumber = AppData.GetMicrochipDetails(AppReference);
                 _scenarioContext.Add("MicrochipNumber", MicrochipNumber);
             }
+        }
+
+        [Then(@"I verify backend SQL entries for GB Outcome")]
+        [When(@"I verify backend SQL entries for GB Outcome")]
+        public void ThenIVerifySQLEntriesForGBOutcome()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifyGBOutcomeWithSQLBackend(AppReference), "GB Outcome not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)'")]
+        [When(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)'")]
+        public void ThenIVerifySQLEntriesForSPSOutcome(string TypeOfPassenger, string SPSOutcome)
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifySPSOutcomeWithSQLBackend(AppReference, TypeOfPassenger, SPSOutcome), "SPS Outcome not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for GB Summary Table")]
+        [When(@"I verify backend SQL entries for GB Summary Table")]
+        public void ThenIVerifySQLEntriesForGBSummary()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifyGBSummaryOutputWithSQLBackend(AppReference), "GB Summary not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for SPS Summary Table")]
+        [When(@"I verify backend SQL entries for SPS Summary Table")]
+        public void ThenIVerifySQLEntriesForSPSSummary()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifySPSSummaryOutputWithSQLBackend(AppReference), "SPS Summary not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for GB Summary Table for Pass appl")]
+        [When(@"I verify backend SQL entries for SPS Summary Table for Pass appl")]
+        public void ThenIVerifySQLEntriesForSPSSummaryForPassAppl()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifyGBSummaryForPassApplWithSQLBackend(AppReference), "GB Summary not matching with SQL Backend data");
         }
     }
 }
