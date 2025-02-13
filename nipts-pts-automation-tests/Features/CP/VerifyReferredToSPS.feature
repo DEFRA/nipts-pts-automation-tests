@@ -13,6 +13,7 @@ Background:
 	When Create an application via backend
 	When Approve an application via backend
 
+		@RunOnly
 Scenario Outline: Validate pagination on Referred to SPS page
 	When I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option

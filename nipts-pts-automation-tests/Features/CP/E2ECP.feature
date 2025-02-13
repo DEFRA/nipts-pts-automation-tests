@@ -70,6 +70,7 @@ Scenario Outline: Veirfy backend entries for GB and SPS Outcome
 	| Transportation | FerryRoute                    | ApplicationRadio             | nextPage        | SPSOutcome | TypeOfPassenger     |
 	| Ferry          | Birkenhead to Belfast (Stena) | Search by application number | Referred to SPS | Allowed    | Ferry foot passenger|
 
+	@RunOnly
 Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - status in Approved
 	When Create an application via backend
 	And Approve an application via backend
@@ -252,6 +253,7 @@ Examples:
 	| Transportation | FerryRoute               |  ApplicationRadio             | nextPage        | SPSOutcome |
 	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number | Referred to SPS | Allowed    |
 
+	@RunOnly
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Unsuccessful
 	When Create an application via backend
 	And Reject an application via backend
@@ -393,6 +395,7 @@ Examples:
 	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
 	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
 
+		@RunOnly
 Scenario Outline: Verify back link navigation for SPS user
 	When Create an application via backend
 	And Approve an application via backend
