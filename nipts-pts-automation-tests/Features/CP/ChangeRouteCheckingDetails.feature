@@ -4,7 +4,7 @@ Feature: Change Route Checking Details
 As a PTS port checker I want ot Change Route Checking Details from all pages
 
 Background: 
-	Given that I navigate to the port checker application
+	Given I navigate to the port checker application
 	And I click signin button on port checker application
 	Then I should redirected to the Sign in using Government Gateway page
 	When I have provided the CP credentials and signin

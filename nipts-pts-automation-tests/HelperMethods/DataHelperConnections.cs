@@ -6,7 +6,7 @@ namespace nipts_pts_automation_tests.HelperMethods
 {
     public interface IDataHelperConnections
     {
-        public DataTable ExecuteQuery(string connString, string queryString);
+        public string ExecuteQuery(string connString, string queryString);
     }
 
     public class DataHelperConnections : IDataHelperConnections
@@ -19,11 +19,11 @@ namespace nipts_pts_automation_tests.HelperMethods
 
         private readonly object _lock = new object();
 
-        public DataTable ExecuteQuery(string connString, string queryString)
+        public string ExecuteQuery(string connString, string queryString)
         {
             lock (_lock)
             {
-                DataSet dataSet;
+                //DataSet dataSet;
 
                 SqlConnection sqlConn = new SqlConnection(connString);
 
@@ -32,25 +32,29 @@ namespace nipts_pts_automation_tests.HelperMethods
                     if (sqlConn == null || ((sqlConn != null && (sqlConn.State == ConnectionState.Closed || sqlConn.State == ConnectionState.Broken))))
                         sqlConn.Open();
 
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
-                    dataAdapter.SelectCommand = new SqlCommand(queryString, sqlConn);
-                    dataAdapter.SelectCommand.CommandType = CommandType.Text;
+                    SqlCommand cmd = new SqlCommand(queryString, sqlConn);
+                    string SQLOutput =  cmd.ExecuteScalar().ToString();
 
-                    dataSet = new DataSet();
-                    dataAdapter.Fill(dataSet, "table");
-                    sqlConn.Close();
-                    return dataSet.Tables["table"];
+                    //SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    //dataAdapter.SelectCommand = new SqlCommand(queryString, sqlConn);
+                    //dataAdapter.SelectCommand.CommandType = CommandType.Text;
+
+                    //dataSet = new DataSet();
+                    //dataAdapter.Fill(dataSet, "table");
+                    //sqlConn.Close();
+                    //return dataSet.Tables["table"];
+                    return SQLOutput;
                 }
                 catch (Exception ex)
                 {
-                    dataSet = null;
+                    //dataSet = null;
                     sqlConn.Close();
                     return null;
                 }
                 finally
                 {
                     sqlConn.Close();
-                    dataSet = null;
+                    //dataSet = null;
                 }
             }
         }

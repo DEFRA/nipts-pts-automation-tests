@@ -32,6 +32,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         }
 
         [Given(@"I have selected '([^']*)' radio option")]
+        [When(@"I have selected '([^']*)' radio option")]
         [Then(@"I have selected '([^']*)' radio option")]
         public void ThenIHaveSelectedRadioOption(string transportType)
         {
@@ -39,6 +40,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         }
 
         [Given(@"I select the '([^']*)' radio option")]
+        [When(@"I select the '([^']*)' radio option")]
         [Then(@"I select the '([^']*)' radio option")]
         public void ThenISelectTheRadioOption(string routeOption)
         {

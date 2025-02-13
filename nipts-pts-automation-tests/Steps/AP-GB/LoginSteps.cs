@@ -28,7 +28,17 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             _objectContainer = container;
         }
 
+        [When(@"that I navigate to the DEFRA application")]
+        [Given(@"that I navigate to the DEFRA application")]
+        public void GivenThatINavigateToTheDEFRAApplication()
+        {
+            var url = urlBuilder.Default("App").Build();
+            _driver?.Navigate().GoToUrl(url);
+        }
+
         [Given(@"I navigate to PETS a travel document URL")]
+        [When(@"I navigate to PETS a travel document URL")]
+        [Then(@"I navigate to PETS a travel document URL")]
         public void GivenINavigateToPETSATravelDocumentURL()
         {
             var url = urlBuilder.Default("App").Build();
@@ -68,6 +78,13 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             };
 
             signin?.IsSignedIn(userObject.UserId, userObject.password);
+        }
+
+        [When(@"click on signout button and verify the signout message on pets")]
+        [Then(@"click on signout button and verify the signout message on pets")]
+        public void ThenClickOnSignoutButtonAndVerifyTheSignoutMessage()
+        {
+            Assert.True(signin?.IsSignedOut(), "Not able to sign out");
         }
 
     }

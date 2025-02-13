@@ -4,14 +4,14 @@ Feature: PTSignificantFeatures
 Create a PETS travel document providing PETS Significante Features to travel from Great Britain to Northern Ireland
 
 Background: 
-	Given that I navigate to the DEFRA application
+	Given I navigate to PETS a travel document URL
 	And I have provided the password for Landing page
 	When I click Continue button from Landing page
 	Then I should redirected to the Sign in using Government Gateway page
-	And sign in with valid credentials with logininfo
+	When I have provided the credentials and signin
+	Then I should redirected to Apply for a pet travel document page
 	
 Scenario Outline: Create PETS Travel Document for PETS with or without Significante Features
-	Then I should navigate to Lifelong pet travel documents page
 	When I click Apply for a document button
 	Then I should navigate to the Pets Owner details correct page
 	When I selected the radio button '<PetsOwnerDetails>' option and continue

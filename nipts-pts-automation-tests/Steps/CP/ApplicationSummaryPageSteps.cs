@@ -80,8 +80,8 @@ namespace nipts_pts_automation_tests.Steps.CP
             lock (_lock)
             {
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
-                AppData.GetApplicationToApprove(AppReference);
-
+                string PTDNumber = AppData.GetApplicationToApprove(AppReference);
+                _scenarioContext.Add("PTDNumber", PTDNumber);
             }
         }
 
@@ -91,8 +91,8 @@ namespace nipts_pts_automation_tests.Steps.CP
             lock (_lock)
             {
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
-                AppData.GetApplicationToRevoke(AppReference);
-
+                string PTDNumber = AppData.GetApplicationToRevoke(AppReference);
+                _scenarioContext.Add("PTDNumber", PTDNumber);
             }
         }
 
@@ -102,10 +102,73 @@ namespace nipts_pts_automation_tests.Steps.CP
             lock (_lock)
             {
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
-                AppData.GetApplicationToReject(AppReference);
+                string PTDNumber = AppData.GetApplicationToReject(AppReference);
+                _scenarioContext.Add("PTDNumber", PTDNumber);
+            }
+        }
+
+        [Given(@"Get an application via backend")]
+        [When(@"Get an application via backend")]
+        public void ThenGetApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                AppData.GetApplication(AppReference);
 
             }
         }
 
+        [Given(@"Create an application via backend")]
+        [When(@"Create an application via backend")]
+        public void ThenCreateApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppId = _applicationSummaryPage.getNewID();
+                string APIAppReference = AppData.CreateApplicationAPI(AppId);
+                _scenarioContext.Add("ReferenceNumber", APIAppReference);
+                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
+            }
+        }
+
+        [Given(@"Create an application via backend with significant features option as No")]
+        [When(@"Create an application via backend with significant features option as No")]
+        public void ThenCreateApplicationViaBackendSigFeaturesNo()
+        {
+            lock (_lock)
+            {
+                string AppId = _applicationSummaryPage.getNewID();
+                string APIAppReference = AppData.CreateApplicationSigFNoAPI(AppId);
+                _scenarioContext.Add("ReferenceNumber", APIAppReference);
+                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
+            }
+        }
+
+        [Given(@"Create an application with Mandatory address only via backend")]
+        [When(@"Create an application with Mandatory address only via backend")]
+        public void ThenCreateApplicationWithMandatoryAddressViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppId = _applicationSummaryPage.getNewID();
+                string APIAppReference = AppData.CreateApplicationWithMandatoryAddressFieldsAPI(AppId);
+                _scenarioContext.Add("ReferenceNumber", APIAppReference);
+                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
+            }
+        }
+
+        [When(@"I have captured pet details")]
+        public void ThenIHaveCapturedPetDetails()
+        {
+            lock (_lock)
+            {
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                string PetType = AppData.GetPetDetails(AppReference);
+                _scenarioContext.Add("PetType", PetType);
+                string MicrochipNumber = AppData.GetMicrochipDetails(AppReference);
+                _scenarioContext.Add("MicrochipNumber", MicrochipNumber);
+            }
+        }
     }
 }

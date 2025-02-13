@@ -4,7 +4,7 @@ As a PTS port checker I want ot login and logout from Checker Portal Application
 
 
 Background: 
-	Given that I navigate to the port checker application
+	Given I navigate to the port checker application
 	And I click signin button on port checker application
 	Then I should redirected to the Sign in using Government Gateway page
 	
@@ -72,5 +72,5 @@ Examples:
 	| Transportation | FerryRoute                    | PTDNumber | TypeOfPassenger      | SPSOutcome |
 	| Ferry          | Birkenhead to Belfast (Stena) | 7BDE08    | Ferry foot passenger | Allowed    |
 
-#Scenario: Database check
-#	When Clear Database for user 'Test'
+#Scenario: API check
+#	When Create an application via backend
