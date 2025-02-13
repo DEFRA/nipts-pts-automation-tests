@@ -204,5 +204,12 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(_applicationSummaryPage.VerifySPSSummaryOutputWithSQLBackend(AppReference), "SPS Summary not matching with SQL Backend data");
         }
 
+        [Then(@"I verify backend SQL entries for GB Summary Table for Pass appl")]
+        [When(@"I verify backend SQL entries for SPS Summary Table for Pass appl")]
+        public void ThenIVerifySQLEntriesForSPSSummaryForPassAppl()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifyGBSummaryForPassApplWithSQLBackend(AppReference), "GB Summary not matching with SQL Backend data");
+        }
     }
 }

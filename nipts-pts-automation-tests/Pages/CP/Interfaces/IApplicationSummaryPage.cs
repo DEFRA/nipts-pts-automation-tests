@@ -14,5 +14,6 @@
         public bool VerifySPSOutcomeWithSQLBackend(string AppReference,string TypeOfPassenger, string SPSOutcome);
         public bool VerifyGBSummaryOutputWithSQLBackend(string AppReference);
         public bool VerifySPSSummaryOutputWithSQLBackend(string AppReference);
+        public bool VerifyGBSummaryForPassApplWithSQLBackend(string AppReference);
     }
 }

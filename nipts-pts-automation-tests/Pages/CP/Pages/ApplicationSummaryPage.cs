@@ -31,8 +31,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement MicrochipNotFound => _driver.WaitForElement(By.XPath("//li[contains(text(),'Cannot find microchip')] | //p[contains(text(),'Cannot find microchip')]"));
         private IWebElement AdditionalComment => _driver.WaitForElement(By.XPath("//dt[text()='Additional comments']/..//p"));
         private IWebElement Route => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Route')]/following-sibling::dd"));
-        private IWebElement ScheduledDepartureDate => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Scheduled departure date')]/..//dd//p"));
-        private IWebElement ScheduledDepartureTime => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Scheduled departure time')]/..//dd//p"));
+        private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//header[@class='pts-location-bar']//p"));
 
         #endregion
 
@@ -121,11 +120,18 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private string GetGBCheckerId()
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
-            string sqlQuery = $"select Id from [dbo].[Checker] where FullName = 'pallavi GB Yewale'";
+            string sqlQuery1 = $"select Id from [dbo].[Organisation] where Location ='GB'";
+            string OrganisationId = "";
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                OrganisationId = dataHelperConnections.ExecuteQuery(connectionString, sqlQuery1);
+            }
+
+            string sqlQuery2 = $"select Id from [dbo].[Checker] where FullName = 'pallavi GB Yewale' and OrganisationId = '{OrganisationId}'";
             string CheckerId = "";
             if (ConfigSetup.BaseConfiguration != null)
             {
-                CheckerId = dataHelperConnections.ExecuteQuery(connectionString, sqlQuery);
+                CheckerId = dataHelperConnections.ExecuteQuery(connectionString, sqlQuery2);
             }
             return CheckerId;
         }
@@ -133,11 +139,18 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private string GetSPSCheckerId()
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
-            string sqlQuery = $"select Id from [dbo].[Checker] where FullName = 'pallavi SPS Yewale'";
+            string sqlQuery1 = $"select Id from [dbo].[Organisation] where Location ='NI'";
+            string OrganisationId = "";
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                OrganisationId = dataHelperConnections.ExecuteQuery(connectionString, sqlQuery1);
+            }
+
+            string sqlQuery2 = $"select Id from [dbo].[Checker] where FullName = 'pallavi SPS Yewale' and OrganisationId = '{OrganisationId}'";
             string CheckerId = "";
             if (ConfigSetup.BaseConfiguration != null)
             {
-                CheckerId = dataHelperConnections.ExecuteQuery(connectionString, sqlQuery);
+                CheckerId = dataHelperConnections.ExecuteQuery(connectionString, sqlQuery2);
             }
             return CheckerId;
         }
@@ -177,12 +190,17 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                         if (!MicrochipNotFound.Text.Contains("Cannot find microchip"))
                             status = false;
                     }
-                    if (i == 1 && row[1].Equals(true))
+                    else if (i == 1 && row[1].Equals(true))
                     {
                         if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
                             status = false;
                     }
-                    if (i == 3)
+                    else if (i == 2 && row[2].Equals("123456789123456"))
+                    {
+                        if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
+                            status = false;
+                    }
+                    else if(i == 3)
                     {
                         if (!AdditionalComment.Text.Contains("None"))
                         {
@@ -190,17 +208,17 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                                 status = false;
                         }
                     }
-                    if (i == 4 && row[4].Equals(true))
+                    else if(i == 4 && row[4].Equals(true))
                     {
                         if (!PassangerRefToDAERA.Text.Contains("Passenger referred to DAERA/SPS at NI port"))
                             status = false;
                     }
-                    if (i == 5 && row[5].Equals(true))
+                    else if(i == 5 && row[5].Equals(true))
                     {
                         if (!PassengerAdvised.Text.Contains("Passenger advised not to travel"))
                             status = false;
                     }
-                    if (i == 6 && row[6].Equals(true))
+                    else if(i == 6 && row[6].Equals(true))
                     {
                         if (!PassengerNoTravel.Text.Contains("Passenger says they will not travel"))
                             status = false;
@@ -231,10 +249,21 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
                     if (i == 0 && row[0].Equals(true))
                     {
-                        if (!MicrochipNotFound.Text.Contains("Cannot find microchip"))
-                            status = false;
+                        if (!TypeOfPassenger.Contains("Airline"))
+                        {
+                            if (!MicrochipNotFound.Text.Contains("Cannot find microchip"))
+                                status = false;
+                        }
                     }
                     else if (i == 1 && row[1].Equals(true))
+                    {
+                        if (!TypeOfPassenger.Contains("Airline"))
+                        {
+                             if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
+                                status = false; 
+                        }
+                    }
+                    else if (i == 2 && row[2].Equals("123456789123456"))
                     {
                         if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
                             status = false;
@@ -255,7 +284,6 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                             else
                                 status = false;
                         }
-
                         else if (TypeOfPassenger.Contains("Airline"))
                         {
                             if (row[3].Equals(3))
@@ -271,7 +299,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                         else
                             status = false;
                     }
-                    else if (i == 4 && row[4].Equals(true))
+                    else if (i == 4 && row[4].Equals(false))
                     {
                         if (SPSOutcome.Contains("Not allowed"))
                             status = true;
@@ -289,7 +317,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery = $"SELECT GBCheck,LinkedCheckId,RouteId,Date,ScheduledSailingTime,CheckOutcome FROM [dbo].[CheckSummary]  Where ApplicationId = '{applicationId}' and TravelDocumentId = '{travelDocumentId}' and [CheckerId]  = '{gBCheckerId}'";
             DataTable sqlData = null;
-            bool status = false;
+            bool status = true;
             int i = 0;
             if (ConfigSetup.BaseConfiguration != null)
             {
@@ -303,30 +331,28 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 {
                     Console.WriteLine($"Row: {row[i]}");
 
-                    if (i == 0 && row[0].Equals(true))
+                    if (i == 0 && !row[0].Equals(true))
                     {
-                        status = true;
+                        status = false;
                     }
-                    else if (i == 1 && !row[1].Equals(null))
+                    else if (i == 1 && row[1].Equals(null))
                     {
-                        status = true;
+                        status = false;
                     }
                     else if (i == 2)
                     {
-                        if(row[1].Equals(1) && Route.Text.Contains("Birkenhead to Belfast (Stena)"))
-                            status = true;
-                        else if (row[1].Equals(2) && Route.Text.Contains("Cairnryan to Larne (P&O)"))
-                            status = true;
-                        else if (row[1].Equals(3) && Route.Text.Contains("Loch Ryan to Belfast (Stena)"))
-                            status = true;
+                        if(row[2].Equals(1) && !Route.Text.Contains("Birkenhead to Belfast (Stena)"))
+                            status = false;
+                        else if (row[2].Equals(2) && !Route.Text.Contains("Cairnryan to Larne (P&O)"))
+                            status = false;
+                        else if (row[2].Equals(3) && !Route.Text.Contains("Loch Ryan to Belfast (Stena)"))
+                            status = false;
                     }
                     else if (i == 3)
                     {
-                        status = true;
                     }
                     else if (i == 4)
                     {
-                        status = true;
                     }
                 }
             }
@@ -337,10 +363,32 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private bool ValidateSPSSummaryWithSQLBackend(string applicationId, string travelDocumentId, string SPSCheckerId)
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
-            string sqlQuery = $"SELECT GBCheck,LinkedCheckId,RouteId,Date,ScheduledSailingTime,CheckOutcome FROM [dbo].[CheckSummary]  Where ApplicationId = '{applicationId}' and TravelDocumentId = '{travelDocumentId}' and [CheckerId]  = '{SPSCheckerId}'";
+            string sqlQuery = $"SELECT GBCheck,LinkedCheckId,FlightNo,RouteId,Date,ScheduledSailingTime,CheckOutcome FROM [dbo].[CheckSummary]  Where ApplicationId = '{applicationId}' and TravelDocumentId = '{travelDocumentId}' and [CheckerId]  = '{SPSCheckerId}'";
             DataTable sqlData = null;
-            bool status = false;
+            bool status = true;
             int i = 0;
+            string departureDate = "";
+            string departureTime = "";
+            string headerTime = headerDepartureTime.Text.Trim();
+            string route = headerTime.Substring(7, 29).Trim();
+            Thread.Sleep(1000);
+            if (route.Contains("Birkenhead to Belfast (Stena)"))
+            {
+                departureDate = headerTime.Substring(53, 10);
+                departureTime = headerTime.Substring(64, 5);
+            }
+            else if (route.Contains("Cairnryan to Larne (P&O)"))
+            {
+                departureDate = headerTime.Substring(48, 10);
+                departureTime = headerTime.Substring(59, 5);
+            }
+            else if (route.Contains("Loch Ryan to Belfast (Stena)"))
+            {
+                departureDate = headerTime.Substring(52, 10);
+                departureTime = headerTime.Substring(63, 5);
+            }
+
+
             if (ConfigSetup.BaseConfiguration != null)
             {
                 sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery);
@@ -353,9 +401,102 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 {
                     Console.WriteLine($"Row: {row[i]}");
 
-                    if (i == 0 && row[0].Equals(false))
+                    if (i == 0 && !row[0].Equals(false))
                     {
-                        status = true;
+                        status = false;
+                    }
+                    else if (i == 2)
+                    {
+                        if (row[2].Equals("AI 123"))
+                        {
+                            route = headerTime.Substring(15, 8).Trim();
+                            departureDate = headerTime.Substring(38, 10);
+                            departureTime = headerTime.Substring(49, 5);
+
+                            if (!row[2].Equals(route))
+                                status = false;
+                        }
+                    }
+                    else if (i == 3 && !row[3].Equals(null))
+                    {
+                        if (row[3].Equals(1) && !Route.Text.Contains("Birkenhead to Belfast (Stena)"))
+                            status = false;
+                        else if (row[3].Equals(2) && !Route.Text.Contains("Cairnryan to Larne (P&O)"))
+                            status = false;
+                        else if (row[3].Equals(3) && !Route.Text.Contains("Loch Ryan to Belfast (Stena)"))
+                            status = false;
+                    }
+                }
+            }
+
+            return status;
+        }
+
+        private bool ValidateGBSummaryForPassApplWithSQLBackend(string applicationId, string travelDocumentId, string gBCheckerId)
+        {
+            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+            string sqlQuery = $"SELECT GBCheck,RouteId,Date,ScheduledSailingTime,CheckOutcome FROM [dbo].[CheckSummary]  Where ApplicationId = '{applicationId}' and TravelDocumentId = '{travelDocumentId}' and [CheckerId]  = '{gBCheckerId}'";
+            DataTable sqlData = null;
+            bool status = true;
+            int i = 0;
+
+            string departureDate = "";
+            string departureTime = "";
+            string headerTime = headerDepartureTime.Text.Trim();
+            string route = headerTime.Substring(7, 29).Trim();
+            Thread.Sleep(1000);
+            if (route.Contains("Birkenhead to Belfast (Stena)"))
+            {
+                departureDate = headerTime.Substring(53, 10);
+                departureTime = headerTime.Substring(64, 5);
+            }
+            else if (route.Contains("Cairnryan to Larne (P&O)"))
+            {
+                departureDate = headerTime.Substring(48, 10);
+                departureTime = headerTime.Substring(59, 5);
+            }
+            else if (route.Contains("Loch Ryan to Belfast (Stena)"))
+            {
+                departureDate = headerTime.Substring(52, 10);
+                departureTime = headerTime.Substring(63, 5);
+            }
+
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery);
+            }
+
+            foreach (DataRow row in sqlData.Rows)
+            {
+                for (i = 0; i < sqlData.Columns.Count; i++)
+
+                {
+                    Console.WriteLine($"Row: {row[i]}");
+
+                    if (i == 0)
+                    {
+                        if(!row[0].Equals(true))
+                        status = false;
+                    }
+                    else if (i == 1)
+                    {
+                        if (row[1].Equals(1) && !route.Contains("Birkenhead to Belfast (Stena)"))
+                            status = false;
+                        else if (row[1].Equals(2) && !route.Contains("Cairnryan to Larne (P&O)"))
+                            status = false;
+                        else if (row[1].Equals(3) && !route.Contains("Loch Ryan to Belfast (Stena)"))
+                            status = false;
+                    }
+                    else if (i == 2)
+                    {
+                    }
+                    else if (i == 3)
+                    {
+                    }
+                    else if (i == 4)
+                    {
+                        if (!row[4].Equals(true))
+                            status = false;
                     }
                 }
             }
@@ -396,6 +537,15 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string CheckOutcomeId = GetCheckOutcomeId(ApplicationId, TravelDocumentId, SPSCheckerId);
             return ValidateSPSOutcomeWithSQLBackend(CheckOutcomeId, TypeOfPassenger, SPSOutcome);
         }
+
+        public bool VerifyGBSummaryForPassApplWithSQLBackend(string AppReference)
+        {
+            string ApplicationId = GetApplId(AppReference);
+            string TravelDocumentId = GetTravelDocumentId(ApplicationId);
+            string GBCheckerId = GetGBCheckerId();
+            return ValidateGBSummaryForPassApplWithSQLBackend(ApplicationId, TravelDocumentId, GBCheckerId);
+        }
+
         #endregion
     }
 }
