@@ -16,5 +16,6 @@
         bool VerifyTheApplicationIsNotAvailable(string PetName);
         void ClickViewLink(string petName);
         void ClickOnManageAccountLink();
+        void ClickOnLifelongPetTravelDocumentsFromHeader();
     }
 }

@@ -31,6 +31,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
         private IReadOnlyCollection<IWebElement> tableHeaderRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr/th"), true);
         private IReadOnlyCollection<IWebElement> tableActionRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr/td[4]//a"), true);
         public IWebElement lnkManageAccount => _driver.WaitForElement(By.XPath("//a[@href='/User/ManageAccount']"));
+        public IWebElement lifelongPetTraveDocuments => _driver.WaitForElement(By.XPath("//li[@class='login-nav__list-item']//a[@href='/TravelDocument']"));
 
         #endregion
 
@@ -159,6 +160,11 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
         public void ClickOnManageAccountLink()
         {
             lnkManageAccount.Click();
+        }
+
+        public void ClickOnLifelongPetTravelDocumentsFromHeader()
+        {
+            lifelongPetTraveDocuments.Click();
         }
 
         #endregion
