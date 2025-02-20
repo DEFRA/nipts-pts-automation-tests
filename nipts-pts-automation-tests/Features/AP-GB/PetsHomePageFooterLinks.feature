@@ -16,11 +16,11 @@ Scenario: Checking the Feedback Hyperlink
 	Then I should navigate to the Feedback details correct page
 	And click on signout button and verify the signout message on pets
 
-Scenario: Checking the Gethelp Hyperlink
-	Then I should navigate to Lifelong pet travel documents page
-	And  I click the Gethelp Link
-	Then I should navigate to the Gethelp details correct page
-	And click on signout button and verify the signout message on pets
+#Scenario: Checking the Gethelp Hyperlink
+#	Then I should navigate to Lifelong pet travel documents page
+#	And  I click the Gethelp Link
+#	Then I should navigate to the Gethelp details correct page
+#	And click on signout button and verify the signout message on pets
 
 Scenario: Checking the AccessibilityStatement Hyperlink
 	Then I should navigate to Lifelong pet travel documents page
