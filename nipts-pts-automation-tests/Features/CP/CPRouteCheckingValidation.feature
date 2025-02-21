@@ -146,3 +146,25 @@ Scenario Outline: Verify validation text  for date field when user enter the tim
 Examples:
 	| Transportation | Flight number |
 	| Flight         | 1234          |
+
+Scenario Outline: Verify positive flow for date field when user enter the date field within 48 hours
+	Then I have selected '<Transportation>' radio option
+	Then I provided date within 48 hours from the current date
+	Then I provide the '<Flight number>' in the box
+	And  I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+Examples:
+	| Transportation | Flight number |
+	| Flight         | 1234          |
+
+Scenario Outline: Verify positive flow for date field when user enter the date field within 24 hours
+	Then I have selected '<Transportation>' radio option
+	Then I provided date that exceeds 24 hours from the current date
+	Then I provide the '<Flight number>' in the box
+	And  I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+Examples:
+	| Transportation | Flight number |
+	| Flight         | 1234          |

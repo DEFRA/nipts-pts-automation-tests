@@ -157,5 +157,12 @@ namespace nipts_pts_automation_tests.Steps.CP
             _routeCheckingPage?.EnterDateMonthYear(DateTime.Now.AddDays(-3));
         }
 
+        [Then(@"I provided date within 48 hours from the current date")]
+        public void ThenIProvidedDateWithin48HoursFromTheCurrentDate()
+        {
+            _routeCheckingPage?.EnterDateMonthYear(DateTime.Now.AddDays(-1));
+        }
+
+
     }
 }
