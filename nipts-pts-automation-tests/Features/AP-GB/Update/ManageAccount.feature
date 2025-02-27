@@ -23,6 +23,7 @@ Scenario: Change Phone Number in Manage account
 	Then I verify the updated Phone number
 	And click on signout button and verify the signout message on pets
 
+	@RunOnly
 Scenario: Change Name in Manage account
 	Then I should navigate to Manage account
 	And I click on Manage your account
