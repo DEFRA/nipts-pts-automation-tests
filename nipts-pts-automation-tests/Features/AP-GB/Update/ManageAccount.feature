@@ -9,6 +9,7 @@ Background:
 	When I have provided the credentials and signin
 	Then I should redirected to Apply for a pet travel document page
 
+	@RunOnly
 Scenario: Change Phone Number in Manage account
 	Then I should navigate to Manage account
 	And I click on Manage your account

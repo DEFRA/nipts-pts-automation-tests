@@ -31,6 +31,7 @@ Examples:
 	| FullName |  Are your details correct | MicrochipOption | MicrochipNumber |
 	| PetCat's |  Yes                      | Yes             | 123456789123485 |
 
+@RunOnly
 Scenario Outline: Verify microchipped date should not allows older than 34 years
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
