@@ -18,11 +18,14 @@ namespace nipts_pts_API_tests.Application
 
             try
             {
+                DateTime dateTime = DateTime.Now;
+                string TodaysDate = dateTime.ToString("yyyy-MM-dd");
+
                 // Create a unique DynamicId for each message
                 string dynamicId = Guid.NewGuid().ToString();
 
                 // Create a message to send to the queue
-                string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"{Status}\", \"Application.DateAuthorised\": \"2024-11-14\" }}";
+                string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"{Status}\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
                 ServiceBusMessage message = new ServiceBusMessage(messageBody);
 
                 // Send the message to the queue
