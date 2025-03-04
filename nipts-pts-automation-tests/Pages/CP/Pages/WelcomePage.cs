@@ -215,6 +215,55 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
             return status;
         }
+
+        public bool getPassCount(string passCount)
+        {
+            string departureDate = "";
+            string departureTime = "";
+            string headerTime = headerDepartureTime.Text.Trim();
+            string route = headerTime.Substring(7, 29).Trim();
+            Thread.Sleep(1000);
+            if (route.Contains("Birkenhead to Belfast (Stena)"))
+            {
+                if (ConfigSetup.BaseConfiguration.TestConfiguration.BSBrowserVersion == "16.5")
+                {
+                    departureDate = headerTime.Substring(60, 10);
+                    departureTime = headerTime.Substring(71, 5);
+                    departTime = headerTime.Substring(71, 5);
+                }
+                else
+                {
+                    departureDate = headerTime.Substring(53, 10);
+                    departureTime = headerTime.Substring(64, 5);
+                    departTime = headerTime.Substring(64, 5);
+                }
+            }
+            else if (route.Contains("Cairnryan to Larne (P&O)"))
+            {
+                departureDate = headerTime.Substring(48, 10);
+                departureTime = headerTime.Substring(59, 5);
+                departTime = headerTime.Substring(59, 5);
+            }
+            else if (route.Contains("Loch Ryan to Belfast (Stena)"))
+            {
+                departureDate = headerTime.Substring(52, 10);
+                departureTime = headerTime.Substring(63, 5);
+                departTime = headerTime.Substring(63, 5);
+            }
+            string matchingRecord = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departureTime}')]/../../../preceding-sibling::div//dd";
+
+            string UIPassCount = null;
+            if (_driver.FindElements(By.XPath(matchingRecord)).Count > 0)
+            {
+                UIPassCount = _driver.FindElement(By.XPath(matchingRecord)).Text;
+            }
+            
+            if (UIPassCount.Equals(passCount))
+                return true;
+            else
+                return false;
+        }
+
         #endregion
     }
 }

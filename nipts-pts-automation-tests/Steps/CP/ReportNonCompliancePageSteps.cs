@@ -160,5 +160,19 @@ namespace nipts_pts_automation_tests.Steps.CP
             _reportNonCompliancePage.SelectGBOutcome(GBOutcome);
         }
 
+        [When(@"I select Visual check '([^']*)' on Report non-compliance page")]
+        [Then(@"I select Visual check '([^']*)' on Report non-compliance page")]
+        public void ThenSelectVisualCheck(string VisualCheck)
+        {
+            _reportNonCompliancePage.SelectVisualCheck(VisualCheck);
+        }
+
+        [When(@"I select Other issues '([^']*)' on Report non-compliance page")]
+        [Then(@"I select Other issues '([^']*)' on Report non-compliance page")]
+        public void ThenSelectOtherIssues(string OtherIssues)
+        {
+            _reportNonCompliancePage.SelectOtherIssues(OtherIssues);
+        }
+
     }
 }

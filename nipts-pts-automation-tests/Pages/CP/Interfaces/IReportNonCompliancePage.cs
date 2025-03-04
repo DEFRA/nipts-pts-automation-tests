@@ -22,5 +22,7 @@
         void SelectMicrochipReason(string microchipReason);
         void EnterAdditionalComment(string additionalComment);
         void SelectGBOutcome(string gBOutcome);
+        void SelectVisualCheck(string visualCheck);
+        void SelectOtherIssues(string otherIssues);
     }
 }
