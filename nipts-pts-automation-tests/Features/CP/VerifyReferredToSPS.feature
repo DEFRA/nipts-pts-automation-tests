@@ -204,7 +204,7 @@ Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	And I click search by '<ApplicationRadio1>' radio button
 	And I provided the Application Number '<ReferenceNumber1>' of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	And I get PTD or reference number and add it in collection
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
@@ -275,7 +275,7 @@ Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	Then I navigate to Find a document page
 	And I provided the '<PTDNumber4>' of the application
 	When I click search button
-	And I should see the application status in 'Revoked'
+	And I should see the application status in 'Cancelled'
 	And I get PTD or reference number and add it in collection
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
@@ -303,7 +303,7 @@ Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	And I click search by '<ApplicationRadio1>' radio button
 	And I provided the Application Number '<ReferenceNumber3>' of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	And I get PTD or reference number and add it in collection
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
@@ -317,7 +317,7 @@ Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	And I click search by '<ApplicationRadio1>' radio button
 	And I provided the Application Number '<ReferenceNumber4>' of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	And I get PTD or reference number and add it in collection
 	And I arrange PTD or reference number in ascending order
 	When I click continue button from application status page
@@ -361,7 +361,7 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 	And I click search by '<ApplicationRadio1>' radio button
 	And I provided the Application Number '<ReferenceNumber1>' of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	And I get PTD or reference number and add it in collection
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
@@ -432,7 +432,7 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 	Then I navigate to Find a document page
 	And I provided the '<PTDNumber4>' of the application
 	When I click search button
-	And I should see the application status in 'Revoked'
+	And I should see the application status in 'Cancelled'
 	And I get PTD or reference number and add it in collection
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
@@ -460,7 +460,7 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 	And I click search by '<ApplicationRadio1>' radio button
 	And I provided the Application Number '<ReferenceNumber3>' of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	And I get PTD or reference number and add it in collection
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
@@ -474,7 +474,7 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 	And I click search by '<ApplicationRadio1>' radio button
 	And I provided the Application Number '<ReferenceNumber4>' of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	And I get PTD or reference number and add it in collection
 	And I arrange PTD or reference number in ascending order
 	When I click continue button from application status page
