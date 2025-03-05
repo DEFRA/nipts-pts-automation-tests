@@ -48,7 +48,7 @@ Scenario Outline: PTS port checker Fail application status in non-compliance pag
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Reference number of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	And click on continue
 	Then I should navigate to Report non-compliance page
 	And I click Pet Travel Document details link dropdown
@@ -71,7 +71,7 @@ Scenario Outline: PTS port checker Fail application status in non-compliance pag
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Reference number of the application
 	When I click search button
-	And I should see the application status in 'Revoked'
+	And I should see the application status in 'Cancelled'
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And I click Pet Travel Document details link dropdown

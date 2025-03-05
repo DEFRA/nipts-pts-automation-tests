@@ -286,7 +286,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Reference numb
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on Reference number of the application
 	And I click on Conduct an SPS check
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details

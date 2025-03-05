@@ -87,7 +87,7 @@ Scenario Outline: PTS port checker continue application by Reference number - st
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Reference number of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	And I should see the application subtitle 'Your application summary'
 	And click on continue
 	Then I should navigate to Report non-compliance page

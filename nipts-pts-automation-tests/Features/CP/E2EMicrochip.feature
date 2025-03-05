@@ -172,7 +172,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Microchip number of the application
 	When I click search button
-	And I should see the application status in 'Revoked'
+	And I should see the application status in 'Cancelled'
 	And I should see the application subtitle 'Lifelong pet travel document and declaration'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
@@ -198,7 +198,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on PTD number of the application
 	And I click on Conduct an SPS check
-	Then I should see the application status in 'Revoked'
+	Then I should see the application status in 'Cancelled'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details
@@ -370,7 +370,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Microchip number of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And I click '<TypeOfPassenger>' in Passenger details
@@ -395,7 +395,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on Reference number of the application
 	And I click on Conduct an SPS check
-	Then I should see the application status in 'Awaiting verification'
+	Then I should see the application status in 'Pending'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details
@@ -537,7 +537,7 @@ Scenario Outline: PTS port checker continue application by Microchip number - st
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Microchip number of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	And click on continue
 	Then I should navigate to Report non-compliance page
 	
