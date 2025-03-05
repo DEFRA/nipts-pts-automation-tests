@@ -1,4 +1,5 @@
 ﻿using BoDi;
+using Microsoft.Azure.Amqp.Framing;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
@@ -29,6 +30,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement MicrochipDoesNotMatch => _driver.WaitForElement(By.XPath("//p[contains(text(),'Microchip number does not match the PTD')]"));
         private IWebElement MicrochipNotFound => _driver.WaitForElement(By.XPath("//p[contains(text(),'Cannot find microchip')]"));
         private IWebElement AdditionalComment => _driver.WaitForElement(By.XPath("//dt[text()='Additional comments']/..//p"));
+        private IWebElement PetNotMatchPTD => _driver.WaitForElement(By.XPath("//li[contains(text(),'Pet does not match the PTD')]"));
+        private IWebElement PotentialCommetcialMov => _driver.WaitForElement(By.XPath("//li[contains(text(),'Potential commercial movement')]"));
+        private IWebElement AuthTravNoConfirmation => _driver.WaitForElement(By.XPath("//li[contains(text(),'Authorised traveller but no confirmation')]"));
+        private IWebElement OtherReason => _driver.WaitForElement(By.XPath("//li[contains(text(),'Other reason')]"));
         #endregion
 
         #region Methods
@@ -45,10 +50,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", clickSPSConduct);
         }
 
-        public bool VerifyMicrochipReason(string NumberMicrochipReason, string microchipReason)
+        public bool VerifyMicrochipReason(string NumberMicrochipReason, string microchipReason,string NumberOtherIssues)
         {
             bool status = true;
-            if (Int32.Parse(NumberMicrochipReason) > 1)
+            if (Int32.Parse(NumberMicrochipReason) > 1 || Int32.Parse(NumberOtherIssues) > 0)
             {
                 if (microchipReason.Contains("MicrochipNumberNoMatch"))
                 {
@@ -125,6 +130,42 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                         status = false;
                 }
             }
+            return status;
+        }
+
+        public bool? VerifyVisualCheck(string petDoesNotMatchThePTD)
+        {
+            bool status = true;
+
+            if (petDoesNotMatchThePTD.Contains("PetDoesNotMatchThePTD"))
+            {
+                if (!PetNotMatchPTD.Text.Contains("Pet does not match the PTD"))
+                    status = false;
+            }
+
+            return status;
+        }
+
+        public bool? VerifyOtherIssues(string numberOtherIssues, string otherIssues)
+        {
+            bool status = true;
+
+            if (otherIssues.Contains("PotentialCommercialMovement"))
+            {
+                if (!PotentialCommetcialMov.Text.Contains("Potential commercial movement"))
+                    status = false;
+            }
+            else if (otherIssues.Contains("AuthorisedTravellerButNoConfirmation"))
+            {
+                if (!AuthTravNoConfirmation.Text.Contains("Authorised traveller but no confirmation"))
+                    status = false;
+            }
+            else if (otherIssues.Contains("OtherReason"))
+            {
+                if (!OtherReason.Text.Contains("Other reason"))
+                    status = false;
+            }
+
             return status;
         }
 

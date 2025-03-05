@@ -32,7 +32,21 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 	When I click save and continue button from application status page
 	Then I should navigate to Welcome page
 	And I verify submiited message
-	
+	And I verify count '1' for Pass Checks
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I provided the PTD number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
+	And I should see the application subtitle 'Lifelong pet travel document and declaration'
+	And I click save and continue button from application status page
+	Then I should see an error message "Select an option" in application status page
+	And I select Pass radio button
+	When I click save and continue button from application status page
+	Then I should navigate to Welcome page
+	And I verify submiited message
+	And I verify count '2' for Pass Checks
+
 Examples:
 	|Transportation | FerryRoute                    | 
 	|Ferry          | Birkenhead to Belfast (Stena) |

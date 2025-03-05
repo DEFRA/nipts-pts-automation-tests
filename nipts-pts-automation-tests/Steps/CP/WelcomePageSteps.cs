@@ -88,5 +88,13 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             Assert.True(_welcomePage?.VerifyEntriesOnCheckerPage(), "Checker page entries are either after 24 hours or before 48 hours");
         }
+
+        [When(@"I verify count '([^']*)' for Pass Checks")]
+        [Then(@"I verify count '([^']*)' for Pass Checks")]
+        public void ThenIVerifyCountForPassChecks(string PassCount)
+        {
+            Assert.True(_welcomePage.getPassCount(PassCount),"Pass count not matching on Checks page");
+        }
+
     }
 }

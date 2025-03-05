@@ -41,6 +41,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             _signInCPPage?.ClickSignInButton();
         }
 
+        [When(@"click on signout button on CP and verify the signout message")]
         [Then(@"click on signout button on CP and verify the signout message")]
         public void ThenClickOnSignoutButtonOnCPAndVerifyTheSignoutMessage()
         {
