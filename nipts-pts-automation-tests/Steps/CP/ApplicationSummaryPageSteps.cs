@@ -211,5 +211,17 @@ namespace nipts_pts_automation_tests.Steps.CP
             string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
             Assert.True(_applicationSummaryPage.VerifyGBSummaryForPassApplWithSQLBackend(AppReference), "GB Summary not matching with SQL Backend data");
         }
+
+        [Given(@"Create an offline application via backend")]
+        [When(@"Create an offline application via backend")]
+        public void ThenCreateOfflineApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string PTDNumber = AppData.writeOfflineApplicationToQueue();
+                _scenarioContext.Add("PTDNumber", PTDNumber);
+            }
+        }
+
     }
 }
