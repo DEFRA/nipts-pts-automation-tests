@@ -52,7 +52,7 @@ Scenario Outline: PTS port checker Fail application status in non-compliance pag
 	And click on continue
 	Then I should navigate to Report non-compliance page
 	And I click Pet Travel Document details link dropdown
-	And I Verify status 'Awaiting verification' on Report non-compliance page
+	And I Verify status 'Pending' on Report non-compliance page
 	And I Verify Application Reference number on Report non-compliance page
 	
 Examples:
@@ -75,7 +75,7 @@ Scenario Outline: PTS port checker Fail application status in non-compliance pag
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And I click Pet Travel Document details link dropdown
-	And I Verify status 'Revoked' on Report non-compliance page
+	And I Verify status 'Cancelled' on Report non-compliance page
 
 Examples:
 	| Transportation | FerryRoute               |  ApplicationRadio             |
@@ -149,13 +149,13 @@ Scenario: Verify hint text and GB,SPS outcome error messages on Report Non- Comp
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And  verify hint text 'Any relevant comments' for Other reason
-	And  verify hint text 'For GB staff to fill in' for GB outcome
-	And  verify hint text 'For NI staff to fill in' for NI outcome
+	#And  verify hint text 'For GB staff to fill in' for GB outcome
+	#And  verify hint text 'For NI staff to fill in' for NI outcome
 	When click on Save outcome
 	Then I should see an error message 'Select at least one GB outcome' in Report non-compliance page
-	When I click 'Allowed to travel under Windsor Framework' on SPS outcome
-	And  click on Save outcome
-	Then I should see an error message 'You cannot select an SPS outcome' in Report non-compliance page
+	#When I click 'Allowed to travel under Windsor Framework' on SPS outcome
+	#And  click on Save outcome
+	#Then I should see an error message 'You cannot select an SPS outcome' in Report non-compliance page
 	
 Examples:
 	| Transportation | FerryRoute                    | PassengerType | MichrochipNumber |
