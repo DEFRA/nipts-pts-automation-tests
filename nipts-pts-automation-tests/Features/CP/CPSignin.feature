@@ -28,6 +28,7 @@ Scenario: CPE2ECrossBrowser
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber>' of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -69,8 +70,8 @@ Scenario: CPE2ECrossBrowser
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| Transportation | FerryRoute                    | PTDNumber | TypeOfPassenger      | SPSOutcome |
-	| Ferry          | Birkenhead to Belfast (Stena) | 7BDE08    | Ferry foot passenger | Allowed    |
+	| Transportation | FerryRoute                    | PTDNumber | TypeOfPassenger      | SPSOutcome | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | 7BDE08    | Ferry foot passenger | Allowed    | Search by PTD number |
 
 #Scenario: API check
 #	When Create an application via backend

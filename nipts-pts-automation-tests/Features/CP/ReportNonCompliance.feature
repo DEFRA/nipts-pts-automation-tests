@@ -21,6 +21,7 @@ Scenario Outline: PTS port checker Fail application status in non-compliance pag
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -34,8 +35,8 @@ Scenario Outline: PTS port checker Fail application status in non-compliance pag
 	Then I should see an error message 'Select the type of passenger' in Report non-compliance page
 
 Examples:
-	| Transportation | FerryRoute                    | 
-	| Ferry          | Birkenhead to Belfast (Stena) |
+	| Transportation | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |
 
 Scenario Outline: PTS port checker Fail application status in non-compliance page - status in Pending
 	When I have selected '<Transportation>' radio option
@@ -113,6 +114,7 @@ Scenario: Verify error messages for microchip number field on Report Non- Compli
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -127,11 +129,11 @@ Scenario: Verify error messages for microchip number field on Report Non- Compli
 	Then I should see an error message '<ErrorMsg>' in Report non-compliance page
 	
 Examples:
-	| Transportation | FerryRoute                    | PassengerType | MichrochipNumber | ErrorMsg                            |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       |                  | Enter the 15-digit microchip number |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       |   11233          |  Enter the 15-digit microchip number, using only numbers                                   |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       |   123@           |  Enter the 15-digit microchip number, using only numbers                                   |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       |   wwqw           |  Enter the 15-digit microchip number, using only numbers                                   |
+	| Transportation | FerryRoute                    | PassengerType | MichrochipNumber | ErrorMsg                                                | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Airline       |                  | Enter the 15-digit microchip number                     | Search by PTD number |
+	| Ferry          | Birkenhead to Belfast (Stena) | Airline       | 11233            | Enter the 15-digit microchip number, using only numbers | Search by PTD number |
+	| Ferry          | Birkenhead to Belfast (Stena) | Airline       | 123@             | Enter the 15-digit microchip number, using only numbers | Search by PTD number |
+	| Ferry          | Birkenhead to Belfast (Stena) | Airline       | wwqw             | Enter the 15-digit microchip number, using only numbers | Search by PTD number |
 
 Scenario: Verify hint text and GB,SPS outcome error messages on Report Non- Compliance page
 	When Approve an application via backend
@@ -142,6 +144,7 @@ Scenario: Verify hint text and GB,SPS outcome error messages on Report Non- Comp
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -158,6 +161,6 @@ Scenario: Verify hint text and GB,SPS outcome error messages on Report Non- Comp
 	#Then I should see an error message 'You cannot select an SPS outcome' in Report non-compliance page
 	
 Examples:
-	| Transportation | FerryRoute                    | PassengerType | MichrochipNumber |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       |                  |
+	| Transportation | FerryRoute                    | PassengerType | MichrochipNumber | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Airline       |                  | Search by PTD number |
 	

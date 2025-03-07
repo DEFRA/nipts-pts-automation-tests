@@ -22,6 +22,7 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -35,6 +36,7 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 	And I verify count '1' for Pass Checks
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -48,8 +50,8 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 	And I verify count '2' for Pass Checks
 
 Examples:
-	|Transportation | FerryRoute                    | 
-	|Ferry          | Birkenhead to Belfast (Stena) |
+	| Transportation | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |
 
 Scenario Outline: PTS port checker Pass application by Reference number - status in Approved
 	When Create an application via backend
@@ -108,6 +110,7 @@ Scenario Outline: Verify format of PTD number and significant features option
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -117,8 +120,8 @@ Scenario Outline: Verify format of PTD number and significant features option
 	
 
 Examples:
-	| Transportation | FerryRoute                    | 
-	| Ferry          | Birkenhead to Belfast (Stena) |
+	| Transportation | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |
 
 
 Scenario Outline: Verify breed selection with significant option as Yes on search results page
@@ -131,6 +134,7 @@ Scenario Outline: Verify breed selection with significant option as Yes on searc
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -139,8 +143,8 @@ Scenario Outline: Verify breed selection with significant option as Yes on searc
 	Then verify Pet Breed option 'Chihuahua' on Search Pass Fail Results Page
 	
 Examples:
-	| Transportation | FerryRoute                    | 
-	| Ferry          | Birkenhead to Belfast (Stena) |
+	| Transportation | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |
 
 Scenario Outline: Verify no entries on checker page after 24 hours and before 48 hours
 	When I have selected '<Transportation>' radio option

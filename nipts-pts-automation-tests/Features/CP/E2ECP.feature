@@ -22,6 +22,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -69,8 +70,8 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
-	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Approved
 	When Create an application with Mandatory address only via backend
@@ -312,6 +313,7 @@ Scenario Outline: Verify navigation of back links in the application for GB user
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -326,8 +328,8 @@ Scenario Outline: Verify navigation of back links in the application for GB user
 	And click on signout button on CP and verify the signout message
 	
 Examples:
-	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
-	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |
 
 Scenario Outline: Verify back link navigation for SPS user
 	When Create an application via backend
@@ -340,6 +342,7 @@ Scenario Outline: Verify back link navigation for SPS user
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -382,6 +385,6 @@ Scenario Outline: Verify back link navigation for SPS user
 	 
 
 Examples:
-	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       |
-	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |
 

@@ -21,6 +21,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -34,6 +35,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -47,6 +49,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -60,6 +63,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -73,6 +77,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -86,6 +91,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -99,6 +105,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -112,6 +119,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -125,6 +133,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -138,6 +147,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -151,6 +161,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -175,8 +186,8 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	#Then I verify referred to SPS record count '10' on page
 
 Examples:
-	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        |
-	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Search by PTD number |
 
 Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	When I have selected '<Transportation>' radio option

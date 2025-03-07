@@ -18,8 +18,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
-        private IWebElement rdoPass => _driver.WaitForElement(By.XPath("//label[normalize-space()='Pass']"));
-        private IWebElement rdoFail => _driver.WaitForElement(By.XPath("//label[normalize-space()='Fail or referred to SPS']"));
+        private IWebElement rdoPass => _driver.WaitForElementExists(By.XPath("//label[normalize-space()='Pass']/..//input"));
+        private IWebElement rdoFail => _driver.WaitForElementExists(By.XPath("//label[normalize-space()='Fail or referred to SPS']/..//input"));
         private IWebElement btnSaveAndContinue => _driver.WaitForElement(By.XPath("//*[@id='saveAndContinue']"));
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));

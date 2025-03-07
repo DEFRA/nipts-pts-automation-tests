@@ -83,6 +83,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             _searchDocumentPage?.EnterMicrochipNumber(microchipNumber);
         }
 
+        [When(@"I click search by '([^']*)' radio button")]
         [Then(@"I click search by '([^']*)' radio button")]
         public void ThenIClickSearchByRadioButton(string radioButton)
         {
