@@ -17,6 +17,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
         public IWebElement PageHeading => _driver.WaitForElement(By.ClassName("govuk-heading-xl"), true);
+        public IWebElement CustomPageHeading => _driver.WaitForElement(By.XPath("//div[@class='govuk-grid-row']//h1[@class='govuk-heading-l']"), true);
         private IWebElement SendApplicationButton => _driver.WaitForElementExists(By.XPath("//button[contains(text(),'Send application')]"));
         private IWebElement chkAgreesToDeclaration => _driver.WaitForElementExists(By.XPath("//input[@id='AgreedToDeclaration']"));
         private IReadOnlyCollection<IWebElement> divMicrochipInformationTitleList => _driver.WaitForElements(By.XPath("//div[@id='document-microchip-card']//dl/div/descendant::dt"));
@@ -34,6 +35,11 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage
         public bool IsNextPageLoaded(string pageTitle)
         {
             return PageHeading.Text.Contains(pageTitle);
+        }
+
+        public bool IsCustomPageLoaded(string pageTitle)
+        {
+            return CustomPageHeading.Text.Contains(pageTitle);
         }
 
         public void TickAgreedToDeclaration()

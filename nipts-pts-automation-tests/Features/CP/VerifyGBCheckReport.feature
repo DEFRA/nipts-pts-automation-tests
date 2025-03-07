@@ -21,6 +21,7 @@ Scenario Outline: Validate GB Check Report page fields for GB User
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -54,10 +55,10 @@ Scenario Outline: Validate GB Check Report page fields for GB User
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerWillNotTravel>'
 
 Examples:
-	| Transportation | FerryRoute                    | NumberMicrochipReasons | MicrochipNumberNoMatch | CannotFindMicrochip | PassengerType        | AdditionalComment        | NumberGBOutcome | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | NumberOtherIssues | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason |
-	| Ferry          | Birkenhead to Belfast (Stena) | 2                      | MicrochipNumberNoMatch | CannotFindMicrochip | Ferry foot passenger | Verify Additonal Comment | 3               | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | 3                 | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason |
-	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 2               | PassengerReferredDAERA | No                       | PassengerWillNotTravel | PetDoesNotMatchThePTD | 2                 | PotentialCommercialMovement | No                                   | OtherReason |
-	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 1               | PassengerReferredDAERA | No                       | No                     | No                    | 0                 | No                          | No                                   | No          |
+	| Transportation | FerryRoute                    | NumberMicrochipReasons | MicrochipNumberNoMatch | CannotFindMicrochip | PassengerType        | AdditionalComment        | NumberGBOutcome | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | NumberOtherIssues | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | 2                      | MicrochipNumberNoMatch | CannotFindMicrochip | Ferry foot passenger | Verify Additonal Comment | 3               | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | 3                 | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | Search by PTD number |
+	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 2               | PassengerReferredDAERA | No                       | PassengerWillNotTravel | PetDoesNotMatchThePTD | 2                 | PotentialCommercialMovement | No                                   | OtherReason | Search by PTD number |
+	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 1               | PassengerReferredDAERA | No                       | No                     | No                    | 0                 | No                          | No                                   | No          | Search by PTD number |
 
 Scenario Outline: Validate GB Check Report page fields for SPS User
 	When I have selected '<Transportation>' radio option
@@ -67,6 +68,7 @@ Scenario Outline: Validate GB Check Report page fields for SPS User
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -112,7 +114,7 @@ Scenario Outline: Validate GB Check Report page fields for SPS User
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerWillNotTravel>'
 
 Examples:
-	| Transportation | FerryRoute                    | NumberMicrochipReasons | MicrochipNumberNoMatch | CannotFindMicrochip | PassengerType        | AdditionalComment        | NumberGBOutcome | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | NumberOtherIssues | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason |
-	| Ferry          | Birkenhead to Belfast (Stena) | 2                      | MicrochipNumberNoMatch | CannotFindMicrochip | Ferry foot passenger | Verify Additonal Comment | 3               | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | 3                 | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason |
-	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 2               | PassengerReferredDAERA | No                       | PassengerWillNotTravel | PetDoesNotMatchThePTD | 2                 | PotentialCommercialMovement | No                                   | OtherReason |
-	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 1               | PassengerReferredDAERA | No                       | No                     | No                    | 0                 | No                          | No                                   | No          |
+	| Transportation | FerryRoute                    | NumberMicrochipReasons | MicrochipNumberNoMatch | CannotFindMicrochip | PassengerType        | AdditionalComment        | NumberGBOutcome | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | NumberOtherIssues | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | 2                      | MicrochipNumberNoMatch | CannotFindMicrochip | Ferry foot passenger | Verify Additonal Comment | 3               | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | 3                 | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | Search by PTD number |
+	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 2               | PassengerReferredDAERA | No                       | PassengerWillNotTravel | PetDoesNotMatchThePTD | 2                 | PotentialCommercialMovement | No                                   | OtherReason | Search by PTD number |
+	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 1               | PassengerReferredDAERA | No                       | No                     | No                    | 0                 | No                          | No                                   | No          | Search by PTD number |

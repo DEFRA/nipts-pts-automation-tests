@@ -23,7 +23,7 @@ Scenario Outline: Veirfy backend entries for GB and SPS Outcome for Fail or Reff
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Reference number of the application
 	When I click search button
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I select MicrochipReason '<MicrochipNumberNoMatch>' on Report non-compliance page
@@ -52,7 +52,7 @@ Scenario Outline: Veirfy backend entries for GB and SPS Outcome for Fail or Reff
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on Reference number of the application
 	And I click on Conduct an SPS check
-	And I should see the application status in 'Awaiting verification'
+	And I should see the application status in 'Pending'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	When I click '<TypeOfPassenger>' in Passenger details
@@ -89,6 +89,7 @@ Scenario Outline: Veirfy backend entries for GB outcome for Pass journey
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -103,8 +104,8 @@ Scenario Outline: Veirfy backend entries for GB outcome for Pass journey
 
 
 Examples:
-	| Transportation | FerryRoute                    | 
-	| Ferry          | Birkenhead to Belfast (Stena) |
+	| Transportation | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |
 
 			#@RunOnly
 Scenario Outline: Veirfy backend entries for SPS outcome and Summary table for SPS flight journey
@@ -120,6 +121,7 @@ Scenario Outline: Veirfy backend entries for SPS outcome and Summary table for S
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -136,7 +138,7 @@ Scenario Outline: Veirfy backend entries for SPS outcome and Summary table for S
 
 
 Examples:
-	| Transportation | Flight number | TypeOfPassenger | nextPage        | SPSOutcome  |
-	| Flight         | AI 123        | Airline         | Referred to SPS | Allowed     |
-	| Flight         | AI 123        | Airline         | Referred to SPS | Not allowed |
+	| Transportation | Flight number | TypeOfPassenger | nextPage        | SPSOutcome  | ApplicationRadio     |
+	| Flight         | AI 123        | Airline         | Referred to SPS | Allowed     | Search by PTD number |
+	| Flight         | AI 123        | Airline         | Referred to SPS | Not allowed | Search by PTD number |
 

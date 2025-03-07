@@ -21,6 +21,7 @@ Scenario Outline: Check SPS to GB PETS Travel Document details By PTD number - s
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -34,8 +35,8 @@ Scenario Outline: Check SPS to GB PETS Travel Document details By PTD number - s
 	Then I should navigate to Welcome page
 	And I should see departure date and time is not matching with latest referred to SPS
 Examples:
-	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome |
-	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | Search by PTD number |
 
 
 Scenario Outline: Check SPS behaviour PETS Travel Document details By PTD number - status in Approved
@@ -47,6 +48,7 @@ Scenario Outline: Check SPS behaviour PETS Travel Document details By PTD number
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -60,5 +62,5 @@ Scenario Outline: Check SPS behaviour PETS Travel Document details By PTD number
 	Then I should navigate to Welcome page
 	And I should see for Flights departure date and time is not matching with latest referred to SPS
 Examples:
-	| Transportation | Flight number | TypeOfPassenger | nextPage        | SPSOutcome  |
-	| Flight         | AI 123        | Airline         | Referred to SPS | Not allowed |
+	| Transportation | Flight number | TypeOfPassenger | nextPage        | SPSOutcome  | ApplicationRadio     |
+	| Flight         | AI 123        | Airline         | Referred to SPS | Not allowed | Search by PTD number |

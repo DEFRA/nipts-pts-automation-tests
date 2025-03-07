@@ -21,6 +21,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -34,6 +35,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -47,6 +49,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -60,6 +63,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -73,6 +77,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -86,6 +91,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -99,6 +105,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -112,6 +119,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -125,6 +133,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -138,6 +147,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -151,6 +161,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -175,8 +186,8 @@ Scenario Outline: Validate pagination on Referred to SPS page
 	#Then I verify referred to SPS record count '10' on page
 
 Examples:
-	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        |
-	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Search by PTD number |
 
 Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	When I have selected '<Transportation>' radio option
@@ -186,7 +197,7 @@ Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
-	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber1>' of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -244,6 +255,7 @@ Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber3>' of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -273,6 +285,7 @@ Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber4>' of the application
 	When I click search button
 	And I should see the application status in 'Cancelled'
@@ -286,6 +299,7 @@ Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber5>' of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -332,8 +346,8 @@ Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	Then I verify wrong PTD and reference number are displayed in ascending order
 
 Examples:
-	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | PTDNumber1 | PTDNumber2 | PTDNumber3 | PTDNumber4 | PTDNumber5 | ApplicationRadio1            | ApplicationRadio2          | ReferenceNumber1 | ReferenceNumber2 | ReferenceNumber3 | ReferenceNumber4 | MicrochipNumber1 | MicrochipNumber2 |
-	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | D7C8D0     | E6361B     | E6361B     | F7DFF5     | DE1A42     | Search by application number | Search by microchip number | LZC7RPYH         | RA7GQJD7         | S338P56E         | TACFHP0H         | 676789876543321  | 676789876543321  |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | PTDNumber1 | PTDNumber2 | PTDNumber3 | PTDNumber4 | PTDNumber5 | ApplicationRadio1            | ApplicationRadio2          | ReferenceNumber1 | ReferenceNumber2 | ReferenceNumber3 | ReferenceNumber4 | MicrochipNumber1 | MicrochipNumber2 | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | D7C8D0     | E6361B     | E6361B     | F7DFF5     | DE1A42     | Search by application number | Search by microchip number | LZC7RPYH         | RA7GQJD7         | S338P56E         | TACFHP0H         | 676789876543321  | 676789876543321  | Search by PTD number |
 
 Scenario Outline: Validate ascending order on Reffered to SPS page
 	When I have selected '<Transportation>' radio option
@@ -343,7 +357,7 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
-	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber1>' of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -401,6 +415,7 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber3>' of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -430,6 +445,7 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber4>' of the application
 	When I click search button
 	And I should see the application status in 'Cancelled'
@@ -443,6 +459,7 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber5>' of the application
 	When I click search button
 	And I should see the application status in 'Approved'
@@ -489,6 +506,6 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 	Then I verify PTD and reference number are displayed in ascending order
 
 Examples:
-	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | PTDNumber1 | PTDNumber2 | PTDNumber3 | PTDNumber4 | PTDNumber5 | ApplicationRadio1            | ApplicationRadio2          | ReferenceNumber1 | ReferenceNumber2 | ReferenceNumber3 | ReferenceNumber4 | MicrochipNumber1 | MicrochipNumber2 |
-	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | DE1A42     | E6361B     | E6361B     | F7DFF5     | DE1A42     | Search by application number | Search by microchip number | LZC7RPYH         | RA7GQJD7         | S338P56E         | TACFHP0H         | 676789876543321  | 676789876543321  |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | PTDNumber1 | PTDNumber2 | PTDNumber3 | PTDNumber4 | PTDNumber5 | ApplicationRadio     | ApplicationRadio1            | ApplicationRadio2          | ReferenceNumber1 | ReferenceNumber2 | ReferenceNumber3 | ReferenceNumber4 | MicrochipNumber1 | MicrochipNumber2 |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | DE1A42     | E6361B     | E6361B     | F7DFF5     | DE1A42     | Search by PTD number | Search by application number | Search by microchip number | LZC7RPYH         | RA7GQJD7         | S338P56E         | TACFHP0H         | 676789876543321  | 676789876543321  |
 

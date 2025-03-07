@@ -21,12 +21,13 @@ Background:
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber>' of the application
 	When I click search button
 	Then I should see an error message "Enter a PTD number" in Find a document page
 Examples:
-	| Transportation | FerryRoute                    | PTDNumber |
-	| Ferry          | Birkenhead to Belfast (Stena) |           |
+	| Transportation | FerryRoute                    | PTDNumber | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) |           | Search by PTD number |
 
 Scenario Outline: Verify validation of less than 6 PTD Number format
 	Then I have selected '<Transportation>' radio option
@@ -36,12 +37,13 @@ Scenario Outline: Verify validation of less than 6 PTD Number format
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber>' of the application
 	When I click search button
 	Then I should see an error message "Enter 6 characters after 'GB826'" in Find a document page
 Examples:
-	| Transportation | FerryRoute                    | PTDNumber |
-	| Ferry          | Birkenhead to Belfast (Stena) | 12345	 |
+	| Transportation | FerryRoute                    | PTDNumber | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | 12345     | Search by PTD number |
 
 Scenario Outline: Verify validation of more than 6 PTD Number format
 	Then I have selected '<Transportation>' radio option
@@ -51,12 +53,13 @@ Scenario Outline: Verify validation of more than 6 PTD Number format
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber>' of the application
 	When I click search button
 	Then I should see an error message "Enter 6 characters after 'GB826'" in Find a document page
 Examples:
-	| Transportation | FerryRoute                    | PTDNumber |
-	| Ferry          | Birkenhead to Belfast (Stena) | 1234567   |
+	| Transportation | FerryRoute                    | PTDNumber | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | 1234567   | Search by PTD number |
 
 Scenario Outline: Verify validation of alphabets other than A-F PTD Number format
 	Then I have selected '<Transportation>' radio option
@@ -66,12 +69,13 @@ Scenario Outline: Verify validation of alphabets other than A-F PTD Number forma
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber>' of the application
 	When I click search button
 	Then I should see an error message "Enter 6 characters after 'GB826', using only letters A to F and numbers" in Find a document page
 Examples:
-	| Transportation | FerryRoute                    | PTDNumber |
-	| Ferry          | Birkenhead to Belfast (Stena) | C9321G	 |
+	| Transportation | FerryRoute                    | PTDNumber | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | C9321G    | Search by PTD number |
 
 Scenario Outline: Verify validation provide invalid 6 PTD Number format and navigate to Document not found page 
 	Then I have selected '<Transportation>' radio option
@@ -81,12 +85,13 @@ Scenario Outline: Verify validation provide invalid 6 PTD Number format and navi
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber>' of the application
 	When I click search button
 	Then I should navigate to Document not found page
 Examples:
-	| Transportation | FerryRoute                    | PTDNumber |
-	| Ferry          | Birkenhead to Belfast (Stena) | 123456    |
+	| Transportation | FerryRoute                    | PTDNumber | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | 123456    | Search by PTD number |
 
 Scenario Outline: Verify validation of special characters with PTD number
 	Then I have selected '<Transportation>' radio option
@@ -96,12 +101,13 @@ Scenario Outline: Verify validation of special characters with PTD number
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber>' of the application
 	When I click search button
 	Then I should see an error message "Enter 6 characters after 'GB826'" in Find a document page
 Examples:
-	| Transportation | FerryRoute                    | PTDNumber |
-	| Ferry          | Birkenhead to Belfast (Stena) | @@@@@$$&  |
+	| Transportation | FerryRoute                    | PTDNumber | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | @@@@@$$&  | Search by PTD number |
 
 Scenario Outline: Verify validation for blank Application Number
 	Then I have selected '<Transportation>' radio option

@@ -5,6 +5,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage
     public interface IApplicationDeclarationPage
     {
         bool IsNextPageLoaded(string pageTitle);
+        bool IsCustomPageLoaded(string pageTitle);
         void TickAgreedToDeclaration();
         void ClickSendApplicationButton();
         Summary GetSummaryDetails();
