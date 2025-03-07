@@ -85,12 +85,13 @@ Scenario Outline: Verify validation page for WAF rule on Search PTD number Field
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Invalid PTD number of the application
 	When I click search button
 	Then I should navigate to the custom '<nextPage>' is loaded
 Examples:
-	| Transportation | nextPage                                           | FerryRoute                     |
-	| Ferry          | You cannot access this page or perform this action | Birkenhead to Belfast (Stena)  |
+	| Transportation | nextPage                                           | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | You cannot access this page or perform this action | Birkenhead to Belfast (Stena) | Search by PTD number |
 
 Scenario Outline: Verify validation page for WAF rule on Search Application number Field
 	Given I navigate to the port checker application
