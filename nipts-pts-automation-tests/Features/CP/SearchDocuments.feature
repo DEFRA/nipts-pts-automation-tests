@@ -12,7 +12,20 @@ Background:
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 
-	
+	Scenario Outline: Verify validation text for No radio button selection on document search page
+	Then I have selected '<Transportation>' radio option
+	Then I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	When I click search button
+	Then I should see an error message "Please select a document search option" in Find a document page
+Examples:
+	| Transportation | FerryRoute                    | 
+	| Ferry          | Birkenhead to Belfast (Stena) |
+
 	Scenario Outline: Verify validation text for blank PTD Number
 	Then I have selected '<Transportation>' radio option
 	Then I select the '<FerryRoute>' radio option
