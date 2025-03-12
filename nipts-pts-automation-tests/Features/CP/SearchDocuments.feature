@@ -21,7 +21,7 @@ Background:
 	When I click search button from footer
 	Then I navigate to Find a document page
 	When I click search button
-	Then I should see an error message "Please select a document search option" in Find a document page
+	Then I should see an error message "Select if you are searching for a PTD, application or microchip number" in Find a document page
 Examples:
 	| Transportation | FerryRoute                    | 
 	| Ferry          | Birkenhead to Belfast (Stena) |
