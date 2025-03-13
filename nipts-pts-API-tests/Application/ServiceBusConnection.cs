@@ -6,9 +6,8 @@ namespace nipts_pts_API_tests.Application
     public class ServiceBusConnection
     {
         static string connectionString = ServiceBusConnectionData.Configuration.ServiceBusConnString;
-        static string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
 
-        public static async Task SendMessageToQueue(string messageBody)
+        public static async Task SendMessageToQueue(string messageBody,string queueName)
         {
             // Create a ServiceBusClient to connect to the Service Bus namespace
             ServiceBusClient client = new ServiceBusClient(connectionString);

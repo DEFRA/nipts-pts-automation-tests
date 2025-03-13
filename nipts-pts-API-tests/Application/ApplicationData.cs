@@ -38,6 +38,7 @@ namespace nipts_pts_API_tests.Application
 
         public void ApproveApplication(string ApplicationId)
         {
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
             DateTime dateTime = DateTime.Now;
             string TodaysDate = dateTime.ToString("yyyy-MM-dd");
 
@@ -46,7 +47,7 @@ namespace nipts_pts_API_tests.Application
 
             string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Authorised\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
 
-            ServiceBusConnection.SendMessageToQueue(messageBody);
+            ServiceBusConnection.SendMessageToQueue(messageBody, queueName);
         }
         public string CreateApplicationSigFNoAPI(string AppId)
         {
@@ -91,6 +92,7 @@ namespace nipts_pts_API_tests.Application
 
         public void RejectApplication(string ApplicationId)
         {
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
             DateTime dateTime = DateTime.Now;
             string TodaysDate = dateTime.ToString("yyyy-MM-dd");
 
@@ -98,7 +100,7 @@ namespace nipts_pts_API_tests.Application
             string dynamicId = Guid.NewGuid().ToString();
 
             string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Rejected\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
-            ServiceBusConnection.SendMessageToQueue(messageBody);
+            ServiceBusConnection.SendMessageToQueue(messageBody, queueName);
         }
 
         public string GetApplicationToRevoke(string AppReference)
@@ -117,6 +119,7 @@ namespace nipts_pts_API_tests.Application
 
         public void RevokeApplication(string ApplicationId)
         {
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
             DateTime dateTime = DateTime.Now;
             string TodaysDate = dateTime.ToString("yyyy-MM-dd");
 
@@ -125,7 +128,7 @@ namespace nipts_pts_API_tests.Application
 
             string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Revoked\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
 
-            ServiceBusConnection.SendMessageToQueue(messageBody);
+            ServiceBusConnection.SendMessageToQueue(messageBody, queueName);
         }
 
         public Task<RestResponse> GetApplication(string AppReference)
@@ -294,13 +297,14 @@ namespace nipts_pts_API_tests.Application
 
         public string writeOfflineApplicationToQueue()
         {
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusOfflineApplQueueName;
             var file = Path.Combine(RequestFolder, "CreateOfflineApplication.json");
             var requestJson = File.ReadAllText(file);
             var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
             dynamicObject.Application.ReferenceNumber = getUniqueRerefenceNumber();
             dynamicObject.PTD.DocumentReferenceNumber = getUniquePTDNumber();
             dynamicObject.Owner.Email = getUniqueEmailId();
-            ServiceBusConnection.SendMessageToQueue(JsonConvert.SerializeObject(dynamicObject));
+            ServiceBusConnection.SendMessageToQueue(JsonConvert.SerializeObject(dynamicObject), queueName);
             return getUniquePTDNumber();
         }
 

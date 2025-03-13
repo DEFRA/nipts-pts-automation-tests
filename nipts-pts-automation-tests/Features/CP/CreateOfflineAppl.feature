@@ -20,11 +20,12 @@ Scenario Outline: Create Offline Application
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
 
 Examples:
-	| Transportation | FerryRoute                    |
-	| Ferry          | Birkenhead to Belfast (Stena) |
+	| Transportation | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |
 

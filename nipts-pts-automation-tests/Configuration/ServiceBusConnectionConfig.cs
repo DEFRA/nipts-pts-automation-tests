@@ -6,5 +6,6 @@ namespace nipts_pts_automation_tests.Configuration
     {
         public string ServiceBusConnString { get; set; }
         public string ServiceBusQueueName { get; set; }
+        public string ServiceBusOfflineApplQueueName { get; set; }
     }
 }
