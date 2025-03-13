@@ -4,6 +4,20 @@ namespace nipts_pts_automation_tests.Tools
 {
     public class Utils
     {
+        public static string GenerateRandomApplicationNumber()
+        {
+            var size = 4;
+            var random = new Random();
+            var alphabets = "ABCDEF0123456789";
+
+            char[] chars = new char[size];
+            for (int i = 0; i < size; i++)
+            {
+                chars[i] = alphabets[random.Next(alphabets.Length)];
+            }
+            return new string(chars);
+        }
+
         public static string GenerateRandomName()
         {
             var size = 25;
