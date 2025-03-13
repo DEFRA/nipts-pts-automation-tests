@@ -23,8 +23,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement txtApplicationNumberSearchBox => _driver.WaitForElement(By.XPath("//input[@id='applicationNumberSearch']"));
         private IWebElement txtMicrochipNumberSearchBox => _driver.WaitForElement(By.XPath("//input[@id='microchipNumber']"));
         private IWebElement expectedText => _driver.WaitForElement(By.XPath("//div[@class='ons-panel__body']"));
-        private IWebElement rdoApplicatioNumbere => _driver.WaitForElement(By.XPath("//label[normalize-space()='Search by application number']"));
-        private IWebElement rdoMicrochipNumbere => _driver.WaitForElement(By.XPath("//label[normalize-space()='Search by microchip number']"));
+        private IWebElement rdoPTDNumber => _driver.WaitForElementExists(By.XPath("//label[normalize-space()='Search by PTD number']"));
+        private IWebElement rdoApplicatioNumbere => _driver.WaitForElementExists(By.XPath("//label[normalize-space()='Search by application number']"));
+        private IWebElement rdoMicrochipNumbere => _driver.WaitForElementExists(By.XPath("//label[normalize-space()='Search by microchip number']"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
         #endregion
 
@@ -35,7 +36,15 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         }
         public void SelectSearchRadioOption(string radioButtonValue)
         {
-            if (radioButtonValue == "Search by application number")
+            if (radioButtonValue == "Search by PTD number")
+            {
+
+                if (!rdoPTDNumber.Selected)
+                {
+                    rdoPTDNumber.Click();
+                }
+            }
+            else if (radioButtonValue == "Search by application number")
             {
 
                 if (!rdoApplicatioNumbere.Selected)

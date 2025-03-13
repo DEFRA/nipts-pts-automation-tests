@@ -295,39 +295,34 @@ namespace nipts_pts_API_tests.Application
         }
 
 
-        public string writeOfflineApplicationToQueue()
+        public string writeOfflineApplicationToQueue(string randonNumber)
         {
             string queueName = ServiceBusConnectionData.Configuration.ServiceBusOfflineApplQueueName;
             var file = Path.Combine(RequestFolder, "CreateOfflineApplication.json");
             var requestJson = File.ReadAllText(file);
             var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
-            dynamicObject.Application.ReferenceNumber = getUniqueRerefenceNumber();
-            dynamicObject.PTD.DocumentReferenceNumber = getUniquePTDNumber();
-            dynamicObject.Owner.Email = getUniqueEmailId();
+            dynamicObject.Application.ReferenceNumber = getUniqueRerefenceNumber(randonNumber);
+            dynamicObject.PTD.DocumentReferenceNumber = getUniquePTDNumber(randonNumber);
+            dynamicObject.Owner.Email = getUniqueEmailId(randonNumber);
             ServiceBusConnection.SendMessageToQueue(JsonConvert.SerializeObject(dynamicObject), queueName);
-            return getUniquePTDNumber();
+            return getUniquePTDNumber(randonNumber);
         }
 
-        public string getUniqueRerefenceNumber()
+        public string getUniqueRerefenceNumber(string randonNumber)
         {
-            string TodaysDate = DateTime.Now.ToString("ddMM");
-            string newRerefenceNumber = "GB826AD" + TodaysDate;
+            string newRerefenceNumber = "GB826AD" + randonNumber;
             return newRerefenceNumber;
         }
 
-        public string getUniquePTDNumber()
+        public string getUniquePTDNumber(string randonNumber)
         {
-            string TodaysDate = DateTime.Now.ToString("ddMM");
-            string newPTDNumber = "GB826AD" + TodaysDate;
+            string newPTDNumber = "GB826AD" + randonNumber;
             return newPTDNumber;
-
         }
 
-        public string getUniqueEmailId()
+        public string getUniqueEmailId(string randonNumber)
         {
-            string TodaysDate = DateTime.Now.ToString("ddMM");
-            string newEmail = "themask" + "+" + TodaysDate + "@smokin.green";
-
+            string newEmail = "themask" + "+" + randonNumber + "@smokin.green";
             return newEmail;
         }
     }

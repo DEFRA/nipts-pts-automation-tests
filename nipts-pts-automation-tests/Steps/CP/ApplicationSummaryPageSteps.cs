@@ -1,6 +1,7 @@
 ﻿using BoDi;
 using nipts_pts_API_tests.Application;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
+using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
@@ -218,7 +219,8 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             lock (_lock)
             {
-                string PTDNumber = AppData.writeOfflineApplicationToQueue();
+                string randonNumber = Utils.GenerateRandomApplicationNumber();
+                string PTDNumber = AppData.writeOfflineApplicationToQueue(randonNumber);
                 _scenarioContext.Add("PTDNumber", PTDNumber);
             }
         }
