@@ -13,6 +13,8 @@
         bool VerifySubmiitedMessage();
         bool VerifyEntriesOnCheckerPage();
         bool getPassCount(string passCount);
-        public bool VerifySelectedFerryRouteOnWelcomePage(string FerryRoute);
+        bool VerifySelectedFerryRouteOnWelcomePage(string FerryRoute);
+        bool VerifyNoViewLinkIfNoReferredToSPS();
+        bool VerifyNoViewLinkIfNoReferredToSPSWithSPSUser();
     }
 }

@@ -39,15 +39,13 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             if (radioButtonValue == "Search by PTD number")
             {
-
-                if (!rdoPTDNumber.Selected)
-                {
+                //if (!rdoPTDNumber.Selected)
+                //{
                     rdoPTDNumber.Click();
-                }
+                //}
             }
             else if (radioButtonValue == "Search by application number")
             {
-
                 if (!rdoApplicatioNumbere.Selected)
                 {
                     rdoApplicatioNumbere.Click();
@@ -55,7 +53,6 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
             else if (radioButtonValue == "Search by microchip number")
             {
-
                 if (!rdoMicrochipNumbere.Selected)
                 {
                     rdoMicrochipNumbere.Click();

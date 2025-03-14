@@ -102,5 +102,18 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(_welcomePage.VerifySelectedFerryRouteOnWelcomePage(FerryRoute), "Selected ferry route not matching on Welcome page");
         }
 
+        [When(@"I verify No View link if No Referred to SPS")]
+        [Then(@"I verify No View link if No Referred to SPS")]
+        public void ThenIVerifyNoViewLinkIfNoReferredToSPS()
+        {
+            Assert.True(_welcomePage.VerifyNoViewLinkIfNoReferredToSPS(), "View Link visible for No Referred to SPS on Checks page");
+        }
+
+        [When(@"I verify No View link if No Referred to SPS with SPS User")]
+        [Then(@"I verify No View link if No Referred to SPS with SPS User")]
+        public void ThenIVerifyNoViewLinkIfNoReferredToSPSWithSPSUser()
+        {
+            Assert.True(_welcomePage.VerifyNoViewLinkIfNoReferredToSPSWithSPSUser(), "View Link visible for No Referred to SPS on Checks page");
+        }
     }
 }
