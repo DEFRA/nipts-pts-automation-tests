@@ -157,3 +157,43 @@ Examples:
 	|Transportation | FerryRoute                    | 
 	|Ferry          | Birkenhead to Belfast (Stena) |
 
+Scenario Outline: Verify no View link for no Referred to SPS record
+	When Create an application via backend
+	When Approve an application via backend
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the PTD number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
+	And I should see the application subtitle 'Lifelong pet travel document and declaration'
+	And I click save and continue button from application status page
+	Then I should see an error message "Select an option" in application status page
+	And I select Pass radio button
+	When I click save and continue button from application status page
+	Then I should navigate to Welcome page
+	And I verify submiited message
+	And I verify count '1' for Pass Checks
+    And I verify No View link if No Referred to SPS
+	And click on signout button on CP and verify the signout message
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the password for prototype research page
+	When I have provided the CP credentials and signin for user 'SPSUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time with SPS user
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+    And I verify No View link if No Referred to SPS with SPS User
+
+Examples:
+	| Transportation | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |
