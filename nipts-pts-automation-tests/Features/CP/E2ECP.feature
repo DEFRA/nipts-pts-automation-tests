@@ -73,6 +73,7 @@ Examples:
 	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |
 	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |
 
+	@RunOnly
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Approved
 	When Create an application with Mandatory address only via backend
 	And Approve an application via backend
@@ -132,6 +133,7 @@ Examples:
 	| Transportation | FerryRoute               |  ApplicationRadio             |nextPage        | SPSOutcome  |
 	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Not allowed |
 
+	@RunOnly
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Revoked
 	When Create an application via backend
 	And Revoke an application via backend
@@ -331,6 +333,7 @@ Examples:
 	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |
 	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |
 
+	@RunOnly
 Scenario Outline: Verify back link navigation for SPS user
 	When Create an application via backend
 	And Approve an application via backend
