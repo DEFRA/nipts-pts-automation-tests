@@ -1,6 +1,7 @@
 ﻿using BoDi;
 using nipts_pts_API_tests.Application;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
+using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
@@ -211,5 +212,18 @@ namespace nipts_pts_automation_tests.Steps.CP
             string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
             Assert.True(_applicationSummaryPage.VerifyGBSummaryForPassApplWithSQLBackend(AppReference), "GB Summary not matching with SQL Backend data");
         }
+
+        [Given(@"Create an offline application via backend")]
+        [When(@"Create an offline application via backend")]
+        public void ThenCreateOfflineApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string randonNumber = Utils.GenerateRandomApplicationNumber();
+                string PTDNumber = AppData.writeOfflineApplicationToQueue(randonNumber);
+                _scenarioContext.Add("PTDNumber", PTDNumber);
+            }
+        }
+
     }
 }
