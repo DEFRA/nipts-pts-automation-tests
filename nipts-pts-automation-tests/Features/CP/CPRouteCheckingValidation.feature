@@ -168,7 +168,7 @@ Examples:
 	| Transportation | Flight number |
 	| Flight         | 1234          |
 
-Scenario Outline: Verify filter functionality for ferry route 
+Scenario: Verify filter functionality for ferry route 
 	When Create an application via backend
 	And Approve an application via backend
 	And I have captured pet details
@@ -180,6 +180,8 @@ Scenario Outline: Verify filter functionality for ferry route
 	And verify the route details on the welcome page for ferry '<FerryRoute>'
 
 Examples:
-	| Transportation | FerryRoute                   | 
-	| Ferry          | Loch Ryan to Belfast (Stena) | 
+	| Transportation | FerryRoute                    | 
+	| Ferry          | Loch Ryan to Belfast (Stena)  | 
+	| Ferry          | Birkenhead to Belfast (Stena) | 
+	| Ferry          | Cairnryan to Larne (P&O)      | 
 
