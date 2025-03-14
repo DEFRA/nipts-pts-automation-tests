@@ -26,6 +26,24 @@ Examples:
 	| Transportation | FerryRoute                    | 
 	| Ferry          | Birkenhead to Belfast (Stena) |
 
+	Scenario Outline: Verify text is retained in the textbox when switching between radio buttons
+	Then I have selected '<Transportation>' radio option
+	Then I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the '<PTDNumber>' of the application
+	And I click search by '<ApplicationRadio2>' radio button
+	Then I click search by '<ApplicationRadio>' radio button
+	And verify the text '<PTDNumber>' in the textbox for the selected radio button '<ApplicationRadio>'
+	
+Examples:
+	| Transportation | FerryRoute                    | ApplicationRadio     | PTDNumber | ApplicationRadio2            | AppNumber |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number | C93213    | Search by application number | PSZLLSM3  |
+
 	Scenario Outline: Verify validation text for blank PTD Number
 	Then I have selected '<Transportation>' radio option
 	Then I select the '<FerryRoute>' radio option
