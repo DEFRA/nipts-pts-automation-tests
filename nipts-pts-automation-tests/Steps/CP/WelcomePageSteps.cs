@@ -96,5 +96,11 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(_welcomePage.getPassCount(PassCount),"Pass count not matching on Checks page");
         }
 
+        [Then(@"verify the route details on the welcome page for ferry '([^']*)'")]
+        public void ThenVerifyFerryRoute(string FerryRoute)
+        {
+            Assert.True(_welcomePage.VerifySelectedFerryRouteOnWelcomePage(FerryRoute), "Selected ferry route not matching on Welcome page");
+        }
+
     }
 }

@@ -263,6 +263,20 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             else
                 return false;
         }
+        public bool VerifySelectedFerryRouteOnWelcomePage(string FerryRoute)
+        {
+            bool status = false;
+            IList<IWebElement> FerryRouteEle = _driver.FindElements(By.XPath("//p[@class='govuk-body  govuk-!-margin-bottom-1']"));
+            foreach (IWebElement ele in FerryRouteEle)
+            {
+                if (ele.Text.Contains(FerryRoute))
+                {
+                    status = true;
+                    break;
+                }
+            }
+            return status;
+        }
 
         #endregion
     }

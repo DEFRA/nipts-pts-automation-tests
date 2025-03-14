@@ -167,3 +167,19 @@ Scenario Outline: Verify positive flow for date field when user enter the date f
 Examples:
 	| Transportation | Flight number |
 	| Flight         | 1234          |
+
+Scenario Outline: Verify filter functionality for ferry route 
+	When Create an application via backend
+	And Approve an application via backend
+	And I have captured pet details
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	And verify the route details on the welcome page for ferry '<FerryRoute>'
+
+Examples:
+	| Transportation | FerryRoute                   | 
+	| Ferry          | Loch Ryan to Belfast (Stena) | 
+

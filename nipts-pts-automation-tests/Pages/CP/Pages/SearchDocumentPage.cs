@@ -3,6 +3,7 @@ using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
 
+
 namespace nipts_pts_automation_tests.Pages.CP.Pages
 {
     public class SearchDocumentPage : ISearchDocumentPage
@@ -73,6 +74,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void EnterApplicationNumber(string applicationNumber)
         {
+            
             txtApplicationNumberSearchBox.SendKeys(applicationNumber);
         }
 
@@ -101,7 +103,27 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
             return false;
         }
-        #endregion
 
+        public bool VerifyTextOnSearchDocPage(string textboxValue,string radioButtonValue)
+        {
+            if (radioButtonValue == "Search by PTD number")
+            {
+                string ptdNumberVal = txtPTDSearchBox.GetAttribute("value");
+                return ptdNumberVal.Equals(textboxValue);
+            }
+            else if (radioButtonValue == "Search by application number")
+            {
+                string appNumberVal = txtApplicationNumberSearchBox.GetAttribute("value");
+                return appNumberVal.Equals(textboxValue);
+            }
+            else if (radioButtonValue == "Search by microchip number")
+            {
+                string microchipNumberVal = txtMicrochipNumberSearchBox.GetAttribute("value");
+                return microchipNumberVal.Equals(textboxValue);
+            }
+            return false;
+        }
+        #endregion
     }
-}
+    }
+
