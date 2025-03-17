@@ -168,7 +168,6 @@ Examples:
 	| Transportation | Flight number |
 	| Flight         | 1234          |
 
-	@RunOnly
 Scenario: Verify filter functionality for ferry route 
 	When Create an application via backend
 	And Approve an application via backend

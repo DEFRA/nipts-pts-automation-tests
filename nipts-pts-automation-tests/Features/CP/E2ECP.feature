@@ -11,7 +11,6 @@ Background:
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 
-	@RunOnly
 Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - status in Approved
 	When Create an application via backend
 	And Approve an application via backend
@@ -133,7 +132,6 @@ Examples:
 	| Transportation | FerryRoute               |  ApplicationRadio             |nextPage        | SPSOutcome  |
 	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Not allowed |
 
-	@RunOnly
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Revoked
 	When Create an application via backend
 	And Revoke an application via backend

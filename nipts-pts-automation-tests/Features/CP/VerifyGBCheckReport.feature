@@ -13,7 +13,6 @@ Background:
 	When Create an application via backend
 	When Approve an application via backend
 
-	@RunOnly
 Scenario Outline: Validate GB Check Report page fields for GB User
 	When I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
