@@ -12,6 +12,7 @@ Background:
 	Then I should redirected to port route checke page
 	When Create an application via backend
 
+	@RunOnly
 Scenario Outline: Check SPS to GB PETS Travel Document details By PTD number - status in Approved
 	When Approve an application via backend
 	And I have selected '<Transportation>' radio option
