@@ -20,7 +20,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
-        private IWebElement pageHeading => _driver.WaitForElement(By.XPath("//h1[contains(text(),'Checks')]"));
+        private IWebElement pageHeading => _driver.WaitForElementExists(By.XPath("//h1[contains(text(),'Checks')]"));
         private IWebElement submittedMessage => _driver.WaitForElement(By.XPath("//div[@class='ons-panel__body']"));
         private IWebElement iconSearch => _driver.WaitForElement(By.XPath("//a[@href='/checker/document-search']//*[name()='svg']"));
         private IWebElement iconHome => _driver.WaitForElement(By.XPath("//span[normalize-space()='Home']"));
@@ -262,6 +262,102 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 return true;
             else
                 return false;
+        }
+
+        public bool VerifyNoViewLinkIfNoReferredToSPS()
+        {
+            string departureDate = "";
+            string departureTime = "";
+            string headerTime = headerDepartureTime.Text.Trim();
+            string route = headerTime.Substring(7, 29).Trim();
+            Thread.Sleep(1000);
+            if (route.Contains("Birkenhead to Belfast (Stena)"))
+            {
+                if (ConfigSetup.BaseConfiguration.TestConfiguration.BSBrowserVersion == "16.5")
+                {
+                    departureDate = headerTime.Substring(60, 10);
+                    departureTime = headerTime.Substring(71, 5);
+                    departTime = headerTime.Substring(71, 5);
+                }
+                else
+                {
+                    departureDate = headerTime.Substring(53, 10);
+                    departureTime = headerTime.Substring(64, 5);
+                    departTime = headerTime.Substring(64, 5);
+                }
+            }
+            else if (route.Contains("Cairnryan to Larne (P&O)"))
+            {
+                departureDate = headerTime.Substring(48, 10);
+                departureTime = headerTime.Substring(59, 5);
+                departTime = headerTime.Substring(59, 5);
+            }
+            else if (route.Contains("Loch Ryan to Belfast (Stena)"))
+            {
+                departureDate = headerTime.Substring(52, 10);
+                departureTime = headerTime.Substring(63, 5);
+                departTime = headerTime.Substring(63, 5);
+            }
+            string FailCount = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departureTime}')]/../../..//dd[1]";
+            string ViewLink = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departureTime}')]/../../..//dd[2]//button";
+
+            string GetFailCount = null;
+            if (_driver.FindElements(By.XPath(FailCount)).Count > 0)
+            {
+                GetFailCount = _driver.FindElement(By.XPath(FailCount)).Text;
+            }
+
+            bool ViewLinkStatus = true;
+
+            if (GetFailCount.Equals("0"))
+                if(_driver.FindElements(By.XPath(ViewLink)).Count > 0)
+                    ViewLinkStatus = false;
+
+            return ViewLinkStatus;
+        }
+
+        public bool VerifyNoViewLinkIfNoReferredToSPSWithSPSUser()
+        {
+            var GBDepartureTime = departTime;
+            string departureDate = "";
+            string headerTime = headerDepartureTime.Text.Trim();
+            string route = headerTime.Substring(7, 29).Trim();
+            Thread.Sleep(1000);
+            if (route.Contains("Birkenhead to Belfast (Stena)"))
+            {
+                if (ConfigSetup.BaseConfiguration.TestConfiguration.BSBrowserVersion == "16.5")
+                {
+                    departureDate = headerTime.Substring(60, 10);
+                }
+                else
+                {
+                    departureDate = headerTime.Substring(53, 10);
+                }
+            }
+            else if (route.Contains("Cairnryan to Larne (P&O)"))
+            {
+                departureDate = headerTime.Substring(48, 10);
+            }
+            else if (route.Contains("Loch Ryan to Belfast (Stena)"))
+            {
+                departureDate = headerTime.Substring(52, 10);
+            }
+            string FailCount = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{GBDepartureTime}')]/../../..//dd[1]";
+            string ViewLink = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{GBDepartureTime}')]/../../..//dd[2]//button";
+
+            string GetFailCount = null;
+            if (_driver.FindElements(By.XPath(FailCount)).Count > 0)
+            {
+                GetFailCount = _driver.FindElement(By.XPath(FailCount)).Text;
+            }
+
+            bool ViewLinkStatus = true;
+
+            if (GetFailCount.Equals("0"))
+                if (_driver.FindElements(By.XPath(ViewLink)).Count > 0)
+                    ViewLinkStatus = false;
+
+            return ViewLinkStatus;
         }
 
         #endregion

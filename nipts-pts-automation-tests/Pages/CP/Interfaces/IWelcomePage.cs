@@ -13,5 +13,7 @@
         bool VerifySubmiitedMessage();
         bool VerifyEntriesOnCheckerPage();
         bool getPassCount(string passCount);
+        bool VerifyNoViewLinkIfNoReferredToSPS();
+        bool VerifyNoViewLinkIfNoReferredToSPSWithSPSUser();
     }
 }
