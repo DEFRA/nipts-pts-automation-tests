@@ -60,6 +60,7 @@ Examples:
 	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 2               | PassengerReferredDAERA | No                       | PassengerWillNotTravel | PetDoesNotMatchThePTD | 2                 | PotentialCommercialMovement | No                                   | OtherReason | Search by PTD number |
 	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 1               | PassengerReferredDAERA | No                       | No                     | No                    | 0                 | No                          | No                                   | No          | Search by PTD number |
 
+	@RunOnly
 Scenario Outline: Validate GB Check Report page fields for SPS User
 	When I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
