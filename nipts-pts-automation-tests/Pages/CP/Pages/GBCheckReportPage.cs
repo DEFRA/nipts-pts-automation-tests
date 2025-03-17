@@ -157,7 +157,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
             else if (otherIssues.Contains("AuthorisedTravellerButNoConfirmation"))
             {
-                if (!AuthTravNoConfirmation.Text.Contains("Authorised traveller but no confirmation"))
+                if (!AuthTravNoConfirmation.Text.Contains("Authorised person but no confirmation"))
                     status = false;
             }
             else if (otherIssues.Contains("OtherReason"))
