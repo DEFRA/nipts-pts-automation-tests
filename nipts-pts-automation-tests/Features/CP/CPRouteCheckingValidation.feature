@@ -1,4 +1,4 @@
-﻿@CPRegression
+﻿@CPRegression @RunOnly
 Feature: CP Route Checking Validation
 
 Validating the negative scenarios for Route Checking Information
@@ -94,7 +94,7 @@ Examples:
 	| ScheduledDepartureDay | ScheduledDepartureMonth | ScheduledDepartureYear | Transportation | Flight number |
 	|                       |  01                     | 29876987               | Flight         | 1234          |
 
-Scenario Outline: Verify validation text  for date field when user enter the date field that exceeds 48 hours before
+Scenario Outline: Verify validation text for date field when user enter the date field that exceeds 48 hours before
 	Then I have selected '<Transportation>' radio option
 	Then I provided date less than 48 hours from the current date
 	Then I provide the '<Flight number>' in the box
@@ -105,7 +105,30 @@ Examples:
 	| Transportation | Flight number |
 	| Flight         | 1234          |
 
-Scenario Outline: Verify validation text  for date field when user enter the date field that exceeds 24 hours after
+Scenario Outline: Verify validation text for date field when user enter the date field that is 48 hours and 1 minute before
+	Then I have selected '<Transportation>' radio option
+	Then I provided exact date less than 48 hours from the current date
+	Then I provide the '<Flight number>' in the box
+	And  I provided time before 47 hours and 59 minute from the current time
+	When I click save and continue button from route checke page
+	Then I should see an error message "The flight or ferry must have departed in the past 48 hours or departs within the next 24 hours" in route checking page
+Examples:
+	| Transportation | Flight number |
+	| Flight         | 1234          |
+
+Scenario Outline: Verify validation text for date field when user enter the date field that is exact 48 hours before
+	Then I have selected '<Transportation>' radio option
+	Then I provided exact date less than 48 hours from the current date
+	Then I provide the '<Flight number>' in the box
+	And  I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should see an error message "The flight or ferry must have departed in the past 48 hours or departs within the next 24 hours" in route checking page
+Examples:
+	| Transportation | Flight number |
+	| Flight         | 1234          |
+
+
+Scenario Outline: Verify validation text for date field when user enter the date field that exceeds 24 hours after
 	Then I have selected '<Transportation>' radio option
 	Then I provided date more than 24 hours from the current date
 	Then I provide the '<Flight number>' in the box
@@ -136,10 +159,21 @@ Examples:
 	| ScheduledDepartureDay | ScheduledDepartureMonth | ScheduledDepartureYear | Transportation | Flight number |
 	| 19                    | 10                      | 2024                   | Flight         | 1234          |
 
-Scenario Outline: Verify validation text  for date field when user enter the time field that exceeds 24 hours after
+Scenario Outline: Verify validation text for date field when user enter the time field that exceeds 24 hours after
 	Then I have selected '<Transportation>' radio option
 	Then I provided date that exceeds 24 hours from the current date
 	Then I provided time that exceeds 24 hours from the current time
+	Then I provide the '<Flight number>' in the box
+	When I click save and continue button from route checke page
+	Then I should see an error message "The flight or ferry must have departed in the past 48 hours or departs within the next 24 hours" in route checking page
+Examples:
+	| Transportation | Flight number |
+	| Flight         | 1234          |
+
+Scenario Outline: Verify validation text for date field when user enter the time field that exceeds 24 hours by 1 minute
+	Then I have selected '<Transportation>' radio option
+	Then I provided date that exceeds 24 hours from the current date
+	Then I provided time that exceeds 24 hours and 1 minute from the current time
 	Then I provide the '<Flight number>' in the box
 	When I click save and continue button from route checke page
 	Then I should see an error message "The flight or ferry must have departed in the past 48 hours or departs within the next 24 hours" in route checking page
@@ -157,11 +191,34 @@ Scenario Outline: Verify positive flow for date field when user enter the date f
 Examples:
 	| Transportation | Flight number |
 	| Flight         | 1234          |
+
+Scenario Outline: Verify positive flow for date field when user enter the date before 48 hours and 1 minute
+	Then I have selected '<Transportation>' radio option
+	Then I provided exact date less than 48 hours from the current date
+	Then I provide the '<Flight number>' in the box
+	And  I provided time that exceeds 24 hours and 1 minute from the current time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+Examples:
+	| Transportation | Flight number |
+	| Flight         | 1234          |
+
 Scenario Outline: Verify positive flow for date field when user enter the date field within 24 hours
 	Then I have selected '<Transportation>' radio option
 	Then I provided date that exceeds 24 hours from the current date
 	Then I provide the '<Flight number>' in the box
 	And  I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+Examples:
+	| Transportation | Flight number |
+	| Flight         | 1234          |
+
+Scenario Outline: Verify positive flow for date field when user enter the date after 23 hours and 59 minutes
+	Then I have selected '<Transportation>' radio option
+	Then I provided date that exceeds 24 hours from the current date
+	Then I provide the '<Flight number>' in the box
+	And  I provided time that exceeds 23 hours and 59 minute from the current time
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 Examples:

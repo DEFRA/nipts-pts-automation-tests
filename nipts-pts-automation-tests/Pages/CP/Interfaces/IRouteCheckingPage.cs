@@ -14,5 +14,7 @@
         void SelectDropDownDepartureTimeWithSPS();
         string SelectfutureDropDownDepartureTime();
         void EnterDateMonthYear(DateTime dateTime);
+        string SelectDropDownDepartureTimeJustOneMinuteLaterThanCurrent();
+        string SelectDropDownDepartureTimeJustOneMinuteBeforeThanCurrent();
     }
 }
