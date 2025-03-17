@@ -84,8 +84,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             string clickPTD = $"//button[contains(text(),'{ptdNumber}')]";
             Thread.Sleep(1000);
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", _driver.WaitForElementExists(By.XPath(clickPTD)));
-            _driver.WaitForElementExists(By.XPath(clickPTD)).Click();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", _driver.FindElement(By.XPath(clickPTD)));
         }
 
         public void ClickOnPage(string pageNumber)

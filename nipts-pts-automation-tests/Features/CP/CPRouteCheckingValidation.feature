@@ -1,4 +1,4 @@
-﻿@CPRegression @RunOnly
+﻿@CPRegression
 Feature: CP Route Checking Validation
 
 Validating the negative scenarios for Route Checking Information
