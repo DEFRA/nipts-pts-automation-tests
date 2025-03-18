@@ -20,7 +20,7 @@ Scenario Outline: Verify getting expected page on invalid characters
 	And I provided the full name of the pet keeper as '<FullName>'
 	When I click Continue button from What is your full name page
 	Then verify next page '<nextPage>' is loaded
-	And I click on Back button in Pets Application
+	And click browser back
 	And click on signout button and verify the signout message on pets
 
 Examples:

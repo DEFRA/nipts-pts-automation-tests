@@ -124,10 +124,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
             if (_driver.FindElements(By.XPath(matchingTime)).Count > 0)
             {
-                Console.WriteLine($"Matching count: {_driver.FindElements(By.XPath(matchingTime)).Count}");
+                Console.WriteLine($"Matching count: {_driver.WaitForElements(By.XPath(matchingTime)).Count}");
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", _driver.FindElement(By.XPath(matchingTime)));
                 //_driver.FindElement(By.XPath(matchingTime)).Click();
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", _driver.FindElement(By.XPath(matchingTime)));
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", _driver.WaitForElementExists(By.XPath(matchingTime)));
             }
         }
 

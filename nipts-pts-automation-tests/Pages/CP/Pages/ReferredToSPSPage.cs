@@ -33,7 +33,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public bool VerifyPetDocumentDetailsOnReferredToSPSPage(string ptdNumberNew, string petType, string michrochipNo)
         {
-            return PTDNoEle.Text.Contains(ptdNumberNew) && PetTypeEle.Text.Contains(petType) && MichrochipNoEle.Text.Contains(michrochipNo);
+            string ptdNumberCheck = $"//button[contains(text(),'{ptdNumberNew}')]";
+            string PetTypeEleCheck = $"//button[contains(text(),'{ptdNumberNew}')]/../../..//td[1]";
+            string MichrochipNoEleCheck = $"//button[contains(text(),'{ptdNumberNew}')]/../../..//td[2]";
+            return _driver.FindElement(By.XPath(ptdNumberCheck)).Text.Contains(ptdNumberNew) && _driver.FindElement(By.XPath(PetTypeEleCheck)).Text.Contains(petType) && _driver.FindElement(By.XPath(MichrochipNoEleCheck)).Text.Contains(michrochipNo);
         }
 
         public bool VerifyDepartureDetailsOnReferredToSPSPage()

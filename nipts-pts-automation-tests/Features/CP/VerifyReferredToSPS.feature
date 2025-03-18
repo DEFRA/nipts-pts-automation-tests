@@ -187,7 +187,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 
 Examples:
 	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | ApplicationRadio     |
-	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Search by PTD number |
+	| Ferry          | Cairnryan to Larne (P&O)      | Ferry foot passenger | Referred to SPS | Search by PTD number |
 
 Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	When I have selected '<Transportation>' radio option

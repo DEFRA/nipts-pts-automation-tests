@@ -32,7 +32,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement AdditionalComment => _driver.WaitForElement(By.XPath("//dt[text()='Additional comments']/..//p"));
         private IWebElement PetNotMatchPTD => _driver.WaitForElement(By.XPath("//li[contains(text(),'Pet does not match the PTD')]"));
         private IWebElement PotentialCommetcialMov => _driver.WaitForElement(By.XPath("//li[contains(text(),'Potential commercial movement')]"));
-        private IWebElement AuthTravNoConfirmation => _driver.WaitForElement(By.XPath("//li[contains(text(),'Authorised traveller but no confirmation')]"));
+        private IWebElement AuthTravNoConfirmation => _driver.WaitForElement(By.XPath("//li[contains(text(),'Authorised person but no confirmation')]"));
         private IWebElement OtherReason => _driver.WaitForElement(By.XPath("//li[contains(text(),'Other reason')]"));
         #endregion
 

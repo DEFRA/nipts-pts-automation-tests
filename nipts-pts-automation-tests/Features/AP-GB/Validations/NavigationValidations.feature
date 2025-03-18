@@ -24,8 +24,9 @@ Scenario Outline: Validate navigation for PTD application
 	And I have provided date of PETS microchipped
 	When I click Continue button from When was your pet microchipped page
 	Then I should redirected to the Is your pet a cat, dog or ferret page
-	When I click on Lifelong pet travel documents from header on home page
-	And I click Create a new pet travel document button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
 	Then I should redirected to the Are your details correct page
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -36,8 +37,10 @@ Scenario Outline: Validate navigation for PTD application
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
 	Then I should redirected to the What breed is your '<Pet>'? page
-	When I click on Lifelong pet travel documents from header on home page
-	And I click Create a new pet travel document button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
 	Then I should redirected to the Are your details correct page
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -53,8 +56,12 @@ Scenario Outline: Validate navigation for PTD application
 	And I provided the Pets name as '<PetName>'
 	When I click on continue button from What is your pet's name page
 	Then I should redirected to the What sex is your pet page
-	When I click on Lifelong pet travel documents from header on home page
-	And I click Create a new pet travel document button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
 	Then I should redirected to the Are your details correct page
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -74,8 +81,14 @@ Scenario Outline: Validate navigation for PTD application
 	And I have provided date of birth
 	When I click on continue button from Do you know your pet's date of birth? page
 	Then I should redirected to the What is the main colour of your '<Pet>' page
-	When I click on Lifelong pet travel documents from header on home page
-	And I click Create a new pet travel document button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
 	Then I should redirected to the Are your details correct page
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -96,8 +109,15 @@ Scenario Outline: Validate navigation for PTD application
 	And I have selected the option as '<Color>' for color
 	When I click on continue button from What is the main colour of your pet page
 	Then I should redirected to the Does your pet have any significant features page
-	When I click on Lifelong pet travel documents from header on home page
-	And I click Create a new pet travel document button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
 	Then I should redirected to the Are your details correct page
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
@@ -120,14 +140,22 @@ Scenario Outline: Validate navigation for PTD application
 	And I have selected an option as '<IsSignificantFeatures>' for significant features
 	When I click on continue button from Does your pet have any significant features page
 	Then I should redirected to the Check your answers and sign the declaration page
-	When I click on Lifelong pet travel documents from header on home page
-	And I click Create a new pet travel document button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
+	When I click on Back button
 	Then I should redirected to the Are your details correct page
 	When I click on continue button from Are your details correct page
 	Then I should redirected to the Is your pet microchipped page
 	When I click Continue button from microchipped page
 	Then I should redirected to the Check your answers and sign the declaration page
-
+ 
 Examples:
 	| FullName  | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color         | IsSignificantFeatures |
 	| PetDog's  | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black         | Yes                   |
