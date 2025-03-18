@@ -177,6 +177,35 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             txtScheduleDepartureYear.SendKeys(year);
         }
 
+        public string SelectDropDownDepartureTimeJustOneMinuteLaterThanCurrent()
+        {
+            var hour = DateTime.Now.ToString("HH");
+            var minutes = DateTime.Now.AddMinutes(1).ToString("mm");
+            string departureTime = $"'{hour}':'{minutes}'";
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourDropdown);
+
+            SelectElement selectHour = new SelectElement(hourDropdown);
+            selectHour.SelectByValue(hour);
+            SelectElement selectMinute = new SelectElement(minuteDropdown);
+            selectMinute.SelectByValue(minutes);
+
+            return departureTime;
+        }
+
+        public string SelectDropDownDepartureTimeJustOneMinuteBeforeThanCurrent()
+        {
+            var hour = DateTime.Now.ToString("HH");
+            var minutes = DateTime.Now.AddMinutes(-1).ToString("mm");
+            string departureTime = $"'{hour}':'{minutes}'";
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourDropdown);
+
+            SelectElement selectHour = new SelectElement(hourDropdown);
+            selectHour.SelectByValue(hour);
+            SelectElement selectMinute = new SelectElement(minuteDropdown);
+            selectMinute.SelectByValue(minutes);
+
+            return departureTime;
+        }
 
         #endregion
 
