@@ -24,5 +24,7 @@
         void SelectGBOutcome(string gBOutcome);
         void SelectVisualCheck(string visualCheck);
         void SelectOtherIssues(string otherIssues);
+        void EnterDetailsOfOutCome(string detailsOfOutCome);
+
     }
 }

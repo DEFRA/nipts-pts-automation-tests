@@ -41,6 +41,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement PotentialCommetcialMov => _driver.WaitForElementExists(By.XPath("//label[contains(text(),'Potential commercial movement')]/..//input"));
         private IWebElement AuthTravNoConfirmation => _driver.WaitForElementExists(By.XPath("//input[contains(@id,'oiFailAuthTravellerNoConfirmation')]"));
         private IWebElement OtherReason => _driver.WaitForElementExists(By.XPath("//input[contains(@id,'oiFailOther')]"));
+        private IWebElement DetailsOfOutCome => _driver.WaitForElementExists(By.Id("spsOutcomeDetails"));
 
         #endregion
 
@@ -236,7 +237,19 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", OtherReason);
                 OtherReason.Click();
             }
+
         }
+
+        public void EnterDetailsOfOutCome(string detailsOfOutCome)
+        {
+            if (!detailsOfOutCome.Contains("None"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", DetailsOfOutCome);
+                DetailsOfOutCome.SendKeys(detailsOfOutCome);
+            }
+        }
+
+
 
         #endregion
 

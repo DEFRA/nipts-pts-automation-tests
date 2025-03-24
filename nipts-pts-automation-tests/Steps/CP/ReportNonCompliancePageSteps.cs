@@ -174,5 +174,13 @@ namespace nipts_pts_automation_tests.Steps.CP
             _reportNonCompliancePage.SelectOtherIssues(OtherIssues);
         }
 
+
+        [When(@"I enter details of outcome'([^']*)'")]
+        [Then(@"I enter details of outcome'([^']*)'")]
+        public void ThenEnterDetailsOfOutCome(string DetailsOfOutCome)
+        {
+            _reportNonCompliancePage.EnterDetailsOfOutCome(DetailsOfOutCome);
+        }
+
     }
 }
