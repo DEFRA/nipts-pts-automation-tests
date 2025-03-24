@@ -13,7 +13,7 @@ Background:
 	When I click Create a new pet travel document button
 	Then I should redirected to the Are your details correct page
 
-
+	@Run@Only
 Scenario Outline: Download PETS Travel Document Dog and Cat - Pending
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
@@ -181,7 +181,7 @@ Examples:
 	| PetDog's  | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black         | Yes                   |
 	| PetCat's  | Yes                      | CV2 4NZ  | 07440345678 | Yes             | 123456789654321 | Cat | Cat     | Female | Tortoiseshell | No                    |
 
-	
+	@RunOnly
 Scenario Outline: Download PETS Travel Document Ferret - Approved
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page

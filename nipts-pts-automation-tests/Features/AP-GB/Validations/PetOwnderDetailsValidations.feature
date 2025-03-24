@@ -22,6 +22,7 @@ Examples:
 	 |  ErrorMessage						 |
 	 |  Select if your details are correct	 |
 
+	 @RunOnly
 Scenario Outline: Verify full name should not allows exceed limits
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
