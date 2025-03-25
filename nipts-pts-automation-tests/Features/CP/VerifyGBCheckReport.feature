@@ -36,6 +36,7 @@ Scenario Outline: Validate GB Check Report page fields for GB User
 	And I select Other issues '<OtherReason>' on Report non-compliance page
 	And I click '<PassengerType>' in Passenger details
 	And I enter relevant comment '<AdditionalComment>'
+	And I enter details of outcome '<DetailsOfOutcome>'
 	And I select GB Outcome '<PassengerReferredDAERA>' on Report non-compliance page
 	And I select GB Outcome '<PassengerAdvisedNoTravel>' on Report non-compliance page
 	And I select GB Outcome '<PassengerWillNotTravel>' on Report non-compliance page
@@ -50,15 +51,16 @@ Scenario Outline: Validate GB Check Report page fields for GB User
 	And I verify GB check report with Other issues '<NumberOtherIssues>','<AuthorisedTravellerButNoConfirmation>'
 	And I verify GB check report with Other issues '<NumberOtherIssues>','<OtherReason>'
 	And I verify GB check report with relevent comment '<AdditionalComment>'
+	And I verify GB check report with details of outcome '<DetailsOfOutcome>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerReferredDAERA>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerAdvisedNoTravel>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerWillNotTravel>'
 
 Examples:
-	| Transportation | FerryRoute                    | NumberMicrochipReasons | MicrochipNumberNoMatch | CannotFindMicrochip | PassengerType        | AdditionalComment        | NumberGBOutcome | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | NumberOtherIssues | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | ApplicationRadio     |
-	| Ferry          | Birkenhead to Belfast (Stena) | 2                      | MicrochipNumberNoMatch | CannotFindMicrochip | Ferry foot passenger | Verify Additonal Comment | 3               | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | 3                 | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | Search by PTD number |
-	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 2               | PassengerReferredDAERA | No                       | PassengerWillNotTravel | PetDoesNotMatchThePTD | 2                 | PotentialCommercialMovement | No                                   | OtherReason | Search by PTD number |
-	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 1               | PassengerReferredDAERA | No                       | No                     | No                    | 0                 | No                          | No                                   | No          | Search by PTD number |
+	| Transportation | FerryRoute                    | NumberMicrochipReasons | MicrochipNumberNoMatch | CannotFindMicrochip | PassengerType        | AdditionalComment        | NumberGBOutcome | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | NumberOtherIssues | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | ApplicationRadio     | DetailsOfOutcome   |
+	| Ferry          | Birkenhead to Belfast (Stena) | 2                      | MicrochipNumberNoMatch | CannotFindMicrochip | Ferry foot passenger | Verify Additonal Comment | 3               | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | 3                 | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | Search by PTD number | Details of Outcome |
+	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 2               | PassengerReferredDAERA | No                       | PassengerWillNotTravel | PetDoesNotMatchThePTD | 2                 | PotentialCommercialMovement | No                                   | OtherReason | Search by PTD number | None               |
+	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 1               | PassengerReferredDAERA | No                       | No                     | No                    | 0                 | No                          | No                                   | No          | Search by PTD number | None               |
 
 	@RunOnly
 Scenario Outline: Validate GB Check Report page fields for SPS User
@@ -84,6 +86,7 @@ Scenario Outline: Validate GB Check Report page fields for SPS User
 	And I select Other issues '<OtherReason>' on Report non-compliance page
 	And I click '<PassengerType>' in Passenger details
 	And I enter relevant comment '<AdditionalComment>'
+	And I enter details of outcome '<DetailsOfOutcome>'
 	And I select GB Outcome '<PassengerReferredDAERA>' on Report non-compliance page
 	And I select GB Outcome '<PassengerAdvisedNoTravel>' on Report non-compliance page
 	And I select GB Outcome '<PassengerWillNotTravel>' on Report non-compliance page
@@ -110,12 +113,13 @@ Scenario Outline: Validate GB Check Report page fields for SPS User
 	And I verify GB check report with Other issues '<NumberOtherIssues>','<AuthorisedTravellerButNoConfirmation>'
 	And I verify GB check report with Other issues '<NumberOtherIssues>','<OtherReason>'
 	And I verify GB check report with relevent comment '<AdditionalComment>'
+	And I verify GB check report with details of outcome '<DetailsOfOutcome>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerReferredDAERA>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerAdvisedNoTravel>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerWillNotTravel>'
 
 Examples:
-	| Transportation | FerryRoute                    | NumberMicrochipReasons | MicrochipNumberNoMatch | CannotFindMicrochip | PassengerType        | AdditionalComment        | NumberGBOutcome | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | NumberOtherIssues | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | ApplicationRadio     |
-	| Ferry          | Birkenhead to Belfast (Stena) | 2                      | MicrochipNumberNoMatch | CannotFindMicrochip | Ferry foot passenger | Verify Additonal Comment | 3               | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | 3                 | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | Search by PTD number |
-	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 2               | PassengerReferredDAERA | No                       | PassengerWillNotTravel | PetDoesNotMatchThePTD | 2                 | PotentialCommercialMovement | No                                   | OtherReason | Search by PTD number |
-	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 1               | PassengerReferredDAERA | No                       | No                     | No                    | 0                 | No                          | No                                   | No          | Search by PTD number |
+	| Transportation | FerryRoute                    | NumberMicrochipReasons | MicrochipNumberNoMatch | CannotFindMicrochip | PassengerType        | AdditionalComment        | NumberGBOutcome | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | NumberOtherIssues | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | ApplicationRadio     | DetailsOfOutcome           |
+	| Ferry          | Birkenhead to Belfast (Stena) | 2                      | MicrochipNumberNoMatch | CannotFindMicrochip | Ferry foot passenger | Verify Additonal Comment | 3               | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | 3                 | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | Search by PTD number | Pet details does not match |
+	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 2               | PassengerReferredDAERA | No                       | PassengerWillNotTravel | PetDoesNotMatchThePTD | 2                 | PotentialCommercialMovement | No                                   | OtherReason | Search by PTD number | None                       |
+	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | MicrochipNumberNoMatch | No                  | Ferry foot passenger | None                     | 1               | PassengerReferredDAERA | No                       | No                     | No                    | 0                 | No                          | No                                   | No          | Search by PTD number | None                       |
