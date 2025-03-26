@@ -37,7 +37,7 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 	When I click search button from footer
 	Then I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
-	And I provided the PTD number of the application
+	And I provided the '<PTDNumber1>' of the application
 	When I click search button
 	And I should see the application status in 'Approved'
 	And I should see the application subtitle 'Lifelong pet travel document and declaration'
@@ -50,8 +50,8 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 	And I verify count '2' for Pass Checks
 
 Examples:
-	| Transportation | FerryRoute                    | ApplicationRadio     |
-	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |
+	| Transportation | FerryRoute                    | ApplicationRadio     | PTDNumber1 |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |  D7C8D0    |
 
 Scenario Outline: PTS port checker Pass application by Reference number - status in Approved
 	When Create an application via backend

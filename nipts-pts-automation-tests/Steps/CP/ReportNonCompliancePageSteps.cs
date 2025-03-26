@@ -150,7 +150,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         [Then(@"I enter relevant comment '([^']*)'")]
         public void ThenEnterAdditionalComment(string AdditionalComment)
         {
-            _reportNonCompliancePage.EnterDetailsOfOutcome(AdditionalComment);
+            _reportNonCompliancePage.EnterAdditionalComment(AdditionalComment);
         }
 
         [When(@"I select GB Outcome '([^']*)' on Report non-compliance page")]
@@ -172,6 +172,14 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenSelectOtherIssues(string OtherIssues)
         {
             _reportNonCompliancePage.SelectOtherIssues(OtherIssues);
+        }
+
+
+        [When(@"I enter details of outcome '([^']*)'")]
+        [Then(@"I enter details of outcome '([^']*)'")]
+        public void ThenEnterDetailsOfOutCome(string DetailsOfOutCome)
+        {
+            _reportNonCompliancePage.EnterDetailsOfOutCome(DetailsOfOutCome);
         }
 
     }
