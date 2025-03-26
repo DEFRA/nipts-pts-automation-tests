@@ -64,5 +64,12 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(gBCheckReportPage.VerifyOtherIssues(NumberOtherIssues, OtherIssues), "Other Issues does not match");
         }
 
+        [When(@"I verify GB check report with details of outcome '([^']*)'")]
+        [Then(@"I verify GB check report with details of outcome '([^']*)'")]
+        public void ThenIVerifyDetailsOfOutcome(string detailsOfOutcome)
+        {
+            Assert.True(gBCheckReportPage.VerifyDetailsOfOutcome(detailsOfOutcome), "DetailsOfOutcome does not match");
+        }
+
     }
 }

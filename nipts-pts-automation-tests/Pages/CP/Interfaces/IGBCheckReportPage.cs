@@ -9,5 +9,6 @@
         bool VerifyGBOutcome(string NumberGBOutcome,string gBOutcome);
         bool? VerifyVisualCheck(string petDoesNotMatchThePTD);
         bool? VerifyOtherIssues(string numberOtherIssues, string otherIssues);
+        bool? VerifyDetailsOfOutcome(string detailsOfOutcome);
     }
 }

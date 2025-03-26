@@ -1,5 +1,4 @@
 ﻿using BoDi;
-using Microsoft.Azure.Amqp.Framing;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
@@ -34,6 +33,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement PotentialCommetcialMov => _driver.WaitForElement(By.XPath("//li[contains(text(),'Potential commercial movement')]"));
         private IWebElement AuthTravNoConfirmation => _driver.WaitForElement(By.XPath("//li[contains(text(),'Authorised person but no confirmation')]"));
         private IWebElement OtherReason => _driver.WaitForElement(By.XPath("//li[contains(text(),'Other reason')]"));
+        private IWebElement DetailsOfOutcome => _driver.WaitForElement(By.XPath("//dt[text()='Details of outcome']/..//p"));
         #endregion
 
         #region Methods
@@ -167,6 +167,14 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
 
             return status;
+        }
+
+        public bool? VerifyDetailsOfOutcome(string detailsOfOutcome)
+        {
+            if (DetailsOfOutcome.Text.Contains(detailsOfOutcome))
+                return true;
+            else
+                return false;
         }
 
         #endregion
