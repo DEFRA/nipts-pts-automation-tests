@@ -95,6 +95,7 @@ Examples:
 	| PetDog's |  Yes                      | Yes             | 1234567891			 |
 	| PetDog's |  Yes                      | Yes             | 1234567891234567      |
 
+	@RunOnly
 Scenario Outline: The date on the microchip should be a future date relative to the pets date of birth
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page

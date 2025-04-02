@@ -132,7 +132,7 @@ Examples:
 	| FullName | Are your details correct | Address                                                                                                                                                                                                                                                            | ErrorMessages                                                                                                                                                                                                                                                                                |
 	| PetDog's | No                       | ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWX | Enter line 1 of your address using 250 characters or less,Enter line 2 of your address using 250 characters or less,Enter your town or city using 250 characters or less,Enter your county using 100 characters or less,Enter your full postcode in the correct format, for example TF7 5AY or TF75AY |
 
-
+	@RunOnly
 Scenario Outline: Verify enter address manually validations with invalid postcode, special characters and exceed limits
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page

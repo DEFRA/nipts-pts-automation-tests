@@ -154,6 +154,7 @@ Examples:
 	| FullName | Are your details correct | MicrochipOption | MicrochipNumber | Pet | PetName |
 	| Pet Dog  | Yes                      | Yes             | 123456789654321 | Cat | Cat     |
 
+	@RunOnly
 Scenario Outline: Verify pet colour page validations by not selecting any color
 	Then I have selected '<Are your details correct>' option
 	When I click on continue button from Are your details correct page
