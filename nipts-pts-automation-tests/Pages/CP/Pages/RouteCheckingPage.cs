@@ -32,6 +32,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement txtScheduleDepartureDay => _driver.WaitForElement(By.Id("departureDateDay"));
         private IWebElement txtScheduleDepartureMonth => _driver.WaitForElement(By.Id("departureDateMonth"));
         private IWebElement txtScheduleDepartureYear => _driver.WaitForElement(By.Id("departureDateYear"));
+        private IWebElement txtFlightFilterMsg1 => _driver.WaitForElement(By.XPath("(//ul[contains(@class,'govuk-list govuk-list--bullet')]//li)[1]"));
+        private IWebElement txtFlightFilterMsg2 => _driver.WaitForElement(By.XPath("(//ul[contains(@class,'govuk-list govuk-list--bullet')]//li)[2]"));
+        private IWebElement txtFlightFilterMsg3 => _driver.WaitForElement(By.XPath("(//ul[contains(@class,'govuk-list govuk-list--bullet')]//li)[3]"));
+        private IWebElement txtFlightFilterHeaderMsg => _driver.WaitForElement(By.XPath("//div[contains(@class,'govuk-grid-column-two-thirds')]//p"));
         #endregion
 
         #region Methods
@@ -206,7 +210,15 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
             return departureTime;
         }
+        public bool VerifyFilterFlightMsg(string FlightMsgPTD, string FlightMsgAppno, string FlightMsgMichrochipNo)
+        {
+            return txtFlightFilterMsg1.Text.Contains(FlightMsgPTD) && txtFlightFilterMsg2.Text.Contains(FlightMsgAppno) && txtFlightFilterMsg3.Text.Contains(FlightMsgMichrochipNo);
+        }
 
+        public bool VerifyFilterFlightHeaderMsg(string FlightHeaderMsg)
+        {
+            return txtFlightFilterHeaderMsg.Text.Contains(FlightHeaderMsg);
+        }
         #endregion
 
     }

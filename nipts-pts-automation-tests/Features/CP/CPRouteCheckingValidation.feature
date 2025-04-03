@@ -242,3 +242,15 @@ Examples:
 	| Ferry          | Birkenhead to Belfast (Stena) | 
 	| Ferry          | Cairnryan to Larne (P&O)      | 
 
+Scenario: Verify message on Home page for ferry selected as flight
+Then I have selected '<Transportation>' radio option
+	Then I provided exact date less than 48 hours from the current date
+	Then I provide the '<Flight number>' in the box
+	And  I provided time that exceeds 24 hours and 1 minute from the current time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	Then verify header message for flights route message 'You can scan or search for'
+	Then verify bulletpoints for flights route message 'PTD number' 'application number' 'microchip number'
+Examples:
+	| Transportation | Flight number | 
+	| Flight         | RK 103        | 
