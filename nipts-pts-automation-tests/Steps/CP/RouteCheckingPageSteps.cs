@@ -1,6 +1,7 @@
 ﻿using BoDi;
 using nipts_pts_automation_tests.Data;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
+using nipts_pts_automation_tests.Pages.CP.Pages;
 using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -202,5 +203,15 @@ namespace nipts_pts_automation_tests.Steps.CP
             _scenarioContext.Add("DepartureTime", departureTime);
         }
 
+        [Then(@"verify bulletpoints for flights route message '([^']*)' '([^']*)' '([^']*)'")]
+        public void ThenVerifyFilterFlightMsgOnHomepage(string FlightMsgPTD, string FlightMsgAppno, string FlightMsgMichrochipNo)
+        {
+            Assert.True(_routeCheckingPage.VerifyFilterFlightMsg(FlightMsgPTD, FlightMsgAppno, FlightMsgMichrochipNo), "Invalid Message for filter Flight on homepage");
+        }
+        [Then(@"verify header message for flights route message '([^']*)'")]
+        public void ThenVerifyFilterFlightHeaderMsgOnHomepage(string FilterFlightHeaderMsg)
+        {
+            Assert.True(_routeCheckingPage.VerifyFilterFlightHeaderMsg(FilterFlightHeaderMsg), "Invalid Message for filter Flight on homepage");
+        }
     }
 }
