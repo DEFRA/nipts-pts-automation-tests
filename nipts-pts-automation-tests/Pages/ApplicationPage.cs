@@ -14,13 +14,13 @@ namespace nipts_pts_automation_tests.Pages
         #region Page Objects
 
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading'] | //h1[@class='govuk-panel__title']"));
-        private By Englishclick => By.XPath("//span[contains(text(),'English')]");
-        private By Welshclick =By.XPath("//span[contains(text(),'Cymraeg')]");
+        private By Englishclick => By.XPath("//a[contains(@id,'localeEn')]");
+        private By Welshclick =By.XPath("//a[contains(@id,'localeCy')]");
         private IWebElement ApplyForADocEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Apply for a document')] | //button[contains(text(),'Gwneud cais am ddogfen')]"));
         private IWebElement ContinueWelshEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Parhau')] | //button[contains(text(),'Continue')]"));
         private IWebElement BackWelshEle => _driver.WaitForElement(By.XPath("//a[contains(text(),'Yn ôl')]"));
         private IWebElement ErrorMessageEle => _driver.WaitForElement(By.XPath("//ul[contains(@class,'govuk-error-summary__list')]//a | //ul[contains(@class,'govuk-error-summary__list')]//span"));
-        private IWebElement FooterLanguageSelector => _driver.WaitForElement(By.XPath("(//a[contains(@class,'govuk-footer__link')])[3]"));
+        private IWebElement LinkLanguageSelector => _driver.WaitForElement(By.XPath("(//a[contains(@id,'locale')]//span[1]"));
         public IWebElement lnkManageAccount => _driver.WaitForElement(By.XPath("//a[@href='/User/ManageAccount']"));
         public IWebElement lnkManageYourAccount => _driver.WaitForElement(By.XPath("//a[@href='/User/RedirectToExternal']"));
         public IWebElement lnkViewDocsFromManageAcc => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='Gweld eich dogfennau teithio gydol oes i anifeiliaid anwes neu wneud cais am un newydd.']"));
@@ -119,10 +119,24 @@ namespace nipts_pts_automation_tests.Pages
 
         public bool VerifyLanguageAtPageFooter(string displayedLang)
         {
-            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,4000)", "");
+            By EnglishLinkLanguageSelector = By.XPath("//a[contains(@id,'localeEn')]");
+            By WelshLinkLanguageSelector = By.XPath("//a[contains(@id,'localeCy')]");
+            bool status = false; 
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
-            return FooterLanguageSelector.Text.Contains(displayedLang);
+
+            if (displayedLang.Equals("English"))
+            {
+                if (_driver.FindElements(EnglishLinkLanguageSelector).Count > 0)
+                    status = true;
+            }
+            if (displayedLang.Equals("Cymraeg"))
+            {
+                if (_driver.FindElements(WelshLinkLanguageSelector).Count > 0)
+                    status = true;
+            }
+            return status;
         }
+
         public void ClickOnContinueEng()
         {
             ContinueEle.Click();
