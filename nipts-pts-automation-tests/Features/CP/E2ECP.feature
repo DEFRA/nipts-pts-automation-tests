@@ -189,6 +189,7 @@ Examples:
 	| Transportation | FerryRoute               |  ApplicationRadio             | nextPage        | SPSOutcome |
 	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number | Referred to SPS | Allowed    |
 
+	@RunOnly
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Unsuccessful
 	When Create an application via backend
 	And Reject an application via backend
@@ -247,6 +248,7 @@ Examples:
 	| Transportation | FerryRoute               |  ApplicationRadio             |nextPage        | SPSOutcome |
 	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Allowed    |
 
+	@RunOnly
 Scenario Outline: Check GB to SPS PETS Travel Document details By Reference number - status in Pending
 	When Create an application via backend
 	When I have captured pet details

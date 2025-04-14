@@ -189,6 +189,7 @@ Examples:
 	| Transportation | FerryRoute               | TypeOfPassenger      | nextPage        | ApplicationRadio     | PTDNumber2 | PTDNumber3 | PTDNumber4 | PTDNumber5 | PTDNumber6 | PTDNumber7 | PTDNumber8 | PTDNumber9 | PTDNumber10 | PTDNumber1 |
 	| Ferry          | Cairnryan to Larne (P&O) | Ferry foot passenger | Referred to SPS | Search by PTD number | D7C8D0     | E6361B     | C1CC2F     | AEA12E     | DE1A42     | C93213     | D78CE8     | C208C7     | 55E5D0      | D4E321     |
 
+	@RunOnly
 Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	When I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
@@ -349,6 +350,7 @@ Examples:
 	| Transportation | FerryRoute               | TypeOfPassenger      | nextPage        | PTDNumber1 | PTDNumber2 | PTDNumber3 | PTDNumber4 | PTDNumber5 | ApplicationRadio1            | ApplicationRadio2          | ReferenceNumber1 | ReferenceNumber2 | ReferenceNumber3 | ReferenceNumber4 | MicrochipNumber1 | MicrochipNumber2 | ApplicationRadio     |
 	| Ferry          | Cairnryan to Larne (P&O) | Ferry foot passenger | Referred to SPS | D7C8D0     | E6361B     | E6361B     | F7DFF5     | DE1A42     | Search by application number | Search by microchip number | LZC7RPYH         | RA7GQJD7         | S338P56E         | TACFHP0H         | 676789876543321  | 676789876543321  | Search by PTD number |
 
+	@RunOnly
 Scenario Outline: Validate ascending order on Reffered to SPS page
 	When I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option

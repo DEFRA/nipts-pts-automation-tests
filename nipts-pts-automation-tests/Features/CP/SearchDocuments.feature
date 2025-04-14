@@ -60,6 +60,7 @@ Examples:
 	| Transportation | FerryRoute                    | PTDNumber | ApplicationRadio     |
 	| Ferry          | Birkenhead to Belfast (Stena) |           | Search by PTD number |
 
+	@RunOnly
 Scenario Outline: Verify validation of less than 6 PTD Number format
 	Then I have selected '<Transportation>' radio option
 	Then I select the '<FerryRoute>' radio option
@@ -220,6 +221,7 @@ Examples:
 	| Transportation | FerryRoute                    | MicrochipNumber | ApplicationRadio		    |
 	| Ferry          | Birkenhead to Belfast (Stena) |				   | Search by microchip number |
 
+	@RunOnly
 Scenario Outline: Verify validation for special characters Microchip number
 	Then I have selected '<Transportation>' radio option
 	Then I select the '<FerryRoute>' radio option

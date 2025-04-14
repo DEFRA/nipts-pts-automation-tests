@@ -149,6 +149,7 @@ Examples:
 	| ScheduledDepartureDay | ScheduledDepartureMonth | ScheduledDepartureYear | Transportation | Flight number |
 	| 19                    | 10                      | 2024                   | Flight         | 1234          |
 
+	@RunOnly
 Scenario Outline: Verify validation text for blank hour field and enter value in minutes field Schedule Departure Time
 	Then I have selected '<Transportation>' radio option
 	Then I provide the '<Flight number>' in the box
@@ -170,6 +171,7 @@ Examples:
 	| Transportation | Flight number |
 	| Flight         | 1234          |
 
+	@RunOnly
 Scenario Outline: Verify validation text for date field when user enter the time field that exceeds 24 hours by 1 minute
 	Then I have selected '<Transportation>' radio option
 	Then I provided date that exceeds 24 hours from the current date
@@ -181,6 +183,7 @@ Examples:
 	| Transportation | Flight number |
 	| Flight         | 1234          |
 
+	@RunOnly
 Scenario Outline: Verify positive flow for date field when user enter the date field within 48 hours
 	Then I have selected '<Transportation>' radio option
 	Then I provided date within 48 hours from the current date

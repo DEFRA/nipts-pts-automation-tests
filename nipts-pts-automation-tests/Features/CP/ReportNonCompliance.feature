@@ -104,7 +104,7 @@ Examples:
 	| Transportation | FerryRoute                    |ApplicationRadio             |
 	| Ferry          | Birkenhead to Belfast (Stena) |Search by application number | 
 
-
+	@RunOnly
 Scenario: Verify error messages for microchip number field on Report Non- Compliance page
 	When Approve an application via backend
 	And I have selected '<Transportation>' radio option
@@ -164,6 +164,7 @@ Examples:
 	| Transportation | FerryRoute                    | PassengerType | MichrochipNumber | ApplicationRadio     |
 	| Ferry          | Birkenhead to Belfast (Stena) | Airline       |                  | Search by PTD number |
 
+	@RunOnly
 Scenario: Verify error messages for any relevant comment field on Report Non- Compliance page
 	When Approve an application via backend
 	And I have selected '<Transportation>' radio option
