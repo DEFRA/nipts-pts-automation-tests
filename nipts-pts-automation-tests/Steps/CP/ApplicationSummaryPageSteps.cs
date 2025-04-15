@@ -225,5 +225,12 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [Given(@"I click Accont on Home Page")]
+        [When(@"I click Accont on Home Page")]
+        public void ThenIClickAccontOnHomePage()
+        {
+            _applicationSummaryPage.ClickOnAccount();
+        }
+
     }
 }

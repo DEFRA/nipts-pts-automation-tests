@@ -15,5 +15,6 @@
         public bool VerifyGBSummaryOutputWithSQLBackend(string AppReference);
         public bool VerifySPSSummaryOutputWithSQLBackend(string AppReference);
         public bool VerifyGBSummaryForPassApplWithSQLBackend(string AppReference);
+        void ClickOnAccount();
     }
 }
