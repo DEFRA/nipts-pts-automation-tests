@@ -36,6 +36,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenIProvidedThePTDNumberOfTheApplication()
         {
             var ptdNumber = _scenarioContext.Get<string>("PTDNumber");
+            Console.WriteLine($"PTDNumber: {ptdNumber}");
             var ptdNumber1 = ptdNumber.Substring(5);
             _searchDocumentPage?.EnterPTDNumber(ptdNumber1);
         }
@@ -44,6 +45,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenIProvidedTheReferenceNumberOfTheApplication()
         {
             var referenceNumber = _scenarioContext.Get<string>("ReferenceNumber");
+            Console.WriteLine($"ReferenceNumber: {referenceNumber}");
             _searchDocumentPage?.EnterApplicationNumber(referenceNumber);
         }
 

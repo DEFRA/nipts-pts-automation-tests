@@ -83,6 +83,7 @@ namespace nipts_pts_automation_tests.Steps.CP
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
                 string PTDNumber = AppData.GetApplicationToApprove(AppReference);
                 _scenarioContext.Add("PTDNumber", PTDNumber);
+                Console.WriteLine($"PTDNumber: {PTDNumber}");
             }
         }
 
