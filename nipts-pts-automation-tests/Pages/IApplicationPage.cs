@@ -20,5 +20,9 @@
         public bool VerifyLanguageAtPageFooter(string displayedLang);
         public void ClickOnContinueEng();
         public void ClickOnHelpWelshLink();
+        public bool VerifyWELSHApprovedPTD(string fieldName, string fieldValue);
+        public bool VerifyPTDNumberOnApprovedPTD(string ptdNumber, string ptdNumberValue);
+        public bool VerifyMichrochipDateOnApprovedPTD(string michrochipDate, string michrochipDateValue);
+        public bool VerifyPetDOBOnApprovedPTD(string petDOB, string petDOBValue);
     }
 }
