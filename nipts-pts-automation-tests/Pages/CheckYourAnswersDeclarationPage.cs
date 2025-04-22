@@ -18,6 +18,7 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement chkAgreeToAccuracy => _driver.WaitForElement(By.XPath("//div[@class='govuk-checkboxes__item']/label[@for='AgreedToAccuracy']"));
         private IWebElement chkAgreeTermsAndPrivacyPolicy => _driver.WaitForElement(By.XPath("//div[@class='govuk-checkboxes__item']/input[@id='AgreedToDeclaration']"));
         private IWebElement chkAgreesToDeclaration => _driver.WaitForElementExists(By.XPath("//input[@id='AgreedToDeclaration']"));
+        private IWebElement chkTextAgreesToDeclaration => _driver.WaitForElementExists(By.XPath("//input[@id='AgreedToDeclaration']/following-sibling::div"));
 
         private IWebElement lnkApplyForAnother => _driver.WaitForElement(By.XPath("//a[contains(text(),'Gwneud cais am ddogfen deithio')]"));
 
@@ -39,7 +40,10 @@ namespace nipts_pts_automation_tests.Pages
         public void TickAgreedToDeclaration()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", chkAgreesToDeclaration);
-            chkAgreesToDeclaration.Click();
+            if (chkTextAgreesToDeclaration.Text.Contains("n cytuno"))
+            { 
+                chkAgreesToDeclaration.Click(); 
+            }
         }
 
         public void TickAgreetToPrivacyPolicy()
@@ -51,7 +55,10 @@ namespace nipts_pts_automation_tests.Pages
         public void ClickSendApplicationButton()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,1000)", "");
-            SendApplicationButton.Click();
+            if (SendApplicationButton.Text.Contains("Anfon cais"))
+            {
+                SendApplicationButton.Click();
+            }
         }
 
         public void ClickApplyForAnotherPetTravelDocument()

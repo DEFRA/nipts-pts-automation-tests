@@ -83,6 +83,7 @@ namespace nipts_pts_automation_tests.Steps.CP
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
                 string PTDNumber = AppData.GetApplicationToApprove(AppReference);
                 _scenarioContext.Add("PTDNumber", PTDNumber);
+                Console.WriteLine($"PTDNumber: {PTDNumber}");
             }
         }
 
@@ -223,6 +224,13 @@ namespace nipts_pts_automation_tests.Steps.CP
                 string PTDNumber = AppData.writeOfflineApplicationToQueue(randonNumber);
                 _scenarioContext.Add("PTDNumber", PTDNumber);
             }
+        }
+
+        [Given(@"I click Accont on Home Page")]
+        [When(@"I click Accont on Home Page")]
+        public void ThenIClickAccontOnHomePage()
+        {
+            _applicationSummaryPage.ClickOnAccount();
         }
 
     }
