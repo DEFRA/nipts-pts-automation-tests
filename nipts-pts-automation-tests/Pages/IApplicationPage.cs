@@ -20,5 +20,9 @@
         public bool VerifyLanguageAtPageFooter(string displayedLang);
         public void ClickOnContinueEng();
         public void ClickOnHelpWelshLink();
+        void ClickWelshPetDetailsChangeLink(string fieldName);
+        void ClickWelshPetDetailsChangeForFerretLink(string fieldName);
+        void ClickWelshMicrochipChangeLink(string fieldName);
+        void ClickWelshPetOwnerChangeLink(string fieldName);
     }
 }
