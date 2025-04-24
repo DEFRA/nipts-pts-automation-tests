@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages;
+using Microsoft.Identity.Client;
 
 namespace nipts_pts_automation_tests.Steps
 {
@@ -151,6 +152,34 @@ namespace nipts_pts_automation_tests.Steps
         {
             string petDOBValue = _scenarioContext.Get<string>("DateOfBirth");
             Assert.True(applicationPage.VerifyPetDOBOnApprovedPTD(petDOB, petDOBValue), "Pet DOB mismatch on approved PTD");
+        }
+
+        [When(@"I have clicked the Welsh change option for the '(.*)' from Pet owner details section")]
+        [Then(@"I have clicked the Welsh change option for the '(.*)' from Pet owner details section")]
+        public void ThenIHaveClickedTheChangeOptionForTheFromPetOwnerDetailsSection(string fieldName)
+        {
+            applicationPage?.ClickWelshPetOwnerChangeLink(fieldName);
+        }
+
+        [When(@"I have clicked the Welsh change option for the '(.*)' from Pet details section")]
+        [Then(@"I have clicked the Welsh change option for the '(.*)' from Pet details section")]
+        public void ThenIHaveClickedTheChangeOptionForTheFromPetDetailsSection(string fieldName)
+        {
+            applicationPage?.ClickWelshPetDetailsChangeLink(fieldName);
+        }
+
+        [When(@"I have clicked the Welsh change option for Ferret '(.*)' from Pet details section")]
+        [Then(@"I have clicked the Welsh change option for Ferret '(.*)' from Pet details section")]
+        public void ThenIHaveClickedTheChangeOptionForFerrerFromPetDetailsSection(string fieldName)
+        {
+            applicationPage?.ClickWelshPetDetailsChangeForFerretLink(fieldName);
+        }
+
+        [When(@"I have clicked the Welsh change option for the '(.*)' from Microchip information section")]
+        [Then(@"I have clicked the Welsh change option for the '(.*)' from Microchip information section")]
+        public void ThenIHaveClickedChangeOptionForTheFieldFromMicrochipInformationSection(string fieldName)
+        {
+            applicationPage?.ClickWelshMicrochipChangeLink(fieldName);
         }
     }
 }

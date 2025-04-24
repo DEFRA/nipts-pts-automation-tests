@@ -20,6 +20,10 @@
         public bool VerifyLanguageAtPageFooter(string displayedLang);
         public void ClickOnContinueEng();
         public void ClickOnHelpWelshLink();
+        void ClickWelshPetDetailsChangeLink(string fieldName);
+        void ClickWelshPetDetailsChangeForFerretLink(string fieldName);
+        void ClickWelshMicrochipChangeLink(string fieldName);
+        void ClickWelshPetOwnerChangeLink(string fieldName);
         public bool VerifyWELSHApprovedPTD(string fieldName, string fieldValue);
         public bool VerifyPTDNumberOnApprovedPTD(string ptdNumber, string ptdNumberValue);
         public bool VerifyMichrochipDateOnApprovedPTD(string michrochipDate, string michrochipDateValue);

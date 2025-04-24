@@ -27,6 +27,9 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement ContinueEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IWebElement tableBody => _driver.WaitForElement(By.XPath("//table/tbody"));
         private IWebElement HelpWelshEle => _driver.WaitForElement(By.XPath("//a[contains(text(),'Cael help')]"));
+        private IReadOnlyCollection<IWebElement> divMicrochipInformationActionList => _driver.WaitForElements(By.XPath("//div[@id='document-microchip-card']//dl/div/descendant::dd[2]/a"));
+        private IReadOnlyCollection<IWebElement> divPetDetailsActionList => _driver.WaitForElements(By.XPath("//div[@id='document-pet-card']//dl/div/descendant::dd[2]/a"));
+        private IReadOnlyCollection<IWebElement> divPetOwnerDetailsActionList => _driver.WaitForElements(By.XPath("//div[@id='document-owner-card']//dl/div/descendant::dd[2]/a"));
         #endregion Page Objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -216,6 +219,88 @@ namespace nipts_pts_automation_tests.Pages
 
 
         #endregion Page Methods
+
+        public void ClickWelshMicrochipChangeLink(string fieldName)
+        {
+            switch (fieldName)
+            {
+                case "Rhif y microsglodyn":
+                    divMicrochipInformationActionList.ElementAt(0)?.Click();
+                    break;
+                case "Dyddiad mewnblannu neu sganio":
+                    divMicrochipInformationActionList.ElementAt(1)?.Click();
+                    break;
+            }
+        }
+
+        public void ClickWelshPetDetailsChangeLink(string fieldName)
+        {
+            switch (fieldName)
+            {
+                case "Enw":
+                    divPetDetailsActionList.ElementAt(0)?.Click();
+                    break;
+                case "Rhywogaeth":
+                    divPetDetailsActionList.ElementAt(1)?.Click();
+                    break;
+                case "Brid":
+                    divPetDetailsActionList.ElementAt(2)?.Click();
+                    break;
+                case "Rhyw":
+                    divPetDetailsActionList.ElementAt(3)?.Click();
+                    break;
+                case "Dyddiad geni":
+                    divPetDetailsActionList.ElementAt(4)?.Click();
+                    break;
+                case "Lliw":
+                    divPetDetailsActionList.ElementAt(5)?.Click();
+                    break;
+                case "Nodweddion arwyddocaol":
+                    divPetDetailsActionList.ElementAt(6)?.Click();
+                    break;
+            }
+        }
+
+        public void ClickWelshPetDetailsChangeForFerretLink(string fieldName)
+        {
+            switch (fieldName)
+            {
+                case "Enw":
+                    divPetDetailsActionList.ElementAt(0)?.Click();
+                    break;
+                case "Rhywogaeth":
+                    divPetDetailsActionList.ElementAt(1)?.Click();
+                    break;
+                case "Rhyw":
+                    divPetDetailsActionList.ElementAt(2)?.Click();
+                    break;
+                case "Dyddiad geni":
+                    divPetDetailsActionList.ElementAt(3)?.Click();
+                    break;
+                case "Lliw":
+                    divPetDetailsActionList.ElementAt(4)?.Click();
+                    break;
+                case "Nodweddion arwyddocaol":
+                    divPetDetailsActionList.ElementAt(5)?.Click();
+                    break;
+            }
+        }
+
+        public void ClickWelshPetOwnerChangeLink(string fieldName)
+        {
+            switch (fieldName)
+            {
+                case "Enw":
+                    divPetOwnerDetailsActionList.ElementAt(0)?.Click();
+                    break;
+                case "Cyfeiriad":
+                    divPetOwnerDetailsActionList.ElementAt(1)?.Click();
+                    break;
+                case "Rhif ff":
+                    divPetOwnerDetailsActionList.ElementAt(2)?.Click();
+                    break;
+            }
+        }
 
     }
 }
