@@ -18,6 +18,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        public By AccountLink => By.XPath("//a[@href='/account']");
+        public By SignOutLink => By.XPath("//a[@href='/signout']");
 
         #endregion
 
@@ -54,6 +56,16 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 return true;
             else
                 return false;
+        }
+
+        public bool VerifyAccountAndSignOutLinksOnPage()
+        {
+            bool status = true;
+
+            if(_driver.FindElements(AccountLink).Count > 0 | _driver.FindElements(SignOutLink).Count > 0)
+                status = false;
+
+            return status;
         }
 
         #endregion

@@ -47,5 +47,11 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             Assert.IsTrue(outagePage?.VerifyHeadingOnPage(text), "Heading not matching");
         }
+
+        [Then(@"verify Account and SignOut links not visible on page")]
+        public void ThenVerifyAccountAndSignOutLinksOnPage()
+        {
+            Assert.IsTrue(outagePage?.VerifyAccountAndSignOutLinksOnPage(), "Account and SignOut Links are visible");
+        }
     }
 }
