@@ -1,4 +1,5 @@
 ﻿using BoDi;
+using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
 using nipts_pts_automation_tests.Pages.AP_GB.LandingPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetBreedPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetColourPage;
@@ -12,6 +13,7 @@ using nipts_pts_automation_tests.Pages.AP_GB.PetOwnerPNumberPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetSexPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetSpeciesPage;
 using nipts_pts_automation_tests.Pages.AP_GB.SignificantFeaturesPage;
+using nipts_pts_automation_tests.Pages.CP.Pages;
 using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
@@ -37,6 +39,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         private IPetOwnerAddressPage? petOwnerAddressPage => _objectContainer.IsRegistered<IPetOwnerAddressPage>() ? _objectContainer.Resolve<IPetOwnerAddressPage>() : null;
         private IPetOwnerPhoneNumberPage? petOwnerPhoneNumberPage => _objectContainer.IsRegistered<IPetOwnerPhoneNumberPage>() ? _objectContainer.Resolve<IPetOwnerPhoneNumberPage>() : null;
         private ILandingPage? landingPage => _objectContainer.IsRegistered<ILandingPage>() ? _objectContainer.Resolve<ILandingPage>() : null;
+        private IHomePage? homePage => _objectContainer.IsRegistered<IHomePage>() ? _objectContainer.Resolve<IHomePage>() : null;
 
         public ValidationsSteps(ScenarioContext context, IObjectContainer container)
         {
@@ -322,5 +325,11 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             Assert.True(landingPage.VerifyNextPageIsLoaded(pageName), "Expected page not loaded");
         }
 
+        [Then(@"I verify the link '([^']*)' on page")]
+        [When(@"I verify the link '([^']*)' on page")]
+        public void ThenVerifyLinkOnPage(string link)
+        {
+            Assert.IsTrue(homePage?.VerifyTheLink(link), "Link not matching ");
+        }
     }
 }

@@ -17,5 +17,6 @@
         void ClickViewLink(string petName);
         void ClickOnManageAccountLink();
         void ClickOnLifelongPetTravelDocumentsFromHeader();
+        bool VerifyTheLink(string link);
     }
 }

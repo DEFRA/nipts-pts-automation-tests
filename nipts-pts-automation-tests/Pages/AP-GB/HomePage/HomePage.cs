@@ -167,6 +167,16 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
             lifelongPetTraveDocuments.Click();
         }
 
+        public bool VerifyTheLink(string link)
+        {
+            string outageLinkEle = $"//a[contains(text(),'{link}')]";
+            if (_driver.FindElements(By.XPath(outageLinkEle)).Count > 0)
+                return true;
+            else
+                return false;
+        }
+
+
         #endregion
     }
 }
