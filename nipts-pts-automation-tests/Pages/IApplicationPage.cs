@@ -24,5 +24,9 @@
         void ClickWelshPetDetailsChangeForFerretLink(string fieldName);
         void ClickWelshMicrochipChangeLink(string fieldName);
         void ClickWelshPetOwnerChangeLink(string fieldName);
+        public bool VerifyWELSHApprovedPTD(string fieldName, string fieldValue);
+        public bool VerifyPTDNumberOnApprovedPTD(string ptdNumber, string ptdNumberValue);
+        public bool VerifyMichrochipDateOnApprovedPTD(string michrochipDate, string michrochipDateValue);
+        public bool VerifyPetDOBOnApprovedPTD(string petDOB, string petDOBValue);
     }
 }

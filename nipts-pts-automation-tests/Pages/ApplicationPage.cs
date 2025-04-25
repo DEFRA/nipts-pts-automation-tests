@@ -170,6 +170,54 @@ namespace nipts_pts_automation_tests.Pages
         {
             HelpWelshEle.Click();
         }
+
+        public bool VerifyWELSHApprovedPTD(string fieldName, string fieldValue)
+        {
+            string FieldName = "//dt[contains(text(),'" + fieldName + "')]";
+            string FieldValue = "//dt[contains(text(),'" + fieldName + "')]/..//dd";
+
+            if (_driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue)); 
+            {
+                return true;
+            }    
+
+        }
+
+        public bool VerifyPTDNumberOnApprovedPTD(string ptdNumber , string ptdNumberValue) 
+        {
+            string PTDNumber = "//dt[contains(text(),'" + ptdNumber + "')]";
+            string PTDNumberValue = "//dt[contains(text(),'" + ptdNumber + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(PTDNumber)).Text.Contains(ptdNumber) && _driver.FindElement(By.XPath(PTDNumberValue)).Text.Contains(ptdNumberValue));
+            {
+                return true;
+            }
+        }
+
+        public bool VerifyMichrochipDateOnApprovedPTD(string michrochipDate, string michrochipDateValue)
+        {
+            string MichrochipDate = "//dt[contains(text(),'" + michrochipDate + "')]";
+            string MichochipDateValue = "//dt[contains(text(),'" + michrochipDate + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(MichrochipDate)).Text.Contains(michrochipDate) && _driver.FindElement(By.XPath(MichochipDateValue)).Text.Contains(michrochipDateValue)) ;
+            {
+                return true;
+            }
+        }
+
+        public bool VerifyPetDOBOnApprovedPTD(string petDOB, string petDOBValue)
+        {
+            string PetDOB = "//dt[contains(text(),'" + petDOB + "')]";
+            string PetDOBValue = "//dt[contains(text(),'" + petDOB + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(PetDOB)).Text.Contains(petDOB) && _driver.FindElement(By.XPath(PetDOBValue)).Text.Contains(petDOBValue)) ;
+            {
+                return true;
+            }
+        }
+
+
+
         #endregion Page Methods
 
         public void ClickWelshMicrochipChangeLink(string fieldName)

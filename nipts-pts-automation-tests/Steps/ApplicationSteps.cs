@@ -127,6 +127,33 @@ namespace nipts_pts_automation_tests.Steps
             applicationPage.ClickOnHelpWelshLink();
         }
 
+        [Then(@"verify WELSH summary of Approved PTD field name '([^']*)' and field value '([^']*)'")]
+        public void ThenVerifyWELSHSummaryApprovedPTD(string fieldName, string fieldValue)
+        {
+            Assert.True(applicationPage.VerifyWELSHApprovedPTD(fieldName,fieldValue), "Summary mistmatch on Approved PTD");
+        }
+
+        [Then(@"verify WELSH text for PTD Number '([^']*)' and PTD Number on approved PTD")]
+        public void ThenIVerifyPTDNumberOnApprovedPTD(string ptdNumber)
+        {
+            string ptdNumberValue = _scenarioContext.Get<string>("PTDNumber");
+            Assert.True(applicationPage.VerifyPTDNumberOnApprovedPTD(ptdNumber,ptdNumberValue), "PTD Number mismatch on approved PTD");
+        }
+
+        [Then(@"verify WELSH text for Michrochip Date '([^']*)' and Michrochip Date on approved PTD")]
+        public void ThenIVerifyMichrochipDateOnApprovedPTD(string michrochipDate)
+        {
+            string michrochipDateValue = _scenarioContext.Get<string>("MicrochippedDate");
+            Assert.True(applicationPage.VerifyMichrochipDateOnApprovedPTD(michrochipDate, michrochipDateValue), "Michrochip Date mismatch on approved PTD");
+        }
+
+        [Then(@"verify WELSH text for Pet DOB '([^']*)' and Pet DOB on approved PTD")]
+        public void ThenIVerifyPetDOBOnApprovedPTD(string petDOB)
+        {
+            string petDOBValue = _scenarioContext.Get<string>("DateOfBirth");
+            Assert.True(applicationPage.VerifyPetDOBOnApprovedPTD(petDOB, petDOBValue), "Pet DOB mismatch on approved PTD");
+        }
+
         [When(@"I have clicked the Welsh change option for the '(.*)' from Pet owner details section")]
         [Then(@"I have clicked the Welsh change option for the '(.*)' from Pet owner details section")]
         public void ThenIHaveClickedTheChangeOptionForTheFromPetOwnerDetailsSection(string fieldName)
