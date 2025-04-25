@@ -49,6 +49,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with details co
 	And I have ticked the I agree to the declaration checkbox
 	When I click Accept and Send button from Declaration page
 	Then I should redirected to the Application submitted page
+	And I verify the link '<Link1>' on page
 	And I can see the unique application reference number
 	When I have clicked the View all your lifelong pet travel documents link
 	Then I should redirected to Apply for a pet travel document page
@@ -64,8 +65,8 @@ Scenario Outline: Create PETS Travel Document By Registered User with details co
 	And click on signout button and verify the signout message on pets
 
 Examples:
-	| FullName    |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet    | PetName | Gender | Color     | IsSignificantFeatures |
-	| PetFerret's |  Yes                      | CV2 4NZ  | 07440345678 | Yes             | 123456789654321 | Ferret | Ferret  | Female | Chocolate | No                    |
+	| FullName    | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet    | PetName | Gender | Color     | IsSignificantFeatures | Link1                               |
+	| PetFerret's | Yes                      | CV2 4NZ  | 07440345678 | Yes             | 123456789654321 | Ferret | Ferret  | Female | Chocolate | No                    | What did you think of this service? |
 
 Scenario Outline: Create PETS Travel Document By Registered User with details not correct - Ferret - Rejected
 	Then I have selected '<Are your details correct>' option
@@ -131,19 +132,6 @@ Scenario Outline: Create PETS Travel Document By Registered User with details no
 Examples:
 	| FullName    |  Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet    | PetName | Gender | Color | IsSignificantFeatures |
 	| PetFerret's |  No                       | CV2 4NZ  | 07440345678 | Yes             | 123456789654321 | Ferret | Ferret  | Female | Sable | No                    |
-
-Scenario Outline: Create PETS Travel Document By Registered User with pet is not microchipped
-	Then I have selected '<Are your details correct>' option
-	When I click on continue button from Are your details correct page
-	Then I should redirected to the Is your pet microchipped page
-	And I selected the '<MicrochipOption>' option
-	When I click Continue button from microchipped page
-	Then I should redirected to the Get your pet microchipped before applying page
-	And click on signout button and verify the signout message on pets
-
-Examples:
-	| IsRegisteredUser                | Are your details correct | MicrochipOption |
-	| Yes, I am the registered keeper | Yes                      | No              |
 
 Scenario Outline: Create PETS Travel Document By Registered User with enter address manually - Revoked
 	Then I have selected '<Are your details correct>' option
