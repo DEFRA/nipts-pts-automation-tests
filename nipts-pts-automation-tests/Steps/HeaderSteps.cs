@@ -60,5 +60,35 @@ namespace nipts_pts_automation_tests.Steps
             Assert.True(headerPage.VerifyHeaderBanner(bannerText), "Header banner text not matching");
 
         }
+
+        [Then(@"delete browser cookies")]
+        [Given(@"delete browser cookies")]
+        public void ThenDeleteBrowserCookies()
+        {
+            headerPage.DeleteBrowserCookies();
+
+        }
+
+        [Then(@"verify cookies banner '([^']*)' in WELSH")]
+        public void ThenVerifyWELSHCookiesBanner(string cookiesWELSHText)
+        {
+            Assert.True(headerPage.VerifyCookiesBannerWelsh(cookiesWELSHText), "Cookies banner text not matching");
+
+        }
+
+        [Then(@"verify text on the cookies preference banner '([^']*)'")]
+        public void ThenVerifyTextOnSelectedCookiesBanner(string cookiesText)
+        {
+            Assert.True(headerPage.VerifyCookiesPrefTextWelsh(cookiesText), "Cookies banner text not matching");
+
+        }
+
+        [Then(@"click on cookies preference button '([^']*)' button in WELSH on cookies banner")]
+        public void ThenClickCookiesPrefBtn(string cookiesPrefBtn)
+        {
+            headerPage.ClickCookiesPrefButton(cookiesPrefBtn);
+
+        }
+
     }
 }
