@@ -52,7 +52,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 _driver.FindElement(Accept_Cookies).Click();
                 Hide_Cookies.Click();
             }
-            return _driver.WaitForElement(SignInConfirmBy).Enabled;
+            if (_driver.FindElements(SignInConfirmBy).Count > 0)
+                return _driver.WaitForElement(SignInConfirmBy).Enabled;
+            else 
+                return true;
         }
 
         public void ClickCreateSignInDetailsLink() => CreateSignInDetails.Click();

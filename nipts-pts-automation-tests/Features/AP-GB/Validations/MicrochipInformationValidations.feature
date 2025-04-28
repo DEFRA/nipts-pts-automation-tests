@@ -133,3 +133,18 @@ Examples:
 	| FullName |  Are your details correct | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color         |
 	| PetDog's |  Yes                      | 02012345671 | Yes             | 123456789123458 | Dog | Dog     | Male   | Black         |
 	| PetCat's |  Yes                      | 07440345672 | Yes             | 123456789654322 | Cat | Cat     | Female | Tortoiseshell |
+
+Scenario Outline: Verify Get your pet microchipped before applying page
+	Then I have selected '<Are your details correct>' option
+	When I click on continue button from Are your details correct page
+	Then I should redirected to the Is your pet microchipped page
+	And I selected the '<MicrochipOption>' option
+	When I click Continue button from microchipped page
+	Then I should redirected to the Get your pet microchipped before applying page
+	And I verify the link '<Link1>' on page
+	And I verify the link '<Link1>' on page
+	And click on signout button and verify the signout message on pets
+
+Examples:
+	| IsRegisteredUser                | Are your details correct | MicrochipOption | Link1                                                     | Link2                               |
+	| Yes, I am the registered keeper | Yes                      | No              | Check how to get your pet microchipped (opens in new tab) | What did you think of this service? |
