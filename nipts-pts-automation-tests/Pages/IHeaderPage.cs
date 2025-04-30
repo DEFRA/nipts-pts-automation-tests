@@ -9,5 +9,9 @@ namespace nipts_pts_automation_tests.Pages
         public bool VerifyGenericGOVPageLoaded();
         public bool VerifyHeaderTitle(string pageTitle);
         public bool VerifyHeaderBanner(string bannerText);
+        public void DeleteBrowserCookies();
+        public bool VerifyCookiesBannerWelsh(string cookiesWELSHText);
+        public bool VerifyCookiesPrefTextWelsh(string cookiesText);
+        public void ClickCookiesPrefButton(string prefBtn);
     }
 }

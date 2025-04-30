@@ -19,6 +19,8 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement feedbacklink => _driver.WaitForElement(By.XPath("//a[contains(text(),' adborth (yn agor mewn tab newydd)')]"));
         private IWebElement HeaderTitle => _driver.WaitForElement(By.XPath("//div[@class='govuk-header__content']/a[contains(@class,'govuk-header')]"));
         private IWebElement HeaderBanner => _driver.WaitForElement(By.XPath("//span[@class='govuk-phase-banner__text']"));
+        private IWebElement CookiesBannerHeaderText => _driver.WaitForElement(By.XPath("//div[contains(@class,'govuk-grid-column-two-thirds')]//h2"));
+        private IWebElement CookiesBannerText => _driver.WaitForElement(By.XPath("(//div[contains(@class,'govuk-cookie-banner__content')]//p)[3]"));
 
         #endregion Page Objects
 
@@ -59,6 +61,28 @@ namespace nipts_pts_automation_tests.Pages
         public bool VerifyHeaderBanner(string bannerText)
         {
             return HeaderBanner.Text.Contains(bannerText);
+        }
+
+        public void DeleteBrowserCookies()
+        {
+            _driver.Manage().Cookies.DeleteAllCookies();
+        }
+
+        public bool VerifyCookiesBannerWelsh(string cookiesWELSHText)
+        {
+            return CookiesBannerHeaderText.Text.Contains(cookiesWELSHText);
+        }
+
+        public bool VerifyCookiesPrefTextWelsh(string cookiesText)
+        {
+            string CookiesText = "//p[contains(text(),'" + cookiesText + "')]";
+            return _driver.WaitForElement(By.XPath(CookiesText)).Text.Contains(cookiesText);
+        }
+
+        public void ClickCookiesPrefButton(string prefBtn)
+        {
+            string CookiesPref = "//button[contains(text(),'" + prefBtn + "')]";
+            _driver.WaitForElement(By.XPath(CookiesPref)).Click();
         }
 
         #endregion Page Methods
