@@ -98,6 +98,16 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [When(@"Revoke Approved application via backend")]
+        public void ThenRevokeApprovedApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
+                AppData.RevokeApprovedApplication(PTDNumber);
+            }
+        }
+
         [When(@"Reject an application via backend")]
         public void ThenRejectApplicationViaBackend()
         {
@@ -214,14 +224,14 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(_applicationSummaryPage.VerifyGBSummaryForPassApplWithSQLBackend(AppReference), "GB Summary not matching with SQL Backend data");
         }
 
-        [Given(@"Create an offline application via backend")]
-        [When(@"Create an offline application via backend")]
-        public void ThenCreateOfflineApplicationViaBackend()
+        [Given(@"Create an offline application via backend for '([^']*)'")]
+        [When(@"Create an offline application via backend for '([^']*)'")]
+        public void ThenCreateOfflineApplicationViaBackend(string Species)
         {
             lock (_lock)
             {
                 string randonNumber = Utils.GenerateRandomApplicationNumber();
-                string PTDNumber = AppData.writeOfflineApplicationToQueue(randonNumber);
+                string PTDNumber = AppData.writeOfflineApplicationToQueue(randonNumber, Species);
                 _scenarioContext.Add("PTDNumber", PTDNumber);
             }
         }

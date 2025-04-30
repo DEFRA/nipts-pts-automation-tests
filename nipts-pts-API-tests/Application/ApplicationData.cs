@@ -148,6 +148,32 @@ namespace nipts_pts_API_tests.Application
             return response;
         }
 
+        public void RevokeApprovedApplication(string PTDNumber)
+        {
+            Task<RestResponse> response = GetApprovedApplication(PTDNumber);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            ApplicationId = dynamicObject.application.applicationId;
+            RevokeApplication(ApplicationId);
+        }
+
+        public Task<RestResponse> GetApprovedApplication(string PTDNumber)
+        {
+            Task<RestResponse> response = null;
+            lock (_lock)
+            {
+                string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint5;
+                var client = SetUrl("api/Checker/checkPTDNumber", APIEndPoint);
+                var file = Path.Combine(RequestFolder, "CheckPTDNumber.json");
+                var requestJson = File.ReadAllText(file);
+                var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
+                dynamicObject.ptdNumber = PTDNumber;
+                var request = CreatePostRequest(JsonConvert.SerializeObject(dynamicObject));
+                response = GetResponseAsync(client, request);
+            }
+            return response;
+        }
+
         public string CreateApplicationAPI(string AppId)
         {
             updateUser();
@@ -295,10 +321,18 @@ namespace nipts_pts_API_tests.Application
         }
 
 
-        public string writeOfflineApplicationToQueue(string randonNumber)
+        public string writeOfflineApplicationToQueue(string randonNumber,string Species)
         {
             string queueName = ServiceBusConnectionData.Configuration.ServiceBusOfflineApplQueueName;
-            var file = Path.Combine(RequestFolder, "CreateOfflineApplication.json");
+            var file = "";
+            
+            if(Species.Equals("Cat"))
+                file = Path.Combine(RequestFolder, "CreateOfflineApplicationCat.json");
+            else if (Species.Equals("Dog"))
+                file = Path.Combine(RequestFolder, "CreateOfflineApplicationDog.json");
+            else if (Species.Equals("Ferret"))
+                file = Path.Combine(RequestFolder, "CreateOfflineApplicationFerret.json");
+
             var requestJson = File.ReadAllText(file);
             var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
             dynamicObject.Application.ReferenceNumber = getUniqueRerefenceNumber(randonNumber);

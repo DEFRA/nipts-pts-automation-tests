@@ -24,6 +24,9 @@
     <None Update="RequestJson\ApproveApplicationRequest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="RequestJson\CheckPTDNumber.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="RequestJson\CreateAddress.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -33,7 +36,13 @@
     <None Update="RequestJson\CreateApplication.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="RequestJson\CreateOfflineApplication.json">
+    <None Update="RequestJson\CreateOfflineApplicationCat.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RequestJson\CreateOfflineApplicationDog.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RequestJson\CreateOfflineApplicationFerret.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RequestJson\CreateOwner.json">

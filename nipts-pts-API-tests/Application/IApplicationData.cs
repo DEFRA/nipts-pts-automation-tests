@@ -17,6 +17,7 @@ namespace nipts_pts_API_tests.Application
         public string CreateApplicationSigFNoAPI(string AppId);
         public string GetPetDetails(string AppReference);
         public string GetMicrochipDetails(string AppReference);
-        public string writeOfflineApplicationToQueue(string randonNumber);
+        public string writeOfflineApplicationToQueue(string randonNumber,string Species);
+        public void RevokeApprovedApplication(string PTDNumber);
     }
 }

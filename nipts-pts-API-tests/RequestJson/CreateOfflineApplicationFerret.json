@@ -1,4 +1,4 @@
-{
+﻿{
   "OwnerAddress": {
     "AddressLineOne": "12 building name",
     "AddressLineTwo": "SUFFOLK STREET QUEENSWAY",
@@ -29,10 +29,8 @@
   "Pet": {
     "MicrochipNumber": "098723456874567",
     "MicrochippedDate": "2025-02-18",
-    "SpeciesId": "1",
-    "BreedId": "1",
-    "AdditionalInfoMixedBreedOrUnknown": "",
-    "Name": "Cat",
+    "SpeciesId": "3",
+    "Name": "Ferret",
     "SexId": "1",
     "DOB": "2025-02-03",
     "ColourId": "1",
@@ -42,9 +40,9 @@
   "Application": {
     "Status": "Authorised",
     "ReferenceNumber": "GB826AD1203",
-    "DateOfApplication": "2025-02-19T18:08:54Z",
+    "DateOfApplication": "2025-04-30T18:08:54Z",
     "DynamicId": "9ddfe38a-ecee-ef11-be1f-7c1e5236fe1e",
-    "DateAuthorised": "2025-02-19"
+    "DateAuthorised": "2025-04-30"
   },
   "PTD": { "DocumentReferenceNumber": "GB826AD1203" }
 }
