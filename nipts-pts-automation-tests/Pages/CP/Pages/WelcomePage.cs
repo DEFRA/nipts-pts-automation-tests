@@ -123,8 +123,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 departureDate = headerTime.Substring(52, 10);
             }
 
-            string matchingTime = $"//input[contains(@value,'{departureRoute}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{GBDepartureTime}')]/..//button";
-            Console.WriteLine($"GBDepartureTime : {GBDepartureTime}");
+            string matchingTime = $"//input[contains(@value,'{departureRoute}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departTime}')]/..//button";
+            Console.WriteLine($"GBDepartureTime : {departTime}");
             Console.WriteLine($"Matching Time: {matchingTime}");
 
             if (_driver.FindElements(By.XPath(matchingTime)).Count > 0)

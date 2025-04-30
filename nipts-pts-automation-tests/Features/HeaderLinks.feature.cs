@@ -132,6 +132,151 @@ namespace nipts_pts_automation_tests.Features
             }
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Verify Cookies Banner in WELSH")]
+        [NUnit.Framework.TestCaseAttribute("test", "Mynd ag anifail anwes o Brydain Fawr i Ogledd Iwerddon", "Cwcis ar fynd ag anifail anwes o Brydain Fawr i Ogledd Iwerddon", null)]
+        public void VerifyCookiesBannerInWELSH(string logininfo, string title, string cookiesText, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("logininfo", logininfo);
+            argumentsOfScenario.Add("title", title);
+            argumentsOfScenario.Add("cookiesText", cookiesText);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify Cookies Banner in WELSH", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 25
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 26
+ testRunner.Given("delete browser cookies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 27
+ testRunner.Given("that I navigate to the Pets application portal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 28
+ testRunner.When(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 29
+ testRunner.When("click on Welsh language", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 30
+ testRunner.Then(string.Format("verify header title \'{0}\'", title), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 31
+ testRunner.Then(string.Format("verify cookies banner \'{0}\' in WELSH", cookiesText), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Verify text for accepted cookies Banner in WELSH")]
+        [NUnit.Framework.TestCaseAttribute("test", "Mynd ag anifail anwes o Brydain Fawr i Ogledd Iwerddon", "Cwcis ar fynd ag anifail anwes o Brydain Fawr i Ogledd Iwerddon", "Rydych chi wedi derbyn cwcis ychwanegol", "Derbyn cwcis ychwanegol", null)]
+        public void VerifyTextForAcceptedCookiesBannerInWELSH(string logininfo, string title, string cookiesText, string selectedCookiesText, string cookiesPrefBtn, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("logininfo", logininfo);
+            argumentsOfScenario.Add("title", title);
+            argumentsOfScenario.Add("cookiesText", cookiesText);
+            argumentsOfScenario.Add("SelectedCookiesText", selectedCookiesText);
+            argumentsOfScenario.Add("CookiesPrefBtn", cookiesPrefBtn);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify text for accepted cookies Banner in WELSH", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 37
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 38
+ testRunner.Given("delete browser cookies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 39
+ testRunner.Given("that I navigate to the Pets application portal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 40
+ testRunner.When(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 41
+ testRunner.When("click on Welsh language", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 42
+ testRunner.Then(string.Format("verify header title \'{0}\'", title), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 43
+ testRunner.Then(string.Format("verify cookies banner \'{0}\' in WELSH", cookiesText), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 44
+ testRunner.And(string.Format("click on cookies preference button \'{0}\' button in WELSH on cookies banner", cookiesPrefBtn), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 45
+ testRunner.Then(string.Format("verify text on the cookies preference banner \'{0}\'", selectedCookiesText), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Verify text for rejected cookies Banner in WELSH")]
+        [NUnit.Framework.TestCaseAttribute("test", "Mynd ag anifail anwes o Brydain Fawr i Ogledd Iwerddon", "Cwcis ar fynd ag anifail anwes o Brydain Fawr i Ogledd Iwerddon", "Rydych chi wedi gwrthod cwcis ychwanegol", "Gwrthod cwcis ychwanegol", null)]
+        public void VerifyTextForRejectedCookiesBannerInWELSH(string logininfo, string title, string cookiesText, string selectedCookiesText, string cookiesPrefBtn, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("logininfo", logininfo);
+            argumentsOfScenario.Add("title", title);
+            argumentsOfScenario.Add("cookiesText", cookiesText);
+            argumentsOfScenario.Add("SelectedCookiesText", selectedCookiesText);
+            argumentsOfScenario.Add("CookiesPrefBtn", cookiesPrefBtn);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Verify text for rejected cookies Banner in WELSH", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 51
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 52
+ testRunner.Given("delete browser cookies", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 53
+ testRunner.Given("that I navigate to the Pets application portal", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 54
+ testRunner.When(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 55
+ testRunner.When("click on Welsh language", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 56
+ testRunner.Then(string.Format("verify header title \'{0}\'", title), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 57
+ testRunner.Then(string.Format("verify cookies banner \'{0}\' in WELSH", cookiesText), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 58
+ testRunner.And(string.Format("click on cookies preference button \'{0}\' button in WELSH on cookies banner", cookiesPrefBtn), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 59
+ testRunner.Then(string.Format("verify text on the cookies preference banner \'{0}\'", selectedCookiesText), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
