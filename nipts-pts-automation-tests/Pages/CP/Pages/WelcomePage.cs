@@ -12,7 +12,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
     {
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
-        static string departTime;
+        static string departTime1;
+        static string departTime2;
+        static string departTime3;
         public WelcomePage(IObjectContainer container)
         {
             _objectContainer = container;
@@ -65,29 +67,29 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 {
                     departureDate = headerTime.Substring(60, 10);
                     departureTime = headerTime.Substring(71, 5);
-                    departTime = headerTime.Substring(71, 5);
+                    departTime1 = headerTime.Substring(71, 5);
                 }
                 else
                 {
                     departureDate = headerTime.Substring(53, 10);
                     departureTime = headerTime.Substring(64, 5);
-                    departTime = headerTime.Substring(64, 5);
+                    departTime1 = headerTime.Substring(64, 5);
                 }
             }
             else if (route.Contains("Cairnryan to Larne (P&O)"))
             {
                 departureDate = headerTime.Substring(48, 10);
                 departureTime = headerTime.Substring(59, 5);
-                departTime = headerTime.Substring(59, 5);
+                departTime1 = headerTime.Substring(59, 5);
             }
             else if (route.Contains("Loch Ryan to Belfast (Stena)"))
             {
                 departureDate = headerTime.Substring(52, 10);
                 departureTime = headerTime.Substring(63, 5);
-                departTime = headerTime.Substring(63, 5);
+                departTime1 = headerTime.Substring(63, 5);
             }
             string matchingTime = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departureTime}')]/..//button";
-            Console.WriteLine($"departTime : {departTime}");
+            Console.WriteLine($"departTime : {departTime1}");
             Console.WriteLine($"Matching Time: {matchingTime}");
 
             if (_driver.FindElements(By.XPath(matchingTime)).Count > 0)
@@ -99,7 +101,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void clickOnViewWithSPSUser(string departureRoute)
         {
-            var GBDepartureTime = departTime;
+            var GBDepartureTime = departTime1;
             string headerTime = headerDepartureTime.Text.Trim();
             string departureDate = "";
             Thread.Sleep(1000);
@@ -123,8 +125,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 departureDate = headerTime.Substring(52, 10);
             }
 
-            string matchingTime = $"//input[contains(@value,'{departureRoute}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departTime}')]/..//button";
-            Console.WriteLine($"GBDepartureTime : {departTime}");
+            string matchingTime = $"//input[contains(@value,'{departureRoute}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departTime1}')]/..//button";
+            Console.WriteLine($"GBDepartureTime : {departTime1}");
             Console.WriteLine($"Matching Time: {matchingTime}");
 
             if (_driver.FindElements(By.XPath(matchingTime)).Count > 0)
@@ -234,26 +236,26 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 {
                     departureDate = headerTime.Substring(60, 10);
                     departureTime = headerTime.Substring(71, 5);
-                    departTime = headerTime.Substring(71, 5);
+                    departTime2 = headerTime.Substring(71, 5);
                 }
                 else
                 {
                     departureDate = headerTime.Substring(53, 10);
                     departureTime = headerTime.Substring(64, 5);
-                    departTime = headerTime.Substring(64, 5);
+                    departTime2 = headerTime.Substring(64, 5);
                 }
             }
             else if (route.Contains("Cairnryan to Larne (P&O)"))
             {
                 departureDate = headerTime.Substring(48, 10);
                 departureTime = headerTime.Substring(59, 5);
-                departTime = headerTime.Substring(59, 5);
+                departTime2 = headerTime.Substring(59, 5);
             }
             else if (route.Contains("Loch Ryan to Belfast (Stena)"))
             {
                 departureDate = headerTime.Substring(52, 10);
                 departureTime = headerTime.Substring(63, 5);
-                departTime = headerTime.Substring(63, 5);
+                departTime2 = headerTime.Substring(63, 5);
             }
             string matchingRecord = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departureTime}')]/../../../preceding-sibling::div//dd";
 
@@ -304,26 +306,26 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 {
                     departureDate = headerTime.Substring(60, 10);
                     departureTime = headerTime.Substring(71, 5);
-                    departTime = headerTime.Substring(71, 5);
+                    departTime3 = headerTime.Substring(71, 5);
                 }
                 else
                 {
                     departureDate = headerTime.Substring(53, 10);
                     departureTime = headerTime.Substring(64, 5);
-                    departTime = headerTime.Substring(64, 5);
+                    departTime3 = headerTime.Substring(64, 5);
                 }
             }
             else if (route.Contains("Cairnryan to Larne (P&O)"))
             {
                 departureDate = headerTime.Substring(48, 10);
                 departureTime = headerTime.Substring(59, 5);
-                departTime = headerTime.Substring(59, 5);
+                departTime3 = headerTime.Substring(59, 5);
             }
             else if (route.Contains("Loch Ryan to Belfast (Stena)"))
             {
                 departureDate = headerTime.Substring(52, 10);
                 departureTime = headerTime.Substring(63, 5);
-                departTime = headerTime.Substring(63, 5);
+                departTime3 = headerTime.Substring(63, 5);
             }
             string FailCount = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departureTime}')]/../../..//dd[1]";
             string ViewLink = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departureTime}')]/../../..//dd[2]//button";
@@ -345,7 +347,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public bool VerifyNoViewLinkIfNoReferredToSPSWithSPSUser()
         {
-            var GBDepartureTime = departTime;
+            var GBDepartureTime = departTime3;
             string departureDate = "";
             string headerTime = headerDepartureTime.Text.Trim();
             string route = headerTime.Substring(7, 29).Trim();
@@ -369,8 +371,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             {
                 departureDate = headerTime.Substring(52, 10);
             }
-            string FailCount = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{GBDepartureTime}')]/../../..//dd[1]";
-            string ViewLink = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{GBDepartureTime}')]/../../..//dd[2]//button";
+            string FailCount = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departTime3}')]/../../..//dd[1]";
+            string ViewLink = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departTime3}')]/../../..//dd[2]//button";
 
             string GetFailCount = null;
             if (_driver.FindElements(By.XPath(FailCount)).Count > 0)

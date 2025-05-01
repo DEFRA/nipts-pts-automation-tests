@@ -92,6 +92,7 @@ Scenario Outline: Validate GB Check Report page fields for SPS User
 	And I select GB Outcome '<PassengerWillNotTravel>' on Report non-compliance page
 	And click on Save outcome
 	Then I should navigate to Welcome page
+	And I click on view on Checks page
 	When click on signout button on CP and verify the signout message
 	And I navigate to the port checker application
 	And I click signin button on port checker application
@@ -238,6 +239,7 @@ Scenario Outline: Validate GB Check Report page fields for duplicate checks for 
 	And I select GB Outcome '<PassengerWillNotTravel>' on Report non-compliance page
 	And click on Save outcome
 	Then I should navigate to Welcome page
+	And I click on view on Checks page
 	When click on signout button on CP and verify the signout message
 	And I navigate to the port checker application
 	And I click signin button on port checker application
