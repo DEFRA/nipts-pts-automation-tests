@@ -101,6 +101,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void clickOnViewWithSPSUser(string departureRoute)
         {
+            Console.WriteLine($"departTime1 : {departTime1}");
             var GBDepartureTime = departTime1;
             string headerTime = headerDepartureTime.Text.Trim();
             string departureDate = "";
