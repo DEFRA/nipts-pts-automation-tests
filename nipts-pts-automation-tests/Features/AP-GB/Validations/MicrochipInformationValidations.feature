@@ -142,7 +142,7 @@ Scenario Outline: Verify Get your pet microchipped before applying page
 	When I click Continue button from microchipped page
 	Then I should redirected to the Get your pet microchipped before applying page
 	And I verify the link '<Link1>' on page
-	And I verify the link '<Link1>' on page
+	And I verify the link '<Link2>' on page
 	And click on signout button and verify the signout message on pets
 
 Examples:
