@@ -63,6 +63,54 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.IsTrue(_searchResultsPassFailPage?.VerifyPetBreedOption(petBreed), $"Pet Breed mismatch on view results page");
 
         }
+        [Then(@"verify Pet Name '([^']*)' on Search Pass Fail Results Page")]
+        public void ThenVerifyPetNameOption(string petName)
+        {
+
+            Assert.IsTrue(_searchResultsPassFailPage?.VerifyPetNameOption(petName), $"Pet Name mismatch on view results page");
+
+        }
+
+        [Then(@"verify Pet Species '([^']*)' on Search Pass Fail Results Page")]
+        public void ThenVerifyPetSpeciesOption(string petSpecies)
+        {
+
+            Assert.IsTrue(_searchResultsPassFailPage?.VerifyPetSpeciesOption(petSpecies), $"Pet Species mismatch on view results page");
+
+        }
+
+        [Then(@"verify Pet Sex '([^']*)' on Search Pass Fail Results Page")]
+        public void ThenVerifyPetSexOption(string petSex)
+        {
+
+            Assert.IsTrue(_searchResultsPassFailPage?.VerifyPetSexOption(petSex), $"Pet Sex mismatch on view results page");
+
+        }
+
+        [Then(@"verify Pet Microchip Number '([^']*)' on Search Pass Fail Results Page")]
+        public void ThenVerifyPetMicrochipNumber(string petMicrochipNumber)
+        {
+
+            Assert.IsTrue(_searchResultsPassFailPage?.VerifyPetpetMicrochipNumber(petMicrochipNumber), $"Pet Microchip Number mismatch on view results page");
+
+        }
+
+        [Then(@"verify Pet Microchip date '([^']*)' on Search Pass Fail Results Page")]
+        public void ThenVerifyPetMicrochipDate(string petMicrochipDate)
+        {
+
+            Assert.IsTrue(_searchResultsPassFailPage?.VerifyPetpetMicrochipDate(petMicrochipDate), $"Pet Microchip date mismatch on view results page");
+
+        }
+
+        [Then(@"verify Pets Date Of Birth '([^']*)' on Search Pass Fail Results Page")]
+        public void ThenVerifyPetsDateOfBirth(string petsDateOfBirth)
+        {
+
+            Assert.IsTrue(_searchResultsPassFailPage?.VerifypetsDateOfBirth(petsDateOfBirth), $"Pets Date Of Birth mismatch on view results page");
+
+        }
+
     }
 }
 
