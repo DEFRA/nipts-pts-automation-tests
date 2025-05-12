@@ -21,6 +21,7 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement chkTextAgreesToDeclaration => _driver.WaitForElementExists(By.XPath("//input[@id='AgreedToDeclaration']/following-sibling::div"));
 
         private IWebElement lnkApplyForAnother => _driver.WaitForElement(By.XPath("//a[contains(text(),'Gwneud cais am ddogfen deithio')]"));
+        private IWebElement lnkViewAllDocuments => _driver.WaitForElement(By.XPath("//a[contains(text(),'Gweld eich holl ddogfennau teithio')]"));
 
         #endregion Page Objects
 
@@ -65,6 +66,46 @@ namespace nipts_pts_automation_tests.Pages
         {
             lnkApplyForAnother.Click();
         }
+
+        public void ClickViewAllPetTravelDocument()
+        {
+            lnkViewAllDocuments.Click();
+        }
+
+        public bool VerifyWELSHSummaryOnAppSummary(string fieldName, string fieldValue)
+        {
+            string FieldName = "//dt[contains(text(),'" + fieldName + "')]";
+            string FieldValue = "(//dt[contains(text(),'" + fieldName + "')]/..//dd)[1]";
+            return (_driver.WaitForElement(By.XPath(FieldName)).Text.Equals(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue));
+        }
+
+        public bool VerifyGenderOnWELSHAppSummary(string fieldName, string fieldValue)
+        {
+            string FieldName = "(//dt[contains(text(),'" + fieldName + "')])[2]";
+            string FieldValue = "((//dt[contains(text(),'" + fieldName + "')])[2])/following-sibling::dd[1]";
+            Console.WriteLine(_driver.WaitForElement(By.XPath(FieldName)).Text);
+            Console.WriteLine(_driver.WaitForElement(By.XPath(FieldValue)).Text);
+            return (_driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue));
+        }
+
+
+        public bool VerifyMichrochipDateOnAppSummaryInWelsh(string michrochipDate, string michrochipDateValue)
+        {
+            string MichrochipDate = "//dt[contains(text(),'" + michrochipDate + "')]";
+            string MichochipDateValue = "(//dt[contains(text(),'" + michrochipDate + "')]/..//dd)[1]";
+            return (_driver.FindElement(By.XPath(MichrochipDate)).Text.Contains(michrochipDate) && _driver.FindElement(By.XPath(MichochipDateValue)).Text.Contains(michrochipDateValue)) ;
+        
+        }
+
+        public bool VerifyPetDOBOnAppSummaryInWelsh(string petDOB, string petDOBValue)
+        {
+            string PetDOB = "//dt[contains(text(),'" + petDOB + "')]";
+            string PetDOBValue = "(//dt[contains(text(),'" + petDOB + "')]/..//dd)[1]";
+
+            return(_driver.FindElement(By.XPath(PetDOB)).Text.Contains(petDOB) && _driver.FindElement(By.XPath(PetDOBValue)).Text.Contains(petDOBValue)) ;
+           
+        }
+
         #endregion Page Methods
 
     }
