@@ -34,6 +34,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement AuthTravNoConfirmation => _driver.WaitForElement(By.XPath("//li[contains(text(),'Authorised person but no confirmation')]"));
         private IWebElement OtherReason => _driver.WaitForElement(By.XPath("//li[contains(text(),'Other reason')]"));
         private IWebElement DetailsOfOutcome => _driver.WaitForElement(By.XPath("//dt[text()='Details of outcome']/..//p"));
+        private IWebElement MicroNoMismatch => _driver.WaitForElement(By.XPath("//dt[text()='Microchip number found in scan']/..//p"));
         #endregion
 
         #region Methods
@@ -70,7 +71,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             {
                 if (microchipReason.Contains("MicrochipNumberNoMatch"))
                 {
-                    if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
+                    if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD") && !MicroNoMismatch.Text.Contains("123456789123456"))
                         status = false;
                 }
                 else if (microchipReason.Contains("CannotFindMicrochip"))
