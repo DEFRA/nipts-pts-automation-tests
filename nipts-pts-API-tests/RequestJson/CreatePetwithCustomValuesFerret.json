@@ -1,0 +1,68 @@
+{
+  "createdBy": "7B2F71FA-BCF1-EE11-904C-6045BD9057B4",
+  "petIdentification": {
+    "identificationType": 1,
+    "microchipNumber": "676789126542125",
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petMicrochipDate": {
+    "day": "11",
+    "month": "5",
+    "year": "2023",
+    "microchippedDate": "2023-05-11T12:38:30.075Z",
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petSpecies": {
+    "petSpecies": 3,
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petBreed": {
+    "petSpecies": 0,
+    "breedType": 0,
+    "breedName": "Automation Breed Name",
+    "breedId": 0,
+    "breedAdditionalInfo": "Automation Ferret Breed Additional Info",
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petName": {
+    "petName": "Automation Pet Ferret",
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petGender": {
+    "gender": 2,
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petAge": {
+    "knowDoB": 1,
+    "day": "21",
+    "month": "4",
+    "year": "2022",
+    "birthDate": "2022-04-21T12:38:30.075Z",
+    "approximateAge": 0,
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petColour": {
+    "petColour": 1,
+    "petColourOther": "Automation Black Ferret",
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petFeature": {
+    "hasUniqueFeature": 1,
+    "featureDescription": "Automation Ferret Feature Descrition",
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petMicrochip": {
+    "microchipNumber": "676789126542125",
+    "isCompleted": true,
+    "title": "string"
+  }
+}

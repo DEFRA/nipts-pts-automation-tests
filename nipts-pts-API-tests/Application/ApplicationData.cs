@@ -49,6 +49,38 @@ namespace nipts_pts_API_tests.Application
 
             ServiceBusConnection.SendMessageToQueue(messageBody, queueName);
         }
+
+        public string CreateApplicationWithPetCustomValues(string AppId, string PetSpecies)
+        {
+            updateUser();
+            createOwner();
+            createAddress();
+            createPetWithCustomValues(PetSpecies);
+            return createApplication(AppId);
+        }
+
+        public void createPetWithCustomValues(string PetSpecies)
+        {
+            var file = "";
+            Task<RestResponse> response = null;
+            string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint2;
+            var client = SetUrl("createpet", APIEndPoint);
+
+            if (PetSpecies.Equals("Cat"))
+                file = Path.Combine(RequestFolder, "CreatePetwithCustomValuesCat.json");
+            else if (PetSpecies.Equals("Dog"))
+                file = Path.Combine(RequestFolder, "CreatePetwithCustomValuesDog.json");
+            else if (PetSpecies.Equals("Ferret"))
+                file = Path.Combine(RequestFolder, "CreatePetwithCustomValuesFerret.json");
+
+            var requestJson = File.ReadAllText(file);
+            var request = CreatePostRequest(requestJson);
+            response = GetResponseAsync(client, request);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            PetId = dynamicObject;
+        }
+
         public string CreateApplicationSigFNoAPI(string AppId)
         {
             updateUser();

@@ -39,7 +39,7 @@ Scenario Outline: Verify pets date of birth should not allows older than 34
 	And I have provided older than expected date of PETS date of birth
 	When I click on continue button from Do you know your pet's date of birth? page
 	Then I should not be redirected to What is the main colour of your '<Pet>' page
-	And I should see an error message "Enter a date that is less than 34 years ago" in pets date of birth page
+	And I should see an error message "The date you entered is too far in the past, check your pet's date of birth is correct" in pets date of birth page
 
 Examples:
 	| FullName | Are your details correct | MicrochipOption | MicrochipNumber | Pet | PetName | Gender |

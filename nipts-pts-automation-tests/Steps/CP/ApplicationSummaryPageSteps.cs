@@ -243,5 +243,17 @@ namespace nipts_pts_automation_tests.Steps.CP
             _applicationSummaryPage.ClickOnAccount();
         }
 
+        [Given(@"Create an application via backend for '([^']*)' with custom values")]
+        [When(@"Create an application via backend for '([^']*)' with custom values")]
+        public void ThenCreateApplicationViaBackendWithCustomValues(string PetSpecies)
+        {
+            lock (_lock)
+            {
+                string AppId = _applicationSummaryPage.getNewID();
+                string APIAppReference = AppData.CreateApplicationWithPetCustomValues(AppId, PetSpecies);
+                _scenarioContext.Add("ReferenceNumber", APIAppReference);
+                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
+            }
+        }
     }
 }
