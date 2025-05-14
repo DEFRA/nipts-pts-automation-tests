@@ -28,5 +28,9 @@
         public bool VerifyPTDNumberOnApprovedPTD(string ptdNumber, string ptdNumberValue);
         public bool VerifyMichrochipDateOnApprovedPTD(string michrochipDate, string michrochipDateValue);
         public bool VerifyPetDOBOnApprovedPTD(string petDOB, string petDOBValue);
+        bool? VerifyWELSHFieldsAndValuesForPendingAppl(string fieldName, string fieldValue);
+        bool? VerifyReferenceNumberOnPendingAppl(string referenceNumberText, string referenceNumberValue);
+        bool? VerifyMichrochipDateOnPendingAppl(string michrochipDateText, string michrochipDateValue);
+        bool? VerifyPetDOBOnPendingAppl(string petDOBText, string petDOBValue);
     }
 }

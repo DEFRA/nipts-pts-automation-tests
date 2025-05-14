@@ -109,3 +109,65 @@ Scenario: View Pet travel documents in WELSH
 	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | PetSex | color | featureOption | FooterLang1 | FooterLang2 |
 	| test2     | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | Male   | Black | No            | English     | Cymraeg     |
 
+	Scenario: View Pet travel documents in WELSH for Pending Application
+	Given that I navigate to the Pets application portal
+	When  sign in with valid credentials with logininfo '<logininfo>'
+	And   click on Welsh language 
+	Then  verify next page '<nextPage>' is loaded
+	When  click on Apply for a document
+	Then  verify next page '<nextPage1>' is loaded
+	When  select 'Nac ydyn' on Personal Details page
+	And   click on continue 
+	And   enter your full name '<fullname>'
+	And   click on continue
+	Then  verify next page '<nextPage2>' is loaded
+	When  enter your postcode '<postcode>'
+	Then  verify total address found on select address page
+	When  select address
+	Then  verify next page '<nextPage3>' is loaded
+	And   click on continue
+	Then  verify next page '<nextPage4>' is loaded
+	When  enter phone number '<phoneNumber>'
+	And   click on continue
+	Then  I selected the '<MicrochipOption>' option
+	And   provided microchip number as <MicrochipNumber>
+	When  click on continue
+	Then  I have provided date of PETS microchipped
+	When  click on continue 
+	Then  I have selected an option as '<Pet>' for pets
+	And   click on continue
+	When  Select breed of your pet '<PetBreed>'
+	Then  click on continue	
+	When  I provided the Pets name as '<PetName>'
+	Then  click on continue 
+	When  Select Pet Sex option '<PetSex>'
+	Then  click on continue 
+    And   enter the pet date of birth
+	And   click on continue
+	Then  Select pet color as '<color>'
+	And   click on continue
+	Then  select Pets significant features '<featureOption>'
+	And   click on continue
+	And   confirm the declaration checkbox
+	Then  click Accept and Send button from Declaration page
+	And   verify next page '<nextPage5>' is loaded
+	When  click on View all lifelong pet travel document link
+	Then  verify next page '<nextPage>' is loaded
+	And   I should see the application in 'Yn aros' status
+	When  I have clicked the View hyperlink from home page
+	Then  verify WELSH text for Reference Number 'Rhif cyfeirnod' and Reference Number on pending application
+	Then  verify WELSH text for Michrochip Date 'Dyddiad' and Michrochip Date on Pending Appl
+	Then  verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on Pending Appl
+	Then  verify WELSH summary of Pending Appl for field name 'Rhif y microsglodyn' and field value '676789876543321'
+	Then  verify WELSH summary of Pending Appl for field name 'Enw a chyfeiriad yr awdurdod cymwys' and field value 'Asiantaeth Iechyd Anifeiliaid a Phlanhigion'
+	Then  verify WELSH summary of Pending Appl for field name 'Lleoliad y mewnblaniad' and field value 'O dan y croen'
+	Then  verify WELSH summary of Pending Appl for field name 'Enw' and field value 'toto'
+	Then  verify WELSH summary of Pending Appl for field name 'Rhywogaeth' and field value 'Dog'
+	Then  verify WELSH summary of Pending Appl for field name 'Brid' and field value 'Basenji'
+	Then  verify WELSH summary of Pending Appl for field name 'Rhyw' and field value 'Male'
+	Then  verify WELSH summary of Pending Appl for field name 'Nodweddion arwyddocaol' and field value 'No'
+	Then  verify WELSH summary of Pending Appl for field name 'Lliw' and field value 'Black'
+
+	Examples: 
+	| logininfo | nextPage          | nextPage1       | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3     | PetSex | nextPage4  | color | featureOption  | FooterLang1 | FooterLang2 | nextPage5 | fullname | postcode | phoneNumber  |
+	| test2     | Dogfennau teithio | ch manylion chi | Ci  | 676789876543321 | Basenji  | Yes             | Beth yw   | Testtoto| ch cyfeiriad? | Gwryw  | ch rhif ff | Du    | Nac oes        | English     | Cymraeg     | Cais wedi | New User | CV31 2EE | 07833861122  |

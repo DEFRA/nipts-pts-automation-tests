@@ -23,34 +23,46 @@ namespace nipts_pts_automation_tests.Steps
         }
 
 
+        [When(@"confirm By sending this application, you confirm that you've given accurate and truthful information about your pet checkbox")]
         [Then(@"confirm By sending this application, you confirm that you've given accurate and truthful information about your pet checkbox")]
         public void ThenIHaveTickedTheBySendingThisApplicationYouConfirmThatYouveGivenAccurateAndTruthfulInformationAboutYourPetCheckbox()
         {
             checkAnsDeclarationPage.TickAgreedToAccuracy();
         }
 
+        [When(@"confirm Defra's privacy policy checkbox")]
         [Then(@"confirm Defra's privacy policy checkbox")]
         public void ThenIHaveTickedTheIAgreeToDefrasPrivacyPolicyCheckbox()
         {
             checkAnsDeclarationPage.TickAgreetToPrivacyPolicy();
         }
 
+        [When(@"confirm the declaration checkbox")]
         [Then(@"confirm the declaration checkbox")]
         public void ThenIHaveTickedTheIAgreeToTheDeclarationCheckbox()
         {
             checkAnsDeclarationPage.TickAgreedToDeclaration();
         }
 
+        [When(@"click Accept and Send button from Declaration page")]
         [Then(@"click Accept and Send button from Declaration page")]
         public void WhenIClickAcceptAndSendButtonFromDeclarationPage()
         {
             checkAnsDeclarationPage.ClickSendApplicationButton();
         }
 
+        [When(@"click on Apply for another lifelong pet travel document link")]
         [Then(@"click on Apply for another lifelong pet travel document link")]
         public void WhenIHaveClickedTheApplyForAnotherLifelongPetTravelDocumentLink()
         {
             checkAnsDeclarationPage.ClickApplyForAnotherPetTravelDocument();
+        }
+
+        [When(@"click on View all lifelong pet travel document link")]
+        [Then(@"click on View all lifelong pet travel document link")]
+        public void WhenIHaveClickedTheViewAllLifelongPetTravelDocumentLink()
+        {
+            checkAnsDeclarationPage.ClickViewAllPetTravelDocument();
         }
     }
 }

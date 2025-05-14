@@ -302,5 +302,49 @@ namespace nipts_pts_automation_tests.Pages
             }
         }
 
+        public bool? VerifyWELSHFieldsAndValuesForPendingAppl(string fieldName, string fieldValue)
+        {
+            string FieldName = "//dt[contains(text(),'" + fieldName + "')]";
+            string FieldValue = "//dt[contains(text(),'" + fieldName + "')]/..//dd";
+
+            if (_driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue)) ;
+            {
+                return true;
+            }
+        }
+
+        public bool? VerifyReferenceNumberOnPendingAppl(string referenceNumberText, string referenceNumberValue)
+        {
+            string ReferenceNumberText = "//dt[contains(text(),'" + referenceNumberText + "')]";
+            string ReferenceNumberValue = "//dt[contains(text(),'" + referenceNumberText + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(ReferenceNumberText)).Text.Contains(referenceNumberText) && _driver.FindElement(By.XPath(ReferenceNumberValue)).Text.Contains(referenceNumberValue)) ;
+            {
+                return true;
+            }
+        }
+
+        public bool? VerifyMichrochipDateOnPendingAppl(string michrochipDateText, string michrochipDateValue)
+        {
+            string MichrochipDate = "//dt[contains(text(),'" + michrochipDateText + "')]";
+            string MichochipDateValue = "//dt[contains(text(),'" + michrochipDateText + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(MichrochipDate)).Text.Contains(michrochipDateText) && _driver.FindElement(By.XPath(MichochipDateValue)).Text.Contains(michrochipDateValue)) ;
+            {
+                return true;
+            }
+        }
+
+        public bool? VerifyPetDOBOnPendingAppl(string petDOBText, string petDOBValue)
+        {
+            string PetDOB = "//dt[contains(text(),'" + petDOBText + "')]";
+            string PetDOBValue = "//dt[contains(text(),'" + petDOBText + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(PetDOB)).Text.Contains(petDOBText) && _driver.FindElement(By.XPath(PetDOBValue)).Text.Contains(petDOBValue)) ;
+            {
+                return true;
+            }
+        }
+
     }
 }
