@@ -111,9 +111,13 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
                 if (tableHeader.Text.Replace("\r\n", string.Empty).Trim().ToUpper().Equals(petName.ToUpper()))
                 {
-                    var tdCollection = element.FindElements(By.TagName("td"));
+                    //var tdCollection = element.FindElements(By.TagName("td"));
 
-                    return tdCollection[2].Text.Replace("\r\n", string.Empty).Trim().ToUpper().Equals(status.ToUpper());
+                    //return tdCollection[2].Text.Replace("\r\n", string.Empty).Trim().ToUpper().Equals(status.ToUpper());
+
+                    var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
+                    var tdCollection = _driver.FindElement(By.XPath(statusPath));
+                    return tdCollection.Text.Trim().ToUpper().Equals(status.ToUpper());
                 }
             }
 
