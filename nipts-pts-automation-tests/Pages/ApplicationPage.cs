@@ -157,9 +157,10 @@ namespace nipts_pts_automation_tests.Pages
 
                 if (tableHeader.Text.Equals(petName))
                 {
-                    var tdCollection = element.FindElements(By.TagName("td"));
-
-                    return tdCollection[2].Text.Trim().ToUpper().Equals(status.ToUpper());
+                    var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
+                    var tdCollection = _driver.FindElement(By.XPath(statusPath));
+                    //var tdCollection = element.FindElements(By.TagName("td"));
+                    return tdCollection.Text.Trim().ToUpper().Equals(status.ToUpper());
                 }
             }
 
@@ -346,5 +347,13 @@ namespace nipts_pts_automation_tests.Pages
             }
         }
 
+        public bool? VerifyHeadingTextOnSummaryPage(string heading)
+        {
+            string headingPath = $"//h2[contains(text(),'{heading}')]";
+            if (_driver.FindElements(By.XPath(headingPath)).Count > 0)
+                return true;
+            else 
+                return false;
+        }
     }
 }

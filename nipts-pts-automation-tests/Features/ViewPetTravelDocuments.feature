@@ -92,18 +92,23 @@ Scenario: View Pet travel documents in WELSH
 	And   I should see the application in 'Approved' status
 	When  click on Welsh language
 	When  I have clicked the View hyperlink from home page
+	Then  verify WELSH heading text 'i dyroddi' on Summary page 
 	Then  verify WELSH text for PTD Number 'Rhif y ddogfen deithio i anifail anwes' and PTD Number on approved PTD
-	Then  verify WELSH text for Michrochip Date 'Dyddiad mewnblannu neu sganio' and Michrochip Date on approved PTD
-	Then  verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on approved PTD
+	Then  verify WELSH heading text 'Gwybodaeth am y microsglodyn' on Summary page 
 	Then  verify WELSH summary of Approved PTD field name 'Rhif y microsglodyn' and field value '676789876543321'
-	Then  verify WELSH summary of Approved PTD field name 'Enw a chyfeiriad yr awdurdod cymwys' and field value 'Asiantaeth Iechyd Anifeiliaid a Phlanhigion'
+	Then  verify WELSH text for Michrochip Date 'Dyddiad mewnblannu neu sganio' and Michrochip Date on approved PTD
 	Then  verify WELSH summary of Approved PTD field name 'Lleoliad y mewnblaniad' and field value 'O dan y croen'
+	Then  verify WELSH heading text 'Awdurdod dyroddi' on Summary page 
+	Then  verify WELSH summary of Approved PTD field name 'Enw a chyfeiriad yr awdurdod cymwys' and field value 'Asiantaeth Iechyd Anifeiliaid a Phlanhigion'
+	Then  verify WELSH heading text 'Manylion yr anifail anwes' on Summary page 
 	Then  verify WELSH summary of Approved PTD field name 'Enw' and field value 'toto'
 	Then  verify WELSH summary of Approved PTD field name 'Rhywogaeth' and field value 'Ci'
 	Then  verify WELSH summary of Approved PTD field name 'Brid' and field value 'Pug'
 	Then  verify WELSH summary of Approved PTD field name 'Rhyw' and field value 'Gwryw'
-	Then  verify WELSH summary of Approved PTD field name 'Nodweddion arwyddocaol' and field value 'Nac oes'
+	Then  verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on approved PTD
 	Then  verify WELSH summary of Approved PTD field name 'Lliw' and field value 'Black'
+	Then  verify WELSH summary of Approved PTD field name 'Nodweddion arwyddocaol' and field value 'Nac oes'
+	Then  verify WELSH heading text 'Manylion perchennog yr anifail anwes' on Summary page 
 
 	Examples: 
 	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | PetSex | color | featureOption | FooterLang1 | FooterLang2 |
@@ -151,22 +156,27 @@ Scenario: View Pet travel documents in WELSH
 	And   confirm the declaration checkbox
 	Then  click Accept and Send button from Declaration page
 	And   verify next page '<nextPage5>' is loaded
+	And   I can see the unique application reference number
 	When  click on View all lifelong pet travel document link
 	Then  verify next page '<nextPage>' is loaded
 	And   I should see the application in 'Yn aros' status
 	When  I have clicked the View hyperlink from home page
+	Then  verify WELSH heading text 'Cais' on Summary page 
 	Then  verify WELSH text for Reference Number 'Rhif cyfeirnod' and Reference Number on pending application
-	Then  verify WELSH text for Michrochip Date 'Dyddiad' and Michrochip Date on Pending Appl
-	Then  verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on Pending Appl
+	Then  verify WELSH heading text 'Gwybodaeth am y microsglodyn' on Summary page 
+	Then  verify WELSH text for Michrochip Date 'Dyddiad mewnblannu neu sganio' and Michrochip Date on Pending Appl
+	Then  verify WELSH summary of Approved PTD field name 'Lleoliad y mewnblaniad' and field value 'O dan y croen'
+	Then  verify WELSH heading text 'Manylion yr anifail anwes' on Summary page 
 	Then  verify WELSH summary of Pending Appl for field name 'Rhif y microsglodyn' and field value '676789876543321'
-	Then  verify WELSH summary of Pending Appl for field name 'Enw a chyfeiriad yr awdurdod cymwys' and field value 'Asiantaeth Iechyd Anifeiliaid a Phlanhigion'
 	Then  verify WELSH summary of Pending Appl for field name 'Lleoliad y mewnblaniad' and field value 'O dan y croen'
-	Then  verify WELSH summary of Pending Appl for field name 'Enw' and field value 'toto'
+	Then  verify WELSH summary of Pending Appl for field name 'Enw' and field value 'Testtoto'
 	Then  verify WELSH summary of Pending Appl for field name 'Rhywogaeth' and field value 'Dog'
 	Then  verify WELSH summary of Pending Appl for field name 'Brid' and field value 'Basenji'
 	Then  verify WELSH summary of Pending Appl for field name 'Rhyw' and field value 'Male'
-	Then  verify WELSH summary of Pending Appl for field name 'Nodweddion arwyddocaol' and field value 'No'
+	Then  verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on Pending Appl
 	Then  verify WELSH summary of Pending Appl for field name 'Lliw' and field value 'Black'
+	Then  verify WELSH summary of Pending Appl for field name 'Nodweddion arwyddocaol' and field value 'No'
+	Then  verify WELSH heading text 'Manylion perchennog yr anifail anwes' on Summary page 
 
 	Examples: 
 	| logininfo | nextPage          | nextPage1       | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3     | PetSex | nextPage4  | color | featureOption  | FooterLang1 | FooterLang2 | nextPage5 | fullname | postcode | phoneNumber  |

@@ -32,5 +32,6 @@
         bool? VerifyReferenceNumberOnPendingAppl(string referenceNumberText, string referenceNumberValue);
         bool? VerifyMichrochipDateOnPendingAppl(string michrochipDateText, string michrochipDateValue);
         bool? VerifyPetDOBOnPendingAppl(string petDOBText, string petDOBValue);
+        bool? VerifyHeadingTextOnSummaryPage(string heading);
     }
 }

@@ -192,7 +192,7 @@ namespace nipts_pts_automation_tests.Steps
         [Then(@"verify WELSH text for Reference Number '([^']*)' and Reference Number on pending application")]
         public void ThenIVerifyRefernceNumberOnPendingAppl(string ReferenceNumberText)
         {
-            string referenceNumberValue = _scenarioContext.Get<string>("PTDNumber");
+            string referenceNumberValue = _scenarioContext.Get<string>("ReferenceNumber");
             Assert.True(applicationPage.VerifyReferenceNumberOnPendingAppl(ReferenceNumberText, referenceNumberValue), "Reference Number mismatch on Pending Appl");
         }
 
@@ -210,6 +210,10 @@ namespace nipts_pts_automation_tests.Steps
             Assert.True(applicationPage.VerifyPetDOBOnPendingAppl(petDOBText, petDOBValue), "Pet DOB mismatch on Pending Appl");
         }
 
-
+        [Then(@"verify WELSH heading text '([^']*)' on Summary page")]
+        public void ThenIVerifyHeadingTextOnSummaryPage(string Heading)
+        {
+            Assert.True(applicationPage.VerifyHeadingTextOnSummaryPage(Heading), "Pet Heading mismatch on Summary page");
+        }
     }
 }
