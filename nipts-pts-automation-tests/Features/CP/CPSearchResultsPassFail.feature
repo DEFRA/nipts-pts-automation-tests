@@ -51,7 +51,7 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 
 Examples:
 	| Transportation | FerryRoute                    | ApplicationRadio     | PTDNumber1 |
-	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |  D7C8D0    |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |  D4F115    |
 
 Scenario Outline: PTS port checker Pass application by Reference number - status in Approved
 	When Create an application via backend
