@@ -90,6 +90,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             Assert.IsTrue(petNamePage?.IsNextPageLoaded(pageTitle), $"The page {pageTitle} not loaded!");
         }
 
+        [When(@"I provided the Pets name as '([^']*)'")]
         [Then(@"I provided the Pets name as '([^']*)'")]
         public void ThenIProvidedThePetsNameAs(string petName)
         {

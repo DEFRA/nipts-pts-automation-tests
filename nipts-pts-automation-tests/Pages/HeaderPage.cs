@@ -14,7 +14,8 @@ namespace nipts_pts_automation_tests.Pages
 
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']"));
         private IWebElement GOVLink => _driver.WaitForElement(By.XPath("//*[name()='svg' and @class='govuk-header__logotype']"));
-        private IWebElement Feedbacktext => _driver.WaitForElement(By.XPath("//div[@id='QID3']//div[@class='QuestionText BorderColor']"));
+        private IWebElement Feedbacktext => _driver.WaitForElement(By.XPath("//div[@class='QuestionText BorderColor']//p"));
+        private IWebElement FeedbackHeading => _driver.WaitForElement(By.XPath("//div[@class='QuestionText BorderColor']//h1"));
         private IWebElement GenericGOVPage => _driver.WaitForElement(By.XPath("//span[contains(@class,'govuk-!-margin-bottom-2 govuk-!-display-block')]"));
         private IWebElement feedbacklink => _driver.WaitForElement(By.XPath("//a[contains(text(),' adborth (yn agor mewn tab newydd)')]"));
         private IWebElement HeaderTitle => _driver.WaitForElement(By.XPath("//div[@class='govuk-header__content']/a[contains(@class,'govuk-header')]"));
@@ -45,7 +46,21 @@ namespace nipts_pts_automation_tests.Pages
 
         public bool VerifyFeedbackPageLoaded()
         {
-            return Feedbacktext.Text.Contains("Overall, how did you feel about the service you used today?");
+            return FeedbackHeading.Text.Contains("Give feedback on Taking a pet from Great Britain to Northern Ireland");
+        }
+
+        public bool? VerifyFeedbackPageText(string text)
+        {
+            return Feedbacktext.Text.Contains(text);
+        }
+
+        public bool? VerifyLinkOnFeedbackPage(string link)
+        {
+            string Feedbacklink = $"//a[contains(text(),'{link}')]";
+            if (_driver.FindElements(By.XPath(Feedbacklink)).Count() > 0)
+                return true;
+            else 
+                return false;
         }
 
         public bool VerifyGenericGOVPageLoaded()

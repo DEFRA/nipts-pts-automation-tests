@@ -157,9 +157,10 @@ namespace nipts_pts_automation_tests.Pages
 
                 if (tableHeader.Text.Equals(petName))
                 {
-                    var tdCollection = element.FindElements(By.TagName("td"));
-
-                    return tdCollection[2].Text.Trim().ToUpper().Equals(status.ToUpper());
+                    var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
+                    var tdCollection = _driver.FindElement(By.XPath(statusPath));
+                    //var tdCollection = element.FindElements(By.TagName("td"));
+                    return tdCollection.Text.Trim().ToUpper().Equals(status.ToUpper());
                 }
             }
 
@@ -302,5 +303,57 @@ namespace nipts_pts_automation_tests.Pages
             }
         }
 
+        public bool? VerifyWELSHFieldsAndValuesForPendingAppl(string fieldName, string fieldValue)
+        {
+            string FieldName = "//dt[contains(text(),'" + fieldName + "')]";
+            string FieldValue = "//dt[contains(text(),'" + fieldName + "')]/..//dd";
+
+            if (_driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue)) ;
+            {
+                return true;
+            }
+        }
+
+        public bool? VerifyReferenceNumberOnPendingAppl(string referenceNumberText, string referenceNumberValue)
+        {
+            string ReferenceNumberText = "//dt[contains(text(),'" + referenceNumberText + "')]";
+            string ReferenceNumberValue = "//dt[contains(text(),'" + referenceNumberText + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(ReferenceNumberText)).Text.Contains(referenceNumberText) && _driver.FindElement(By.XPath(ReferenceNumberValue)).Text.Contains(referenceNumberValue)) ;
+            {
+                return true;
+            }
+        }
+
+        public bool? VerifyMichrochipDateOnPendingAppl(string michrochipDateText, string michrochipDateValue)
+        {
+            string MichrochipDate = "//dt[contains(text(),'" + michrochipDateText + "')]";
+            string MichochipDateValue = "//dt[contains(text(),'" + michrochipDateText + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(MichrochipDate)).Text.Contains(michrochipDateText) && _driver.FindElement(By.XPath(MichochipDateValue)).Text.Contains(michrochipDateValue)) ;
+            {
+                return true;
+            }
+        }
+
+        public bool? VerifyPetDOBOnPendingAppl(string petDOBText, string petDOBValue)
+        {
+            string PetDOB = "//dt[contains(text(),'" + petDOBText + "')]";
+            string PetDOBValue = "//dt[contains(text(),'" + petDOBText + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(PetDOB)).Text.Contains(petDOBText) && _driver.FindElement(By.XPath(PetDOBValue)).Text.Contains(petDOBValue)) ;
+            {
+                return true;
+            }
+        }
+
+        public bool? VerifyHeadingTextOnSummaryPage(string heading)
+        {
+            string headingPath = $"//h2[contains(text(),'{heading}')]";
+            if (_driver.FindElements(By.XPath(headingPath)).Count > 0)
+                return true;
+            else 
+                return false;
+        }
     }
 }

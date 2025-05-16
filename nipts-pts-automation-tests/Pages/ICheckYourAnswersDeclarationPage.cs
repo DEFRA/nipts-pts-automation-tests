@@ -7,5 +7,6 @@
         public void TickAgreetToPrivacyPolicy();
         public void ClickSendApplicationButton();
         public void ClickApplyForAnotherPetTravelDocument();
+        public void ClickViewAllPetTravelDocument();
     }
 }

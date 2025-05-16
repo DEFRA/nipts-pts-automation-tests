@@ -29,7 +29,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
         private IWebElement btnApplyForDocument => _driver.WaitForElement(By.XPath("//button[contains(text(),'Apply for a document')]"), true);
         private IReadOnlyCollection<IWebElement> tableRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr"), true);
         private IReadOnlyCollection<IWebElement> tableHeaderRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr/th"), true);
-        private IReadOnlyCollection<IWebElement> tableActionRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr/td[4]//a"), true);
+        private IReadOnlyCollection<IWebElement> tableActionRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr/td[2]//a"), true);
         public IWebElement lnkManageAccount => _driver.WaitForElement(By.XPath("//a[@href='/User/ManageAccount']"));
         public IWebElement lifelongPetTraveDocuments => _driver.WaitForElement(By.XPath("//li[@class='login-nav__list-item']//a[@href='/TravelDocument']"));
 
@@ -111,9 +111,13 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
                 if (tableHeader.Text.Replace("\r\n", string.Empty).Trim().ToUpper().Equals(petName.ToUpper()))
                 {
-                    var tdCollection = element.FindElements(By.TagName("td"));
+                    //var tdCollection = element.FindElements(By.TagName("td"));
 
-                    return tdCollection[2].Text.Replace("\r\n", string.Empty).Trim().ToUpper().Equals(status.ToUpper());
+                    //return tdCollection[2].Text.Replace("\r\n", string.Empty).Trim().ToUpper().Equals(status.ToUpper());
+
+                    var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
+                    var tdCollection = _driver.FindElement(By.XPath(statusPath));
+                    return tdCollection.Text.Trim().ToUpper().Equals(status.ToUpper());
                 }
             }
 
@@ -155,6 +159,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
             }
 
             lnkview?.Click();
+            Thread.Sleep(2000);
         }
 
         public void ClickOnManageAccountLink()

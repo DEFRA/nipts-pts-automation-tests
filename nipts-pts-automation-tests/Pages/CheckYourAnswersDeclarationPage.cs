@@ -20,7 +20,8 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement chkAgreesToDeclaration => _driver.WaitForElementExists(By.XPath("//input[@id='AgreedToDeclaration']"));
         private IWebElement chkTextAgreesToDeclaration => _driver.WaitForElementExists(By.XPath("//input[@id='AgreedToDeclaration']/following-sibling::div"));
 
-        private IWebElement lnkApplyForAnother => _driver.WaitForElement(By.XPath("//a[contains(text(),'Gwneud cais am ddogfen deithio')]"));
+        private IWebElement lnkApplyForAnother => _driver.WaitForElement(By.XPath("//a[contains(text(),'Gwneud cais am ddogfen deithio gydol oes arall i anifeiliaid anwes')]"));
+        private IWebElement lnkViewAllPetTravelDocuments => _driver.WaitForElement(By.XPath("//a[contains(text(),'Gweld eich holl ddogfennau teithio gydol oes i anifeiliaid anwes')]"));
 
         #endregion Page Objects
 
@@ -65,6 +66,12 @@ namespace nipts_pts_automation_tests.Pages
         {
             lnkApplyForAnother.Click();
         }
+
+        public void ClickViewAllPetTravelDocument()
+        {
+            lnkViewAllPetTravelDocuments.Click();
+        }
+
         #endregion Page Methods
 
     }
