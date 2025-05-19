@@ -181,5 +181,39 @@ namespace nipts_pts_automation_tests.Steps
         {
             applicationPage?.ClickWelshMicrochipChangeLink(fieldName);
         }
+
+
+        [Then(@"verify WELSH summary of Pending Appl for field name '([^']*)' and field value '([^']*)'")]
+        public void ThenVerifyWELSHSummaryPendingAppl(string fieldName, string fieldValue)
+        {
+            Assert.True(applicationPage.VerifyWELSHFieldsAndValuesForPendingAppl(fieldName, fieldValue), "Summary mistmatch on Pending Appl");
+        }
+
+        [Then(@"verify WELSH text for Reference Number '([^']*)' and Reference Number on pending application")]
+        public void ThenIVerifyRefernceNumberOnPendingAppl(string ReferenceNumberText)
+        {
+            string referenceNumberValue = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(applicationPage.VerifyReferenceNumberOnPendingAppl(ReferenceNumberText, referenceNumberValue), "Reference Number mismatch on Pending Appl");
+        }
+
+        [Then(@"verify WELSH text for Michrochip Date '([^']*)' and Michrochip Date on Pending Appl")]
+        public void ThenIVerifyMichrochipDateOnPendingAppl(string michrochipDateText)
+        {
+            string michrochipDateValue = _scenarioContext.Get<string>("MicrochippedDate");
+            Assert.True(applicationPage.VerifyMichrochipDateOnPendingAppl(michrochipDateText, michrochipDateValue), "Michrochip Date mismatch on Pending Appl");
+        }
+
+        [Then(@"verify WELSH text for Pet DOB '([^']*)' and Pet DOB on Pending Appl")]
+        public void ThenIVerifyPetDOBOnPendingAppl(string petDOBText)
+        {
+            string petDOBValue = _scenarioContext.Get<string>("DateOfBirth");
+            Assert.True(applicationPage.VerifyPetDOBOnPendingAppl(petDOBText, petDOBValue), "Pet DOB mismatch on Pending Appl");
+        }
+
+        [Then(@"verify WELSH heading text '([^']*)' on Summary page")]
+        public void ThenIVerifyHeadingTextOnSummaryPage(string Heading)
+        {
+            Assert.True(applicationPage.VerifyHeadingTextOnSummaryPage(Heading), "Pet Heading mismatch on Summary page");
+        }
     }
 }

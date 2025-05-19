@@ -32,7 +32,19 @@ namespace nipts_pts_automation_tests.Steps
         [Then(@"verify feedback page is loaded")]
         public void ThenVerifyFeedbackPageIsLoaded()
         {
-            Assert.True(headerPage.VerifyFeedbackPageLoaded(), "Feed back page not loaded");
+            Assert.True(headerPage.VerifyFeedbackPageLoaded(), "Feedback page not loaded");
+        }
+
+        [Then(@"verify feedback page text '([^']*)' is correct")]
+        public void ThenVerifyFeedbackPageTextIsCorrect(string text)
+        {
+            Assert.True(headerPage.VerifyFeedbackPageText(text), "Feedback page text is not correct");
+        }
+
+        [Then(@"verify link '([^']*)' on feedback page text")]
+        public void ThenVerifyLinkOnFeedbackPage(string link)
+        {
+            Assert.True(headerPage.VerifyLinkOnFeedbackPage(link), "Link on Feedback page is not correct");
         }
 
         [Then(@"verify generic GOV page is loaded")]

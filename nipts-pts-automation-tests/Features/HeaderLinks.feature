@@ -13,6 +13,8 @@ Pets header page
 	When  click on the feedback link
 	And   switch to next opened tab
 	Then  verify feedback page is loaded
+	And   verify feedback page text 'Your feedback will help us improve the service.' is correct
+	And   verify link 'Accessibility statement (opens in a new tab)' on feedback page text
 	When  switch to previous tab
 	And   Click on GOV.UK link in the header of the page
 	Then  verify generic GOV page is loaded

@@ -13,5 +13,7 @@ namespace nipts_pts_automation_tests.Pages
         public bool VerifyCookiesBannerWelsh(string cookiesWELSHText);
         public bool VerifyCookiesPrefTextWelsh(string cookiesText);
         public void ClickCookiesPrefButton(string prefBtn);
+        bool? VerifyFeedbackPageText(string text);
+        bool? VerifyLinkOnFeedbackPage(string link);
     }
 }
