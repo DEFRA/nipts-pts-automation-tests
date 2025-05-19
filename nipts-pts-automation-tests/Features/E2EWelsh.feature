@@ -15,7 +15,7 @@ Background:
 	And  click on Welsh language
 
 
-Scenario Outline: Create PETS Travel Document By Registered User with details correct for Dog Species - Approved in WELSH
+Scenario Outline: Create PETS Travel Document By Registered User with details correct for Dog Species - Approved 
 	When select 'Ydyn' on Personal Details page
 	And click on continue
 	Then I selected the '<MicrochipOption>' option
