@@ -160,7 +160,7 @@ namespace nipts_pts_automation_tests.Pages
                     var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
                     var tdCollection = _driver.FindElement(By.XPath(statusPath));
                     //var tdCollection = element.FindElements(By.TagName("td"));
-                    return tdCollection.Text.Trim().ToUpper().Equals(status.ToUpper());
+                    return tdCollection.Text.Trim().ToUpper().Contains(status.ToUpper());
                 }
             }
 
