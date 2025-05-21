@@ -215,5 +215,11 @@ namespace nipts_pts_automation_tests.Steps
         {
             Assert.True(applicationPage.VerifyHeadingTextOnSummaryPage(Heading), "Pet Heading mismatch on Summary page");
         }
+
+        [Then(@"verify Place of Issuance text is present '([^']*)' on Approved PTD")]
+        public void ThenIVerifyHeadingTextOnApprovedPTD(string PlaceOfIssText)
+        {
+            Assert.True(applicationPage.VerifyPlaceOfIssuanceOnApprovedDoc(PlaceOfIssText), "Place of Issuance text not present on approved PTD");
+        }
     }
 }
