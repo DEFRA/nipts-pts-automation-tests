@@ -1,9 +1,8 @@
-﻿using BoDi;
-using nipts_pts_automation_tests.HelperMethods;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps
 {

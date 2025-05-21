@@ -1,9 +1,9 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using nipts_pts_automation_tests.Pages;
 using nipts_pts_automation_tests.Tools;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using nipts_pts_automation_tests.Data;
 
 namespace nipts_pts_automation_tests.Steps

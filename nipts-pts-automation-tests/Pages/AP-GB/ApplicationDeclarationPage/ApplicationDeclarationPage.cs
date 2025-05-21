@@ -1,4 +1,4 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using Defra.UI.Tests.Contracts;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;

@@ -1,10 +1,10 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage;
 using nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails;
 using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
 using nipts_pts_automation_tests.Pages.AP_GB.SummaryPage;
 using NUnit.Framework;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps.AP_GB
 {

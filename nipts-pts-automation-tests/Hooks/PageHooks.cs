@@ -1,4 +1,4 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage;
 using nipts_pts_automation_tests.Pages.AP_GB.ApplicationSubmittedPage;
 using nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails;
@@ -22,7 +22,7 @@ using nipts_pts_automation_tests.Data;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages;
 using nipts_pts_automation_tests.Tools;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using nipts_pts_automation_tests.Pages.CP.Pages;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using nipts_pts_automation_tests.Pages.AP_GB.PetSexPage;

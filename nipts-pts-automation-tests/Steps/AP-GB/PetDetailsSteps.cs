@@ -1,4 +1,4 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages.AP_GB.PetBreedPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetColourPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetDOBPage;
@@ -8,7 +8,7 @@ using nipts_pts_automation_tests.Pages.AP_GB.PetSpeciesPage;
 using nipts_pts_automation_tests.Pages.AP_GB.SignificantFeaturesPage;
 using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps.AP_GB
 {
@@ -53,7 +53,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             petSpeciesPage?.ClickContinueButton();
         }
 
-        [Then(@"I should redirected to the What breed is your '([^']*)'\? page")]
+        [Then(@"I should redirected to the What breed is your '([^']*)'? page")]
         public void ThenIShouldRedirectedToTheWhatBreedIsYourPage(string petType)
         {
             if (!petType.ToLower().Equals("ferret"))
@@ -139,7 +139,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             _scenarioContext.Add("DateOfBirth", dateOfBirth);
         }
 
-        [When(@"I click on continue button from Do you know your pet's date of birth\? page")]
+        [When(@"I click on continue button from Do you know your pet's date of birth? page")]
         public void WhenIClickOnContinueButtonFromDoYouKnowYourPetsDateOfBirthPage()
         {
             petDOBPage?.ClickContinueButton();

@@ -1,4 +1,4 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using Microsoft.Extensions.Configuration;
 using nipts_pts_automation_tests.Configuration;
 using System.Reflection;
