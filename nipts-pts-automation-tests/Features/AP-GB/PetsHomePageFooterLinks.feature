@@ -51,3 +51,12 @@ Scenario: Checking the CrownCopyright Hyperlink
 	Then I should navigate to the CrownCopyright details correct page
 	When that I navigate to the DEFRA application
 	Then click on signout button and verify the signout message on pets
+
+Scenario Outline: Checking the updated dashboard on homepage
+	Then I verify the header petname '<Petname>' on homepage
+	Then I verify the header Status '<Status>' on homepage
+
+
+Examples:
+	| Petname  | Status |
+	| Pet name | Status |

@@ -109,6 +109,7 @@ Scenario: View Pet travel documents in WELSH
 	Then  verify WELSH summary of Approved PTD field name 'Lliw' and field value 'Black'
 	Then  verify WELSH summary of Approved PTD field name 'Nodweddion arwyddocaol' and field value 'Nac oes'
 	Then  verify WELSH heading text 'Manylion perchennog yr anifail anwes' on Summary page 
+	Then  verify WELSH format of PTD number on search results page
 
 	Examples: 
 	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | PetSex | color | featureOption | FooterLang1 | FooterLang2 |

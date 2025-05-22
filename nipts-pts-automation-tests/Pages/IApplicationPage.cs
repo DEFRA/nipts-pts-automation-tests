@@ -33,5 +33,8 @@
         bool? VerifyMichrochipDateOnPendingAppl(string michrochipDateText, string michrochipDateValue);
         bool? VerifyPetDOBOnPendingAppl(string petDOBText, string petDOBValue);
         bool? VerifyHeadingTextOnSummaryPage(string heading);
+        public bool VerifyTheHeaderWelshPetname(string Petname);
+        public bool VerifyTheHeaderWelshStatus(string Status);
+        public bool VerifyWELSHPTDNoOnSearchResultsPassFailPage(string finalPTD);
     }
 }

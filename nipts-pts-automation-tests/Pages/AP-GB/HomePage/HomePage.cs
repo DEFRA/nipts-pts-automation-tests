@@ -1,6 +1,7 @@
 ﻿using BoDi;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
+using TechTalk.SpecFlow;
 
 
 namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
@@ -181,6 +182,32 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                 return false;
         }
 
+        public bool VerifyTheHeaderPetname(string Petname)
+        {
+            string outageLinkEle = "//th[contains(.,'Pet name')]";
+            if (_driver.FindElements(By.XPath(outageLinkEle)).Count > 0)
+            {
+                if (_driver.FindElement(By.XPath(outageLinkEle)).Text.Equals("Pet name"))
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return true;
+        }
+        public bool VerifyTheHeaderStatus(string Status)
+        {
+            string outageLinkEle = "//th[contains(.,'Status')]";
+            if (_driver.FindElements(By.XPath(outageLinkEle)).Count > 0)
+            {
+                if (_driver.FindElement(By.XPath(outageLinkEle)).Text.Equals("Status"))
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return true;
+        }
 
         #endregion
     }

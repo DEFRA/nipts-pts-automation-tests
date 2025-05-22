@@ -2,6 +2,7 @@
 using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using System.Runtime.InteropServices;
 using TechTalk.SpecFlow;
 
 namespace nipts_pts_automation_tests.Steps.AP_GB
@@ -155,5 +156,16 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             HomePage?.ClickOnLifelongPetTravelDocumentsFromHeader();
         }
 
+        [Then(@"I verify the header petname '([^']*)' on homepage")]
+        public void ThenVerifyPetnameOnPage(string Petname)
+        {
+            Assert.IsTrue(HomePage?.VerifyTheHeaderPetname(Petname), "Link not matching ");
+        }
+
+        [Then(@"I verify the header Status '([^']*)' on homepage")]
+        public void ThenVerifyStatusOnPage(string Status)
+        {
+            Assert.IsTrue(HomePage?.VerifyTheHeaderStatus(Status), "Link not matching ");
+        }
     }
 }
