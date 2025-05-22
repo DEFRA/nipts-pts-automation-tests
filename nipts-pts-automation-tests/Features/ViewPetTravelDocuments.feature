@@ -92,6 +92,7 @@ Scenario: View Pet travel documents in WELSH
 	And   I should see the application in 'Approved' status
 	When  click on Welsh language
 	When  I have clicked the View hyperlink from home page
+	Then  verify Place of Issuance text is present 'man cyhoeddi' on Approved PTD
 	Then  verify WELSH heading text 'i dyroddi' on Summary page 
 	Then  verify WELSH text for PTD Number 'Rhif y ddogfen deithio i anifail anwes' and PTD Number on approved PTD
 	Then  verify WELSH heading text 'Gwybodaeth am y microsglodyn' on Summary page 

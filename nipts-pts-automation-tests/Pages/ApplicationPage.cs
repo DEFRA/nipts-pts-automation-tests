@@ -27,6 +27,7 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement ContinueEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IWebElement tableBody => _driver.WaitForElement(By.XPath("//table/tbody"));
         private IWebElement HelpWelshEle => _driver.WaitForElement(By.XPath("//a[contains(text(),'Cael help')]"));
+        private IWebElement PlaceOfIssuanceEle => _driver.WaitForElement(By.XPath("(//h2[contains(@class,'govuk-summary-card__title')])[5]"));
         private IReadOnlyCollection<IWebElement> divMicrochipInformationActionList => _driver.WaitForElements(By.XPath("//div[@id='document-microchip-card']//dl/div/descendant::dd[2]/a"));
         private IReadOnlyCollection<IWebElement> divPetDetailsActionList => _driver.WaitForElements(By.XPath("//div[@id='document-pet-card']//dl/div/descendant::dd[2]/a"));
         private IReadOnlyCollection<IWebElement> divPetOwnerDetailsActionList => _driver.WaitForElements(By.XPath("//div[@id='document-owner-card']//dl/div/descendant::dd[2]/a"));
@@ -354,6 +355,11 @@ namespace nipts_pts_automation_tests.Pages
                 return true;
             else 
                 return false;
+        }
+
+        public bool VerifyPlaceOfIssuanceOnApprovedDoc(string placeofIssText)
+        {
+            return PlaceOfIssuanceEle.Text.Contains(placeofIssText);
         }
     }
 }

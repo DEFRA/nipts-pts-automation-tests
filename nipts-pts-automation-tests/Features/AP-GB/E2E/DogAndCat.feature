@@ -65,6 +65,8 @@ Scenario Outline: Create PETS Travel Document By Registered User with details co
 	When Approve an application via backend
 	Then I click on Back button in Pets Application
 	And I should see the application in 'Approved' status
+	When I have clicked the View hyperlink from home page
+	Then  verify Place of Issuance text is present 'place of issuance' on Approved PTD
 	And click on signout button and verify the signout message on pets
 
 Examples:
