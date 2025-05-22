@@ -246,5 +246,11 @@ namespace nipts_pts_automation_tests.Steps
             String finalPTD = sb.ToString();
             applicationPage.VerifyWELSHPTDNoOnSearchResultsPassFailPage(finalPTD);
         }
+      
+        [Then(@"verify Place of Issuance text is present '([^']*)' on Approved PTD")]
+        public void ThenIVerifyHeadingTextOnApprovedPTD(string PlaceOfIssText)
+        {
+            Assert.True(applicationPage.VerifyPlaceOfIssuanceOnApprovedDoc(PlaceOfIssText), "Place of Issuance text not present on approved PTD");
+        }
     }
 }

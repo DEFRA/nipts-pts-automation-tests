@@ -1,6 +1,7 @@
 ﻿using BoDi;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
@@ -63,6 +64,39 @@ namespace nipts_pts_automation_tests.Steps
         public void WhenIHaveClickedTheViewAllLifelongPetTravelDocumentLink()
         {
             checkAnsDeclarationPage.ClickViewAllPetTravelDocument();
+        }
+
+        [Then(@"verify WELSH summary on the application summary page with field name '([^']*)' and field value '([^']*)'")]
+        public void ThenVerifyWELSHSummaryApprovedPTD(string fieldName, string fieldValue)
+        {
+            Assert.True(checkAnsDeclarationPage.VerifyWELSHSummaryOnAppSummary(fieldName, fieldValue), "Summary mistmatch on Approved PTD");
+        }
+
+        [Then(@"verify gender on the application summary in WELSH as '([^']*)' '([^']*)'")]
+        public void ThenVerifyGenderOnWELSHSummaryPTD(string fieldName, string fieldValue)
+        {
+            Assert.True(checkAnsDeclarationPage.VerifyGenderOnWELSHAppSummary(fieldName, fieldValue), "Summary mistmatch on Approved PTD");
+        }
+
+        [Then(@"verify pet owner details on the application summary in WELSH as '([^']*)' '([^']*)'")]
+        public void ThenVerifyPetOwnerDetailsOnWELSHSummaryPTD(string fieldName, string fieldValue)
+        {
+            Assert.True(checkAnsDeclarationPage.VerifyPetOwnerDetailsOnAppSummaryInWELSH(fieldName, fieldValue), "Summary mistmatch on Approved PTD");
+        }
+
+
+        [Then(@"verify WELSH text for Michrochip Date '([^']*)' and Michrochip Date on application summary page")]
+        public void ThenIVerifyMichrochipDateOnPTD(string michrochipDate)
+        {
+            string michrochipDateValue = _scenarioContext.Get<string>("MicrochippedDate");
+            Assert.True(checkAnsDeclarationPage.VerifyMichrochipDateOnAppSummaryInWelsh(michrochipDate, michrochipDateValue), "Michrochip Date mismatch on approved PTD");
+        }
+
+        [Then(@"verify WELSH text for Pet DOB '([^']*)' and Pet DOB on application summary page")]
+        public void ThenIVerifyPetDOBOnPTD(string petDOB)
+        {
+            string petDOBValue = _scenarioContext.Get<string>("DateOfBirth");
+            Assert.True(checkAnsDeclarationPage.VerifyPetDOBOnAppSummaryInWelsh(petDOB, petDOBValue), "Pet DOB mismatch on approved PTD");
         }
     }
 }

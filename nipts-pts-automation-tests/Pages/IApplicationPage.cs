@@ -36,5 +36,6 @@
         public bool VerifyTheHeaderWelshPetname(string Petname);
         public bool VerifyTheHeaderWelshStatus(string Status);
         public bool VerifyWELSHPTDNoOnSearchResultsPassFailPage(string finalPTD);
+        public bool VerifyPlaceOfIssuanceOnApprovedDoc(string placeofIssText);
     }
 }
