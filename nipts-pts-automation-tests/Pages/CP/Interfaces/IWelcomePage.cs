@@ -12,5 +12,9 @@
         void clickOnViewWithSPSUser(string departureRoute);
         bool VerifySubmiitedMessage();
         bool VerifyEntriesOnCheckerPage();
+        bool getPassCount(string passCount);
+        bool VerifySelectedFerryRouteOnWelcomePage(string FerryRoute);
+        bool VerifyNoViewLinkIfNoReferredToSPS();
+        bool VerifyNoViewLinkIfNoReferredToSPSWithSPSUser();
     }
 }

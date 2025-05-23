@@ -35,7 +35,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement txtNIOutcomeHintTxt => _driver.WaitForElement(By.Id("sps-item-hint"));
         private IWebElement PTDNumber => _driver.WaitForElement(By.XPath("//dt[contains(text(),'PTD number')]/./following-sibling::dd"));
         private IWebElement ApplicationRefNumber => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Application reference number')]/./following-sibling::dd"));
-        private IWebElement RelevantComment => _driver.WaitForElement(By.Id("relevant-comments"));
+        private IWebElement RelevantComment => _driver.WaitForElementExists(By.Id("relevantComments"));
+        private IWebElement PetNotMatchPTD => _driver.WaitForElementExists(By.XPath("//input[@id ='vcNotMatchPTD']"));
+        private IWebElement PotentialCommetcialMov => _driver.WaitForElementExists(By.XPath("//label[contains(text(),'Potential commercial movement')]/..//input"));
+        private IWebElement AuthTravNoConfirmation => _driver.WaitForElementExists(By.XPath("//input[contains(@id,'oiFailAuthTravellerNoConfirmation')]"));
+        private IWebElement OtherReason => _driver.WaitForElementExists(By.XPath("//input[contains(@id,'oiFailOther')]"));
+        private IWebElement DetailsOfOutCome => _driver.WaitForElementExists(By.Id("spsOutcomeDetails"));
 
         #endregion
 
@@ -182,6 +187,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             if (!additionalComment.Contains("None"))
             {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", RelevantComment);
                 RelevantComment.SendKeys(additionalComment);
             }
         }
@@ -204,6 +210,45 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 passangerNotTravel.Click();
             }
         }
+
+        public void SelectVisualCheck(string visualCheck)
+        {
+            if (visualCheck.Contains("PetDoesNotMatchThePTD"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", PetNotMatchPTD);
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", PetNotMatchPTD);
+            }
+        }
+        public void SelectOtherIssues(string otherIssues)
+        {
+            if (otherIssues.Contains("PotentialCommercialMovement"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", PotentialCommetcialMov);
+                PotentialCommetcialMov.Click();
+            }
+            else if (otherIssues.Contains("AuthorisedTravellerButNoConfirmation"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", AuthTravNoConfirmation);
+                AuthTravNoConfirmation.Click();
+            }
+            else if (otherIssues.Contains("OtherReason"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", OtherReason);
+                OtherReason.Click();
+            }
+
+        }
+
+        public void EnterDetailsOfOutCome(string detailsOfOutCome)
+        {
+            if (!detailsOfOutCome.Contains("None"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", DetailsOfOutCome);
+                DetailsOfOutCome.SendKeys(detailsOfOutCome);
+            }
+        }
+
+
 
         #endregion
 

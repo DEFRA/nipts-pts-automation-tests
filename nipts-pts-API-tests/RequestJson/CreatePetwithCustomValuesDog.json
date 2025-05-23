@@ -1,0 +1,68 @@
+{
+  "createdBy": "7B2F71FA-BCF1-EE11-904C-6045BD9057B4",
+  "petIdentification": {
+    "identificationType": 1,
+    "microchipNumber": "676789876543325",
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petMicrochipDate": {
+    "day": "21",
+    "month": "8",
+    "year": "2024",
+    "microchippedDate": "2024-08-21T12:38:30.075Z",
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petSpecies": {
+    "petSpecies": 1,
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petBreed": {
+    "petSpecies": 1,
+    "breedType": 0,
+    "breedName": "Automation Breed Name",
+    "breedId": 99,
+    "breedAdditionalInfo": "Automation Dog Breed Additional Info",
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petName": {
+    "petName": "Automation Pet Dog",
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petGender": {
+    "gender": 1,
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petAge": {
+    "knowDoB": 1,
+    "day": "21",
+    "month": "4",
+    "year": "2024",
+    "birthDate": "2024-04-21T12:38:30.075Z",
+    "approximateAge": 0,
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petColour": {
+    "petColour": 1,
+    "petColourOther": "Automation Black Dog",
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petFeature": {
+    "hasUniqueFeature": 1,
+    "featureDescription": "Automation Dog Feature Descrition",
+    "isCompleted": true,
+    "title": "string"
+  },
+  "petMicrochip": {
+    "microchipNumber": "676789876543325",
+    "isCompleted": true,
+    "title": "string"
+  }
+}

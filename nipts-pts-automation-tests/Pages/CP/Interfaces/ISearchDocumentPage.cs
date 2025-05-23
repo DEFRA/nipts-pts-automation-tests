@@ -10,5 +10,6 @@
         void SearchButton();
         void ClearSearchButton();
         bool IsError(string errorMessage);
+     bool VerifyTextOnSearchDocPage(string radioButtonValue, string textboxValue);
     }
 }

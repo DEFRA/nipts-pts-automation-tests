@@ -64,6 +64,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void WhenIClickOnPTDNumberOfTheApplication()
         {
             var ptdNumber = _scenarioContext.Get<string>("PTDNumber");
+            Console.WriteLine($"PTDNumber: {ptdNumber}");
             var ptdNumberNew = ptdNumber.Substring(0,5) + " " + ptdNumber.Substring(5,3) + " " + ptdNumber.Substring(8,3);
             referredToSPSPage?.ClickOnPTDNumberOfTheApplication(ptdNumberNew);
         }
@@ -73,6 +74,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void WhenIClickOnReferenceNumberOfTheApplication()
         {
             string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Console.WriteLine($"AppReference: {AppReference}");
             referredToSPSPage?.ClickOnPTDNumberOfTheApplication(AppReference);
         }
 

@@ -29,6 +29,7 @@ namespace nipts_pts_automation_tests.Steps
         public void WhenEnterNameOfPet(string petName)
         {
             petNamePage.EnterNameOfPet(petName);
+            _scenarioContext.Add("PetName", petName);
         }
 
         [Then(@"verify error message '([^']*)' on enter pet name")]

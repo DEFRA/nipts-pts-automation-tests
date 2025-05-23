@@ -1,6 +1,7 @@
 ﻿using BoDi;
 using nipts_pts_API_tests.Application;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
+using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
@@ -82,6 +83,7 @@ namespace nipts_pts_automation_tests.Steps.CP
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
                 string PTDNumber = AppData.GetApplicationToApprove(AppReference);
                 _scenarioContext.Add("PTDNumber", PTDNumber);
+                Console.WriteLine($"PTDNumber: {PTDNumber}");
             }
         }
 
@@ -93,6 +95,16 @@ namespace nipts_pts_automation_tests.Steps.CP
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
                 string PTDNumber = AppData.GetApplicationToRevoke(AppReference);
                 _scenarioContext.Add("PTDNumber", PTDNumber);
+            }
+        }
+
+        [When(@"Revoke Approved application via backend")]
+        public void ThenRevokeApprovedApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
+                AppData.RevokeApprovedApplication(PTDNumber);
             }
         }
 
@@ -158,6 +170,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [Then(@"I have captured pet details")]
         [When(@"I have captured pet details")]
         public void ThenIHaveCapturedPetDetails()
         {
@@ -168,6 +181,78 @@ namespace nipts_pts_automation_tests.Steps.CP
                 _scenarioContext.Add("PetType", PetType);
                 string MicrochipNumber = AppData.GetMicrochipDetails(AppReference);
                 _scenarioContext.Add("MicrochipNumber", MicrochipNumber);
+            }
+        }
+
+        [Then(@"I verify backend SQL entries for GB Outcome")]
+        [When(@"I verify backend SQL entries for GB Outcome")]
+        public void ThenIVerifySQLEntriesForGBOutcome()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifyGBOutcomeWithSQLBackend(AppReference), "GB Outcome not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)'")]
+        [When(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)'")]
+        public void ThenIVerifySQLEntriesForSPSOutcome(string TypeOfPassenger, string SPSOutcome)
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifySPSOutcomeWithSQLBackend(AppReference, TypeOfPassenger, SPSOutcome), "SPS Outcome not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for GB Summary Table")]
+        [When(@"I verify backend SQL entries for GB Summary Table")]
+        public void ThenIVerifySQLEntriesForGBSummary()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifyGBSummaryOutputWithSQLBackend(AppReference), "GB Summary not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for SPS Summary Table")]
+        [When(@"I verify backend SQL entries for SPS Summary Table")]
+        public void ThenIVerifySQLEntriesForSPSSummary()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifySPSSummaryOutputWithSQLBackend(AppReference), "SPS Summary not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for GB Summary Table for Pass appl")]
+        [When(@"I verify backend SQL entries for SPS Summary Table for Pass appl")]
+        public void ThenIVerifySQLEntriesForSPSSummaryForPassAppl()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifyGBSummaryForPassApplWithSQLBackend(AppReference), "GB Summary not matching with SQL Backend data");
+        }
+
+        [Given(@"Create an offline application via backend for '([^']*)'")]
+        [When(@"Create an offline application via backend for '([^']*)'")]
+        public void ThenCreateOfflineApplicationViaBackend(string Species)
+        {
+            lock (_lock)
+            {
+                string randonNumber = Utils.GenerateRandomApplicationNumber();
+                string PTDNumber = AppData.writeOfflineApplicationToQueue(randonNumber, Species);
+                _scenarioContext.Add("PTDNumber", PTDNumber);
+            }
+        }
+
+        [Given(@"I click Accont on Home Page")]
+        [When(@"I click Accont on Home Page")]
+        public void ThenIClickAccontOnHomePage()
+        {
+            _applicationSummaryPage.ClickOnAccount();
+        }
+
+        [Given(@"Create an application via backend for '([^']*)' with custom values")]
+        [When(@"Create an application via backend for '([^']*)' with custom values")]
+        public void ThenCreateApplicationViaBackendWithCustomValues(string PetSpecies)
+        {
+            lock (_lock)
+            {
+                string AppId = _applicationSummaryPage.getNewID();
+                string APIAppReference = AppData.CreateApplicationWithPetCustomValues(AppId, PetSpecies);
+                _scenarioContext.Add("ReferenceNumber", APIAppReference);
+                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
             }
         }
     }

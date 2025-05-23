@@ -4,5 +4,6 @@
     {
         string ServiceBusConnString { get; set; }
         string ServiceBusQueueName { get; set; }
+        string ServiceBusOfflineApplQueueName { get; set; }
     }
 }

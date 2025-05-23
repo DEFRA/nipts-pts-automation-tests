@@ -23,6 +23,12 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             Assert.IsTrue(ApplicationDeclarationPage?.IsNextPageLoaded(pageTitle), $"The page {pageTitle} not loaded!");
         }
 
+        [Then(@"I should navigate to the custom '([^']*)' is loaded")]
+        public void ThenIShouldNavigateToTheCustomPage(string pageTitle)
+        {
+            Assert.IsTrue(ApplicationDeclarationPage?.IsCustomPageLoaded(pageTitle), $"The page {pageTitle} not loaded!");
+        }
+
         [Then(@"I navigate to the Check your answers and sign the declaration page")]
         public void ThenINavigateToTheCheckYourAnswersAndSignTheDeclarationPage()
         {

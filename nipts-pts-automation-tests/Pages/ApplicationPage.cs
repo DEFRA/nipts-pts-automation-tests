@@ -14,19 +14,24 @@ namespace nipts_pts_automation_tests.Pages
         #region Page Objects
 
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading'] | //h1[@class='govuk-panel__title']"));
-        private By Englishclick => By.XPath("//a[contains(text(),'English')]");
-        private By Welshclick =By.XPath("//a[contains(text(),'Cymraeg')]");
+        private By Englishclick => By.XPath("//a[contains(@id,'localeEn')]");
+        private By Welshclick =By.XPath("//a[contains(@id,'localeCy')]");
         private IWebElement ApplyForADocEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Apply for a document')] | //button[contains(text(),'Gwneud cais am ddogfen')]"));
         private IWebElement ContinueWelshEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Parhau')] | //button[contains(text(),'Continue')]"));
         private IWebElement BackWelshEle => _driver.WaitForElement(By.XPath("//a[contains(text(),'Yn ôl')]"));
         private IWebElement ErrorMessageEle => _driver.WaitForElement(By.XPath("//ul[contains(@class,'govuk-error-summary__list')]//a | //ul[contains(@class,'govuk-error-summary__list')]//span"));
-        private IWebElement FooterLanguageSelector => _driver.WaitForElement(By.XPath("(//a[contains(@class,'govuk-footer__link')])[3]"));
+        private IWebElement LinkLanguageSelector => _driver.WaitForElement(By.XPath("(//a[contains(@id,'locale')]//span[1]"));
         public IWebElement lnkManageAccount => _driver.WaitForElement(By.XPath("//a[@href='/User/ManageAccount']"));
         public IWebElement lnkManageYourAccount => _driver.WaitForElement(By.XPath("//a[@href='/User/RedirectToExternal']"));
         public IWebElement lnkViewDocsFromManageAcc => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='Gweld eich dogfennau teithio gydol oes i anifeiliaid anwes neu wneud cais am un newydd.']"));
         private IWebElement ContinueEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IWebElement tableBody => _driver.WaitForElement(By.XPath("//table/tbody"));
         private IWebElement HelpWelshEle => _driver.WaitForElement(By.XPath("//a[contains(text(),'Cael help')]"));
+        private IWebElement PlaceOfIssuanceEle => _driver.WaitForElement(By.XPath("(//h2[contains(@class,'govuk-summary-card__title')])[5]"));
+        private IReadOnlyCollection<IWebElement> divMicrochipInformationActionList => _driver.WaitForElements(By.XPath("//div[@id='document-microchip-card']//dl/div/descendant::dd[2]/a"));
+        private IReadOnlyCollection<IWebElement> divPetDetailsActionList => _driver.WaitForElements(By.XPath("//div[@id='document-pet-card']//dl/div/descendant::dd[2]/a"));
+        private IReadOnlyCollection<IWebElement> divPetOwnerDetailsActionList => _driver.WaitForElements(By.XPath("//div[@id='document-owner-card']//dl/div/descendant::dd[2]/a"));
+        private IWebElement WELSHPTDNumberEle => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Rhif y ddogfen deithio i anifail anwes')]/following-sibling::dd"));
         #endregion Page Objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -119,10 +124,24 @@ namespace nipts_pts_automation_tests.Pages
 
         public bool VerifyLanguageAtPageFooter(string displayedLang)
         {
-            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,4000)", "");
+            By EnglishLinkLanguageSelector = By.XPath("//a[contains(@id,'localeEn')]");
+            By WelshLinkLanguageSelector = By.XPath("//a[contains(@id,'localeCy')]");
+            bool status = false; 
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
-            return FooterLanguageSelector.Text.Contains(displayedLang);
+
+            if (displayedLang.Equals("English"))
+            {
+                if (_driver.FindElements(EnglishLinkLanguageSelector).Count > 0)
+                    status = true;
+            }
+            if (displayedLang.Equals("Cymraeg"))
+            {
+                if (_driver.FindElements(WelshLinkLanguageSelector).Count > 0)
+                    status = true;
+            }
+            return status;
         }
+
         public void ClickOnContinueEng()
         {
             ContinueEle.Click();
@@ -140,9 +159,10 @@ namespace nipts_pts_automation_tests.Pages
 
                 if (tableHeader.Text.Equals(petName))
                 {
-                    var tdCollection = element.FindElements(By.TagName("td"));
-
-                    return tdCollection[2].Text.Trim().ToUpper().Equals(status.ToUpper());
+                    var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
+                    var tdCollection = _driver.FindElement(By.XPath(statusPath));
+                    //var tdCollection = element.FindElements(By.TagName("td"));
+                    return tdCollection.Text.Trim().ToUpper().Contains(status.ToUpper());
                 }
             }
 
@@ -153,7 +173,200 @@ namespace nipts_pts_automation_tests.Pages
         {
             HelpWelshEle.Click();
         }
+
+        public bool VerifyWELSHApprovedPTD(string fieldName, string fieldValue)
+        {
+            string FieldName = "//dt[contains(text(),'" + fieldName + "')]";
+            string FieldValue = "//dt[contains(text(),'" + fieldName + "')]/..//dd";
+
+            if (_driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue)); 
+            {
+                return true;
+            }    
+
+        }
+
+        public bool VerifyPTDNumberOnApprovedPTD(string ptdNumber , string ptdNumberValue) 
+        {
+            string PTDNumber = "//dt[contains(text(),'" + ptdNumber + "')]";
+            string PTDNumberValue = "//dt[contains(text(),'" + ptdNumber + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(PTDNumber)).Text.Contains(ptdNumber) && _driver.FindElement(By.XPath(PTDNumberValue)).Text.Contains(ptdNumberValue));
+            {
+                return true;
+            }
+        }
+
+        public bool VerifyMichrochipDateOnApprovedPTD(string michrochipDate, string michrochipDateValue)
+        {
+            string MichrochipDate = "//dt[contains(text(),'" + michrochipDate + "')]";
+            string MichochipDateValue = "//dt[contains(text(),'" + michrochipDate + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(MichrochipDate)).Text.Contains(michrochipDate) && _driver.FindElement(By.XPath(MichochipDateValue)).Text.Contains(michrochipDateValue)) ;
+            {
+                return true;
+            }
+        }
+
+        public bool VerifyPetDOBOnApprovedPTD(string petDOB, string petDOBValue)
+        {
+            string PetDOB = "//dt[contains(text(),'" + petDOB + "')]";
+            string PetDOBValue = "//dt[contains(text(),'" + petDOB + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(PetDOB)).Text.Contains(petDOB) && _driver.FindElement(By.XPath(PetDOBValue)).Text.Contains(petDOBValue)) ;
+            {
+                return true;
+            }
+        }
+
+
+
         #endregion Page Methods
 
+        public void ClickWelshMicrochipChangeLink(string fieldName)
+        {
+            switch (fieldName)
+            {
+                case "Rhif y microsglodyn":
+                    divMicrochipInformationActionList.ElementAt(0)?.Click();
+                    break;
+                case "Dyddiad mewnblannu neu sganio":
+                    divMicrochipInformationActionList.ElementAt(1)?.Click();
+                    break;
+            }
+        }
+
+        public void ClickWelshPetDetailsChangeLink(string fieldName)
+        {
+            switch (fieldName)
+            {
+                case "Enw":
+                    divPetDetailsActionList.ElementAt(0)?.Click();
+                    break;
+                case "Rhywogaeth":
+                    divPetDetailsActionList.ElementAt(1)?.Click();
+                    break;
+                case "Brid":
+                    divPetDetailsActionList.ElementAt(2)?.Click();
+                    break;
+                case "Rhyw":
+                    divPetDetailsActionList.ElementAt(3)?.Click();
+                    break;
+                case "Dyddiad geni":
+                    divPetDetailsActionList.ElementAt(4)?.Click();
+                    break;
+                case "Lliw":
+                    divPetDetailsActionList.ElementAt(5)?.Click();
+                    break;
+                case "Nodweddion arwyddocaol":
+                    divPetDetailsActionList.ElementAt(6)?.Click();
+                    break;
+            }
+        }
+
+        public void ClickWelshPetDetailsChangeForFerretLink(string fieldName)
+        {
+            switch (fieldName)
+            {
+                case "Enw":
+                    divPetDetailsActionList.ElementAt(0)?.Click();
+                    break;
+                case "Rhywogaeth":
+                    divPetDetailsActionList.ElementAt(1)?.Click();
+                    break;
+                case "Rhyw":
+                    divPetDetailsActionList.ElementAt(2)?.Click();
+                    break;
+                case "Dyddiad geni":
+                    divPetDetailsActionList.ElementAt(3)?.Click();
+                    break;
+                case "Lliw":
+                    divPetDetailsActionList.ElementAt(4)?.Click();
+                    break;
+                case "Nodweddion arwyddocaol":
+                    divPetDetailsActionList.ElementAt(5)?.Click();
+                    break;
+            }
+        }
+
+        public void ClickWelshPetOwnerChangeLink(string fieldName)
+        {
+            switch (fieldName)
+            {
+                case "Enw":
+                    divPetOwnerDetailsActionList.ElementAt(0)?.Click();
+                    break;
+                case "Cyfeiriad":
+                    divPetOwnerDetailsActionList.ElementAt(1)?.Click();
+                    break;
+                case "Rhif ff":
+                    divPetOwnerDetailsActionList.ElementAt(2)?.Click();
+                    break;
+            }
+        }
+
+        public bool? VerifyWELSHFieldsAndValuesForPendingAppl(string fieldName, string fieldValue)
+        {
+            string FieldName = "//dt[contains(text(),'" + fieldName + "')]";
+            string FieldValue = "//dt[contains(text(),'" + fieldName + "')]/..//dd";
+
+            if (_driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue)) ;
+            {
+                return true;
+            }
+        }
+
+        public bool? VerifyReferenceNumberOnPendingAppl(string referenceNumberText, string referenceNumberValue)
+        {
+            string ReferenceNumberText = "//dt[contains(text(),'" + referenceNumberText + "')]";
+            string ReferenceNumberValue = "//dt[contains(text(),'" + referenceNumberText + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(ReferenceNumberText)).Text.Contains(referenceNumberText) && _driver.FindElement(By.XPath(ReferenceNumberValue)).Text.Contains(referenceNumberValue)) ;
+            {
+                return true;
+            }
+        }
+
+        public bool? VerifyMichrochipDateOnPendingAppl(string michrochipDateText, string michrochipDateValue)
+        {
+            string MichrochipDate = "//dt[contains(text(),'" + michrochipDateText + "')]";
+            string MichochipDateValue = "//dt[contains(text(),'" + michrochipDateText + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(MichrochipDate)).Text.Contains(michrochipDateText) && _driver.FindElement(By.XPath(MichochipDateValue)).Text.Contains(michrochipDateValue)) ;
+            {
+                return true;
+            }
+        }
+
+        public bool? VerifyPetDOBOnPendingAppl(string petDOBText, string petDOBValue)
+        {
+            string PetDOB = "//dt[contains(text(),'" + petDOBText + "')]";
+            string PetDOBValue = "//dt[contains(text(),'" + petDOBText + "')]/..//dd";
+
+            if (_driver.FindElement(By.XPath(PetDOB)).Text.Contains(petDOBText) && _driver.FindElement(By.XPath(PetDOBValue)).Text.Contains(petDOBValue)) ;
+            {
+                return true;
+            }
+        }
+
+        public bool? VerifyHeadingTextOnSummaryPage(string heading)
+        {
+            string headingPath = $"//h2[contains(text(),'{heading}')]";
+            if (_driver.FindElements(By.XPath(headingPath)).Count > 0)
+                return true;
+            else 
+                return false;
+        }
+
+
+        public bool VerifyWELSHPTDNoOnSearchResultsPassFailPage(string finalPTD)
+        {
+            return WELSHPTDNumberEle.Text.Equals(finalPTD);
+        }
+        
+        public bool VerifyPlaceOfIssuanceOnApprovedDoc(string placeofIssText)
+        {
+            return PlaceOfIssuanceEle.Text.Contains(placeofIssText);
+        }
     }
 }

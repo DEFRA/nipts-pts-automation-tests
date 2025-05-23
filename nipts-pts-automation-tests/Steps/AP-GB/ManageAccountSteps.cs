@@ -68,6 +68,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
 
         [Then(@"I click on Back button in Pets Application")]
         [Then(@"I click on Back button")]
+        [When(@"I click on Back button")]
         public void ThenIClickOnBackButton()
         {
             ManageAccountPage?.ClickBackButton();

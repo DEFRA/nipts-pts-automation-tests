@@ -60,15 +60,6 @@
     "isCompleted": true,
     "title": "string"
   },
-  "petIdentificationEvidenceViewModel": [
-    {
-      "fileName": "string",
-      "fileUpload": "SGVsbG8gd29ybGQh",
-      "identificationType": 0,
-      "isCompleted": true,
-      "title": "string"
-    }
-  ],
   "petMicrochip": {
     "microchipNumber": "676789876543325",
     "isCompleted": true,

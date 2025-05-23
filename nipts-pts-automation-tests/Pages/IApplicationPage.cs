@@ -20,5 +20,20 @@
         public bool VerifyLanguageAtPageFooter(string displayedLang);
         public void ClickOnContinueEng();
         public void ClickOnHelpWelshLink();
+        void ClickWelshPetDetailsChangeLink(string fieldName);
+        void ClickWelshPetDetailsChangeForFerretLink(string fieldName);
+        void ClickWelshMicrochipChangeLink(string fieldName);
+        void ClickWelshPetOwnerChangeLink(string fieldName);
+        public bool VerifyWELSHApprovedPTD(string fieldName, string fieldValue);
+        public bool VerifyPTDNumberOnApprovedPTD(string ptdNumber, string ptdNumberValue);
+        public bool VerifyMichrochipDateOnApprovedPTD(string michrochipDate, string michrochipDateValue);
+        public bool VerifyPetDOBOnApprovedPTD(string petDOB, string petDOBValue);
+        bool? VerifyWELSHFieldsAndValuesForPendingAppl(string fieldName, string fieldValue);
+        bool? VerifyReferenceNumberOnPendingAppl(string referenceNumberText, string referenceNumberValue);
+        bool? VerifyMichrochipDateOnPendingAppl(string michrochipDateText, string michrochipDateValue);
+        bool? VerifyPetDOBOnPendingAppl(string petDOBText, string petDOBValue);
+        bool? VerifyHeadingTextOnSummaryPage(string heading);
+        public bool VerifyWELSHPTDNoOnSearchResultsPassFailPage(string finalPTD);
+        public bool VerifyPlaceOfIssuanceOnApprovedDoc(string placeofIssText);
     }
 }

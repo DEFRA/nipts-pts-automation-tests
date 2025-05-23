@@ -1,6 +1,7 @@
 ﻿using BoDi;
 using nipts_pts_automation_tests.Pages.AP_GB.SummaryPage;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
+using nipts_pts_automation_tests.Pages.CP.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
@@ -35,6 +36,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenIProvidedThePTDNumberOfTheApplication()
         {
             var ptdNumber = _scenarioContext.Get<string>("PTDNumber");
+            Console.WriteLine($"PTDNumber: {ptdNumber}");
             var ptdNumber1 = ptdNumber.Substring(5);
             _searchDocumentPage?.EnterPTDNumber(ptdNumber1);
         }
@@ -43,6 +45,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenIProvidedTheReferenceNumberOfTheApplication()
         {
             var referenceNumber = _scenarioContext.Get<string>("ReferenceNumber");
+            Console.WriteLine($"ReferenceNumber: {referenceNumber}");
             _searchDocumentPage?.EnterApplicationNumber(referenceNumber);
         }
 
@@ -83,9 +86,10 @@ namespace nipts_pts_automation_tests.Steps.CP
             _searchDocumentPage?.EnterMicrochipNumber(microchipNumber);
         }
 
+        [When(@"I click search by '([^']*)' radio button")]
         [Then(@"I click search by '([^']*)' radio button")]
         public void ThenIClickSearchByRadioButton(string radioButton)
-        {
+        {   
             _searchDocumentPage?.SelectSearchRadioOption(radioButton);
         }
 
@@ -123,5 +127,11 @@ namespace nipts_pts_automation_tests.Steps.CP
             _searchDocumentPage?.EnterMicrochipNumber(microchipNumber);
         }
 
+        [Then(@"verify the text '([^']*)' in the textbox for the selected radio button '([^']*)'")]
+        public void ThenVerifyTextInTextbox(string textboxValue, string radioButtonValue)
+        {
+            Assert.IsTrue(_searchDocumentPage?.VerifyTextOnSearchDocPage(textboxValue, radioButtonValue), $"Text validation failed");
+
+        }
     }
 }

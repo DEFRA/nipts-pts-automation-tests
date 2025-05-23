@@ -38,8 +38,49 @@ namespace nipts_pts_API_tests.Application
 
         public void ApproveApplication(string ApplicationId)
         {
-            ServiceBusConnection.SendMessageToQueue(ApplicationId, "Authorised");
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
+            DateTime dateTime = DateTime.Now;
+            string TodaysDate = dateTime.ToString("yyyy-MM-dd");
+
+            // Create a unique DynamicId for each message
+            string dynamicId = Guid.NewGuid().ToString();
+
+            string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Authorised\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
+
+            ServiceBusConnection.SendMessageToQueue(messageBody, queueName);
         }
+
+        public string CreateApplicationWithPetCustomValues(string AppId, string PetSpecies)
+        {
+            updateUser();
+            createOwner();
+            createAddress();
+            createPetWithCustomValues(PetSpecies);
+            return createApplication(AppId);
+        }
+
+        public void createPetWithCustomValues(string PetSpecies)
+        {
+            var file = "";
+            Task<RestResponse> response = null;
+            string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint2;
+            var client = SetUrl("createpet", APIEndPoint);
+
+            if (PetSpecies.Equals("Cat"))
+                file = Path.Combine(RequestFolder, "CreatePetwithCustomValuesCat.json");
+            else if (PetSpecies.Equals("Dog"))
+                file = Path.Combine(RequestFolder, "CreatePetwithCustomValuesDog.json");
+            else if (PetSpecies.Equals("Ferret"))
+                file = Path.Combine(RequestFolder, "CreatePetwithCustomValuesFerret.json");
+
+            var requestJson = File.ReadAllText(file);
+            var request = CreatePostRequest(requestJson);
+            response = GetResponseAsync(client, request);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            PetId = dynamicObject;
+        }
+
         public string CreateApplicationSigFNoAPI(string AppId)
         {
             updateUser();
@@ -83,7 +124,15 @@ namespace nipts_pts_API_tests.Application
 
         public void RejectApplication(string ApplicationId)
         {
-            ServiceBusConnection.SendMessageToQueue(ApplicationId, "Rejected");
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
+            DateTime dateTime = DateTime.Now;
+            string TodaysDate = dateTime.ToString("yyyy-MM-dd");
+
+            // Create a unique DynamicId for each message
+            string dynamicId = Guid.NewGuid().ToString();
+
+            string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Rejected\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
+            ServiceBusConnection.SendMessageToQueue(messageBody, queueName);
         }
 
         public string GetApplicationToRevoke(string AppReference)
@@ -102,7 +151,16 @@ namespace nipts_pts_API_tests.Application
 
         public void RevokeApplication(string ApplicationId)
         {
-            ServiceBusConnection.SendMessageToQueue(ApplicationId, "Revoked");
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
+            DateTime dateTime = DateTime.Now;
+            string TodaysDate = dateTime.ToString("yyyy-MM-dd");
+
+            // Create a unique DynamicId for each message
+            string dynamicId = Guid.NewGuid().ToString();
+
+            string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Revoked\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
+
+            ServiceBusConnection.SendMessageToQueue(messageBody, queueName);
         }
 
         public Task<RestResponse> GetApplication(string AppReference)
@@ -116,6 +174,32 @@ namespace nipts_pts_API_tests.Application
                 var requestJson = File.ReadAllText(file);
                 var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
                 dynamicObject.applicationNumber = AppReference;
+                var request = CreatePostRequest(JsonConvert.SerializeObject(dynamicObject));
+                response = GetResponseAsync(client, request);
+            }
+            return response;
+        }
+
+        public void RevokeApprovedApplication(string PTDNumber)
+        {
+            Task<RestResponse> response = GetApprovedApplication(PTDNumber);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            ApplicationId = dynamicObject.application.applicationId;
+            RevokeApplication(ApplicationId);
+        }
+
+        public Task<RestResponse> GetApprovedApplication(string PTDNumber)
+        {
+            Task<RestResponse> response = null;
+            lock (_lock)
+            {
+                string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint5;
+                var client = SetUrl("api/Checker/checkPTDNumber", APIEndPoint);
+                var file = Path.Combine(RequestFolder, "CheckPTDNumber.json");
+                var requestJson = File.ReadAllText(file);
+                var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
+                dynamicObject.ptdNumber = PTDNumber;
                 var request = CreatePostRequest(JsonConvert.SerializeObject(dynamicObject));
                 response = GetResponseAsync(client, request);
             }
@@ -268,5 +352,44 @@ namespace nipts_pts_API_tests.Application
             return MicrochipNo;
         }
 
+
+        public string writeOfflineApplicationToQueue(string randonNumber,string Species)
+        {
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusOfflineApplQueueName;
+            var file = "";
+            
+            if(Species.Equals("Cat"))
+                file = Path.Combine(RequestFolder, "CreateOfflineApplicationCat.json");
+            else if (Species.Equals("Dog"))
+                file = Path.Combine(RequestFolder, "CreateOfflineApplicationDog.json");
+            else if (Species.Equals("Ferret"))
+                file = Path.Combine(RequestFolder, "CreateOfflineApplicationFerret.json");
+
+            var requestJson = File.ReadAllText(file);
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
+            dynamicObject.Application.ReferenceNumber = getUniqueRerefenceNumber(randonNumber);
+            dynamicObject.PTD.DocumentReferenceNumber = getUniquePTDNumber(randonNumber);
+            dynamicObject.Owner.Email = getUniqueEmailId(randonNumber);
+            ServiceBusConnection.SendMessageToQueue(JsonConvert.SerializeObject(dynamicObject), queueName);
+            return getUniquePTDNumber(randonNumber);
+        }
+
+        public string getUniqueRerefenceNumber(string randonNumber)
+        {
+            string newRerefenceNumber = "GB826AD" + randonNumber;
+            return newRerefenceNumber;
+        }
+
+        public string getUniquePTDNumber(string randonNumber)
+        {
+            string newPTDNumber = "GB826AD" + randonNumber;
+            return newPTDNumber;
+        }
+
+        public string getUniqueEmailId(string randonNumber)
+        {
+            string newEmail = "themask" + "+" + randonNumber + "@smokin.green";
+            return newEmail;
+        }
     }
 }

@@ -14,5 +14,9 @@
         void SelectDropDownDepartureTimeWithSPS();
         string SelectfutureDropDownDepartureTime();
         void EnterDateMonthYear(DateTime dateTime);
+        string SelectDropDownDepartureTimeJustOneMinuteLaterThanCurrent();
+        string SelectDropDownDepartureTimeJustOneMinuteBeforeThanCurrent();
+        public bool VerifyFilterFlightMsg(string FlightMsgPTD, string FlightMsgAppno, string FlightMsgMichrochipNo);
+        public bool VerifyFilterFlightHeaderMsg(string FlightHeaderMsg);
     }
 }

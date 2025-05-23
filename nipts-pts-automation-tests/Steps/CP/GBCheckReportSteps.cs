@@ -29,11 +29,11 @@ namespace nipts_pts_automation_tests.Steps.CP
             gBCheckReportPage.ClickOnConductAnSPSCheck();
         }
 
-        [When(@"I verify GB check report with MicrochipReason '([^']*)','([^']*)'")]
-        [Then(@"I verify GB check report with MicrochipReason '([^']*)','([^']*)'")]
-        public void ThenIVerifyMicrochipReason(string NumberMicrochipReason,string MicrochipReason)
+        [When(@"I verify GB check report with MicrochipReason '([^']*)','([^']*)','([^']*)'")]
+        [Then(@"I verify GB check report with MicrochipReason '([^']*)','([^']*)','([^']*)'")]
+        public void ThenIVerifyMicrochipReason(string NumberMicrochipReason,string MicrochipReason,string NumberOtherIssues)
         {
-            Assert.True(gBCheckReportPage.VerifyMicrochipReason(NumberMicrochipReason,MicrochipReason), "Microchip Reason does not match");
+            Assert.True(gBCheckReportPage.VerifyMicrochipReason(NumberMicrochipReason,MicrochipReason, NumberOtherIssues), "Microchip Reason does not match");
         }
 
         [When(@"I verify GB check report with relevent comment '([^']*)'")]
@@ -48,6 +48,27 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenIVerifyGBOutcome(string NumberGBOutcome, string GBOutcome)
         {
             Assert.True(gBCheckReportPage.VerifyGBOutcome(NumberGBOutcome,GBOutcome), "GB Outcome does not match");
+        }
+
+        [When(@"I verify GB check report wiht Visual check '([^']*)'")]
+        [Then(@"I verify GB check report wiht Visual check '([^']*)'")]
+        public void ThenIVerifyGBOutcome(string PetDoesNotMatchThePTD)
+        {
+            Assert.True(gBCheckReportPage.VerifyVisualCheck(PetDoesNotMatchThePTD), "Visual Check does not match");
+        }
+
+        [When(@"I verify GB check report with Other issues '([^']*)','([^']*)'")]
+        [Then(@"I verify GB check report with Other issues '([^']*)','([^']*)'")]
+        public void ThenIVerifyOtherIssues(string NumberOtherIssues, string OtherIssues)
+        {
+            Assert.True(gBCheckReportPage.VerifyOtherIssues(NumberOtherIssues, OtherIssues), "Other Issues does not match");
+        }
+
+        [When(@"I verify GB check report with details of outcome '([^']*)'")]
+        [Then(@"I verify GB check report with details of outcome '([^']*)'")]
+        public void ThenIVerifyDetailsOfOutcome(string detailsOfOutcome)
+        {
+            Assert.True(gBCheckReportPage.VerifyDetailsOfOutcome(detailsOfOutcome), "DetailsOfOutcome does not match");
         }
 
     }

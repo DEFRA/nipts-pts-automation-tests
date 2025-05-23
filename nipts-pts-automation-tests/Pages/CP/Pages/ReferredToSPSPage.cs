@@ -33,7 +33,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public bool VerifyPetDocumentDetailsOnReferredToSPSPage(string ptdNumberNew, string petType, string michrochipNo)
         {
-            return PTDNoEle.Text.Contains(ptdNumberNew) && PetTypeEle.Text.Contains(petType) && MichrochipNoEle.Text.Contains(michrochipNo);
+            string ptdNumberCheck = $"//button[contains(text(),'{ptdNumberNew}')]";
+            string PetTypeEleCheck = $"//button[contains(text(),'{ptdNumberNew}')]/../../..//td[1]";
+            string MichrochipNoEleCheck = $"//button[contains(text(),'{ptdNumberNew}')]/../../..//td[2]";
+            return _driver.FindElement(By.XPath(ptdNumberCheck)).Text.Contains(ptdNumberNew) && _driver.FindElement(By.XPath(PetTypeEleCheck)).Text.Contains(petType) && _driver.FindElement(By.XPath(MichrochipNoEleCheck)).Text.Contains(michrochipNo);
         }
 
         public bool VerifyDepartureDetailsOnReferredToSPSPage()
@@ -82,10 +85,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void ClickOnPTDNumberOfTheApplication(string ptdNumber)
         {
-            var clickPTD = _driver.WaitForElement(By.XPath($"//button[contains(text(),'{ptdNumber}')]"));
-            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,2000)", "");
-            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
-            jsExecutor.ExecuteScript("arguments[0].click();", clickPTD);
+            string clickPTD = $"//button[contains(text(),'{ptdNumber}')]";
+            Thread.Sleep(1000);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", _driver.FindElement(By.XPath(clickPTD)));
         }
 
         public void ClickOnPage(string pageNumber)
@@ -106,7 +108,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void ClickOnNextPage(string nextPage)
         {
-            string pageXpath = $"//a//span[contains(text(), '{nextPage}')]";
+            string pageXpath = $"//span[contains(text(), '{nextPage}')]/..";
             Thread.Sleep(1000);
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", _driver.WaitForElement(By.XPath(pageXpath)));
             _driver.WaitForElement(By.XPath(pageXpath)).Click();

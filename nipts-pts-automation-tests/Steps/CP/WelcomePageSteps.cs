@@ -88,5 +88,32 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             Assert.True(_welcomePage?.VerifyEntriesOnCheckerPage(), "Checker page entries are either after 24 hours or before 48 hours");
         }
+
+        [When(@"I verify count '([^']*)' for Pass Checks")]
+        [Then(@"I verify count '([^']*)' for Pass Checks")]
+        public void ThenIVerifyCountForPassChecks(string PassCount)
+        {
+            Assert.True(_welcomePage.getPassCount(PassCount),"Pass count not matching on Checks page");
+        }
+
+        [Then(@"verify the route details on the welcome page for ferry '([^']*)'")]
+        public void ThenVerifyFerryRoute(string FerryRoute)
+        {
+            Assert.True(_welcomePage.VerifySelectedFerryRouteOnWelcomePage(FerryRoute), "Selected ferry route not matching on Welcome page");
+        }
+
+        [When(@"I verify No View link if No Referred to SPS")]
+        [Then(@"I verify No View link if No Referred to SPS")]
+        public void ThenIVerifyNoViewLinkIfNoReferredToSPS()
+        {
+            Assert.True(_welcomePage.VerifyNoViewLinkIfNoReferredToSPS(), "View Link visible for No Referred to SPS on Checks page");
+        }
+
+        [When(@"I verify No View link if No Referred to SPS with SPS User")]
+        [Then(@"I verify No View link if No Referred to SPS with SPS User")]
+        public void ThenIVerifyNoViewLinkIfNoReferredToSPSWithSPSUser()
+        {
+            Assert.True(_welcomePage.VerifyNoViewLinkIfNoReferredToSPSWithSPSUser(), "View Link visible for No Referred to SPS on Checks page");
+        }
     }
 }

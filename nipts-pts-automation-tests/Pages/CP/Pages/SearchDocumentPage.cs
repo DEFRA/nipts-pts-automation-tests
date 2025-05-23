@@ -3,6 +3,7 @@ using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
 
+
 namespace nipts_pts_automation_tests.Pages.CP.Pages
 {
     public class SearchDocumentPage : ISearchDocumentPage
@@ -19,12 +20,13 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement pageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')]"));
         private IWebElement btnSearch => _driver.WaitForElement(By.XPath("//button[normalize-space()='Search']"));
         private IWebElement btnClearSearch => _driver.WaitForElement(By.XPath("//a[@id='clearSearchButton']"));
-        private IWebElement txtPTDSearchBox => _driver.WaitForElement(By.XPath("//input[@id='ptdNumberSearch']"));
+        private IWebElement txtPTDSearchBox => _driver.WaitForElementExists(By.XPath("//input[@id='ptdNumberSearch']"));
         private IWebElement txtApplicationNumberSearchBox => _driver.WaitForElement(By.XPath("//input[@id='applicationNumberSearch']"));
         private IWebElement txtMicrochipNumberSearchBox => _driver.WaitForElement(By.XPath("//input[@id='microchipNumber']"));
         private IWebElement expectedText => _driver.WaitForElement(By.XPath("//div[@class='ons-panel__body']"));
-        private IWebElement rdoApplicatioNumbere => _driver.WaitForElement(By.XPath("//label[normalize-space()='Search by application number']"));
-        private IWebElement rdoMicrochipNumbere => _driver.WaitForElement(By.XPath("//label[normalize-space()='Search by microchip number']"));
+        private IWebElement rdoPTDNumber => _driver.WaitForElementExists(By.XPath("//label[normalize-space()='Search by PTD number']"));
+        private IWebElement rdoApplicatioNumbere => _driver.WaitForElementExists(By.XPath("//label[normalize-space()='Search by application number']"));
+        private IWebElement rdoMicrochipNumbere => _driver.WaitForElementExists(By.XPath("//label[normalize-space()='Search by microchip number']"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
         #endregion
 
@@ -35,9 +37,15 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         }
         public void SelectSearchRadioOption(string radioButtonValue)
         {
-            if (radioButtonValue == "Search by application number")
+            if (radioButtonValue == "Search by PTD number")
             {
-
+                //if (!rdoPTDNumber.Selected)
+                //{
+                    rdoPTDNumber.Click();
+                //}
+            }
+            else if (radioButtonValue == "Search by application number")
+            {
                 if (!rdoApplicatioNumbere.Selected)
                 {
                     rdoApplicatioNumbere.Click();
@@ -45,7 +53,6 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
             else if (radioButtonValue == "Search by microchip number")
             {
-
                 if (!rdoMicrochipNumbere.Selected)
                 {
                     rdoMicrochipNumbere.Click();
@@ -64,6 +71,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void EnterApplicationNumber(string applicationNumber)
         {
+            
             txtApplicationNumberSearchBox.SendKeys(applicationNumber);
         }
 
@@ -92,7 +100,27 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
             return false;
         }
-        #endregion
 
+        public bool VerifyTextOnSearchDocPage(string textboxValue,string radioButtonValue)
+        {
+            if (radioButtonValue == "Search by PTD number")
+            {
+                string ptdNumberVal = txtPTDSearchBox.GetAttribute("value");
+                return ptdNumberVal.Equals(textboxValue);
+            }
+            else if (radioButtonValue == "Search by application number")
+            {
+                string appNumberVal = txtApplicationNumberSearchBox.GetAttribute("value");
+                return appNumberVal.Equals(textboxValue);
+            }
+            else if (radioButtonValue == "Search by microchip number")
+            {
+                string microchipNumberVal = txtMicrochipNumberSearchBox.GetAttribute("value");
+                return microchipNumberVal.Equals(textboxValue);
+            }
+            return false;
+        }
+        #endregion
     }
-}
+    }
+

@@ -29,7 +29,7 @@ namespace nipts_pts_automation_tests.Pages
         #region Page Methods
         public void SelectPetsSexOption(string sex)
         {
-            if (sex.ToLower().Equals("male"))
+            if (sex.ToLower().Equals("male") | sex.ToLower().Equals("gwryw"))
             {
                 MaleRadiobtn.Click();
             }

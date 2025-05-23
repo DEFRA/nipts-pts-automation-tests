@@ -32,7 +32,19 @@ namespace nipts_pts_automation_tests.Steps
         [Then(@"verify feedback page is loaded")]
         public void ThenVerifyFeedbackPageIsLoaded()
         {
-            Assert.True(headerPage.VerifyFeedbackPageLoaded(), "Feed back page not loaded");
+            Assert.True(headerPage.VerifyFeedbackPageLoaded(), "Feedback page not loaded");
+        }
+
+        [Then(@"verify feedback page text '([^']*)' is correct")]
+        public void ThenVerifyFeedbackPageTextIsCorrect(string text)
+        {
+            Assert.True(headerPage.VerifyFeedbackPageText(text), "Feedback page text is not correct");
+        }
+
+        [Then(@"verify link '([^']*)' on feedback page text")]
+        public void ThenVerifyLinkOnFeedbackPage(string link)
+        {
+            Assert.True(headerPage.VerifyLinkOnFeedbackPage(link), "Link on Feedback page is not correct");
         }
 
         [Then(@"verify generic GOV page is loaded")]
@@ -60,5 +72,35 @@ namespace nipts_pts_automation_tests.Steps
             Assert.True(headerPage.VerifyHeaderBanner(bannerText), "Header banner text not matching");
 
         }
+
+        [Then(@"delete browser cookies")]
+        [Given(@"delete browser cookies")]
+        public void ThenDeleteBrowserCookies()
+        {
+            headerPage.DeleteBrowserCookies();
+
+        }
+
+        [Then(@"verify cookies banner '([^']*)' in WELSH")]
+        public void ThenVerifyWELSHCookiesBanner(string cookiesWELSHText)
+        {
+            Assert.True(headerPage.VerifyCookiesBannerWelsh(cookiesWELSHText), "Cookies banner text not matching");
+
+        }
+
+        [Then(@"verify text on the cookies preference banner '([^']*)'")]
+        public void ThenVerifyTextOnSelectedCookiesBanner(string cookiesText)
+        {
+            Assert.True(headerPage.VerifyCookiesPrefTextWelsh(cookiesText), "Cookies banner text not matching");
+
+        }
+
+        [Then(@"click on cookies preference button '([^']*)' button in WELSH on cookies banner")]
+        public void ThenClickCookiesPrefBtn(string cookiesPrefBtn)
+        {
+            headerPage.ClickCookiesPrefButton(cookiesPrefBtn);
+
+        }
+
     }
 }

@@ -149,5 +149,17 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             Assert.IsTrue(HomePage?.VerifyTheExpectedStatus(petName, applicationStatus), $"The submitted application is not in expected status of '{applicationStatus}'");
         }
 
+        [When(@"I click on Lifelong pet travel documents from header on home page")]
+        public void WhenIClickOnLifelongPetTravelDocumentsFromHeader()
+        {
+            HomePage?.ClickOnLifelongPetTravelDocumentsFromHeader();
+        }
+
+        [Then(@"I verify PTD table heading '([^']*)' on homepage")]
+        public void ThenVerifyPTDTableHeading(string heading)
+        {
+            Assert.IsTrue(HomePage?.VerifyPTDTableHeading(heading), "PTD table heading not matching ");
+        }
+
     }
 }

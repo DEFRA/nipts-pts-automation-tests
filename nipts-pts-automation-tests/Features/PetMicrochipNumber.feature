@@ -56,8 +56,8 @@ Scenario: Verify error messages on invalid microchip number
 
 	Examples: 
 	| logininfo | nextPage                                        | nextPage1             | MicrochipNumber        | MicrochipOption | errorMessage                                         |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi |                        | Yes             | Rhowch rif microsglodyn 15 digid eich anifail anwes  |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi | ABCDEFGHIJKLMNOPHDJHGDFJKGFDKJBVKJDFNBKJFDHGKJSDHFGKDJHFKJSDHFKJHDSKJFHDKJHKJDHFKDHGJGJHSDFVJSDHFJDBFJEDDIUFGEISEHFKSDNFSBDFJFGFGFGHGHDHBVCJXCVKJDFGVKDFDGFVJHMDBFVJDFBVDFBVJHDFBVJDFBVJDFBVKJJHDFVJHDFVFDVDFVFDVFDVDFVDFVDFVDFNVKJDFBVJHDFJVHBDFJHJHDFVJHDFBVJHDDFGFDHGFHGJHJGHFTYTRYRDGDFGERTEERGRDFGDFGFDHFGHFGH | Yes             | Rhowch rif 15 digid, gan ddefnyddio rhifau yn unig   |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi |                        | Oes             | Rhowch rif microsglodyn 15 digid eich anifail anwes  |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi | ABCDEFGHIJKLMNOPHDJHGDFJKGFDKJBVKJDFNBKJFDHGKJSDHFGKDJHFKJSDHFKJHDSKJFHDKJHKJDHFKDHGJGJHSDFVJSDHFJDBFJEDDIUFGEISEHFKSDNFSBDFJFGFGFGHGHDHBVCJXCVKJDFGVKDFDGFVJHMDBFVJDFBVDFBVJHDFBVJDFBVJDFBVKJJHDFVJHDFVFDVDFVFDVFDVDFVDFVDFVDFNVKJDFBVJHDFJVHBDFJHJHDFVJHDFBVJHDDFGFDHGFHGJHJGHFTYTRYRDGDFGERTEERGRDFGDFGFDHFGHFGH | Oes             | Rhowch rif 15 digid, gan ddefnyddio rhifau yn unig   |
 
 Scenario: Verify WAF error message on microchip number
 	Given that I navigate to the Pets application portal
@@ -76,7 +76,7 @@ Scenario: Verify WAF error message on microchip number
 
 	Examples: 
 	| logininfo | nextPage                                        | nextPage1             | MicrochipNumber        | MicrochipOption | nextPage2                                         |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi | '-'                    | Yes             | You cannot access this page or perform this action|
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi | '-'                    | Oes             | You cannot access this page or perform this action|
 
 Scenario: Verify error messages for not selecting any option on microchip number
 	Given that I navigate to the Pets application portal
@@ -87,12 +87,30 @@ Scenario: Verify error messages for not selecting any option on microchip number
 	And   select 'Ydyn' on Personal Details page
 	And   click on continue
 	Then  verify next page '<nextPage1>' is loaded
-	When  I selected the '<MicrochipOption>' option
-	And   provided microchip number as <MicrochipNumber>
 	And   click on continue
-	Then  verify next page '<nextPage2>' is loaded
+	Then  verify error message '<errorMessage>' on Pets
 
 
 	Examples: 
-	| logininfo | nextPage                                        | nextPage1             | MicrochipNumber        | MicrochipOption | nextPage2                                         |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi | '-'                    | Yes             | You cannot access this page or perform this action|
+	| logininfo | nextPage                                        | nextPage1             | errorMessage                      |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi | Select if your pet is microchipped|
+
+Scenario Outline: Verify Get your pet microchipped before applying page
+	Given that I navigate to the Pets application portal
+	When  sign in with valid credentials with logininfo '<logininfo>'
+	And   click on Welsh language 
+	Then  verify next page '<nextPage>' is loaded
+	When  click on Apply for a document
+	And   select 'Ydyn' on Personal Details page
+	And   click on continue
+	Then  verify next page '<nextPage1>' is loaded
+	When  I selected the '<MicrochipOption>' option
+	And   click on continue
+	Then  verify next page '<nextPage2>' is loaded
+	And I verify the link '<Link1>' on page
+	And I verify the link '<Link2>' on page
+	And click on signout button and verify the signout message on pets
+
+Examples:
+	| logininfo | nextPage                                        | nextPage1             | MicrochipNumber        | MicrochipOption | nextPage2                                                       | Link1                                                                                    | Link2                               |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi | '-'                    | Nac oes         | Trefnwch osod microsglodyn ar eich anifail anwes cyn gwneud cais| Gwiriwch sut i drefnu gosod microsglodyn ar eich anifail anwes (yn agor mewn tab newydd) | Rhowch eich barn |
