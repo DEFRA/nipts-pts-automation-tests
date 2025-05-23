@@ -3,7 +3,6 @@ using nipts_pts_automation_tests.Pages;
 using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using System.Runtime.InteropServices;
 using TechTalk.SpecFlow;
 
 namespace nipts_pts_automation_tests.Steps.AP_GB
