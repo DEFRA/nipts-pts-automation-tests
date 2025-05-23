@@ -31,7 +31,7 @@ namespace nipts_pts_automation_tests.Pages
         private IReadOnlyCollection<IWebElement> divMicrochipInformationActionList => _driver.WaitForElements(By.XPath("//div[@id='document-microchip-card']//dl/div/descendant::dd[2]/a"));
         private IReadOnlyCollection<IWebElement> divPetDetailsActionList => _driver.WaitForElements(By.XPath("//div[@id='document-pet-card']//dl/div/descendant::dd[2]/a"));
         private IReadOnlyCollection<IWebElement> divPetOwnerDetailsActionList => _driver.WaitForElements(By.XPath("//div[@id='document-owner-card']//dl/div/descendant::dd[2]/a"));
-        private IWebElement WELSHPTDNumberEle => _driver.WaitForElement(By.XPath("//*[@id=\"document-issued-card\"]/div[2]/dl/div[1]/dd"));
+        private IWebElement WELSHPTDNumberEle => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Rhif y ddogfen deithio i anifail anwes')]/following-sibling::dd"));
         #endregion Page Objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -358,33 +358,6 @@ namespace nipts_pts_automation_tests.Pages
                 return false;
         }
 
-        public bool VerifyTheHeaderWelshPetname(string Petname)
-        {
-            string outageLinkEle = "//th[contains(.,'Statws')]";
-            if (_driver.FindElements(By.XPath(outageLinkEle)).Count > 0)
-            {
-                if (_driver.FindElement(By.XPath(outageLinkEle)).Text.Equals("Fault"))
-                    return true;
-                else
-                    return false;
-            }
-            else
-                return true;
-        }
-        
-        public bool VerifyTheHeaderWelshStatus(string Status)
-        {
-            string outageLinkEle = "//th[contains(.,'Status')]";
-            if (_driver.FindElements(By.XPath(outageLinkEle)).Count > 0)
-            {
-                if (_driver.FindElement(By.XPath(outageLinkEle)).Text.Equals("Statws"))
-                    return true;
-                else
-                    return false;
-            }
-            else
-                return true;
-        }
 
         public bool VerifyWELSHPTDNoOnSearchResultsPassFailPage(string finalPTD)
         {

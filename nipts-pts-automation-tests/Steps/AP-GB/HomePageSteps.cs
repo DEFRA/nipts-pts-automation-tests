@@ -1,4 +1,5 @@
 ﻿using BoDi;
+using nipts_pts_automation_tests.Pages;
 using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -156,16 +157,11 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             HomePage?.ClickOnLifelongPetTravelDocumentsFromHeader();
         }
 
-        [Then(@"I verify the header petname '([^']*)' on homepage")]
-        public void ThenVerifyPetnameOnPage(string Petname)
+        [Then(@"I verify PTD table heading '([^']*)' on homepage")]
+        public void ThenVerifyPTDTableHeading(string heading)
         {
-            Assert.IsTrue(HomePage?.VerifyTheHeaderPetname(Petname), "Link not matching ");
+            Assert.IsTrue(HomePage?.VerifyPTDTableHeading(heading), "PTD table heading not matching ");
         }
 
-        [Then(@"I verify the header Status '([^']*)' on homepage")]
-        public void ThenVerifyStatusOnPage(string Status)
-        {
-            Assert.IsTrue(HomePage?.VerifyTheHeaderStatus(Status), "Link not matching ");
-        }
     }
 }

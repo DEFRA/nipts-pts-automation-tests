@@ -221,16 +221,6 @@ namespace nipts_pts_automation_tests.Steps
         }
 
         [Then(@"I verify the header Welsh petname '([^']*)' on homepage")]
-        public void ThenVerifyWelshPetnameOnPage(string Petname)
-        {
-            Assert.IsTrue(applicationPage?.VerifyTheHeaderWelshPetname(Petname), "Link not matching ");
-        }
-
-        [Then(@"I verify the header Welsh Status '([^']*)' on homepage")]
-        public void ThenVerifyWelshStatusOnPage(string Status)
-        {
-            Assert.IsTrue(applicationPage?.VerifyTheHeaderWelshStatus(Status), "Link not matching");
-        }
 
         [Then(@"verify WELSH format of PTD number on search results page")]
         public void ThenIVerifyWELSHFormatofPTDNumber()

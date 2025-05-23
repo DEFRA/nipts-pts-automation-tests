@@ -182,12 +182,12 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                 return false;
         }
 
-        public bool VerifyTheHeaderPetname(string Petname)
+        public bool VerifyPTDTableHeading(string heading)
         {
-            string outageLinkEle = "//th[contains(.,'Pet name')]";
-            if (_driver.FindElements(By.XPath(outageLinkEle)).Count > 0)
+            var headingEle = "//th[contains(text(),'" + heading + "')]";
+            if (_driver.FindElements(By.XPath(headingEle)).Count > 0)
             {
-                if (_driver.FindElement(By.XPath(outageLinkEle)).Text.Equals("Pet name"))
+                if (_driver.FindElement(By.XPath(headingEle)).Text.Equals(heading))
                     return true;
                 else
                     return false;
@@ -195,20 +195,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
             else
                 return true;
         }
-        public bool VerifyTheHeaderStatus(string Status)
-        {
-            string outageLinkEle = "//th[contains(.,'Status')]";
-            if (_driver.FindElements(By.XPath(outageLinkEle)).Count > 0)
-            {
-                if (_driver.FindElement(By.XPath(outageLinkEle)).Text.Equals("Status"))
-                    return true;
-                else
-                    return false;
-            }
-            else
-                return true;
-        }
-
+ 
         #endregion
     }
 }

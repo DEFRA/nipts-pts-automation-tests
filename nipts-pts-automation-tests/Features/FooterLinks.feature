@@ -51,8 +51,8 @@ Scenario Outline: Verify Welsh updated dashboard on home page
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
 	When  click on Welsh language 
-	Then I verify the header Welsh petname '<Petname>' on homepage
-	Then I verify the header Welsh Status '<Status>' on homepage
+	Then I verify PTD table heading '<Petname>' on homepage
+	Then I verify PTD table heading '<Status>' on homepage
 
 Examples:
 	| Petname             | Status | logininfo |

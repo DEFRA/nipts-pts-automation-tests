@@ -18,7 +18,6 @@
         void ClickOnManageAccountLink();
         void ClickOnLifelongPetTravelDocumentsFromHeader();
         bool VerifyTheLink(string link);
-        public bool VerifyTheHeaderPetname(string Petname);
-        public bool VerifyTheHeaderStatus(string Status);
+        public bool VerifyPTDTableHeading(string heading);
     }
 }

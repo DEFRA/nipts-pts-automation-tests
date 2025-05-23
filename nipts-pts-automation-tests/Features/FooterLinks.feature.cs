@@ -247,10 +247,10 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("click on Welsh language", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 54
- testRunner.Then(string.Format("I verify the header Welsh petname \'{0}\' on homepage", petname), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then(string.Format("I verify PTD table heading \'{0}\' on homepage", petname), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 55
- testRunner.Then(string.Format("I verify the header Welsh Status \'{0}\' on homepage", status), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then(string.Format("I verify PTD table heading \'{0}\' on homepage", status), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
