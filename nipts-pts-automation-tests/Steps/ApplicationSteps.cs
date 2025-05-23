@@ -220,8 +220,6 @@ namespace nipts_pts_automation_tests.Steps
             Assert.True(applicationPage.VerifyHeadingTextOnSummaryPage(Heading), "Pet Heading mismatch on Summary page");
         }
 
-        [Then(@"I verify the header Welsh petname '([^']*)' on homepage")]
-
         [Then(@"verify WELSH format of PTD number on search results page")]
         public void ThenIVerifyWELSHFormatofPTDNumber()
         {
