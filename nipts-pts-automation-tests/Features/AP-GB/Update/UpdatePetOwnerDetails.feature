@@ -1,4 +1,4 @@
-﻿@ChangeDetails @APGBRegression 
+﻿@APGBRegression 
 Feature: Update Pet Owner Details
 
 Modify the Pet owner details before submitting the application

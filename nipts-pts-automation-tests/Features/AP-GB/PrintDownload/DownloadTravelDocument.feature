@@ -1,4 +1,4 @@
-﻿@PTSTest @APGBRegression 
+﻿@APGBRegression 
 Feature: Download Travel Document
 
 Create a PETS travel document from Great Britain to Northern Ireland and Download the travel document

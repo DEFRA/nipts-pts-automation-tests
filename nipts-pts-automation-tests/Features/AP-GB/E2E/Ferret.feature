@@ -1,4 +1,4 @@
-﻿@E2E @APGBRegression 
+﻿@APGBRegression 
 Feature: E2E Ferret
 
 Create a PETS travel document for the travel from Great Britain to Northern Ireland

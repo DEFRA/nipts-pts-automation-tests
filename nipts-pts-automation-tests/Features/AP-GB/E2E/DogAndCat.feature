@@ -1,4 +1,4 @@
-﻿@E2E @APGBRegression 
+﻿@APGBRegression 
 
 Feature: E2E Dog and Cat
 

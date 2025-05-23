@@ -1,4 +1,4 @@
-﻿@PETS @APGBRegression 
+﻿@APGBRegression 
 Feature: PetsHomePageFooterLinks
 
 Checking the header, footer, GetHelp and Feedback Hyperlinks

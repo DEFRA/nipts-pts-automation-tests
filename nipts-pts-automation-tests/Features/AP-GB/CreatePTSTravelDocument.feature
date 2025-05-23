@@ -1,4 +1,4 @@
-﻿@PETS @APGBRegression 
+﻿@APGBRegression 
 Feature: CreatePTSTravelDocument
 
 Create a PETS travel document for the travel from Great Britain to Northern Ireland
