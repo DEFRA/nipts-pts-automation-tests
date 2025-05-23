@@ -1,5 +1,5 @@
 ﻿
-using BoDi;
+using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Configuration;
 
 namespace nipts_pts_automation_tests.Tools

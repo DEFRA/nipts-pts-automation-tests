@@ -1,7 +1,7 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Capabilities;
 using nipts_pts_automation_tests.Configuration;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Hooks
 {

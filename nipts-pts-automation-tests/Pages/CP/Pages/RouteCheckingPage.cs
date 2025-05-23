@@ -1,9 +1,9 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Pages.CP.Pages
 {

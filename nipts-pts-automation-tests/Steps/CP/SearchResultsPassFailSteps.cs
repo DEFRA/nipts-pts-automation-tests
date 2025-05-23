@@ -1,14 +1,11 @@
-﻿using BoDi;
-using nipts_pts_automation_tests.Pages;
-using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages.AP_GB.SummaryPage;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
-using nipts_pts_automation_tests.Pages.CP.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using System.Text;
 using System.Text.RegularExpressions;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps.CP
 {

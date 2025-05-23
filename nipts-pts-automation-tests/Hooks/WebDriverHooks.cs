@@ -1,11 +1,10 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using Defra.UI.Framework.Object;
 using OpenQA.Selenium;
 using nipts_pts_automation_tests.Capabilities;
 using nipts_pts_automation_tests.Configuration;
 using System.Reflection;
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Infrastructure;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Hooks
 {
@@ -18,10 +17,10 @@ namespace nipts_pts_automation_tests.Hooks
 
         private readonly ScenarioContext _scenarioContext;
         private readonly IObjectContainer _objectContainer;
-        private readonly ISpecFlowOutputHelper _specFlowOutputHelper;
+        private readonly IReqnrollOutputHelper _specFlowOutputHelper;
 
         public WebDriverHook(ScenarioContext context, ObjectContainer container,
-            ISpecFlowOutputHelper specFlowOutputHelper)
+            IReqnrollOutputHelper specFlowOutputHelper)
         {
             _scenarioContext = context;
             _objectContainer = container;

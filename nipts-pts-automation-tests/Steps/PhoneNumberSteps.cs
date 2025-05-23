@@ -1,16 +1,8 @@
-﻿using BoDi;
-using nipts_pts_automation_tests.Data;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages;
-using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TechTalk.SpecFlow;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps
 {
