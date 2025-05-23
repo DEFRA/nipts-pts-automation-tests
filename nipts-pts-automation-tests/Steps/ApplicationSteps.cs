@@ -4,9 +4,6 @@ using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages;
-using Microsoft.Identity.Client;
-using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
-using nipts_pts_automation_tests.Pages.CP.Pages;
 using System.Text.RegularExpressions;
 using System.Text;
 
