@@ -181,7 +181,20 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                 return false;
         }
 
-
+        public bool VerifyPTDTableHeading(string heading)
+        {
+            var headingEle = "//th[contains(text(),'" + heading + "')]";
+            if (_driver.FindElements(By.XPath(headingEle)).Count > 0)
+            {
+                if (_driver.FindElement(By.XPath(headingEle)).Text.Equals(heading))
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return true;
+        }
+ 
         #endregion
     }
 }

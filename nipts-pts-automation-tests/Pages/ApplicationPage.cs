@@ -31,6 +31,7 @@ namespace nipts_pts_automation_tests.Pages
         private IReadOnlyCollection<IWebElement> divMicrochipInformationActionList => _driver.WaitForElements(By.XPath("//div[@id='document-microchip-card']//dl/div/descendant::dd[2]/a"));
         private IReadOnlyCollection<IWebElement> divPetDetailsActionList => _driver.WaitForElements(By.XPath("//div[@id='document-pet-card']//dl/div/descendant::dd[2]/a"));
         private IReadOnlyCollection<IWebElement> divPetOwnerDetailsActionList => _driver.WaitForElements(By.XPath("//div[@id='document-owner-card']//dl/div/descendant::dd[2]/a"));
+        private IWebElement WELSHPTDNumberEle => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Rhif y ddogfen deithio i anifail anwes')]/following-sibling::dd"));
         #endregion Page Objects
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -357,6 +358,12 @@ namespace nipts_pts_automation_tests.Pages
                 return false;
         }
 
+
+        public bool VerifyWELSHPTDNoOnSearchResultsPassFailPage(string finalPTD)
+        {
+            return WELSHPTDNumberEle.Text.Equals(finalPTD);
+        }
+        
         public bool VerifyPlaceOfIssuanceOnApprovedDoc(string placeofIssText)
         {
             return PlaceOfIssuanceEle.Text.Contains(placeofIssText);

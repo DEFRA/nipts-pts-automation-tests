@@ -46,3 +46,14 @@ Scenario Outline: Verify text and Logo on the footer of Sign up page
 Examples: 
     | logininfo | nextPage                      | FooterText                         |FooterPageLink              |FooterLogoLink |
     | test      | Lifelong pet travel documents | All content is available under the |Open Government Licence v3.0|Crown copyright|
+
+Scenario Outline: Verify Welsh updated dashboard on home page
+	Given that I navigate to the Pets application portal
+	When  sign in with valid credentials with logininfo '<logininfo>'
+	When  click on Welsh language 
+	Then I verify PTD table heading '<Petname>' on homepage
+	Then I verify PTD table heading '<Status>' on homepage
+
+Examples:
+	| Petname             | Status | logininfo |
+	| Enw’r anifail anwes | Statws | test      |

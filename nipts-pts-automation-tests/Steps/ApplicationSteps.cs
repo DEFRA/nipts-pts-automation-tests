@@ -4,7 +4,8 @@ using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages;
-using Microsoft.Identity.Client;
+using System.Text.RegularExpressions;
+using System.Text;
 
 namespace nipts_pts_automation_tests.Steps
 {
@@ -216,6 +217,21 @@ namespace nipts_pts_automation_tests.Steps
             Assert.True(applicationPage.VerifyHeadingTextOnSummaryPage(Heading), "Pet Heading mismatch on Summary page");
         }
 
+        [Then(@"verify WELSH format of PTD number on search results page")]
+        public void ThenIVerifyWELSHFormatofPTDNumber()
+        {
+            var ptdNumber = _scenarioContext.Get<string>("PTDNumber");
+            var ptdNumber1 = ptdNumber.Substring(5);
+            var ptdNumber2 = ptdNumber.Substring(0, 5);
+            string ptdNumber3 = ptdNumber2.ToString();
+            string ptdNumber4 = Regex.Replace(ptdNumber1, @"\w{3}", @" $0", RegexOptions.RightToLeft);
+            StringBuilder sb = new StringBuilder();
+            sb.Append(ptdNumber3);
+            sb.Append(ptdNumber4);
+            String finalPTD = sb.ToString();
+            applicationPage.VerifyWELSHPTDNoOnSearchResultsPassFailPage(finalPTD);
+        }
+      
         [Then(@"verify Place of Issuance text is present '([^']*)' on Approved PTD")]
         public void ThenIVerifyHeadingTextOnApprovedPTD(string PlaceOfIssText)
         {

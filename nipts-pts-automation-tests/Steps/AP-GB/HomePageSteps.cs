@@ -155,5 +155,11 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             HomePage?.ClickOnLifelongPetTravelDocumentsFromHeader();
         }
 
+        [Then(@"I verify PTD table heading '([^']*)' on homepage")]
+        public void ThenVerifyPTDTableHeading(string heading)
+        {
+            Assert.IsTrue(HomePage?.VerifyPTDTableHeading(heading), "PTD table heading not matching ");
+        }
+
     }
 }
