@@ -1,7 +1,6 @@
 ﻿using BoDi;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
-using TechTalk.SpecFlow;
 
 
 namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
