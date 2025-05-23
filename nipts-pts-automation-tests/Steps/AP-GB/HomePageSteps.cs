@@ -1,5 +1,4 @@
 ﻿using BoDi;
-using nipts_pts_automation_tests.Pages;
 using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
 using NUnit.Framework;
 using OpenQA.Selenium;
