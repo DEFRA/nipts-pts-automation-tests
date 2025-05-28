@@ -51,7 +51,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public bool VerifyHeadingOnPage(string Heading)
         {
-            string outageLinkEle = $"//h1[contains(text(),'{Heading}')]";
+            string outageLinkEle = $"//*[contains(text(),'{Heading}')]";
             if (_driver.FindElements(By.XPath(outageLinkEle)).Count > 0)
                 return true;
             else

@@ -10,7 +10,6 @@ Scenario Outline: Verify CP 403 Outage page
 	When I have provided the credentials and signin
 	Then verify heading '<Heading1>' on page
 	And verify heading '<Heading2>' on page
-	#And verify the link '<OutageLink>' on outage page
 	And verify text '<text1>' on page
 
 	Examples:

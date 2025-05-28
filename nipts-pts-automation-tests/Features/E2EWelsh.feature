@@ -1,4 +1,4 @@
-﻿@E2E 
+﻿@Regression 
 
 Feature: E2E Welsh
 
