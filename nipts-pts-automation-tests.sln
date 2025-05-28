@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI", "CI", "{8655DED8-0432-
 		CP-pipeline-crossbrowserIOS.yml = CP-pipeline-crossbrowserIOS.yml
 		CP-pipeline-crossbrowserMacOS.yml = CP-pipeline-crossbrowserMacOS.yml
 		CP-pipeline-crossbrowserWindows.yml = CP-pipeline-crossbrowserWindows.yml
+		GB-automation-pipeline.yml = GB-automation-pipeline.yml
 		pipeline-automation.yml = pipeline-automation.yml
 		pipeline-crossbrowserAndroid.yml = pipeline-crossbrowserAndroid.yml
 		pipeline-crossbrowserIOS.yml = pipeline-crossbrowserIOS.yml

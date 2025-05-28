@@ -96,3 +96,5 @@ variables:
     value: 'TestCategory=CrossBrowserCP'
   ${{ if eq(parameters.jobNameParam, 'DatabaseCheck') }}:
     value: 'TestCategory=DatabaseQuery'
+  ${{ if eq(parameters.jobNameParam, 'APRegressionGB') }}:
+    value: 'TestCategory=APGBRegression'
