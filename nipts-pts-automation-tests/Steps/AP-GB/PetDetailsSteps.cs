@@ -53,7 +53,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             petSpeciesPage?.ClickContinueButton();
         }
 
-        [Then(@"I should redirected to the What breed is your '([^']*)'? page")]
+        [Then(@"I should redirected to the What breed is your '([^']*)' page")]
         public void ThenIShouldRedirectedToTheWhatBreedIsYourPage(string petType)
         {
             if (!petType.ToLower().Equals("ferret"))
