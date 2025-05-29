@@ -107,6 +107,9 @@ namespace nipts_pts_automation_tests.Features
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Enter Telephone Number on Pets")]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "0745678944", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "+44 7000000000", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "+(91) 1234567890", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "+1 212-555 4567", null)]
         public async global::System.Threading.Tasks.Task EnterTelephoneNumberOnPets(string logininfo, string nextPage, string nextPage1, string nextPage2, string nextPage3, string nextPage4, string nextPage5, string fullname, string postcode, string phoneNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -195,9 +198,9 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify error message for invalid contact Telephone Number")]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "07456789**", "fel 01632 960 001 neu 07700 900 982", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "07456789**", "fel 01632 960 001, 07700 900 982 neu +49 30 12345678", null)]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "", "Rhowch eich rhif ff", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "0745678976435847687465", "fel 01632 960 001 neu 07700 900 982", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "0745678976435847687465", "fel 01632 960 001, 07700 900 982 neu +49 30 12345678", null)]
         public async global::System.Threading.Tasks.Task VerifyErrorMessageForInvalidContactTelephoneNumber(string logininfo, string nextPage, string fullname, string postcode, string phoneNumber, string errorMessage, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -209,7 +212,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("phoneNumber", phoneNumber);
             argumentsOfScenario.Add("errorMessage", errorMessage);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Verify error message for invalid contact Telephone Number", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 31
+#line 34
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -219,49 +222,49 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 32
+#line 35
  await testRunner.GivenAsync("that I navigate to the Pets application portal", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 33
+#line 36
  await testRunner.WhenAsync(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 34
+#line 37
  await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 35
+#line 38
  await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 36
+#line 39
  await testRunner.AndAsync("click on Apply for a document", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 37
+#line 40
  await testRunner.AndAsync("select \'Nac ydyn\' on Personal Details page", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 38
+#line 41
  await testRunner.WhenAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 39
- await testRunner.WhenAsync(string.Format("enter your full name \'{0}\'", fullname), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 40
- await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 41
- await testRunner.WhenAsync(string.Format("enter your postcode \'{0}\'", postcode), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
 #line 42
- await testRunner.AndAsync("select address", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.WhenAsync(string.Format("enter your full name \'{0}\'", fullname), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 43
  await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 44
- await testRunner.AndAsync(string.Format("enter phone number \'{0}\'", phoneNumber), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.WhenAsync(string.Format("enter your postcode \'{0}\'", postcode), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 45
- await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("select address", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 46
+ await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 47
+ await testRunner.AndAsync(string.Format("enter phone number \'{0}\'", phoneNumber), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 48
+ await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 49
  await testRunner.ThenAsync(string.Format("verify error message \'{0}\' on Pets", errorMessage), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -286,7 +289,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("postcode", postcode);
             argumentsOfScenario.Add("phoneNumber", phoneNumber);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Verify English and Welsh Version of Telephone Number page on Pets", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 54
+#line 57
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -296,76 +299,76 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 55
+#line 58
  await testRunner.GivenAsync("that I navigate to the Pets application portal", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 56
+#line 59
  await testRunner.WhenAsync(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 57
+#line 60
  await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 58
+#line 61
  await testRunner.AndAsync("click on Apply for a document", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 59
+#line 62
  await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage1), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 60
- await testRunner.WhenAsync("select \'Nac ydyn\' on Personal Details page", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 61
- await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 62
- await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage2), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
 #line 63
- await testRunner.WhenAsync(string.Format("enter your full name \'{0}\'", fullname), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("select \'Nac ydyn\' on Personal Details page", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 64
  await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 65
- await testRunner.WhenAsync(string.Format("enter your postcode \'{0}\'", postcode), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage2), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 66
- await testRunner.AndAsync("select address", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.WhenAsync(string.Format("enter your full name \'{0}\'", fullname), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 67
  await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 68
- await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage3), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.WhenAsync(string.Format("enter your postcode \'{0}\'", postcode), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 69
- await testRunner.WhenAsync(string.Format("enter phone number \'{0}\'", phoneNumber), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.AndAsync("select address", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 70
  await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 71
- await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage4), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage3), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 72
- await testRunner.WhenAsync("click on back", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 73
- await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage4), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 74
- await testRunner.WhenAsync("click on English language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 75
- await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage6), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 76
  await testRunner.WhenAsync(string.Format("enter phone number \'{0}\'", phoneNumber), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 77
+#line 73
  await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
+#line 74
+ await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage4), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 75
+ await testRunner.WhenAsync("click on back", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 76
+ await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage4), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 77
+ await testRunner.WhenAsync("click on English language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
 #line 78
+ await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage6), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 79
+ await testRunner.WhenAsync(string.Format("enter phone number \'{0}\'", phoneNumber), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 80
+ await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 81
  await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage5), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
