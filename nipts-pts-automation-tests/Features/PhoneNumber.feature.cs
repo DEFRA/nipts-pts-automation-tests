@@ -106,7 +106,7 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Enter Telephone Number on Pets")]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "0745678944", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "07456789442", null)]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "+44 7000000000", null)]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "+(91) 1234567890", null)]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "+1 212-555 4567", null)]
@@ -273,7 +273,7 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify English and Welsh Version of Telephone Number page on Pets")]
-        [NUnit.Framework.TestCaseAttribute("test", "manylion chi", "Beth yw", "ch rhif ff", "", "Is your pet microchipped?", "What is your phone number?", "TestFullName", "SE1 7PB", "0745678944", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "manylion chi", "Beth yw", "ch rhif ff", "Oes microsglodyn wedi", "Is your pet microchipped?", "What is your phone number?", "TestFullName", "SE1 7PB", "07456789442", null)]
         public async global::System.Threading.Tasks.Task VerifyEnglishAndWelshVersionOfTelephoneNumberPageOnPets(string logininfo, string nextPage1, string nextPage2, string nextPage3, string nextPage4, string nextPage5, string nextPage6, string fullname, string postcode, string phoneNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -354,7 +354,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.WhenAsync("click on back", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 76
- await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage4), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage2), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 77
  await testRunner.WhenAsync("click on English language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
