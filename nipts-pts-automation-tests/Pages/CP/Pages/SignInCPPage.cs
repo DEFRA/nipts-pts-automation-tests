@@ -70,8 +70,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void EnterPassword()
         {
-            Thread.Sleep(1000);
-            if(PageHeading.Text == "This is a test environment")
+            Thread.Sleep(3000);
+            if(PageHeading.Text.Contains("This is a test environment"))
             {
                 string envPassword = ConfigSetup.BaseConfiguration.TestConfiguration.EnvPassword;
                 IJavaScriptExecutor jse = (IJavaScriptExecutor)_driver;
@@ -81,7 +81,6 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 jsExecutor.ExecuteScript("arguments[0].click();", btnContinue);
                 Thread.Sleep(5000);
                 txtLoging.SendKeys(envPassword);
-                //jse.ExecuteScript("arguments[0].setAttribute('value','" + envPassword + "')", txtLoging);
                 Thread.Sleep(3000);
                 jsExecutor.ExecuteScript("arguments[0].click();", btnContinue);
                 Thread.Sleep(5000);
