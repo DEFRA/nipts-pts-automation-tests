@@ -65,13 +65,11 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public bool IsSignedOut()
         {
-            //((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", SignOut);
-            //signOutBy.Click();
             Thread.Sleep(1000);
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             jsExecutor.ExecuteScript("arguments[0].click();", SignOut);
             _driver.WaitForElementCondition(ExpectedConditions.ElementIsVisible(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']")));
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             return PageHeading.Text.Contains("You have signed out") || PageHeading.Text.Contains("Your Defra account");
         }
 
