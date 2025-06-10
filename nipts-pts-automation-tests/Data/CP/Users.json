@@ -12,6 +12,17 @@
       "HomePage": true
     },
     {
+      "userId": "244587649948",
+      "password": "Cpportal@1",
+      "logininfo": "AdminUser",
+      "UserName": "BhagyaGB lakshmiC",
+      "UserEmail": "bhagyalakshmi.gadi+GBATST@capgemini.com",
+      "Useraddress": "",
+      "UserPhoneNumber": "07000000000",
+      "Environment": "tst",
+      "HomePage": true
+    },
+    {
       "userId": "20 83 54 18 09 17",
       "password": "Cpportal@123",
       "logininfo": "SPSUser",

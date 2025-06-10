@@ -255,5 +255,12 @@ namespace nipts_pts_automation_tests.Steps.CP
                 Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
             }
         }
+
+        [Given(@"verify role '([^']*)' on manage account page")]
+        [Then(@"verify role '([^']*)' on manage account page")]
+        public void ThenIVerifyRole(string role)
+        {
+            _applicationSummaryPage.VerifyRole(role);
+        }
     }
 }
