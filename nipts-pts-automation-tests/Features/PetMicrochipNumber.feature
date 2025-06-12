@@ -93,7 +93,7 @@ Scenario: Verify error messages for not selecting any option on microchip number
 
 	Examples: 
 	| logininfo | nextPage                                        | nextPage1             | errorMessage                      |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi | Select if your pet is microchipped|
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi | Dwedwch a oes gan eich anifail anwes ficrosglodyn|
 
 Scenario Outline: Verify Get your pet microchipped before applying page
 	Given that I navigate to the Pets application portal
