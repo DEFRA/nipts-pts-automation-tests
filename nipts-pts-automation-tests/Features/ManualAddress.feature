@@ -30,7 +30,7 @@ Scenario: Enter Address Manually
 	| logininfo | nextPage                                        | nextPage1    | nextPage2 | nextPage3   | nextPage4     | nextPage5  | nextPage6             | fullname     | AddressLineOne | AddressLineTwo | TownOrCity | County  | Postcode |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | manylion chi | Beth yw   | ch cod post | ch cyfeiriad? | ch rhif ff | What is your address? | TestFullName | Addressline1   | Addressline2   | London     | England | SE3 0ER  |
 
-	@RunOnly
+	
 	Scenario: Validate error messages on Manual Address page
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'

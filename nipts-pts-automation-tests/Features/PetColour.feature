@@ -40,7 +40,7 @@ Scenario: Select pet color in WELSH and verify next page in the application
 	| logininfo | nextPage                                        | nextPage1  | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2         | nextPage3               | PetSex | nextPage4         | nextPage5     | color | nextPage6                       |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch ci chi? | Ci  | 676789876543321 | Basenji  | Yes             | ch anifail anwes? | rhyw eich anifail anwes | Gwryw  | dyddiad geni eich | prif liw eich | Du    | unrhyw nodweddion arwyddocaol   |
 
-	@RunOnly
+	
 Scenario: Verify WELSH error message when no color is selected on pet color page
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
@@ -80,7 +80,7 @@ Scenario: Verify WELSH error message when no color is selected on pet color page
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch cath chi?		| Cath   | 676789876543321 | Birman   | Yes             | ch anifail anwes? | rhyw eich anifail anwes | Gwryw  | dyddiad geni eich | prif liw eich |       | unrhyw nodweddion arwyddocaol | Dewiswch brif liw eich cath |
 	
 	
-	@RunOnly
+	
 Scenario: Verify WELSH error message for invalid input in Other color option
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
@@ -122,7 +122,7 @@ Scenario: Verify WELSH error message for invalid input in Other color option
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch cath chi       | Cath  | 676789876543321 | Birman   | Yes             | ch anifail anwes? | rhyw eich anifail anwes | Gwryw  | dyddiad geni eich | prif liw eich | Arall | unrhyw nodweddion arwyddocaol | Disgrifiwch liw eich cath					 |                |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch cath chi       | Cath  | 676789876543321 | Birman   | Yes             | ch anifail anwes? | rhyw eich anifail anwes | Gwryw  | dyddiad geni eich | prif liw eich | Arall | unrhyw nodweddion arwyddocaol | gan ddefnyddio 150 o gymeriadau neu lai    |I am entering more thant one hundred and fifty characters in the pet color field. Error message should be displayed for exceeding the character limit  .                |
 
-	@RunOnly
+	
 	Scenario: Verify WELSH error message for invalid input in Other color option for ferret
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
@@ -159,7 +159,7 @@ Scenario: Verify WELSH error message for invalid input in Other color option
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch anifail anwes? | Ffured| 676789876543321 | Yes             | ch anifail anwes? | rhyw eich anifail anwes | Gwryw  | dyddiad geni eich | prif liw eich | Arall | unrhyw nodweddion arwyddocaol | Disgrifiwch liw eich ffured  			 |                |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch anifail anwes? | Ffured| 676789876543321 | Yes             | ch anifail anwes? | rhyw eich anifail anwes | Gwryw  | dyddiad geni eich | prif liw eich | Arall | unrhyw nodweddion arwyddocaol | gan ddefnyddio 150 o gymeriadau neu lai    |I am entering more thant one hundred and fifty characters in the pet color field. Error message should be displayed for exceeding the character limit  .                |
 
-	@RunOnly
+	
 Scenario: Verify WELSH error message when no color is selected on pet color page for ferret
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'

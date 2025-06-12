@@ -37,7 +37,7 @@ Scenario: Enter valid pet date of birth and validate next page in the applicatio
 	| logininfo | nextPage                                        | nextPage1   | Pet | MicrochipNumber | PetBreed  | MicrochipOption | nextPage2               | PetName | PetSex | nextPage3                       | PetDOBDay | PetDOBMonth | PetDOBYear | MicrochipDay | MicrochipMonth | MicrochipYear | nextPage4     |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Beth yw enw | Ci  | 676789876543321 | Ci Affgan | Yes             | rhyw eich anifail anwes | toto    | Gwryw  | dyddiad geni eich anifail anwes | 01        | 01          | 2020       | 01           | 03             | 2024          | prif liw eich |
 
-	@RunOnly
+	
 	Scenario: Validate error messages on pet date of birth page
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'

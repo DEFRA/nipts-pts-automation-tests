@@ -38,7 +38,7 @@ Scenario: Validate microchip Number error message with no option
 	Examples: 
 	| logininfo | nextPage                                        | MicrochipOption | nextPage1             | nextPage2                                                        |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Nac oes         | Oes microsglodyn wedi | Trefnwch osod microsglodyn ar eich anifail anwes cyn gwneud cais |
-	@RunOnly
+	
 Scenario: Verify error messages on invalid microchip number
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
