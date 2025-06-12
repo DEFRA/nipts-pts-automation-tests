@@ -203,10 +203,17 @@ this.ScenarioInitialize(scenarioInfo);
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Error message on not selecting option before continue on Personal Details " +
             "page")]
-        [NUnit.Framework.TestCaseAttribute("test", "Dogfennau teithio gydol oes i anifeiliaid anwes", "Dwedwch a yw eich manylion chi", null)]
+        [NUnit.Framework.CategoryAttribute("RunOnly")]
+        [NUnit.Framework.TestCaseAttribute("test", "Dogfennau teithio gydol oes i anifeiliaid anwes", "Dewiswch a ydych chi", null)]
         public async global::System.Threading.Tasks.Task VerifyErrorMessageOnNotSelectingOptionBeforeContinueOnPersonalDetailsPage(string logininfo, string nextPage, string errorMessage, string[] exampleTags)
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] @__tags = new string[] {
+                    "RunOnly"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("logininfo", logininfo);
             argumentsOfScenario.Add("nextPage", nextPage);

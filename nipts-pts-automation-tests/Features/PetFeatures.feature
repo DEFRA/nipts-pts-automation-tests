@@ -72,6 +72,7 @@ Scenario: Select no option on significant feature and verify next page in the ap
 	| logininfo | nextPage                                        | nextPage1                                                 | Pet | MicrochipNumber | PetBreed | MicrochipOption | PetName | PetSex | color | featureOption | nextPage2             |
 	| test2     | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes gan eich anifail anwes unrhyw nodweddion arwyddocaol? | Dog | 676789876543321 | Pug      | Oes             | toto    | Gwryw  | Coch  | Nac oes       | Gwiriwch eich atebion |
 
+	
 Scenario: Validate error messages for not selecting any option on significant feature page
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
@@ -103,8 +104,9 @@ Scenario: Validate error messages for not selecting any option on significant fe
 
 	Examples: 
 	| logininfo | nextPage                                        | nextPage1                                                 | Pet | MicrochipNumber | PetBreed | MicrochipOption | PetName | PetSex | color | features | errorMessage                                                       |
-	| test2     | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes gan eich anifail anwes unrhyw nodweddion arwyddocaol? | Dog | 676789876543321 | Pug      | Oes             | toto    | Gwryw  | Coch  | Oes      | Dwedwch a oes gan eich anifail anwes unrhyw nodweddion arwyddocaol |
+	| test2     | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes gan eich anifail anwes unrhyw nodweddion arwyddocaol? | Dog | 676789876543321 | Pug      | Oes             | toto    | Gwryw  | Coch  | Oes      | Dewiswch a oes gan eich anifail anwes unrhyw nodweddion arwyddocaol|
 
+	
 	Scenario: Validate error messages for not entering feature details on significant feature page
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
@@ -140,7 +142,7 @@ Scenario: Validate error messages for not selecting any option on significant fe
 	| test2     | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes gan eich anifail anwes unrhyw nodweddion arwyddocaol? | Dog | 676789876543321 | Pug      | Oes             | toto    | Gwryw  | Coch  | Oes      | Disgrifiwch nodwedd arwyddocaol eich anifail anwes |
 
 
-
+	
 	Scenario: Validate error messages for more than 300 chars on significant feature page
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'

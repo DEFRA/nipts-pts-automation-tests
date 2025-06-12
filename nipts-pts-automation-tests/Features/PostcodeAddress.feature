@@ -27,6 +27,7 @@ Scenario: Enter postcode and select address on Pets
 	| logininfo | nextPage                                        | nextPage1    | nextPage2     | nextPage3   | nextPage4    | nextPage5 | fullname     | postcode |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | manylion chi | ch enw llawn? | ch cod post | ch cyfeiriad?| ch rhif ff| TestFullName | SE1 7PB  |
 
+	
 Scenario: Verify error message for invalid postcode
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
@@ -42,7 +43,7 @@ Scenario: Verify error message for invalid postcode
 
 	Examples: 
 	| logininfo | nextPage                                        | fullname     | postcode | errorMessage                        |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | TestFullName |          | Rhowch god post                     |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | TestFullName |          | Rhowch eich cod post                |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | TestFullName | SE10 1EE | Rhowch god post yng Nghymru         |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | TestFullName | SE1 7PBABCDEFGHIJKLMNOP  |Rhowch god post llawn yn y fformat cywir   |
 
