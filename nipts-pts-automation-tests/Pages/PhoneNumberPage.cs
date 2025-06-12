@@ -28,6 +28,7 @@ namespace nipts_pts_automation_tests.Pages
 
         public void EnterPhoneNumber(string phoneNumber)
         {
+            PhoneNumberEle.Clear();
             PhoneNumberEle.SendKeys(phoneNumber);
         }
 

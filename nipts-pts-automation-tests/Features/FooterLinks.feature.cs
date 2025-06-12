@@ -106,7 +106,7 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Footer links and pages on Pets")]
-        [NUnit.Framework.TestCaseAttribute("test", "Pet travel scheme privacy notice", "data.protection@defra.gov.uk", "www.legislation.gov.uk", "Cookies", "opt out of Google Analytics cookies", "Accessibility statement for taking a dog", "AbilityNet (opens in new tab)", "contact the Equality Advisory and Support Service (EASS)", "Northern Ireland Pet Travel Scheme terms and conditions", "Windsor Framework", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Pet travel scheme privacy notice", "data.protection@defra.gov.uk", "www.legislation.gov.uk", "Cwcis", "opt out of Google Analytics cookies", "Accessibility statement for taking a dog", "AbilityNet (opens in new tab)", "contact the Equality Advisory and Support Service (EASS)", "Northern Ireland Pet Travel Scheme terms and conditions", "Windsor Framework", null)]
         public async global::System.Threading.Tasks.Task VerifyFooterLinksAndPagesOnPets(string logininfo, string privacyPageTitle, string privacyLink1, string privacyLink2, string cookiesPageTitle, string cookiesLink1, string accessibilityPageTitle, string accessibilityLink1, string accessibilityLink2, string tCsPageTitle, string tCsLink1, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;

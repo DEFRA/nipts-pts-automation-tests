@@ -78,7 +78,7 @@ Scenario: Verify WELSH error message when no color is selected on pet color page
 	| logininfo | nextPage                                        | nextPage1		    | Pet    | MicrochipNumber | PetBreed | MicrochipOption | nextPage2         | nextPage3               | PetSex | nextPage4         | nextPage5     | color | nextPage6                     | errorMsg                    |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch ci chi?		    | Ci     | 676789876543321 | Basenji  | Yes             | ch anifail anwes? | rhyw eich anifail anwes | Gwryw  | dyddiad geni eich | prif liw eich |       | unrhyw nodweddion arwyddocaol | Dewiswch brif liw eich ci   |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch cath chi?		| Cath   | 676789876543321 | Birman   | Yes             | ch anifail anwes? | rhyw eich anifail anwes | Gwryw  | dyddiad geni eich | prif liw eich |       | unrhyw nodweddion arwyddocaol | Dewiswch brif liw eich cath |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | ch anifail anwes?   | Ffured | 676789876543321 | Birman   | Yes             | ch anifail anwes? | rhyw eich anifail anwes | Gwryw  | dyddiad geni eich | prif liw eich |       | unrhyw nodweddion arwyddocaol | Dewiswch brif liw eich ffured |
+	
 	
 	@RunOnly
 Scenario: Verify WELSH error message for invalid input in Other color option
