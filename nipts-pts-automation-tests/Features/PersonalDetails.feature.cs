@@ -203,7 +203,7 @@ this.ScenarioInitialize(scenarioInfo);
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Error message on not selecting option before continue on Personal Details " +
             "page")]
-        [NUnit.Framework.TestCaseAttribute("test", "Dogfennau teithio gydol oes i anifeiliaid anwes", "Dwedwch a yw eich manylion chi", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Dogfennau teithio gydol oes i anifeiliaid anwes", "Dewiswch a ydych chi", null)]
         public async global::System.Threading.Tasks.Task VerifyErrorMessageOnNotSelectingOptionBeforeContinueOnPersonalDetailsPage(string logininfo, string nextPage, string errorMessage, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;

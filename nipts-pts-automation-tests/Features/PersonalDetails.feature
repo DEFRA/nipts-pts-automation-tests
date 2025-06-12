@@ -32,7 +32,7 @@ Scenario: Verify Personal Details page
 	| logininfo | nextPage                                        | nextPage1                 | nextPage2    |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Are your details correct? | manylion chi |
 
-
+	@RunOnly
 	Scenario: Verify Error message on not selecting option before continue on Personal Details page 
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
@@ -44,8 +44,8 @@ Scenario: Verify Personal Details page
 
 
 	Examples: 
-	| logininfo | nextPage                                        | errorMessage                   |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Dwedwch a yw eich manylion chi |
+	| logininfo | nextPage                                        | errorMessage                 |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Dewiswch a ydych chi |
 
 	Scenario: Verify next page after selecting Yes on Personal Details page 
 	Given that I navigate to the Pets application portal
