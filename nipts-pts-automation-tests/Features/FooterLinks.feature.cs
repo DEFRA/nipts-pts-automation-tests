@@ -106,7 +106,7 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Footer links and pages on Pets")]
-        [NUnit.Framework.TestCaseAttribute("test", "Pet travel scheme privacy notice", "data.protection@defra.gov.uk", "www.legislation.gov.uk", "Cwcis", "opt out of Google Analytics cookies", "Accessibility statement for taking a dog", "AbilityNet (opens in new tab)", "contact the Equality Advisory and Support Service (EASS)", "Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon", "Fframwaith Windsor (yn agor mewn tab newydd)", "Darllenwch ragor am symudiadau masnachol", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Pet travel scheme privacy notice", "data.protection@defra.gov.uk", "www.legislation.gov.uk", "Cwcis", "r Comisiynydd Gwybodaeth (yn agor mewn tab newydd)", "Accessibility statement for taking a dog", "AbilityNet (opens in new tab)", "contact the Equality Advisory and Support Service (EASS)", "Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon", "Fframwaith Windsor (yn agor mewn tab newydd)", "Darllenwch ragor am symudiadau masnachol", null)]
         public async global::System.Threading.Tasks.Task VerifyFooterLinksAndPagesOnPets(string logininfo, string privacyPageTitle, string privacyLink1, string privacyLink2, string cookiesPageTitle, string cookiesLink1, string accessibilityPageTitle, string accessibilityLink1, string accessibilityLink2, string tCsPageTitle, string tCsLink1, string tCsLink2, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -169,6 +169,9 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
 #line 19
  await testRunner.ThenAsync(string.Format("verify the page title in Footer page \'{0}\'", cookiesPageTitle), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 20
+ await testRunner.AndAsync(string.Format("verify the link in Footer page details \'{0}\'", cookiesLink1), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 21
  await testRunner.AndAsync("click on back", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
