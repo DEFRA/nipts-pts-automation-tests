@@ -289,7 +289,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("postcode", postcode);
             argumentsOfScenario.Add("phoneNumber", phoneNumber);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Verify English and Welsh Version of Telephone Number page on Pets", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 57
+#line 58
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -299,76 +299,76 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 58
+#line 59
  await testRunner.GivenAsync("that I navigate to the Pets application portal", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 59
+#line 60
  await testRunner.WhenAsync(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 60
+#line 61
  await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 61
+#line 62
  await testRunner.AndAsync("click on Apply for a document", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 62
+#line 63
  await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage1), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 63
+#line 64
  await testRunner.WhenAsync("select \'Nac ydyn\' on Personal Details page", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 64
- await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
 #line 65
- await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage2), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 66
- await testRunner.WhenAsync(string.Format("enter your full name \'{0}\'", fullname), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 67
- await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 68
- await testRunner.WhenAsync(string.Format("enter your postcode \'{0}\'", postcode), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 69
- await testRunner.AndAsync("select address", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 70
- await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 71
- await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage3), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 72
- await testRunner.WhenAsync(string.Format("enter phone number \'{0}\'", phoneNumber), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 73
- await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 74
- await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage4), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 75
- await testRunner.WhenAsync("click on back", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 76
  await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage2), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 77
- await testRunner.WhenAsync("click on English language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 67
+ await testRunner.WhenAsync(string.Format("enter your full name \'{0}\'", fullname), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 78
- await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage6), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 79
- await testRunner.WhenAsync(string.Format("enter phone number \'{0}\'", phoneNumber), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 80
+#line 68
  await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
+#line 69
+ await testRunner.WhenAsync(string.Format("enter your postcode \'{0}\'", postcode), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 70
+ await testRunner.AndAsync("select address", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 71
+ await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 72
+ await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage3), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 73
+ await testRunner.WhenAsync(string.Format("enter phone number \'{0}\'", phoneNumber), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 74
+ await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 75
+ await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage4), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 76
+ await testRunner.WhenAsync("click on back", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 77
+ await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage2), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 78
+ await testRunner.WhenAsync("click on English language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 79
+ await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage6), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 80
+ await testRunner.WhenAsync(string.Format("enter phone number \'{0}\'", phoneNumber), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
 #line 81
+ await testRunner.AndAsync("click on continue", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 82
  await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage5), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

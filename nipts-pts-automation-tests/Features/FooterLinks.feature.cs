@@ -106,8 +106,8 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Footer links and pages on Pets")]
-        [NUnit.Framework.TestCaseAttribute("test", "Pet travel scheme privacy notice", "data.protection@defra.gov.uk", "www.legislation.gov.uk", "Cwcis", "opt out of Google Analytics cookies", "Accessibility statement for taking a dog", "AbilityNet (opens in new tab)", "contact the Equality Advisory and Support Service (EASS)", "Northern Ireland Pet Travel Scheme terms and conditions", "Windsor Framework", null)]
-        public async global::System.Threading.Tasks.Task VerifyFooterLinksAndPagesOnPets(string logininfo, string privacyPageTitle, string privacyLink1, string privacyLink2, string cookiesPageTitle, string cookiesLink1, string accessibilityPageTitle, string accessibilityLink1, string accessibilityLink2, string tCsPageTitle, string tCsLink1, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("test", "Pet travel scheme privacy notice", "data.protection@defra.gov.uk", "www.legislation.gov.uk", "Cwcis", "opt out of Google Analytics cookies", "Accessibility statement for taking a dog", "AbilityNet (opens in new tab)", "contact the Equality Advisory and Support Service (EASS)", "Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon", "Fframwaith Windsor (yn agor mewn tab newydd)", "Darllenwch ragor am symudiadau masnachol", null)]
+        public async global::System.Threading.Tasks.Task VerifyFooterLinksAndPagesOnPets(string logininfo, string privacyPageTitle, string privacyLink1, string privacyLink2, string cookiesPageTitle, string cookiesLink1, string accessibilityPageTitle, string accessibilityLink1, string accessibilityLink2, string tCsPageTitle, string tCsLink1, string tCsLink2, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
@@ -122,6 +122,7 @@ namespace nipts_pts_automation_tests.Features
             argumentsOfScenario.Add("Accessibility Link 2", accessibilityLink2);
             argumentsOfScenario.Add("TCs page title", tCsPageTitle);
             argumentsOfScenario.Add("TCs Link 1", tCsLink1);
+            argumentsOfScenario.Add("TCs Link 2", tCsLink2);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Verify Footer links and pages on Pets", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 7
 this.ScenarioInitialize(scenarioInfo);
@@ -196,6 +197,9 @@ this.ScenarioInitialize(scenarioInfo);
 #line 29
  await testRunner.ThenAsync(string.Format("verify the link in Footer page details \'{0}\'", tCsLink1), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
+#line 30
+ await testRunner.ThenAsync(string.Format("verify the link in Footer page details \'{0}\'", tCsLink2), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
             }
             await this.ScenarioCleanupAsync();
         }
@@ -213,7 +217,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("FooterPageLink", footerPageLink);
             argumentsOfScenario.Add("FooterLogoLink", footerLogoLink);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Verify text and Logo on the footer of Sign up page", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 37
+#line 38
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -223,22 +227,22 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 38
+#line 39
  await testRunner.GivenAsync("that I navigate to the Pets application portal", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 39
+#line 40
  await testRunner.WhenAsync(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 40
+#line 41
  await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 41
+#line 42
  await testRunner.ThenAsync(string.Format("verify text \'{0}\' on the page footer", footerText), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 42
+#line 43
  await testRunner.ThenAsync(string.Format("verify the link in Footer page details \'{0}\'", footerPageLink), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 43
+#line 44
  await testRunner.ThenAsync(string.Format("verify the link in Footer page details \'{0}\'", footerLogoLink), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -256,7 +260,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("Status", status);
             argumentsOfScenario.Add("logininfo", logininfo);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Verify Welsh updated dashboard on home page", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 50
+#line 51
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -266,19 +270,19 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 51
+#line 52
  await testRunner.GivenAsync("that I navigate to the Pets application portal", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 52
+#line 53
  await testRunner.WhenAsync(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 53
+#line 54
  await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 54
+#line 55
  await testRunner.ThenAsync(string.Format("I verify PTD table heading \'{0}\' on homepage", petname), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 55
+#line 56
  await testRunner.ThenAsync(string.Format("I verify PTD table heading \'{0}\' on homepage", status), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

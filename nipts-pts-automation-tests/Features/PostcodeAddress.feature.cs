@@ -191,19 +191,12 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify error message for invalid postcode")]
-        [NUnit.Framework.CategoryAttribute("RunOnly")]
         [NUnit.Framework.TestCaseAttribute("test", "Dogfennau teithio gydol oes i anifeiliaid anwes", "TestFullName", "", "Rhowch eich cod post", null)]
         [NUnit.Framework.TestCaseAttribute("test", "Dogfennau teithio gydol oes i anifeiliaid anwes", "TestFullName", "SE10 1EE", "Rhowch god post yng Nghymru", null)]
         [NUnit.Framework.TestCaseAttribute("test", "Dogfennau teithio gydol oes i anifeiliaid anwes", "TestFullName", "SE1 7PBABCDEFGHIJKLMNOP", "Rhowch god post llawn yn y fformat cywir", null)]
         public async global::System.Threading.Tasks.Task VerifyErrorMessageForInvalidPostcode(string logininfo, string nextPage, string fullname, string postcode, string errorMessage, string[] exampleTags)
         {
-            string[] @__tags = new string[] {
-                    "RunOnly"};
-            if ((exampleTags != null))
-            {
-                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
-            }
-            string[] tagsOfScenario = @__tags;
+            string[] tagsOfScenario = exampleTags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("logininfo", logininfo);
             argumentsOfScenario.Add("nextPage", nextPage);

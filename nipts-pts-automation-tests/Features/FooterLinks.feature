@@ -27,10 +27,11 @@ Scenario Outline: Verify Footer links and pages on Pets
 	When  click TCs link on footer page
 	Then  verify the page title in Footer page '<TCs page title>'
 	Then  verify the link in Footer page details '<TCs Link 1>'
+	Then  verify the link in Footer page details '<TCs Link 2>'
 
 Examples: 
-    | logininfo | Privacy page title              |Privacy Link 1		   	   |Privacy Link 2        |Cookies page Title |Cookies Link 1                     |Accessibility page title                |Accessibility Link 1         |Accessibility Link 2                                    | TCs page title                       |TCs Link 1 |
-	| test      | Pet travel scheme privacy notice|data.protection@defra.gov.uk|www.legislation.gov.uk|Cwcis              |opt out of Google Analytics cookies|Accessibility statement for taking a dog|AbilityNet (opens in new tab)|contact the Equality Advisory and Support Service (EASS)| Northern Ireland Pet Travel Scheme terms and conditions| Windsor Framework  |
+    | logininfo | Privacy page title               | Privacy Link 1               | Privacy Link 2         | Cookies page Title | Cookies Link 1                      | Accessibility page title                 | Accessibility Link 1          | Accessibility Link 2                                     | TCs page title                                                       | TCs Link 1                                   | TCs Link 2                               |
+    | test      | Pet travel scheme privacy notice | data.protection@defra.gov.uk | www.legislation.gov.uk | Cwcis              | opt out of Google Analytics cookies | Accessibility statement for taking a dog | AbilityNet (opens in new tab) | contact the Equality Advisory and Support Service (EASS) | Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon | Fframwaith Windsor (yn agor mewn tab newydd) | Darllenwch ragor am symudiadau masnachol |
 
 
 
