@@ -28,7 +28,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement iconHome => _driver.WaitForElement(By.XPath("//span[normalize-space()='Home']"));
         private IWebElement lnkHeadersChange => _driver.WaitForElement(By.XPath("//a[normalize-space()='Change']"));
         private IReadOnlyCollection<IWebElement> viewLinks => _driver.WaitForElements(By.XPath("//button[contains(text(),'View')]"));
-        private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//header[@class='pts-location-bar']//p"));
+        private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//div[@class='pts-location-bar']//p"));
         private IReadOnlyCollection<IWebElement> DepartureDateTime => _driver.WaitForElements(By.XPath("//h2//b[contains(text(),'Departure:')]/.."));
         private IWebElement NoChecksMsg => _driver.WaitForElement(By.XPath("//p[contains(text(),'No animals have been checked in the past 48 hours.')]"));
         #endregion
