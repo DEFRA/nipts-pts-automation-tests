@@ -347,7 +347,7 @@ Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 
 Examples:
 	| Transportation | FerryRoute               | TypeOfPassenger      | nextPage        | PTDNumber1 | PTDNumber2 | PTDNumber3 | PTDNumber4 | PTDNumber5 | ApplicationRadio1            | ApplicationRadio2          | ReferenceNumber1 | ReferenceNumber2 | ReferenceNumber3 | ReferenceNumber4 | MicrochipNumber1 | MicrochipNumber2 | ApplicationRadio     |
-	| Ferry          | Cairnryan to Larne (P&O) | Ferry foot passenger | Referred to SPS | D4F115     | E6361B     | E6361B     | F7DFF5     | 926C36     | Search by application number | Search by microchip number | LZC7RPYH         | RA7GQJD7         | S338P56E         | TACFHP0H         | 676789876543321  | 676789876543321  | Search by PTD number |
+	| Ferry          | Cairnryan to Larne (P&O) | Ferry foot passenger | Referred to SPS | D4F115     | E6361B     | E6361B     | F7DFF5     | 926C36     | Search by application number | Search by microchip number | LZC7RPYH         | RA7GQJD7         | S338P56E         | TACFHP0H         | 123798686767887  | 123798686767887  | Search by PTD number |
 
 Scenario Outline: Validate ascending order on Reffered to SPS page
 	When I have selected '<Transportation>' radio option
@@ -430,42 +430,12 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 	Then I should navigate to Welcome page
 	When I click search button from footer
 	Then I navigate to Find a document page
-	And I click search by '<ApplicationRadio2>' radio button
-	And I provided the Microchip number '<MicrochipNumber2>' of the application
-	When I click search button
-	And I should see the application status in 'Approved'
-	And I get PTD or reference number and add it in collection
-	And I select Fail radio button
-	When I click save and continue button from application status page
-	Then I should navigate to Report non-compliance page
-	And I select 'Cannot find microchip' as non compliance reason
-	And I click '<TypeOfPassenger>' in Passenger details
-	And I click on GB outcome
-	When I click Report non-compliance button from Report non-compliance page
-	Then I should navigate to Welcome page
-	When I click search button from footer
-	Then I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber4>' of the application
 	When I click search button
 	And I should see the application status in 'Cancelled'
 	And I get PTD or reference number and add it in collection
 	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	And I select 'Cannot find microchip' as non compliance reason
-	And I click '<TypeOfPassenger>' in Passenger details
-	And I click on GB outcome
-	When I click Report non-compliance button from Report non-compliance page
-	Then I should navigate to Welcome page
-	When I click search button from footer
-	Then I navigate to Find a document page
-	And I click search by '<ApplicationRadio>' radio button
-	And I provided the '<PTDNumber5>' of the application
-	When I click search button
-	And I should see the application status in 'Approved'
-	And I get PTD or reference number and add it in collection
-	And I select Fail radio button
-	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click '<TypeOfPassenger>' in Passenger details
@@ -506,6 +476,6 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 	Then I verify PTD and reference number are displayed in ascending order
 
 Examples:
-	| Transportation | FerryRoute                   | TypeOfPassenger      | nextPage        | PTDNumber1 | PTDNumber2 | PTDNumber3 | PTDNumber4 | PTDNumber5 | ApplicationRadio     | ApplicationRadio1            | ApplicationRadio2          | ReferenceNumber1 | ReferenceNumber2 | ReferenceNumber3 | ReferenceNumber4 | MicrochipNumber1 | MicrochipNumber2 |
-	| Ferry          | Loch Ryan to Belfast (Stena) | Ferry foot passenger | Referred to SPS | D4F115     | E6361B     | E6361B     | F7DFF5     | D4F115     | Search by PTD number | Search by application number | Search by microchip number | LZC7RPYH         | RA7GQJD7         | S338P56E         | TACFHP0H         | 676789876543321  | 676789876543321  |
+	| Transportation | FerryRoute                   | TypeOfPassenger      | nextPage        | PTDNumber1 | PTDNumber3 | PTDNumber4 | ApplicationRadio     | ApplicationRadio1            | ApplicationRadio2          | ReferenceNumber1 | ReferenceNumber2 | ReferenceNumber3 | ReferenceNumber4 | MicrochipNumber1 | 
+	| Ferry          | Loch Ryan to Belfast (Stena) | Ferry foot passenger | Referred to SPS | D4F115     | E6361B     | F7DFF5     | Search by PTD number | Search by application number | Search by microchip number | LZC7RPYH         | RA7GQJD7         | S338P56E         | TACFHP0H         | 123798686767887  |
 

@@ -31,7 +31,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement MicrochipNotFound => _driver.WaitForElement(By.XPath("//li[contains(text(),'Cannot find microchip')] | //p[contains(text(),'Cannot find microchip')]"));
         private IWebElement AdditionalComment => _driver.WaitForElement(By.XPath("//dt[text()='Additional comments']/..//p"));
         private IWebElement Route => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Route')]/following-sibling::dd"));
-        private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//header[@class='pts-location-bar']//p"));
+        private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//div[@class='pts-location-bar']//p"));
         private IWebElement clickAccount => _driver.WaitForElement(By.XPath("//span[@id='account-text']"));
         private IWebElement RoleIdentification => _driver.WaitForElement(By.XPath("//span[contains(@class,'idm-table__cell--access-level-content')]"));
 
