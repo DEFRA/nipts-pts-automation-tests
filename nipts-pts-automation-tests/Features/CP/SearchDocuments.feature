@@ -103,7 +103,7 @@ Scenario Outline: Verify validation of alphabets other than A-F PTD Number forma
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber>' of the application
 	When I click search button
-	Then I should see an error message "Enter 6 characters after 'GB826', using only letters A to F and numbers" in Find a document page
+	Then I should see an error message "Enter 6 characters after 'GB826', using only letters A-F and numbers" in Find a document page
 Examples:
 	| Transportation | FerryRoute                    | PTDNumber | ApplicationRadio     |
 	| Ferry          | Birkenhead to Belfast (Stena) | C9321G    | Search by PTD number |
@@ -183,7 +183,7 @@ Scenario Outline: Verify validation of special characters with Application numbe
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Application Number '<ReferenceNumber>' of the application
 	When I click search button
-	Then I should see an error message "Enter 8 characters, using only letters and numbers" in Find a document page
+	Then I should see an error message "Enter 8 characters using letters and numbers" in Find a document page
 Examples:
 	| Transportation | FerryRoute                    | ReferenceNumber | ApplicationRadio			  |
 	| Ferry          | Birkenhead to Belfast (Stena) | @@@@@$$&		   | Search by application number |
