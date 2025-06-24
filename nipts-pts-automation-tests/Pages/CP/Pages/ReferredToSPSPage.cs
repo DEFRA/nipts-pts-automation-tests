@@ -77,6 +77,18 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
             return status;
         }
+        public bool VerifyPetSpeciesAndColourOnReferredToSPSPage(string Species, string Colour)
+        {
+            string PetDetails = $"//tbody[contains(@class,'govuk-table__body')]//tr//td[1]";
+            if(_driver.FindElement(By.XPath(PetDetails)).Text.Contains(Species) && _driver.FindElement(By.XPath(PetDetails)).Text.Contains(Colour))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }   
+        }
 
         public bool VerifySPSOutcome(string outcome)
         {

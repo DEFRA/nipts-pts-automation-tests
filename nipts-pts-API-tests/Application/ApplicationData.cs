@@ -214,6 +214,14 @@ namespace nipts_pts_API_tests.Application
             createPet();
             return createApplication(AppId);
         }
+        public string CreateApplicationAPIWithOtherColour(string AppId)
+        {
+            updateUser();
+            createOwner();
+            createAddress();
+            createPetWithOtherColour();
+            return createApplication(AppId);
+        }
 
         public string CreateApplicationWithMandatoryAddressFieldsAPI(string AppId)
         {
@@ -286,6 +294,20 @@ namespace nipts_pts_API_tests.Application
             string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint2;
             var client = SetUrl("createpet", APIEndPoint);
             var file = Path.Combine(RequestFolder, "CreatePet.json");
+            var requestJson = File.ReadAllText(file);
+            var request = CreatePostRequest(requestJson);
+            response = GetResponseAsync(client, request);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            PetId = dynamicObject;
+        }
+
+        public void createPetWithOtherColour()
+        {
+            Task<RestResponse> response = null;
+            string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint2;
+            var client = SetUrl("createpet", APIEndPoint);
+            var file = Path.Combine(RequestFolder, "CreatePerOtherColour.json");
             var requestJson = File.ReadAllText(file);
             var request = CreatePostRequest(requestJson);
             response = GetResponseAsync(client, request);

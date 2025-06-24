@@ -50,6 +50,7 @@
   },
   "petColour": {
     "petColour": 1,
+    "petColourOther": "Automation Colour",
     "isCompleted": true,
     "title": "string"
   },

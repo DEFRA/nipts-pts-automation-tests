@@ -144,6 +144,20 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [Given(@"Create an application via backend with Other Colour")]
+        [When(@"Create an application via backend with Other Colour")]
+        public void ThenCreateApplicationViaBackendWithOtherColour()
+        {
+            lock (_lock)
+            {
+                string AppId = _applicationSummaryPage.getNewID();
+                string APIAppReference = AppData.CreateApplicationAPIWithOtherColour(AppId);
+                _scenarioContext.Add("ReferenceNumber", APIAppReference);
+                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
+            }
+        }
+
+
         [Given(@"Create an application via backend with significant features option as No")]
         [When(@"Create an application via backend with significant features option as No")]
         public void ThenCreateApplicationViaBackendSigFeaturesNo()

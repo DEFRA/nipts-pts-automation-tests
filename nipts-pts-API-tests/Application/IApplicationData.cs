@@ -20,6 +20,6 @@ namespace nipts_pts_API_tests.Application
         public string writeOfflineApplicationToQueue(string randonNumber,string Species);
         public void RevokeApprovedApplication(string PTDNumber);
         public string CreateApplicationWithPetCustomValues(string AppId,string PetSpecies);
-
+        public string CreateApplicationAPIWithOtherColour(string appId);
     }
 }

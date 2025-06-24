@@ -52,6 +52,9 @@
     <None Update="RequestJson\CreateOwner.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="RequestJson\CreatePerOtherColour.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="RequestJson\CreatePet.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
