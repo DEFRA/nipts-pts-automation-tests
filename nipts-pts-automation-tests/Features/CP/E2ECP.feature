@@ -102,6 +102,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	Then verify next page '<nextPage>' is loaded
 	And I verify Pet document details on Referred to SPS details
 	And I verify Pet departure details on Referred to SPS details
+	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -128,6 +129,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
+	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
@@ -160,6 +162,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	Then verify next page '<nextPage>' is loaded
 	And I verify Pet document details on Referred to SPS details
 	And I verify Pet departure details on Referred to SPS details
+	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -185,6 +188,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
+	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
@@ -218,6 +222,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	Then verify next page '<nextPage>' is loaded
 	And I verify Pet document detailsfor Pending and Unsuccessful Appl on Referred to SPS details
 	And I verify Pet departure details on Referred to SPS details
+	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -243,6 +248,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
+	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
@@ -274,6 +280,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Reference numb
 	Then verify next page '<nextPage>' is loaded
 	And I verify Pet document detailsfor Pending and Unsuccessful Appl on Referred to SPS details
 	And I verify Pet departure details on Referred to SPS details
+	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
 	And click on signout button on CP and verify the signout message
 	When I navigate to the port checker application
 	And I click signin button on port checker application
@@ -299,6 +306,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Reference numb
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
+	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
 Examples:
