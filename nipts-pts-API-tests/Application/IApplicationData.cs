@@ -8,6 +8,7 @@ namespace nipts_pts_API_tests.Application
         public string GetApplicationToReject(string AppReference);
         public string GetApplicationToRevoke(string AppReference);
         public void ApproveApplication(string ApplicationId);
+        public void SuspendApplication(string ApplicationId);
         public void RejectApplication(string ApplicationId);
         public void RevokeApplication(string ApplicationId);
         public Task<RestResponse> GetApplication(string AppReference);
@@ -21,5 +22,8 @@ namespace nipts_pts_API_tests.Application
         public void RevokeApprovedApplication(string PTDNumber);
         public string CreateApplicationWithPetCustomValues(string AppId,string PetSpecies);
         public string CreateApplicationAPIWithOtherColour(string appId);
+        public void GetAwaitingApplicationToSuspend(string AppReference);
+        public void GetAuthorisedApplicationToSuspend(string PTDNumber);
+        public void GetSuspendedApplicationToApprove(string PTDNumber);
     }
 }

@@ -558,6 +558,197 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             RoleIdentification.Text.Equals(role);
         }
 
+        public bool VerifySuspendedApplicationWithSQLBackend(string AppReference)
+        {
+            string ApplicationId = GetApplId(AppReference);
+            return GetApplSummaryForSuspended(ApplicationId);
+        }
+
+        public bool VerifyUnSuspendedApplicationWithSQLBackend(string AppReference)
+        {
+            string ApplicationId = GetApplId(AppReference);
+            return GetApplSummaryForUnSuspended(ApplicationId);
+        }
+
+        public bool VerifySuspendedApplicationWithSQLBackendWithPTD(string PTDNumber)
+        {
+            return GetSuspendedApplicationWithSQLBackendWithPTD(PTDNumber);
+        }
+
+        public bool VerifyUnSuspendedApplicationWithSQLBackendWithPTD(string PTDNumber)
+        {
+            return GetUnSuspendedApplicationWithSQLBackendWithPTD(PTDNumber);
+        }
+
+        public bool GetApplSummaryForSuspended(string ApplicationId)
+        {
+            Thread.Sleep(7000);
+            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+            string sqlQuery = $"SELECT Status,DateSuspended  FROM [dbo].[Application] Where [Id] = '{ApplicationId}'";
+            DataTable sqlData = null;
+            bool status = true;
+            int i = 0;
+            string todaysDate = DateTime.Now.Day.ToString().Trim();
+
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery);
+            }
+
+            foreach (DataRow row in sqlData.Rows)
+            {
+                for (i = 0; i < sqlData.Columns.Count; i++)
+
+                {
+                    Console.WriteLine($"Row: {row[i]}");
+
+                    if (i == 0)
+                    {
+                        if (!row[0].Equals("Suspended"))
+                            status = false;
+                    }
+                    else if (i == 1)
+                    {
+                        if (row[1]==null)
+                        {
+                            status = false;
+                        }
+                    }
+                }
+            }
+
+            return status;
+        }
+
+        public bool GetApplSummaryForUnSuspended(string ApplicationId)
+        {
+            Thread.Sleep(7000);
+            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+            string sqlQuery = $"SELECT Status,DateUnsuspended  FROM [dbo].[Application] Where [Id] = '{ApplicationId}'";
+            DataTable sqlData = null;
+            bool status = true;
+            int i = 0;
+
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery);
+            }
+
+            foreach (DataRow row in sqlData.Rows)
+            {
+                for (i = 0; i < sqlData.Columns.Count; i++)
+
+                {
+                    Console.WriteLine($"Row: {row[i]}");
+
+                    if (i == 0)
+                    {
+                        if (!row[0].Equals("Authorised"))
+                            status = false;
+                    }
+                    else if (i == 1)
+                    {
+                        if (row[1]==null)
+                        {
+                            status = false;
+                        }
+                    }
+                }
+            }
+            return status;
+        }
+
+        public bool GetSuspendedApplicationWithSQLBackendWithPTD(string PTDNumber)
+        {
+            Thread.Sleep(7000);
+            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+            string sqlQuery1 = $"SELECT ApplicationId  FROM [dbo].[TravelDocument] Where [DocumentReferenceNumber] = '{PTDNumber}'";
+            string ApplicationId ="";
+            DataTable sqlData = null;
+            bool status = true;
+            int i = 0;
+
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                ApplicationId = dataHelperConnections.ExecuteQuery(connectionString, sqlQuery1);
+            }
+
+            string sqlQuery2 = $"SELECT Status,Datesuspended  FROM [dbo].[Application] Where [Id] = '{ApplicationId}'";
+            
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery2);
+            }
+            
+            foreach (DataRow row in sqlData.Rows)
+            {
+                for (i = 0; i < sqlData.Columns.Count; i++)
+
+                {
+                    Console.WriteLine($"Row: {row[i]}");
+
+                    if (i == 0)
+                    {
+                        if (!row[0].Equals("Suspended"))
+                            status = false;
+                    }
+                    else if (i == 1)
+                    {
+                        if (row[1] == null)
+                        {
+                            status = false;
+                        }
+                    }
+                }
+            }
+            return status;
+        }
+
+        public bool GetUnSuspendedApplicationWithSQLBackendWithPTD(string PTDNumber)
+        {
+            Thread.Sleep(7000);
+            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+            string sqlQuery1 = $"SELECT ApplicationId  FROM [dbo].[TravelDocument] Where [DocumentReferenceNumber] = '{PTDNumber}'";
+            string ApplicationId="";
+            DataTable sqlData = null;
+            bool status = true;
+            int i = 0;
+
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                ApplicationId = dataHelperConnections.ExecuteQuery(connectionString, sqlQuery1);
+            }
+            
+            string sqlQuery2 = $"SELECT Status,DateUnsuspended  FROM [dbo].[Application] Where [Id] = '{ApplicationId}'";
+            
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery2);
+            }
+
+            foreach (DataRow row in sqlData.Rows)
+            {
+                for (i = 0; i < sqlData.Columns.Count; i++)
+
+                {
+                    Console.WriteLine($"Row: {row[i]}");
+
+                    if (i == 0)
+                    {
+                        if (!row[0].Equals("Authorised"))
+                            status = false;
+                    }
+                    else if (i == 1)
+                    {
+                        if (row[1] == null)
+                        {
+                            status = false;
+                        }
+                    }
+                }
+            }
+            return status;
+        }
         #endregion
     }
 }

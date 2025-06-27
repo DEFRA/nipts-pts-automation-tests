@@ -36,6 +36,15 @@ namespace nipts_pts_API_tests.Application
             return PTDNumber;
         }
 
+        public void GetSuspendedApplicationToApprove(string PTDNumber)
+        {
+            Task<RestResponse> response = GetApprovedApplication(PTDNumber);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            ApplicationId = dynamicObject.application.applicationId;
+            ApproveApplication(ApplicationId);
+        }
+
         public void ApproveApplication(string ApplicationId)
         {
             string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
@@ -49,6 +58,39 @@ namespace nipts_pts_API_tests.Application
 
             ServiceBusConnection.SendMessageToQueue(messageBody, queueName);
         }
+
+        public void GetAwaitingApplicationToSuspend(string AppReference)
+        {
+            Task<RestResponse> response = GetApplication(AppReference);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            ApplicationId = dynamicObject.application.applicationId;
+            SuspendApplication(ApplicationId);
+        }
+
+        public void GetAuthorisedApplicationToSuspend(string PTDNumber)
+        {
+            Task<RestResponse> response = GetApprovedApplication(PTDNumber);
+            var responseString = response.Result.Content.ToString();
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            ApplicationId = dynamicObject.application.applicationId;
+            SuspendApplication(ApplicationId);
+        }
+
+        public void SuspendApplication(string ApplicationId)
+        {
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
+            DateTime dateTime = DateTime.Now;
+            string TodaysDate = dateTime.ToString("yyyy-MM-dd");
+
+            // Create a unique DynamicId for each message
+            string dynamicId = Guid.NewGuid().ToString();
+
+            string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Suspended\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
+
+            ServiceBusConnection.SendMessageToQueue(messageBody, queueName);
+        }
+
 
         public string CreateApplicationWithPetCustomValues(string AppId, string PetSpecies)
         {

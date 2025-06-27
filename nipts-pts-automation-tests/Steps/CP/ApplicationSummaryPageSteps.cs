@@ -76,6 +76,7 @@ namespace nipts_pts_automation_tests.Steps.CP
 
         [Given(@"Approve an application via backend")]
         [When(@"Approve an application via backend")]
+        [Then(@"Approve an application via backend")]
         public void ThenApproveApplicationViaBackend()
         {
             lock (_lock)
@@ -87,7 +88,56 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [Given(@"Approve suspended application via backend")]
+        [When(@"Approve suspended application via backend")]
+        [Then(@"Approve suspended application via backend")]
+        public void ThenApproveSuspendedApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                AppData.GetApplicationToApprove(AppReference);
+            }
+        }
+
+        [Given(@"Approve suspended application with PTDNumber via backend")]
+        [When(@"Approve suspended application with PTDNumber via backend")]
+        [Then(@"Approve suspended application with PTDNumber via backend")]
+        public void ThenApproveSuspendedApplicationWithPTDNumberViaBackend()
+        {
+            lock (_lock)
+            {
+                string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
+                AppData.GetSuspendedApplicationToApprove(PTDNumber);
+            }
+        }
+
+        [Given(@"Suspend an Awaiting application via backend")]
+        [When(@"Suspend an Awaiting application via backend")]
+        [Then(@"Suspend an Awaiting application via backend")]
+        public void ThenSuspendAwaitingApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                AppData.GetAwaitingApplicationToSuspend(AppReference);
+            }
+        }
+
+        [Given(@"Suspend an Authorised application via backend")]
+        [When(@"Suspend an Authorised application via backend")]
+        [Then(@"Suspend an Authorised application via backend")]
+        public void ThenSuspendAuthorisedApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
+                AppData.GetAuthorisedApplicationToSuspend(PTDNumber);
+            }
+        }
+
         [When(@"Revoke an application via backend")]
+        [Then(@"Revoke an application via backend")]
         public void ThenRevokeApplicationViaBackend()
         {
             lock (_lock)
@@ -98,6 +148,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [When(@"Revoke Approved application via backend")]
         [When(@"Revoke Approved application via backend")]
         public void ThenRevokeApprovedApplicationViaBackend()
         {
@@ -120,7 +171,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         }
 
         [Given(@"Get an application via backend")]
-        [When(@"Get an application via backend")]
+        [Then(@"Get an application via backend")]
         public void ThenGetApplicationViaBackend()
         {
             lock (_lock)
@@ -247,6 +298,7 @@ namespace nipts_pts_automation_tests.Steps.CP
                 string randonNumber = Utils.GenerateRandomApplicationNumber();
                 string PTDNumber = AppData.writeOfflineApplicationToQueue(randonNumber, Species);
                 _scenarioContext.Add("PTDNumber", PTDNumber);
+                Console.WriteLine($"PTDNumber: {PTDNumber}");
             }
         }
 
@@ -275,6 +327,38 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenIVerifyRole(string role)
         {
             _applicationSummaryPage.VerifyRole(role);
+        }
+
+        [Then(@"I verify backend SQL entries for Suspended Application")]
+        [When(@"I verify backend SQL entries for Suspended Application")]
+        public void ThenIVerifySQLEntriesForSuspendedApplication()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifySuspendedApplicationWithSQLBackend(AppReference), "Suspended Application Summary not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for Unsuspended Application")]
+        [When(@"I verify backend SQL entries for Unsuspended Application")]
+        public void ThenIVerifySQLEntriesForUnSuspendedApplication()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifyUnSuspendedApplicationWithSQLBackend(AppReference), "UnSuspended Application Summary not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for Suspended Application with PTD number")]
+        [When(@"I verify backend SQL entries for Suspended Application with PTD number")]
+        public void ThenIVerifySQLEntriesForSuspendedApplicationWithPTD()
+        {
+            string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
+            Assert.True(_applicationSummaryPage.VerifySuspendedApplicationWithSQLBackendWithPTD(PTDNumber), "Suspended Application Summary not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for Unsuspended Application with PTD number")]
+        [When(@"I verify backend SQL entries for Unsuspended Application with PTD number")]
+        public void ThenIVerifySQLEntriesForUnSuspendedApplicationWithPTD()
+        {
+            string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
+            Assert.True(_applicationSummaryPage.VerifyUnSuspendedApplicationWithSQLBackendWithPTD(PTDNumber), "UnSuspended Application Summary not matching with SQL Backend data");
         }
     }
 }
