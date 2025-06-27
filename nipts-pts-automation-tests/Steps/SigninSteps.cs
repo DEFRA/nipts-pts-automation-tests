@@ -75,5 +75,13 @@ namespace nipts_pts_automation_tests.Steps
         {
             Assert.True(signin.VerifySignOutTextInSelectedLanguage(SignOutText), "SignOut text language not matching");
         }
+
+        [Then(@"verify the link on the accessibility statement page '([^']*)'")]
+        public void VerifyLinkOnTheAccessibilityStatement(string Link)
+        {
+            Assert.True(signin.VerifyAccessibilityStatementLink(Link), "Link not matching on Accessibility statement");
+        }
+
+        
     }
 }

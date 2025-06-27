@@ -3,13 +3,16 @@
 As a PTS port checker I want ot login and logout from Checker Portal Application
 
 
-Background: 
-	Given I navigate to the port checker application
-	And I click signin button on port checker application
-	Then I should redirected to the Sign in using Government Gateway page
+#Background: 
+#	Given I navigate to the port checker application
+#	And I click signin button on port checker application
+#	Then I should redirected to the Sign in using Government Gateway page
 	
 @CPRegression
 Scenario: SignOut
+	Given I navigate to the port checker application
+	And I click signin button on port checker application
+	Then I should redirected to the Sign in using Government Gateway page
 	When I have provided the CP credentials and signin
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
@@ -17,6 +20,9 @@ Scenario: SignOut
 
 @CrossBrowserCP
 Scenario: CPE2ECrossBrowser
+	Given I navigate to the port checker application
+	And I click signin button on port checker application
+	Then I should redirected to the Sign in using Government Gateway page
 	When I have provided the password for prototype research page
 	And I have provided the CP credentials and signin for user 'GBUser'
 	And I have provided the password for prototype research page
@@ -75,3 +81,23 @@ Examples:
 
 #Scenario: API check
 #	When Create an application via backend
+
+Scenario: Verify links on accessibility statement on sign in page
+	Given I navigate to the port checker application
+	Then I click on accessibility statement link
+	When I have provided the password for prototype research page
+	Then verify next page 'Accessibility statement for Check a pet travelling from GB to NI' is loaded
+	Then verify the link on the accessibility statement page '<Accesibility Link 1>'
+	Then verify the link on the accessibility statement page '<Accesibility Link 2>'
+	Then verify the link on the accessibility statement page '<Accesibility Link 3>'
+	Then verify the link on the accessibility statement page '<Accesibility Link 4>'
+	Then verify the link on the accessibility statement page '<Accesibility Link 5>'
+	Then verify the link on the accessibility statement page '<Accesibility Link 6>'
+	
+	 
+
+Examples: 
+     | Accesibility Link 1    | Accesibility Link 2								   | Accesibility Link 3						 | Accesibility Link 4									   | Accesibility Link 5			       | Accesibility Link 6     | 
+     | AbilityNet			  |  contact the Equality Advisory and Support Service |  Equalities Commission for Northern Ireland | Public Sector Bodies (Websites and Mobile Applications) |  Web Content Accessibility Guidelines | NIPetTravel@apha.gov.uk | 
+
+	
