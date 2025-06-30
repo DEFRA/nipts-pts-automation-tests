@@ -150,6 +150,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             //var breed = petType.ToLower().Equals("ferret") ? isSummaryPage ? "-" : null : _scenarioContext.Get<string>("Breed");
            // var breed = petType.ToLower().Equals("ferret") ? "-" : _scenarioContext.Get<string>("Breed");
 
+
             var sex = _scenarioContext.Get<string>("Sex");
             var dateOfBirth = _scenarioContext.Get<string>("DateOfBirth");
             var color = _scenarioContext.Get<string>("Color");

@@ -17,5 +17,9 @@
         public bool VerifyGBSummaryForPassApplWithSQLBackend(string AppReference);
         void ClickOnAccount();
         public void VerifyRole(string role);
+        public bool VerifySuspendedApplicationWithSQLBackend(string AppReference);
+        public bool VerifyUnSuspendedApplicationWithSQLBackend(string AppReference);
+        public bool VerifySuspendedApplicationWithSQLBackendWithPTD(string PTDNumber);
+        public bool VerifyUnSuspendedApplicationWithSQLBackendWithPTD(string PTDNumber);
     }
 }

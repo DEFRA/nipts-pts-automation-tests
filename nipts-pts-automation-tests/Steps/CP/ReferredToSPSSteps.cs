@@ -3,6 +3,7 @@ using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using Reqnroll;
+using System.Drawing;
 
 namespace nipts_pts_automation_tests.Steps.CP
 {
@@ -50,6 +51,13 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void WhenIVerifyPetDepartureDetailsOnReferredToSPSPage()
         {
             Assert.True(referredToSPSPage?.VerifyDepartureDetailsOnReferredToSPSPage(), "Pet Departure details not matching on Referred to SPS Page");
+        }
+
+        [Then(@"I verify Species '([^']*)' and Colour '([^']*)' on Referred to SPS details")]
+        [When(@"I verify Species '([^']*)' and Colour '([^']*)' on Referred to SPS details")]
+        public void WhenIVerifyPetSpeciesAndColourOnReferredToSPSPage(string Species, string Colour)
+        {
+            Assert.True(referredToSPSPage?.VerifyPetSpeciesAndColourOnReferredToSPSPage(Species, Colour), "Pet Species Or Colour not matching on Referred to SPS Page");
         }
 
         [Then(@"I verify SPS outcome '([^']*)' on referred SPS page")]
