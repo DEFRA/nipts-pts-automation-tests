@@ -80,5 +80,11 @@ namespace nipts_pts_automation_tests.Steps.CP
             _signInCPPage?.IsSignedIn(userObject.UserId, userObject.password);
         }
 
+        [When(@"I click on accessibility statement link")]
+        [Then(@"I click on accessibility statement link")]
+        public void ThenClickOnAccessibilityLink()
+        {
+            _signInCPPage?.ClickAccessibilityStatementLink();
+        }
     }
 }

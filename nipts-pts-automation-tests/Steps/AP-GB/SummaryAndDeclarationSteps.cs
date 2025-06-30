@@ -1,4 +1,5 @@
-﻿using Reqnroll.BoDi;
+﻿
+using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage;
 using nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails;
 using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
@@ -147,7 +148,8 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             var petType = _scenarioContext.Get<string>("PetType");
 
             //var breed = petType.ToLower().Equals("ferret") ? isSummaryPage ? "-" : null : _scenarioContext.Get<string>("Breed");
-            //var breed = petType.ToLower().Equals("ferret") ? "-" : _scenarioContext.Get<string>("Breed");
+           // var breed = petType.ToLower().Equals("ferret") ? "-" : _scenarioContext.Get<string>("Breed");
+
 
             var sex = _scenarioContext.Get<string>("Sex");
             var dateOfBirth = _scenarioContext.Get<string>("DateOfBirth");
@@ -161,7 +163,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
 
             Assert.AreEqual(petName, summary?.PetName, $"Pet name is not matchin in {pageName} page!");
             Assert.AreEqual(petType, summary?.Species, $"Species is not matching in {pageName} page!");
-            //Assert.AreEqual(breed, summary?.Breed, $"Breed is not matching in {pageName} page!");
+     //       Assert.AreEqual(breed, summary?.Breed, $"Breed is not matching in {pageName} page!");
             Assert.AreEqual(sex, summary?.Sex, $"Sex is not matching in {pageName} page!");
             Assert.AreEqual(dateOfBirth, summary?.DateOfBirth, $"Date of birth is not matching in {pageName} page!");
             Assert.AreEqual(color, summary?.Colour, $"Color is not matching in {pageName} page!");
