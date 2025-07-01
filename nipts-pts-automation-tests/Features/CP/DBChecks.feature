@@ -142,3 +142,65 @@ Examples:
 	| Flight         | AI 123        | Airline         | Referred to SPS | Allowed     | Search by PTD number |
 	| Flight         | AI 123        | Airline         | Referred to SPS | Not allowed | Search by PTD number |
 
+Scenario Outline: Veirfy backend entries for application status while Suspensed 
+	When I have provided the CP credentials and signin for user 'SPSUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	When Create an application via backend
+	And Approve an application via backend
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the PTD number of the application
+	When I click search button
+	Then I should see the application status in 'Approved'
+	When Suspend an Authorised application via backend
+	Then I verify backend SQL entries for Suspended Application
+	And Approve suspended application via backend
+	Then I verify backend SQL entries for Unsuspended Application
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the PTD number of the application
+	When I click search button
+	Then I should see the application status in 'Approved'
+
+Examples:
+	| Transportation | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |
+
+Scenario Outline: Veirfy backend entries for offline application status while Suspensed
+	When I have provided the CP credentials and signin for user 'SPSUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	When Create an offline application via backend for 'Cat'
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	And I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the PTD number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
+	When Suspend an Authorised application via backend
+	Then I verify backend SQL entries for Suspended Application with PTD number
+	And Approve suspended application with PTDNumber via backend
+	Then I verify backend SQL entries for Unsuspended Application with PTD number
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the PTD number of the application
+	When I click search button
+	Then I should see the application status in 'Approved'
+
+Examples:
+	| Transportation | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |

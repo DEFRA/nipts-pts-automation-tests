@@ -49,7 +49,8 @@
     "title": "string"
   },
   "petColour": {
-    "petColour": 1,
+    "petColour": 11,
+    "petColourOther": "Automation Colour",
     "isCompleted": true,
     "title": "string"
   },

@@ -69,6 +69,23 @@ namespace nipts_pts_automation_tests.Pages
         {
             return SignOut.Text.Contains(signOutText);
         }
+
+        public bool VerifyAccessibilityStatementLink(string LinkText)
+        {
+            bool status = false;
+            IList<IWebElement> LinkTextEle = _driver.FindElements(By.XPath("//a"));
+            foreach (IWebElement ele in LinkTextEle)
+            {
+                if (ele.Text.Contains(LinkText))
+                {
+                    status = true;
+                    break;
+                }
+            }
+            return status;
+        }
+
+       
     }
 
 }

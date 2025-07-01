@@ -30,6 +30,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement SignOut => _driver.WaitForElement(By.XPath("//a[@href='/signout']"));
         private IWebElement AcceptAdditionalCookies => _driver.WaitForElement(By.XPath("//button[contains(text(),'Accept analytics cookies')]"));
         private IWebElement HideCookieMessage => _driver.WaitForElement(By.XPath("//a[contains(text(),'Hide cookie message')]"));
+        private IWebElement lnkAccessibilityStatement => _driver.WaitForElement(By.XPath("//p[@class='govuk-body']//a"));
         #endregion
 
         #region Methods
@@ -85,6 +86,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 jsExecutor.ExecuteScript("arguments[0].click();", btnContinue);
                 Thread.Sleep(5000);
             }
+        }
+
+        public void ClickAccessibilityStatementLink()
+        {
+            lnkAccessibilityStatement.Click();
+            
         }
         #endregion
 

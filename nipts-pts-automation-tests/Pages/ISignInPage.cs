@@ -7,5 +7,7 @@
         public bool IsSignedIn(string userId, string password);
         public void EnterPassword();
         public bool VerifySignOutTextInSelectedLanguage(string signOutText);
+        public bool VerifyAccessibilityStatementLink(string LinkText);
+      
     }
 }

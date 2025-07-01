@@ -12,5 +12,6 @@
         void GetPTDReferenceAndAddInCollection();
         void ArrangePTDRefNumberInAscendingOrder();
         bool VerifyAscendingOderOfPTDReference();
+        bool VerifyPetSpeciesAndColourOnReferredToSPSPage(string Species, string Colour);
     }
 }
