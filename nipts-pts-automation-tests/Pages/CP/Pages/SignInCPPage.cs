@@ -21,7 +21,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         #region Page objects
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']"));
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
-        private IWebElement btnSignIn => _driver.WaitForElement(By.XPath("//button[contains(text(),'Sign in')]"));
+        private IWebElement btnSignIn => _driver.WaitForElement(By.XPath("//a[contains(text(),'Sign in')] | //button[contains(text(),'Sign in')]"));
         private IWebElement UserId => _driver.FindElement(By.CssSelector("#user_id"));
         private IWebElement Password => _driver.FindElement(By.CssSelector("#password"));
         private IWebElement SignIn => _driver.WaitForElement(By.XPath("//button[contains(@id,'continue')]"));
