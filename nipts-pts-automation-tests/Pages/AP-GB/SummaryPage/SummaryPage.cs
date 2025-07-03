@@ -45,6 +45,12 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.SummaryPage
             else
                 return false;
         }
+        public bool VerifyStatusOnAppSummary(string fieldName, string fieldValue)
+        {
+            string FieldName = "(//dt[contains(text(),'Status')])";
+            string FieldValue = "((//dt[contains(text(),'Status')]))/following-sibling::dd[1]";
+            return (_driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue));
+        }
 
         public Summary GetSummaryDetails()
         {
