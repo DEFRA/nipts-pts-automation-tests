@@ -368,6 +368,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with other colo
 	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
+	And verify status on the application summary as 'Status' 'Pending'
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page

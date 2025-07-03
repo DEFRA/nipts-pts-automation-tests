@@ -165,6 +165,7 @@ Scenario: View Pet travel documents in WELSH
 	When  I have clicked the View hyperlink from home page
 	Then  verify WELSH heading text 'Cais' on Summary page 
 	Then  verify WELSH text for Reference Number 'Rhif cyfeirnod' and Reference Number on pending application
+	Then  verify WELSH summary of Pending Appl for field name 'Statws' and field value 'Yn aros'
 	Then  verify WELSH heading text 'Gwybodaeth am y microsglodyn' on Summary page 
 	Then  verify WELSH text for Michrochip Date 'Dyddiad mewnblannu neu sganio' and Michrochip Date on Pending Appl
 	Then  verify WELSH summary of Approved PTD field name 'Lleoliad y mewnblaniad' and field value 'O dan y croen'
