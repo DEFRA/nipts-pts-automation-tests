@@ -108,8 +108,8 @@ namespace nipts_pts_automation_tests.Features
         [NUnit.Framework.DescriptionAttribute("Enter Telephone Number on Pets")]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "07456789442", null)]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "+44 7000000000", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "+(91) 1234567890", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "+1 212-555 4567", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "0", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "manylion chi", "Beth yw", "ch cod post?", "ch rhif ff", "Oes microsglodyn wedi", "TestFullName", "SE1 7PB", "12345678912345678912", null)]
         public async global::System.Threading.Tasks.Task EnterTelephoneNumberOnPets(string logininfo, string nextPage, string nextPage1, string nextPage2, string nextPage3, string nextPage4, string nextPage5, string fullname, string postcode, string phoneNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -198,9 +198,9 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify error message for invalid contact Telephone Number")]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "07456789**", "fel 01632 960 001, 07700 900 982 neu +49 30 12345678", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "07456789**", "fel 01632 960 001 neu 07700 900 982", null)]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "", "Rhowch eich rhif ff", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "0745678976435847687465", "fel 01632 960 001, 07700 900 982 neu +49 30 12345678", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "0745678976435847687465", "fel 01632 960 001 neu 07700 900 982", null)]
         public async global::System.Threading.Tasks.Task VerifyErrorMessageForInvalidContactTelephoneNumber(string logininfo, string nextPage, string fullname, string postcode, string phoneNumber, string errorMessage, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;

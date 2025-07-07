@@ -59,8 +59,8 @@ Scenario Outline: Verify pet owner phone number page validations and should not 
 Examples:
 	| FullName |  Are your details correct | PostCode | PhoneNumber                                                        | ErrorMessage																	|
 	| PetCat's |  No                       | CV2 4NZ  |                                                                    | Enter your phone number														|
-	| PetDog's |  No                       | CV1 4PY  | ABCDEFGHAD                                                         | Enter your phone number, like 01632 960 001, 07700 900 982 or +49 30 12345678	|
-	| PetDog's |  No                       | CV1 4PY  | 075515528680755155286807551552868075515528680755155286807551552868 | Enter your phone number, like 01632 960 001, 07700 900 982 or +49 30 12345678  |
+	| PetDog's |  No                       | CV1 4PY  | ABCDEFGHAD                                                         | Enter your phone number, like 01632 960 001 or 07700 900 982|
+	| PetDog's |  No                       | CV1 4PY  | 123456789123456789123 | Enter your phone number, like 01632 960 001 or 07700 900 982|
 
 Scenario Outline: Verify postcode search page validations and should not moves to next page
 	Then I have selected '<Are your details correct>' option
