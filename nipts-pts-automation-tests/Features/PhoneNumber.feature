@@ -28,8 +28,8 @@ Scenario: Enter Telephone Number on Pets
 	| logininfo | nextPage                      | nextPage1    | nextPage2| nextPage3    | nextPage4  | nextPage5             | fullname     | postcode | phoneNumber |
 	| test      | Lifelong pet travel documents | manylion chi | Beth yw  | ch cod post? | ch rhif ff | Oes microsglodyn wedi | TestFullName | SE1 7PB  | 07456789442  |
 	| test      | Lifelong pet travel documents | manylion chi | Beth yw  | ch cod post? | ch rhif ff | Oes microsglodyn wedi | TestFullName | SE1 7PB  | +44 7000000000  |
-	| test      | Lifelong pet travel documents | manylion chi | Beth yw  | ch cod post? | ch rhif ff | Oes microsglodyn wedi | TestFullName | SE1 7PB  | +(91) 1234567890  |
-	| test      | Lifelong pet travel documents | manylion chi | Beth yw  | ch cod post? | ch rhif ff | Oes microsglodyn wedi | TestFullName | SE1 7PB  | +1 212-555 4567  |
+	| test      | Lifelong pet travel documents | manylion chi | Beth yw  | ch cod post? | ch rhif ff | Oes microsglodyn wedi | TestFullName | SE1 7PB  | 0               |
+	| test      | Lifelong pet travel documents | manylion chi | Beth yw  | ch cod post? | ch rhif ff | Oes microsglodyn wedi | TestFullName | SE1 7PB  | 12345678912345678912  |
 
 Scenario: Verify error message for invalid contact Telephone Number
 	Given that I navigate to the Pets application portal
@@ -50,9 +50,9 @@ Scenario: Verify error message for invalid contact Telephone Number
 
 	Examples: 
 	| logininfo | nextPage                      | fullname     | postcode | phoneNumber | errorMessage                        |
-	| test      | Lifelong pet travel documents | TestFullName | SE1 7PB  | 07456789**  |  fel 01632 960 001, 07700 900 982 neu +49 30 12345678 |
+	| test      | Lifelong pet travel documents | TestFullName | SE1 7PB  | 07456789**  |  fel 01632 960 001 neu 07700 900 982 |
 	| test      | Lifelong pet travel documents | TestFullName | SE1 7PB  |             | Rhowch eich rhif ff                 |
-	| test      | Lifelong pet travel documents | TestFullName | SE1 7PB  | 0745678976435847687465  |  fel 01632 960 001, 07700 900 982 neu +49 30 12345678 |
+	| test      | Lifelong pet travel documents | TestFullName | SE1 7PB  | 0745678976435847687465  |  fel 01632 960 001 neu 07700 900 982 |
 
 	
 	Scenario: Verify English and Welsh Version of Telephone Number page on Pets 
