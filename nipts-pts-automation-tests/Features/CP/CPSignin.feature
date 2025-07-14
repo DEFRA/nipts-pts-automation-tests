@@ -101,3 +101,25 @@ Examples:
      | AbilityNet			  |  contact the Equality Advisory and Support Service |  Equalities Commission for Northern Ireland | Public Sector Bodies (Websites and Mobile Applications) |  Web Content Accessibility Guidelines | NIPetTravel@apha.gov.uk | 
 
 	
+Scenario: Verify sign in functionality on accessibility statement
+	Given I navigate to the port checker application
+	When I click on accessibility statement link
+	And I have provided the password for prototype research page
+	Then verify next page 'Accessibility statement for Check a pet travelling from GB to NI' is loaded
+	And I click on Back button in Pets Application
+	When I navigate to the port checker application
+	And I click signin button on port checker application
+	And I have provided the CP credentials and signin
+	Then verify next page 'What route are you checking' is loaded
+	And I click on Back button in Pets Application
+	Then click browser back
+	And  click browser back
+	When I click on accessibility statement link
+	Then verify next page 'Accessibility statement for Check a pet travelling from GB to NI' is loaded
+
+Examples: 
+ | nextpage1														| nextpage2						 |
+ | Accessibility statement for Check a pet travelling from GB to NI | What route are you checking    |
+
+
+
