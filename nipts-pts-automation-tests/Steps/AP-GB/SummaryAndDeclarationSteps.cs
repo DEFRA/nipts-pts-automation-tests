@@ -222,5 +222,10 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             Assert.IsTrue(homePage?.VerifyTheApplicationIsNotAvailable(petName), $"The application is available in Dashboard!");
         }
 
+        [Then(@"verify status on the application summary as '([^']*)' '([^']*)'")]
+        public void ThenVerifyGenderOnWELSHSummaryPTD(string fieldName, string fieldValue)
+        {
+            Assert.True(summaryPage?.VerifyStatusOnAppSummary(fieldName, fieldValue), "Status mistmatch on Pending application");
+        }
     }
 }

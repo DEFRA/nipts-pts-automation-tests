@@ -8,5 +8,6 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.SummaryPage
         Summary GetSummaryDetails();
         public void ClickPDFDownloadLink();
         public bool ClickPrintdLink();
+        public bool VerifyStatusOnAppSummary(string fieldName, string fieldValue);
     }
 }
