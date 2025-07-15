@@ -1734,7 +1734,7 @@
           "buildTransitive/Selenium.WebDriver.targets": {}
         }
       },
-      "Selenium.WebDriver.ChromeDriver/136.0.7103.4900": {
+      "Selenium.WebDriver.ChromeDriver/138.0.7204.9400": {
         "type": "package",
         "build": {
           "build/Selenium.WebDriver.ChromeDriver.targets": {}
@@ -2087,7 +2087,8 @@
           "Reqnroll.ExternalData": "2.4.1",
           "Reqnroll.NUnit": "2.4.1",
           "Reqnroll.SpecFlowCompatibility": "2.4.1",
-          "RestSharp": "112.1.0"
+          "RestSharp": "112.1.0",
+          "Selenium.WebDriver.ChromeDriver": "138.0.7204.9400"
         },
         "compile": {
           "bin/placeholder/nipts-pts-API-tests.dll": {}
@@ -4437,10 +4438,10 @@
         "selenium.webdriver.nuspec"
       ]
     },
-    "Selenium.WebDriver.ChromeDriver/136.0.7103.4900": {
-      "sha512": "lpxEus4IlB0OWZRiH+lX5DUK4Ro7BHkpcN4C7WG9m13FWdLmx8MKPa20dot6cQI2AzxnLfXD0DBIu8x1TFVAGg==",
+    "Selenium.WebDriver.ChromeDriver/138.0.7204.9400": {
+      "sha512": "nVFFEbOaBeY0uWJikYNPlR1SQUb69eP0Jv3s7H0gLJHEbNMXPBSvkyVY3UYMYGpiEnFg+CUQD66Lw1yTV/mAdQ==",
       "type": "package",
-      "path": "selenium.webdriver.chromedriver/136.0.7103.4900",
+      "path": "selenium.webdriver.chromedriver/138.0.7204.9400",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4457,7 +4458,7 @@
         "driver/win32/LICENSE.chromedriver",
         "driver/win32/chromedriver.exe",
         "nupkg-icon.png",
-        "selenium.webdriver.chromedriver.136.0.7103.4900.nupkg.sha512",
+        "selenium.webdriver.chromedriver.138.0.7204.9400.nupkg.sha512",
         "selenium.webdriver.chromedriver.nuspec"
       ]
     },
@@ -5181,7 +5182,7 @@
       "Reqnroll.ExternalData >= 2.4.1",
       "Reqnroll.NUnit >= 2.4.1",
       "Reqnroll.SpecFlowCompatibility >= 2.4.1",
-      "Selenium.WebDriver.ChromeDriver >= 136.0.7103.4900",
+      "Selenium.WebDriver.ChromeDriver >= 138.0.7204.9400",
       "System.Data.SqlClient >= 4.8.6",
       "nipts-pts-API-tests >= 1.0.0"
     ]
@@ -5289,7 +5290,7 @@
           },
           "Selenium.WebDriver.ChromeDriver": {
             "target": "Package",
-            "version": "[136.0.7103.4900, )"
+            "version": "[138.0.7204.9400, )"
           },
           "System.Data.SqlClient": {
             "target": "Package",

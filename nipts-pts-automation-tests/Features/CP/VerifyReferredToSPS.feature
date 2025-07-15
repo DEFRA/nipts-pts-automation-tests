@@ -187,7 +187,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 
 Examples:
 	| Transportation | FerryRoute               | TypeOfPassenger      | nextPage        | ApplicationRadio     | PTDNumber2 | PTDNumber3 | PTDNumber4 | PTDNumber5 | PTDNumber6 | PTDNumber7 | PTDNumber8 | PTDNumber9 | PTDNumber10 | PTDNumber1 |
-	| Ferry          | Cairnryan to Larne (P&O) | Ferry foot passenger | Referred to SPS | Search by PTD number | 926C36     | E6361B     | C1CC2F     | AEA12E     | D4F115     | C93213     | D78CE8     | C208C7     | 55E5D0      | D4E321     |
+	| Ferry          | Cairnryan to Larne (P&O) | Ferry foot passenger | Referred to SPS | Search by PTD number | 926C36     | E6361B     | C1CC2F     | AEA12E     | D4F115     | 1DEFA0     | D78CE8     | C208C7     | 55E5D0      | D4E321     |
 
 Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	When I have selected '<Transportation>' radio option

@@ -16,6 +16,7 @@
     <PackageReference Include="Reqnroll.NUnit" Version="2.4.1" />
     <PackageReference Include="Reqnroll.SpecFlowCompatibility" Version="2.4.1" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="138.0.7204.9400" />
   </ItemGroup>
 
   <ItemGroup>
