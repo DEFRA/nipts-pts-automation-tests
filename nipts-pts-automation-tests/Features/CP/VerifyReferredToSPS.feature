@@ -347,7 +347,7 @@ Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 
 Examples:
 	| Transportation | FerryRoute               | TypeOfPassenger      | nextPage        | PTDNumber1 | PTDNumber2 | PTDNumber3 | PTDNumber4 | PTDNumber5 | ApplicationRadio1            | ApplicationRadio2          | ReferenceNumber1 | ReferenceNumber2 | ReferenceNumber3 | ReferenceNumber4 | MicrochipNumber1 | MicrochipNumber2 | ApplicationRadio     |
-	| Ferry          | Cairnryan to Larne (P&O) | Ferry foot passenger | Referred to SPS | D4F115     | E6361B     | E6361B     | F7DFF5     | 926C36     | Search by application number | Search by microchip number | LZC7RPYH         | RA7GQJD7         | S338P56E         | TACFHP0H         | 123798686767887  | 123798686767887  | Search by PTD number |
+	| Ferry          | Cairnryan to Larne (P&O) | Ferry foot passenger | Referred to SPS | D4F115     | E6361B     | E6361B     | F7DFF5     | 926C36     | Search by application number | Search by microchip number | MSFMHRAD         | TS9YYQQ3         | LEYZB2C5         | P6XQW6V6         | 123798686767887  | 123798686767887  | Search by PTD number |
 
 Scenario Outline: Validate ascending order on Reffered to SPS page
 	When I have selected '<Transportation>' radio option
@@ -477,5 +477,5 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 
 Examples:
 	| Transportation | FerryRoute                   | TypeOfPassenger      | nextPage        | PTDNumber1 | PTDNumber3 | PTDNumber4 | ApplicationRadio     | ApplicationRadio1            | ApplicationRadio2          | ReferenceNumber1 | ReferenceNumber2 | ReferenceNumber3 | ReferenceNumber4 | MicrochipNumber1 | 
-	| Ferry          | Loch Ryan to Belfast (Stena) | Ferry foot passenger | Referred to SPS | D4F115     | E6361B     | F7DFF5     | Search by PTD number | Search by application number | Search by microchip number | LZC7RPYH         | RA7GQJD7         | S338P56E         | TACFHP0H         | 123798686767887  |
+	| Ferry          | Loch Ryan to Belfast (Stena) | Ferry foot passenger | Referred to SPS | D4F115     | E6361B     | F7DFF5     | Search by PTD number | Search by application number | Search by microchip number | MSFMHRAD         | TS9YYQQ3         | LEYZB2C5         | P6XQW6V6         | 123798686767887  |
 
