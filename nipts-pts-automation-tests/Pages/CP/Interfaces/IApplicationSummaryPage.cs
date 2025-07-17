@@ -21,5 +21,9 @@
         public bool VerifyUnSuspendedApplicationWithSQLBackend(string AppReference);
         public bool VerifySuspendedApplicationWithSQLBackendWithPTD(string PTDNumber);
         public bool VerifyUnSuspendedApplicationWithSQLBackendWithPTD(string PTDNumber);
+        public bool VerifyTheSuspendedApplicationWarning(string SuspendedApplicationWarning);
+        bool VerifyTheContinueButtonNotDisplayed();
+        bool VerifyThePassButtonNotDisplayed();
+        bool VerifyTheFailButtonNotDisplayed();
     }
 }

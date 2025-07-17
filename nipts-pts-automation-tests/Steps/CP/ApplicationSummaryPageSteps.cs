@@ -360,5 +360,33 @@ namespace nipts_pts_automation_tests.Steps.CP
             string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
             Assert.True(_applicationSummaryPage.VerifyUnSuspendedApplicationWithSQLBackendWithPTD(PTDNumber), "UnSuspended Application Summary not matching with SQL Backend data");
         }
+
+        [Then(@"I should see the suspended application warning '([^']*)'")]
+        [When(@"I should see the suspended application warning '([^']*)'")]
+        public void ThenIShouldSeeTheSuspendedApplicationWarning(string SuspendedApplicationWarning)
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyTheSuspendedApplicationWarning(SuspendedApplicationWarning), "The Suspended Application warning is not as expected");
+        }
+
+        [Then(@"I verify continue button not displayed on search result page")]
+        [When(@"I verify continue button not displayed on search result page")]
+        public void ThenIVerifyContinueButtonNotDisplayedOnSearchResultPage()
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyTheContinueButtonNotDisplayed(), "Continue button should not displayed on Search Result page");
+        }
+
+        [Then(@"I verify pass button not displayed on search result page")]
+        [When(@"I verify pass button not displayed on search result page")]
+        public void ThenIVerifyPassButtonNotDisplayedOnSearchResultPage()
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyThePassButtonNotDisplayed(), "Pass button should not displayed on Search Result page");
+        }
+
+        [Then(@"I verify fail button not displayed on search result page")]
+        [When(@"I verify fail button not displayed on search result page")]
+        public void ThenIVerifyFailButtonNotDisplayedOnSearchResultPage()
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyTheFailButtonNotDisplayed(), "Fail button should not displayed on Search Result page");
+        }
     }
 }

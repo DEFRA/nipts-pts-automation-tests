@@ -35,6 +35,15 @@
       "UserEmail": "nikita.phatak+1811@capgemini.com",
       "Useraddress": "Leamignton spa, warwickshire",
       "UserPhoneNumber": "07833861119"
+    },
+    {
+      "userId": "36 23 34 92 01 16",
+      "password": "Automation123$",
+      "logininfo": "test4",
+      "UserName": "Automation User",
+      "UserEmail": "ptsdefra@gmail.com",
+      "Useraddress": "4 ORTS ROAD, READING, BERKSHIRE, RG1 3JN, United Kingdom",
+      "UserPhoneNumber": "07582487781"
     }
   ]
 }

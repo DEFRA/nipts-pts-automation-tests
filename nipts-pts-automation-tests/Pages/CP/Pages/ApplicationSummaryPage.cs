@@ -34,6 +34,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//div[@class='pts-location-bar']//p"));
         private IWebElement clickAccount => _driver.WaitForElement(By.XPath("//span[@id='account-text']"));
         private IWebElement RoleIdentification => _driver.WaitForElement(By.XPath("//span[contains(@class,'idm-table__cell--access-level-content')]"));
+        private IWebElement SuspendedWarningText => _driver.WaitForElement(By.XPath("//div[@class='govuk-warning-text']"));
 
         #endregion
 
@@ -202,7 +203,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                         if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
                             status = false;
                     }
-                    else if(i == 3)
+                    else if (i == 3)
                     {
                         if (!AdditionalComment.Text.Contains("None"))
                         {
@@ -210,17 +211,17 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                                 status = false;
                         }
                     }
-                    else if(i == 4 && row[4].Equals(true))
+                    else if (i == 4 && row[4].Equals(true))
                     {
                         if (!PassangerRefToDAERA.Text.Contains("Passenger referred to DAERA/SPS at NI port"))
                             status = false;
                     }
-                    else if(i == 5 && row[5].Equals(true))
+                    else if (i == 5 && row[5].Equals(true))
                     {
                         if (!PassengerAdvised.Text.Contains("Passenger advised not to travel"))
                             status = false;
                     }
-                    else if(i == 6 && row[6].Equals(true))
+                    else if (i == 6 && row[6].Equals(true))
                     {
                         if (!PassengerNoTravel.Text.Contains("Passenger says they will not travel"))
                             status = false;
@@ -230,7 +231,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return status;
         }
 
-        private bool ValidateSPSOutcomeWithSQLBackend(string checkOutcomeId,string TypeOfPassenger, string SPSOutcome)
+        private bool ValidateSPSOutcomeWithSQLBackend(string checkOutcomeId, string TypeOfPassenger, string SPSOutcome)
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery = $"SELECT MCNotFound,MCNotMatch,MCNotMatchActual,PassengerTypeId,SPSOutcome FROM [dbo].[CheckOutcome]  Where Id = '{checkOutcomeId}'";
@@ -261,8 +262,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                     {
                         if (!TypeOfPassenger.Contains("Airline"))
                         {
-                             if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
-                                status = false; 
+                            if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
+                                status = false;
                         }
                     }
                     else if (i == 2 && row[2].Equals("123456789123456"))
@@ -273,7 +274,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                     else if (i == 3)
                     {
                         if (TypeOfPassenger.Contains("Ferry foot passenger"))
-                        { 
+                        {
                             if (row[3].Equals(1))
                                 status = true;
                             else
@@ -343,7 +344,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                     }
                     else if (i == 2)
                     {
-                        if(row[2].Equals(1) && !Route.Text.Contains("Birkenhead to Belfast (Stena)"))
+                        if (row[2].Equals(1) && !Route.Text.Contains("Birkenhead to Belfast (Stena)"))
                             status = false;
                         else if (row[2].Equals(2) && !Route.Text.Contains("Cairnryan to Larne (P&O)"))
                             status = false;
@@ -477,8 +478,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
                     if (i == 0)
                     {
-                        if(!row[0].Equals(true))
-                        status = false;
+                        if (!row[0].Equals(true))
+                            status = false;
                     }
                     else if (i == 1)
                     {
@@ -531,7 +532,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return ValidateGBOutcomeWithSQLBackend(CheckOutcomeId);
         }
 
-        public bool VerifySPSOutcomeWithSQLBackend(string AppReference,string TypeOfPassenger, string SPSOutcome)
+        public bool VerifySPSOutcomeWithSQLBackend(string AppReference, string TypeOfPassenger, string SPSOutcome)
         {
             string ApplicationId = GetApplId(AppReference);
             string TravelDocumentId = GetTravelDocumentId(ApplicationId);
@@ -609,7 +610,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                     }
                     else if (i == 1)
                     {
-                        if (row[1]==null)
+                        if (row[1] == null)
                         {
                             status = false;
                         }
@@ -648,7 +649,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                     }
                     else if (i == 1)
                     {
-                        if (row[1]==null)
+                        if (row[1] == null)
                         {
                             status = false;
                         }
@@ -663,7 +664,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             Thread.Sleep(7000);
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery1 = $"SELECT ApplicationId  FROM [dbo].[TravelDocument] Where [DocumentReferenceNumber] = '{PTDNumber}'";
-            string ApplicationId ="";
+            string ApplicationId = "";
             DataTable sqlData = null;
             bool status = true;
             int i = 0;
@@ -674,12 +675,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
 
             string sqlQuery2 = $"SELECT Status,Datesuspended  FROM [dbo].[Application] Where [Id] = '{ApplicationId}'";
-            
+
             if (ConfigSetup.BaseConfiguration != null)
             {
                 sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery2);
             }
-            
+
             foreach (DataRow row in sqlData.Rows)
             {
                 for (i = 0; i < sqlData.Columns.Count; i++)
@@ -709,7 +710,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             Thread.Sleep(7000);
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery1 = $"SELECT ApplicationId  FROM [dbo].[TravelDocument] Where [DocumentReferenceNumber] = '{PTDNumber}'";
-            string ApplicationId="";
+            string ApplicationId = "";
             DataTable sqlData = null;
             bool status = true;
             int i = 0;
@@ -718,9 +719,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             {
                 ApplicationId = dataHelperConnections.ExecuteQuery(connectionString, sqlQuery1);
             }
-            
+
             string sqlQuery2 = $"SELECT Status,DateUnsuspended  FROM [dbo].[Application] Where [Id] = '{ApplicationId}'";
-            
+
             if (ConfigSetup.BaseConfiguration != null)
             {
                 sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery2);
@@ -749,6 +750,40 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
             return status;
         }
+
+        public bool VerifyTheSuspendedApplicationWarning(string SuspendedApplicationWarning)
+        {
+            string text = SuspendedWarningText.Text;
+            if (SuspendedWarningText.Text.Contains(SuspendedApplicationWarning))
+                return true;
+            else
+                return false;
+        }
+
+        public bool VerifyTheContinueButtonNotDisplayed()
+        {
+            if (_driver.FindElements(By.XPath("//button[contains(text(),'Continue')]")).Count>0)
+                return false;
+            else
+                return true;
+        }
+
+        public bool VerifyThePassButtonNotDisplayed()
+        {
+            if (_driver.FindElements(By.XPath("//label[normalize-space()='Pass']/..//input")).Count > 0)
+                return false;
+            else
+                return true;
+        }
+
+        public bool VerifyTheFailButtonNotDisplayed()
+        {
+            if (_driver.FindElements(By.XPath("//label[normalize-space()='Fail or referred to SPS']/..//input")).Count > 0)
+                return false;
+            else
+                return true;
+        }
+
         #endregion
     }
 }
