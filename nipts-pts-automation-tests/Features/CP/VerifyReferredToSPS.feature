@@ -187,7 +187,7 @@ Scenario Outline: Validate pagination on Referred to SPS page
 
 Examples:
 	| Transportation | FerryRoute               | TypeOfPassenger      | nextPage        | ApplicationRadio     | PTDNumber2 | PTDNumber3 | PTDNumber4 | PTDNumber5 | PTDNumber6 | PTDNumber7 | PTDNumber8 | PTDNumber9 | PTDNumber10 | PTDNumber1 |
-	| Ferry          | Cairnryan to Larne (P&O) | Ferry foot passenger | Referred to SPS | Search by PTD number | 926C36     | E6361B     | C1CC2F     | AEA12E     | D4F115     | 1DEFA0     | D78CE8     | C208C7     | 55E5D0      | D4E321     |
+	| Ferry          | Cairnryan to Larne (P&O) | Ferry foot passenger | Referred to SPS | Search by PTD number | C5A036     | E6361B     | 05A888     | 393A1B     | 027E5C     | 1DEFA0     | E2E7AE     | D4EA77     | 35E5AB      | 17F418     |
 
 Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 	When I have selected '<Transportation>' radio option
@@ -347,7 +347,7 @@ Scenario Outline: Validate wrong ascending order on Reffered to SPS page
 
 Examples:
 	| Transportation | FerryRoute               | TypeOfPassenger      | nextPage        | PTDNumber1 | PTDNumber2 | PTDNumber3 | PTDNumber4 | PTDNumber5 | ApplicationRadio1            | ApplicationRadio2          | ReferenceNumber1 | ReferenceNumber2 | ReferenceNumber3 | ReferenceNumber4 | MicrochipNumber1 | MicrochipNumber2 | ApplicationRadio     |
-	| Ferry          | Cairnryan to Larne (P&O) | Ferry foot passenger | Referred to SPS | D4F115     | E6361B     | E6361B     | F7DFF5     | 926C36     | Search by application number | Search by microchip number | MSFMHRAD         | TS9YYQQ3         | LEYZB2C5         | P6XQW6V6         | 123798686767887  | 123798686767887  | Search by PTD number |
+	| Ferry          | Cairnryan to Larne (P&O) | Ferry foot passenger | Referred to SPS | C5A036     | E6361B     | E6361B     | F7DFF5     | 393A1B     | Search by application number | Search by microchip number | FUL5G1XA         | TS9YYQQ3         | QLPZ78Q2         | GLXU05Q5         | 981118686767887  | 981118686767887  | Search by PTD number |
 
 Scenario Outline: Validate ascending order on Reffered to SPS page
 	When I have selected '<Transportation>' radio option
@@ -403,10 +403,9 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 	And I click search by '<ApplicationRadio2>' radio button
 	And I provided the Microchip number '<MicrochipNumber1>' of the application
 	When I click search button
-	And I should see the application status in 'Approved'
+	And I should see the application status in 'Pending'
 	And I get PTD or reference number and add it in collection
-	And I select Fail radio button
-	When I click save and continue button from application status page
+	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click '<TypeOfPassenger>' in Passenger details
@@ -477,5 +476,5 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 
 Examples:
 	| Transportation | FerryRoute                   | TypeOfPassenger      | nextPage        | PTDNumber1 | PTDNumber3 | PTDNumber4 | ApplicationRadio     | ApplicationRadio1            | ApplicationRadio2          | ReferenceNumber1 | ReferenceNumber2 | ReferenceNumber3 | ReferenceNumber4 | MicrochipNumber1 | 
-	| Ferry          | Loch Ryan to Belfast (Stena) | Ferry foot passenger | Referred to SPS | D4F115     | E6361B     | F7DFF5     | Search by PTD number | Search by application number | Search by microchip number | MSFMHRAD         | TS9YYQQ3         | LEYZB2C5         | P6XQW6V6         | 123798686767887  |
+	| Ferry          | Loch Ryan to Belfast (Stena) | Ferry foot passenger | Referred to SPS | C5A036     | E6361B     | F7DFF5     | Search by PTD number | Search by application number | Search by microchip number | FUL5G1XA         | TS9YYQQ3         | QLPZ78Q2         | GLXU05Q5         | 123454444123456  |
 
