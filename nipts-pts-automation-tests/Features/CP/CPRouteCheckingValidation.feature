@@ -31,6 +31,7 @@ Examples:
 	| Transportation | FerryRoute |
 	| Ferry  	     |			  |
 
+	@RunOnly
 Scenario Outline: Verify validation text for empty text box checking a flight
 	Then I have selected '<Transportation>' radio option
 	Then I provide the '<Flight number>' in the box

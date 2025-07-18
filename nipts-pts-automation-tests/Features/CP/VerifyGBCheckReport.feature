@@ -191,7 +191,7 @@ Examples:
 	| Transportation | FerryRoute                    | NumberMicrochipReasons | MicrochipNumberNoMatch | CannotFindMicrochip | PassengerType        | AdditionalComment        | NumberGBOutcome | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | NumberOtherIssues | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | ApplicationRadio     | DetailsOfOutcome          |
 	| Ferry          | Birkenhead to Belfast (Stena) | 2                      | MicrochipNumberNoMatch | CannotFindMicrochip | Ferry foot passenger | Verify Additonal Comment | 3               | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | PetDoesNotMatchThePTD | 3                 | PotentialCommercialMovement | AuthorisedTravellerButNoConfirmation | OtherReason | Search by PTD number | Verify Details of Outcome |
 
-
+	@RunOnly
 Scenario Outline: Validate GB Check Report page fields for duplicate checks for SPS User
 	When I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
