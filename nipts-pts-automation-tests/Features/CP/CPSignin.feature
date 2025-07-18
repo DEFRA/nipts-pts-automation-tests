@@ -77,7 +77,7 @@ Scenario: CPE2ECrossBrowser
 
 Examples:
 	| Transportation | FerryRoute                    | PTDNumber | TypeOfPassenger      | SPSOutcome | ApplicationRadio     |
-	| Ferry          | Birkenhead to Belfast (Stena) | 926C36    | Ferry foot passenger | Allowed    | Search by PTD number |
+	| Ferry          | Birkenhead to Belfast (Stena) | 05A888    | Ferry foot passenger | Allowed    | Search by PTD number |
 
 #Scenario: API check
 #	When Create an application via backend
