@@ -212,5 +212,12 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             Assert.True(_routeCheckingPage.VerifyFilterFlightHeaderMsg(FilterFlightHeaderMsg), "Invalid Message for filter Flight on homepage");
         }
+
+        [When(@"I verify the header text '([^']*)'")]
+        [Then(@"I verify the header text '([^']*)'")]
+        public void ThenIVerifyTheHeaderText(string HeaderText)
+        {
+            Assert.True(_routeCheckingPage?.VerifyTheHeaderText(HeaderText), "Header Text not matching");
+        }
     }
 }

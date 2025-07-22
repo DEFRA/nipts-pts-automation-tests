@@ -40,6 +40,13 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.IsTrue(_applicationSummaryPage?.VerifyTheExpectedSubtitle(applicationSubtitle), "The submitted application is not in expected subtitle");
         }
 
+        [Then(@"I should see the Search Results Heading '([^']*)'")]
+        [When(@"I should see the Search Results Heading '([^']*)'")]
+        public void ThenIShouldSeeTheSearchResultsHeading(string SearchResultsHeading)
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyTheSearchResultsHeading(SearchResultsHeading), "The submitted application is not in expected subtitle");
+        }
+
         [Then(@"I select Pass radio button")]
         [When(@"I select Pass radio button")]
         public void WhenISelectPassRadioButton()

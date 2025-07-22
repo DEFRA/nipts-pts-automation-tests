@@ -33,6 +33,7 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 	When I click save and continue button from application status page
 	Then I should navigate to Welcome page
 	And I verify submiited message
+    And I verify submiited message image
 	And I verify count '1' for Pass Checks
 	When I click search button from footer
 	Then I navigate to Find a document page
@@ -47,6 +48,7 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 	When I click save and continue button from application status page
 	Then I should navigate to Welcome page
 	And I verify submiited message
+    And I verify submiited message image
 	And I verify count '2' for Pass Checks
 
 Examples:
@@ -72,6 +74,7 @@ Scenario Outline: PTS port checker Pass application by Reference number - status
 	When I click save and continue button from application status page
 	Then I should navigate to Welcome page
 	And I verify submiited message
+    And I verify submiited message image
 	
 Examples:
 	|Transportation | FerryRoute                    | ApplicationRadio             | 
@@ -178,6 +181,7 @@ Scenario Outline: Verify no View link for no Referred to SPS record
 	When I click save and continue button from application status page
 	Then I should navigate to Welcome page
 	And I verify submiited message
+    And I verify submiited message image
 	And I verify count '1' for Pass Checks
     And I verify No View link if No Referred to SPS
 	And click on signout button on CP and verify the signout message

@@ -2,12 +2,6 @@
 
 As a PTS port checker I want ot login and logout from Checker Portal Application
 
-
-#Background: 
-#	Given I navigate to the port checker application
-#	And I click signin button on port checker application
-#	Then I should redirected to the Sign in using Government Gateway page
-	
 @CPRegression
 Scenario: SignOut
 	Given I navigate to the port checker application
@@ -16,6 +10,7 @@ Scenario: SignOut
 	When I have provided the CP credentials and signin
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	Then click on signout button on CP and verify the signout message
 
 @CrossBrowserCP
@@ -82,6 +77,7 @@ Examples:
 #Scenario: API check
 #	When Create an application via backend
 
+@CPRegression
 Scenario: Verify links on accessibility statement on sign in page
 	Given I navigate to the port checker application
 	Then I click on accessibility statement link
@@ -94,13 +90,11 @@ Scenario: Verify links on accessibility statement on sign in page
 	Then verify the link on the accessibility statement page '<Accesibility Link 5>'
 	Then verify the link on the accessibility statement page '<Accesibility Link 6>'
 	
-	 
-
 Examples: 
      | Accesibility Link 1    | Accesibility Link 2								   | Accesibility Link 3						 | Accesibility Link 4									   | Accesibility Link 5			       | Accesibility Link 6     | 
      | AbilityNet			  |  contact the Equality Advisory and Support Service |  Equalities Commission for Northern Ireland | Public Sector Bodies (Websites and Mobile Applications) |  Web Content Accessibility Guidelines | NIPetTravel@apha.gov.uk | 
 
-	
+@CPRegression
 Scenario: Verify sign in functionality on accessibility statement
 	Given I navigate to the port checker application
 	When I click on accessibility statement link
@@ -121,5 +115,22 @@ Examples:
  | nextpage1														| nextpage2						 |
  | Accessibility statement for Check a pet travelling from GB to NI | What route are you checking    |
 
+@CPRegression
+Scenario: Verify Scan link on footer
+	Given I navigate to the port checker application
+	And I click signin button on port checker application
+	Then I should redirected to the Sign in using Government Gateway page
+	When I have provided the CP credentials and signin
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	When I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	And I verify scan link from footer
+	Then click on signout button on CP and verify the signout message
 
-
+Examples:
+	| Transportation | FerryRoute                    |
+	| Ferry          | Birkenhead to Belfast (Stena) |

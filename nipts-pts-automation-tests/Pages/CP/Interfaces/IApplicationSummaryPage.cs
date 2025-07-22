@@ -25,5 +25,6 @@
         bool VerifyTheContinueButtonNotDisplayed();
         bool VerifyThePassButtonNotDisplayed();
         bool VerifyTheFailButtonNotDisplayed();
+        public bool VerifyTheSearchResultsHeading(string SearchResultsHeading);
     }
 }

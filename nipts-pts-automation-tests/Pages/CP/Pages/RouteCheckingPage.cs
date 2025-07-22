@@ -18,6 +18,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IWebElement HeaderTextEle => _driver.WaitForElement(By.XPath("//div[contains(@class,'govuk-heading-l')]"));
         private IWebElement pageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')]"));
         private IWebElement rdoFerry => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='routeOption']"));
         private IWebElement rdoFlight => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='routeOption-2']"));
@@ -219,6 +220,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             return txtFlightFilterHeaderMsg.Text.Contains(FlightHeaderMsg);
         }
+
+        public bool VerifyTheHeaderText(string headerText)
+        {
+            return HeaderTextEle.Text.Contains(headerText);
+        }
+
         #endregion
 
     }

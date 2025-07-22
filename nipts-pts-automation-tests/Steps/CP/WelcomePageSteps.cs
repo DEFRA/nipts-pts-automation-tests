@@ -35,6 +35,13 @@ namespace nipts_pts_automation_tests.Steps.CP
             _welcomePage?.FooterSearchButton();
         }
 
+        [Then(@"I verify scan link from footer")]
+        [When(@"I verify scan link from footer")]
+        public void WhenIVerifyScanLinkFromFooter()
+        {
+            Assert.True(_welcomePage?.VerifyScanLinkFromFooter(),"Scan Link not found");
+        }
+
         [Then(@"I click change link from headers")]
         public void ThenIClickChangeLinkFromHeaders()
         {
@@ -80,6 +87,14 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenIVerifySubmiitedMessage()
         {
             Assert.True(_welcomePage?.VerifySubmiitedMessage(), "Submitted message not matching");
+        }
+
+
+        [When(@"I verify submiited message image")]
+        [Then(@"I verify submiited message image")]
+        public void ThenIVerifySubmiitedMessageImage()
+        {
+            Assert.True(_welcomePage?.VerifySubmiitedMessageImage(), "Submitted message not matching");
         }
 
         [When(@"I verify no entries on checker page after 24 hours and before 48 hours")]

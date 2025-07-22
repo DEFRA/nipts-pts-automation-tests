@@ -20,16 +20,21 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	And I have provided Scheduled departure time
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	When I click search button from footer
 	Then I navigate to Find a document page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the PTD number of the application
 	When I click search button
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	And I should see the application status in 'Approved'
 	And I should see the application subtitle 'Lifelong pet travel document and declaration'
-	And I select Fail radio button
-	When I click save and continue button from application status page
+	Then I should see the Search Results Heading 'Checks'
+	When I select Fail radio button
+	And I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click '<TypeOfPassenger>' in Passenger details
 	And I click on GB outcome
@@ -37,6 +42,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	Then I should navigate to Welcome page
 	When I click on view on Checks page
 	Then verify next page '<nextPage>' is loaded
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	And I verify Pet document details on Referred to SPS details
 	And I verify Pet departure details on Referred to SPS details
 	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
@@ -47,27 +53,35 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	When I have provided the CP credentials and signin for user 'SPSUser'
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	And I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time with SPS user
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on PTD number of the application
 	Then verify next page '<nextPage1>' is loaded
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on Conduct an SPS check
 	Then I should see the application status in 'Approved'
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	When I select Fail radio button
 	And I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	When I click '<TypeOfPassenger>' in Passenger details
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click 'Allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
@@ -268,7 +282,9 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Reference numb
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Reference number of the application
 	When I click search button
-	And I should see the application status in 'Pending'
+	Then I should see the application status in 'Pending'
+	And I should see the Search Results Heading 'Checks'
+	And I should see the application subtitle 'Your application summary'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And I click '<TypeOfPassenger>' in Passenger details

@@ -475,6 +475,7 @@ Examples:
 	When I click save and continue button from application status page
 	Then I should navigate to Welcome page
 	And I verify submiited message
+    And I verify submiited message image
 
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio           | 

@@ -35,6 +35,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement clickAccount => _driver.WaitForElement(By.XPath("//span[@id='account-text']"));
         private IWebElement RoleIdentification => _driver.WaitForElement(By.XPath("//span[contains(@class,'idm-table__cell--access-level-content')]"));
         private IWebElement SuspendedWarningText => _driver.WaitForElement(By.XPath("//div[@class='govuk-warning-text']"));
+        private IWebElement ChecksOnSearchResults => _driver.WaitForElementExists(By.XPath("//h2[contains(@class,'govuk-heading-l')] [@id='search-results-heading']"));
 
         #endregion
 
@@ -46,7 +47,13 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public bool VerifyTheExpectedSubtitle(string applicationSubtitle)
         {
-            return _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-panel__title')]/../following-sibling::h1")).Text.Trim().Equals(applicationSubtitle);
+            return _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-panel__title')]/../following-sibling::h2")).Text.Trim().Equals(applicationSubtitle);
+        }
+
+        public bool VerifyTheSearchResultsHeading(string SearchResultsHeading)
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", ChecksOnSearchResults);
+            return _driver.WaitForElement(By.XPath("//h2[contains(@class,'govuk-heading-l')] [@id='search-results-heading']")).Text.Trim().Equals(SearchResultsHeading);
         }
 
         public void SelectPassRadioButton()
