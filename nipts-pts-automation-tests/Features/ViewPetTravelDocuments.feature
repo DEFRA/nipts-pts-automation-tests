@@ -50,7 +50,7 @@ Scenario: View Pet travel documents in WELSH
 		
 	Examples: 
 	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3       | PetSex | nextPage4    | nextPage5					    | nextPage6			       | color | nextPage7                     | featureOption | nextPage8              | nextPage10                    | FooterLang1 | FooterLang2 | nextPage9	 |
-	| test2     | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | sex is your pet | Gwryw  | Beth yw rhyw | dyddiad geni eich anifail anwes | Beth yw prif liw eich ci | Du    | unrhyw nodweddion arwyddocaol | Nac oes       | Gwiriwch eich atebion  | Lifelong pet travel documents | English     | Cymraeg     | manylion chi |
+	| test      | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | sex is your pet | Gwryw  | Beth yw rhyw | dyddiad geni eich anifail anwes | Beth yw prif liw eich ci | Du    | unrhyw nodweddion arwyddocaol | Nac oes       | Gwiriwch eich atebion  | Lifelong pet travel documents | English     | Cymraeg     | manylion chi |
 
 
 	
@@ -114,7 +114,7 @@ Scenario: View Pet travel documents in WELSH
 
 	Examples: 
 	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | PetSex | color | featureOption | FooterLang1 | FooterLang2 |
-	| test2     | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | Male   | Black | No            | English     | Cymraeg     |
+	| test      | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | Male   | Black | No            | English     | Cymraeg     |
 
 	Scenario: View Pet travel documents in WELSH for Pending Application
 	Given that I navigate to the Pets application portal
@@ -183,4 +183,4 @@ Scenario: View Pet travel documents in WELSH
 
 	Examples: 
 	| logininfo | nextPage          | nextPage1       | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3     | PetSex | nextPage4  | color | featureOption  | FooterLang1 | FooterLang2 | nextPage5 | fullname | postcode | phoneNumber  |
-	| test2     | Dogfennau teithio | ch manylion chi | Ci  | 676789876543321 | Basenji  | Yes             | Beth yw   | Testtoto| ch cyfeiriad? | Gwryw  | ch rhif ff | Du    | Nac oes        | English     | Cymraeg     | Cais wedi | New User | CV31 2EE | 07833861122  |
+	| test      | Dogfennau teithio | ch manylion chi | Ci  | 676789876543321 | Basenji  | Yes             | Beth yw   | Testtoto| ch cyfeiriad? | Gwryw  | ch rhif ff | Du    | Nac oes        | English     | Cymraeg     | Cais wedi | New User | CV31 2EE | 07833861122  |

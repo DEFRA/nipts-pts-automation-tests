@@ -25,6 +25,16 @@
         void SelectVisualCheck(string visualCheck);
         void SelectOtherIssues(string otherIssues);
         void EnterDetailsOfOutCome(string detailsOfOutCome);
-
+        bool VerifyTheReasonsHeadingStructure();
+        bool VerifyTheMicrochipHeadingStructure();
+        void ClickOnTheMicrochipDetailsHeadingStructure();
+        bool VerifyTheVisualCheckHeadingStructure();
+        void ClickOnPetDetailsHeadingStructure();
+        bool VerifyTheOtherIssuesHeadingStructure();
+        void ClickOnPetOwnerDetailsHeadingStructure();
+        bool VerifyTheAnyRelevantCommentsHeadingStructure();
+        bool VerifyTheRecordOutcomeHeadingStructure();
+        bool VerifyThePassengerDetailsHeadingStructure();
+        bool VerifyThePetTravelDocumentHeadingStructure();
     }
 }
