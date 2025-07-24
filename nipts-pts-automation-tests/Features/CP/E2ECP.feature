@@ -35,6 +35,16 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	And I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	Then I verify the header text 'Check a pet travelling from GB to NI'
+    And I verify the Reasons Heading structure
+    And I verify the Microchip Heading structure
+    And I click on Microchip details Heading structure
+    And I verify the Visual check Heading structure
+    And I click on Pet details Heading structure
+    And I verify the Other Issues Heading structure
+    And I verify the Passanger details Heading structure
+    And I click on Pet owner details Heading structure
+    And I verify the Any relevant comments Heading structure
+    And I verify the Record outcome Heading structure
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click '<TypeOfPassenger>' in Passenger details
 	And I click on GB outcome
@@ -73,6 +83,16 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	And I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	Then I verify the header text 'Check a pet travelling from GB to NI'
+    And I verify the Reasons Heading structure
+    And I verify the Microchip Heading structure
+    And I click on Microchip details Heading structure
+    And I verify the Visual check Heading structure
+    And I click on Pet details Heading structure
+    And I verify the Other Issues Heading structure
+    And I verify the Passanger details Heading structure
+    And I click on Pet owner details Heading structure
+    And I verify the Any relevant comments Heading structure
+    And I verify the Record outcome Heading structure
 	When I click '<TypeOfPassenger>' in Passenger details
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click 'Allowed' on SPS outcome
@@ -167,6 +187,18 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	And I should see the application status in 'Cancelled'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
+    And I verify the Reasons Heading structure
+    And I verify the Pet Travel Document Heading structure
+    And I verify the Microchip Heading structure
+    And I click on Microchip details Heading structure
+    And I verify the Visual check Heading structure
+    And I click on Pet details Heading structure
+    And I verify the Other Issues Heading structure
+    And I verify the Passanger details Heading structure
+    And I click on Pet owner details Heading structure
+    And I verify the Any relevant comments Heading structure
+    And I verify the Record outcome Heading structure
 	And I click '<TypeOfPassenger>' in Passenger details
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click on GB outcome
@@ -195,6 +227,18 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	And I should see the application status in 'Cancelled'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
+    And I verify the Reasons Heading structure
+    And I verify the Pet Travel Document Heading structure
+    And I verify the Microchip Heading structure
+    And I click on Microchip details Heading structure
+    And I verify the Visual check Heading structure
+    And I click on Pet details Heading structure
+    And I verify the Other Issues Heading structure
+    And I verify the Passanger details Heading structure
+    And I click on Pet owner details Heading structure
+    And I verify the Any relevant comments Heading structure
+    And I verify the Record outcome Heading structure
 	When I click '<TypeOfPassenger>' in Passenger details
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click 'Allowed' on SPS outcome
@@ -227,6 +271,18 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	And I should see the application subtitle 'Your application summary'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
+    And I verify the Reasons Heading structure
+    And I verify the Pet Travel Document Heading structure
+    And I verify the Microchip Heading structure
+    And I click on Microchip details Heading structure
+    And I verify the Visual check Heading structure
+    And I click on Pet details Heading structure
+    And I verify the Other Issues Heading structure
+    And I verify the Passanger details Heading structure
+    And I click on Pet owner details Heading structure
+    And I verify the Any relevant comments Heading structure
+    And I verify the Record outcome Heading structure
 	And I click '<TypeOfPassenger>' in Passenger details
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click on GB outcome
@@ -255,6 +311,18 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	And I should see the application status in 'Unsuccessful'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
+    And I verify the Reasons Heading structure
+    And I verify the Pet Travel Document Heading structure
+    And I verify the Microchip Heading structure
+    And I click on Microchip details Heading structure
+    And I verify the Visual check Heading structure
+    And I click on Pet details Heading structure
+    And I verify the Other Issues Heading structure
+    And I verify the Passanger details Heading structure
+    And I click on Pet owner details Heading structure
+    And I verify the Any relevant comments Heading structure
+    And I verify the Record outcome Heading structure
 	When I click '<TypeOfPassenger>' in Passenger details
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click 'Allowed' on SPS outcome
@@ -287,6 +355,18 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Reference numb
 	And I should see the application subtitle 'Your application summary'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
+    And I verify the Reasons Heading structure
+    And I verify the Pet Travel Document Heading structure
+    And I verify the Microchip Heading structure
+    And I click on Microchip details Heading structure
+    And I verify the Visual check Heading structure
+    And I click on Pet details Heading structure
+    And I verify the Other Issues Heading structure
+    And I verify the Passanger details Heading structure
+    And I click on Pet owner details Heading structure
+    And I verify the Any relevant comments Heading structure
+    And I verify the Record outcome Heading structure
 	And I click '<TypeOfPassenger>' in Passenger details
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click on GB outcome
@@ -315,6 +395,18 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Reference numb
 	And I should see the application status in 'Pending'
 	When I click continue button from application status page
 	Then I should navigate to Report non-compliance page
+	Then I verify the header text 'Check a pet travelling from GB to NI'
+    And I verify the Reasons Heading structure
+    And I verify the Pet Travel Document Heading structure
+    And I verify the Microchip Heading structure
+    And I click on Microchip details Heading structure
+    And I verify the Visual check Heading structure
+    And I click on Pet details Heading structure
+    And I verify the Other Issues Heading structure
+    And I verify the Passanger details Heading structure
+    And I click on Pet owner details Heading structure
+    And I verify the Any relevant comments Heading structure
+    And I verify the Record outcome Heading structure
 	When I click '<TypeOfPassenger>' in Passenger details
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click 'Allowed' on SPS outcome
@@ -476,5 +568,5 @@ Scenario Outline: Check GB to SPS PETS Travel Document details with Other Colour
 
 Examples:
 	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |
-	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |
+	| Ferry          | Cairnryan to Larne (P&O)      | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |
 

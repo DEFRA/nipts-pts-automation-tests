@@ -41,7 +41,17 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement AuthTravNoConfirmation => _driver.WaitForElementExists(By.XPath("//input[contains(@id,'oiFailAuthTravellerNoConfirmation')]"));
         private IWebElement OtherReason => _driver.WaitForElementExists(By.XPath("//input[contains(@id,'oiFailOther')]"));
         private IWebElement DetailsOfOutCome => _driver.WaitForElementExists(By.Id("spsOutcomeDetails"));
-
+        By ReasonsHeadingEle => By.XPath("//div[contains(@class,'govuk-section-break')]//h2[@class='govuk-heading-l']");
+        By MicrochipHeadingEle => By.XPath("//h3[@class='govuk-heading-m'][contains(text(),'Microchip')]");
+        By MicrochipDetailsHeadingEle => By.XPath("//span[@class='govuk-details__summary-text'][contains(text(),'Microchip details')]");
+        By VisualCheckHeadingEle => By.XPath("//h3[@class='govuk-heading-m'][contains(text(),'Visual check')]");
+        By PetDetailsHeadingEle => By.XPath("//span[@class='govuk-details__summary-text'][contains(text(),'Pet details')]");
+        By OtherIssuesHeadingEle => By.XPath("//h3[@class='govuk-heading-m'][contains(text(),'Other issues')]");
+        By PassengerDetailsHeadingEle => By.XPath("//h2[contains(@class,'govuk-heading-l')][contains(text(),'Passenger details')]");
+        By PetOwnerDetailsHeadingEle => By.XPath("//span[@class='govuk-details__summary-text'][contains(text(),'Pet owner details')]");
+        By RecordOutcomeHeadingEle => By.XPath("//h2[@class='govuk-heading-l'][contains(text(),'Record outcome')]");
+        By AnyRelevantCommentsHeadingEle => By.XPath("//h2[@class='govuk-heading-l']//label[contains(text(),'Any relevant comments')]");
+        By PetTravelDocumentHeadingEle => By.XPath("//h3[@class='govuk-heading-m'][contains(text(),'Pet Travel Document')]");
         #endregion
 
         #region Methods
@@ -248,8 +258,92 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
         }
 
+        public bool VerifyTheReasonsHeadingStructure()
+        {
+            if (_driver.FindElements(ReasonsHeadingEle).Count > 0)
+                return true;
+            else
+                return false;
+        }
 
+        public bool VerifyTheMicrochipHeadingStructure()
+        {
+            if (_driver.FindElements(MicrochipHeadingEle).Count > 0)
+                return true;
+            else
+                return false;
+        }
 
+        public void ClickOnTheMicrochipDetailsHeadingStructure()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", microchipNotFound);
+            _driver.FindElement(MicrochipDetailsHeadingEle).Click();
+        }
+
+        public bool VerifyTheVisualCheckHeadingStructure()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", PetNotMatchPTD);
+            if (_driver.FindElements(VisualCheckHeadingEle).Count > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public void ClickOnPetDetailsHeadingStructure()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", PetNotMatchPTD);
+            _driver.FindElement(PetDetailsHeadingEle).Click();
+        }
+
+        public bool VerifyTheOtherIssuesHeadingStructure()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", PotentialCommetcialMov);
+            if (_driver.FindElements(OtherIssuesHeadingEle).Count > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public bool VerifyThePassengerDetailsHeadingStructure()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", PotentialCommetcialMov);
+            if (_driver.FindElements(PassengerDetailsHeadingEle).Count > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public void ClickOnPetOwnerDetailsHeadingStructure()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", btnFootPassengerRadio);
+            _driver.FindElement(PetOwnerDetailsHeadingEle).Click();
+        }
+
+        public bool VerifyTheAnyRelevantCommentsHeadingStructure()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", RelevantComment);
+            if (_driver.FindElements(AnyRelevantCommentsHeadingEle).Count > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public bool VerifyTheRecordOutcomeHeadingStructure()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", DetailsOfOutCome);
+            if (_driver.FindElements(RecordOutcomeHeadingEle).Count > 0)
+                return true;
+            else
+                return false;
+        }
+
+        public bool VerifyThePetTravelDocumentHeadingStructure()
+        {
+            if (_driver.FindElements(PetTravelDocumentHeadingEle).Count > 0)
+                return true;
+            else
+                return false;
+        }
         #endregion
 
     }

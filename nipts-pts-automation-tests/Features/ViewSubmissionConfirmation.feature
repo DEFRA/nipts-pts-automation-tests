@@ -52,7 +52,7 @@ Scenario: View Submission confirmation page in WELSH
 		
 	Examples: 
 	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3       | PetSex | nextPage4    | nextPage5                       | nextPage6                | color | nextPage7                     | featureOption | nextPage8                                      | nextPage10                    | FooterLang1 | FooterLang2 | nextPage9 | Link1            |
-	| test2     | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | sex is your pet | Gwryw  | Beth yw rhyw | dyddiad geni eich anifail anwes | Beth yw prif liw eich ci | Du    | unrhyw nodweddion arwyddocaol | Nac oes       | Gwiriwch eich atebion a llofnodwch y datganiad | Lifelong pet travel documents | English     | Cymraeg     | Cais wedi | Rhowch eich barn |
+	| test      | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | sex is your pet | Gwryw  | Beth yw rhyw | dyddiad geni eich anifail anwes | Beth yw prif liw eich ci | Du    | unrhyw nodweddion arwyddocaol | Nac oes       | Gwiriwch eich atebion a llofnodwch y datganiad | Lifelong pet travel documents | English     | Cymraeg     | Cais wedi | Rhowch eich barn |
 
 
 	Scenario: Verify Change your details page in WELSH when postcode is not from England, scotland or Wales
