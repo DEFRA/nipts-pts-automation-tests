@@ -233,5 +233,11 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         {
             Assert.False(summaryPage?.VerifyPrintDownloadPDFLinksSuspendedUser(), "Print download link is displayed for Suspended User on summary PDF");
         }
+
+        [Then(@"verify Issuing Authority is not displayed on suspended user PTD")]
+        public void VerifyIssuingAuthSuspendedUserPTD()
+        {
+            Assert.True(summaryPage?.VerifyIssuingAuthNotDisplayedSuspendedUserPTD(), "Issuing Authority is displayed for Suspended User on summary PDF");
+        }
     }
 }

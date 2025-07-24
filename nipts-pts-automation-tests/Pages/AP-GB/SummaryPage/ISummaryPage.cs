@@ -10,5 +10,6 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.SummaryPage
         public bool ClickPrintdLink();
         public bool VerifyStatusOnAppSummary(string fieldName, string fieldValue);
         public bool VerifyPrintDownloadPDFLinksSuspendedUser();
+        public bool VerifyIssuingAuthNotDisplayedSuspendedUserPTD();
     }
 }
