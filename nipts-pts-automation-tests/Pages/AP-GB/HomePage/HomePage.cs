@@ -32,6 +32,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
         private IReadOnlyCollection<IWebElement> tableActionRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr/td[2]//a"), true);
         public IWebElement lnkManageAccount => _driver.WaitForElement(By.XPath("//a[@href='/User/ManageAccount']"));
         public IWebElement lifelongPetTraveDocuments => _driver.WaitForElement(By.XPath("//li[@class='login-nav__list-item']//a[@href='/TravelDocument']"));
+        public IWebElement SuspendedMsgEle => _driver.WaitForElement(By.XPath("//div[contains(@class,'govuk-warning-text')]/strong"));
 
         #endregion
 
@@ -194,7 +195,26 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
             else
                 return true;
         }
- 
+        public bool VerifySuspendedWarningMsg(string warningMsg)
+        {
+            return SuspendedMsgEle.Text.Contains(warningMsg);
+        }
+
+        public bool VerifyApplyBtnNotDisplayedSuspendedUser()
+        {
+
+            try
+            {
+                if (btnApplyForDocumentButton.Displayed)
+                    return true;
+                else return false;
+            }
+            catch (ElementNotVisibleException)
+            {
+                return false;
+            }
+        }
+
         #endregion
     }
 }

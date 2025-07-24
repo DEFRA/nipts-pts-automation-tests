@@ -44,6 +44,15 @@
       "UserEmail": "ptsdefra@gmail.com",
       "Useraddress": "4 ORTS ROAD, READING, BERKSHIRE, RG1 3JN, United Kingdom",
       "UserPhoneNumber": "07582487781"
+    },
+    {
+      "userId": "59 94 24 94 92 79",
+      "password": "Test@12345",
+      "logininfo": "test5",
+      "UserName": "test nikita",
+      "UserEmail": "nikita.phatak+2309@capgemini.com",
+      "Useraddress": "THE JET 67 BRUNSWICK STREET, LEAMINGTON SPA, WARWICKSHIRE, CV31 2EE",
+      "UserPhoneNumber": "+447833861122"
     }
   ]
 }

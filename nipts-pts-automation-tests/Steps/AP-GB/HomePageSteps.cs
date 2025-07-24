@@ -1,8 +1,9 @@
-﻿using Reqnroll.BoDi;
+﻿using nipts_pts_automation_tests.Pages;
 using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using Reqnroll;
+using Reqnroll.BoDi;
 
 namespace nipts_pts_automation_tests.Steps.AP_GB
 {
@@ -161,5 +162,17 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             Assert.IsTrue(HomePage?.VerifyPTDTableHeading(heading), "PTD table heading not matching ");
         }
 
+
+        [Then(@"I verify warning message '([^']*)' on homepage for suspended user")]
+        public void ThenVerifywarningMsdSuspendedUser(string warningMsg)
+        {
+            Assert.True(HomePage?.VerifySuspendedWarningMsg(warningMsg), "Message mismatch for suspended user");
+        }
+
+        [Then(@"verify Apply for a document button is not displayed for suspended user")]
+        public void ThenVerifyApplyForDocBtnNotPresent()
+        {
+            Assert.False(HomePage?.VerifyApplyBtnNotDisplayedSuspendedUser(), "Apply New Document button displayed for suspended user");
+        }
     }
 }

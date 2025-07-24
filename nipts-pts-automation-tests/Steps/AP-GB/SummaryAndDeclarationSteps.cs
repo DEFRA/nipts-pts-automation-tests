@@ -227,5 +227,11 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         {
             Assert.True(summaryPage?.VerifyStatusOnAppSummary(fieldName, fieldValue), "Status mistmatch on Pending application");
         }
+
+        [Then(@"verify print and download links are not displayed on suspended user PTD")]
+        public void ThenLinksSuspendedUserPTD()
+        {
+            Assert.False(summaryPage?.VerifyPrintDownloadPDFLinksSuspendedUser(), "Print download link is displayed for Suspended User on summary PDF");
+        }
     }
 }
