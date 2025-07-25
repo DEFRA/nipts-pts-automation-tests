@@ -24,6 +24,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.SummaryPage
         private IReadOnlyCollection<IWebElement> divPetOwnerDetails => _driver.WaitForElements(By.XPath("//div[@id='document-owner-card']//dl/div"));
         private IWebElement lnkPDFDownload => _driver.WaitForElement(By.XPath("//a[contains(text(),'Download your application')] | //a[contains(text(),'Download your document')]"));
         private By lnkPrint => By.XPath("//button[contains(text(),'Print your application')] | //button[contains(text(),'Print your document')]");
+        
         #endregion
 
         #region Methods
@@ -166,6 +167,31 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.SummaryPage
 
             return summary;
         }
+        public bool VerifyPrintDownloadPDFLinksSuspendedUser()
+        {
+            try
+            {
+                if ((lnkPDFDownload.Displayed) ||(_driver.FindElement(By.XPath("//button[contains(text(),'Print your document')]")).Displayed))
+                    return true;
+                else return false;
+            }
+            catch (ElementNotVisibleException)
+            {
+                return false;
+            }
+
+        }
+        public bool VerifyIssuingAuthNotDisplayedSuspendedUserPTD()
+        {
+            bool IssuingAuth = true;
+                if (_driver.FindElements(By.XPath("//div[@id='document-authority-card']//h2")).Count > 0)
+                IssuingAuth = false;
+
+            return IssuingAuth;
+        }
+
     }
+
 }
+
 #endregion

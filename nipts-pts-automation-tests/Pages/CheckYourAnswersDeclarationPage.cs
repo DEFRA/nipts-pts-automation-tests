@@ -76,8 +76,6 @@ namespace nipts_pts_automation_tests.Pages
         {
             string FieldName = "//dt[contains(text(),'" + fieldName + "')]";
             string FieldValue = "(//dt[contains(text(),'" + fieldName + "')]/..//dd)[1]";
-            Console.WriteLine(_driver.WaitForElement(By.XPath(FieldName)).Text);
-            Console.WriteLine(_driver.WaitForElement(By.XPath(FieldValue)).Text);
             return (_driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue));
         }
 
@@ -93,8 +91,6 @@ namespace nipts_pts_automation_tests.Pages
         {
             string FieldName = "(//dt[contains(text(),'" + fieldName + "')])[2]";
             string FieldValue = "((//dt[contains(text(),'" + fieldName + "')])[2])/following-sibling::dd[1]";
-            Console.WriteLine(_driver.WaitForElement(By.XPath(FieldName)).Text);
-            Console.WriteLine(_driver.WaitForElement(By.XPath(FieldValue)).Text);
             return (_driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue));
         }
 
