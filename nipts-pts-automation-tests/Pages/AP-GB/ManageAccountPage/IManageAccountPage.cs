@@ -4,7 +4,7 @@
     {
         void ClickOnManageYourAccountLink();
         void ClickOnUpdatedetailsLink();
-        void ClickOnChangePersonalInformationLink();
+        void ClickOnChangeNameLink();
         void ClickOnChangePersonalAddressLink();
         void EnterPhoneNumber(String phoneNumber);
         void ClickContinue();
@@ -16,5 +16,7 @@
         void EnterTheValidPostcode(string postcode);
         void ClickFindAddressButton();
         string SelectTheAddress();
+        void ClickOnChangePhoneLink();
+
     }
 }

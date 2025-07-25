@@ -39,10 +39,16 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             ManageAccountPage?.ClickOnUpdatedetailsLink();
         }
 
-        [Then(@"I click on Change Personal Information link")]
-        public void ThenIClickOnChangePersonalInformationLink()
+        [Then(@"I click on Change Name link")]
+        public void ThenIClickOnChangeNameLink()
         {
-            ManageAccountPage?.ClickOnChangePersonalInformationLink();
+            ManageAccountPage?.ClickOnChangeNameLink();
+        }
+
+        [Then(@"I click on Change Phone link")]
+        public void ThenIClickOnChangePhoneLink()
+        {
+            ManageAccountPage?.ClickOnChangePhoneLink();
         }
 
         [Then(@"I click on Change Personal Address link")]

@@ -13,7 +13,7 @@ Scenario: Change Phone Number in Manage account
 	Then I should navigate to Manage account
 	And I click on Manage your account
 	And I click on Update Details link
-	And I click on Change Personal Information link
+	And I click on Change Phone link
 	And I enter updated Phone number
 	And I click Continue
 	And I click on Back button
@@ -26,7 +26,7 @@ Scenario: Change Name in Manage account
 	Then I should navigate to Manage account
 	And I click on Manage your account
 	And I click on Update Details link
-	And I click on Change Personal Information link
+	And I click on Change Name link
 	And I enter updated First Name
 	And I enter updated Last Name
 	And I click Continue
@@ -37,11 +37,11 @@ Scenario: Change Name in Manage account
 	And I should navigate to Manage account
 	And I click on Manage your account
 	And I click on Update Details link
-	And I click on Change Personal Information link
+	And I click on Change Name link
 	And I revert the Pet Owner Name to the Original Name
 	And click on signout button and verify the signout message on pets
 
-@ignore
+#@ignore
 Scenario Outline: Change Address in Manage account
 	Then I should navigate to Manage account
 	And I click on Manage your account
