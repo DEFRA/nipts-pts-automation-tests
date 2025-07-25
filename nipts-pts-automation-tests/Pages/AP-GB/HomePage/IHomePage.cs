@@ -19,5 +19,7 @@
         void ClickOnLifelongPetTravelDocumentsFromHeader();
         bool VerifyTheLink(string link);
         public bool VerifyPTDTableHeading(string heading);
+        public bool VerifySuspendedWarningMsg(string warningMsg);
+        public bool VerifyApplyBtnNotDisplayedSuspendedUser();
     }
-}
+} 
