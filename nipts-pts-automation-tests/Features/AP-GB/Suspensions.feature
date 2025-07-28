@@ -139,8 +139,9 @@ Scenario Outline: Verify warning message and apply button for suspended user on 
 	Then I should see the application on pets in 'Suspended' status
 	Then I verify warning message 'You have been suspended from this scheme and cannot use your pet travel documents' on homepage for suspended user
 	And verify Apply for a document button is not displayed for suspended user
+	When I have clicked the View hyperlink from home page
 	And Approve suspended application with PTDNumber via backend
-	And I click on Back button in Pets Application
+	Then I click on Back button in Pets Application
 	Then I should see the application on pets in 'Approved' status
 	And click on signout button and verify the signout message on pets
 
