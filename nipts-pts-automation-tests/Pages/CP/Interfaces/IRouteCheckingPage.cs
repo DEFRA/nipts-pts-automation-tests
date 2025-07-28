@@ -19,5 +19,6 @@
         public bool VerifyFilterFlightMsg(string FlightMsgPTD, string FlightMsgAppno, string FlightMsgMichrochipNo);
         public bool VerifyFilterFlightHeaderMsg(string FlightHeaderMsg);
         bool VerifyTheHeaderText(string headerText);
+        bool VerifyScheduledDepartureHeading();
     }
 }

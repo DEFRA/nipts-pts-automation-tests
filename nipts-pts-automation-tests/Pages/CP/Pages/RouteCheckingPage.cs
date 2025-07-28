@@ -3,7 +3,6 @@ using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
-using Reqnroll;
 
 namespace nipts_pts_automation_tests.Pages.CP.Pages
 {
@@ -18,7 +17,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
-        private IWebElement HeaderTextEle => _driver.WaitForElement(By.XPath("//div[contains(@class,'govuk-heading-l')]"));
+        private IWebElement HeaderTextEle => _driver.WaitForElement(By.XPath("//header[@class='govuk-width-container pts-header-title']//div[@class='govuk-grid-column-two-thirds']//div[contains(@class,'govuk-heading-l')]"));
         private IWebElement pageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')]"));
         private IWebElement rdoFerry => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='routeOption']"));
         private IWebElement rdoFlight => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='routeOption-2']"));
@@ -26,7 +25,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement rdoCairnryan => _driver.WaitForElement(By.XPath("//label[normalize-space()='Cairnryan to Larne (P&O)']"));
         private IWebElement rdoLochRyan => _driver.WaitForElement(By.XPath("//label[normalize-space()='Loch Ryan to Belfast (Stena)']"));
         private IWebElement btnSaveAndContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Save and continue']"));
+        private By hourDropdownEle => By.XPath("//label[@for='sailingHour']");
         private IWebElement hourDropdown => _driver.WaitForElement(By.CssSelector("#sailingHour"));
+        private By minuteDropdownEle => By.XPath("//label[@for='sailingMinutes']");
         private IWebElement minuteDropdown => _driver.WaitForElement(By.CssSelector("#sailingMinutes"));
         private IWebElement txtBoxFlighterNumber => _driver.WaitForElement(By.XPath("//input[@id='routeFlight']"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
@@ -37,6 +38,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement txtFlightFilterMsg2 => _driver.WaitForElement(By.XPath("(//ul[contains(@class,'govuk-list govuk-list--bullet')]//li)[2]"));
         private IWebElement txtFlightFilterMsg3 => _driver.WaitForElement(By.XPath("(//ul[contains(@class,'govuk-list govuk-list--bullet')]//li)[3]"));
         private IWebElement txtFlightFilterHeaderMsg => _driver.WaitForElement(By.XPath("//div[contains(@class,'govuk-grid-column-two-thirds')]//p"));
+        private By ScheduledDepartureHeading => By.XPath("//fieldset[@aria-describedby='sailingHourHint']//h2[contains(text(),'Scheduled departure time')]");
         #endregion
 
         #region Methods
@@ -50,19 +52,14 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             if (radioButtonValue == "Ferry")
             {
 
-                //if (!rdoFerry.Selected)
-                //{
-                    //rdoFerry.Click();
-                    IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
-                    jsExecutor.ExecuteScript("arguments[0].click();", rdoFerry);
-                //}
+                IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
+                jsExecutor.ExecuteScript("arguments[0].click();", rdoFerry);
             }
             else if (radioButtonValue == "Flight")
             {
 
                 if (!rdoFlight.Selected)
                 {
-                    //rdoFlight.Click();
                     IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
                     jsExecutor.ExecuteScript("arguments[0].click();", rdoFlight);
                 }
@@ -92,11 +89,13 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string departureTime = $"'{hour}':'{minutes}'";
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourDropdown);
 
-            SelectElement selectHour = new SelectElement(hourDropdown);
-            selectHour.SelectByValue(hour);
-            SelectElement selectMinute = new SelectElement(minuteDropdown);
-            selectMinute.SelectByValue(minutes);
-
+            if (_driver.FindElements(hourDropdownEle).Count >0 || _driver.FindElements(minuteDropdownEle).Count >0)
+            { 
+                SelectElement selectHour = new SelectElement(hourDropdown);
+                selectHour.SelectByValue(hour);
+                SelectElement selectMinute = new SelectElement(minuteDropdown);
+                selectMinute.SelectByValue(minutes);
+            }
             return departureTime;
         }
 
@@ -226,6 +225,13 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return HeaderTextEle.Text.Contains(headerText);
         }
 
+        public bool VerifyScheduledDepartureHeading()
+        {
+            if(_driver.FindElements(ScheduledDepartureHeading).Count > 0)
+                return true;
+            else
+                return false;
+        }
         #endregion
 
     }

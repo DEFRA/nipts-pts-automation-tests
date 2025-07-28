@@ -14,6 +14,7 @@ Background:
 
 Scenario Outline: Verify validation text for not selection checking a ferry or a flight​
 	Then I have selected '<Transportation>' radio option
+    And I verify the Scheduled departure time heading
 	And I have provided Scheduled departure time
 	When I click save and continue button from route checke page
 	Then I should see an error '<ErrorMessage>' in route checking page
@@ -24,6 +25,7 @@ Examples:
 Scenario Outline: Verify validation text for not selection checking a ferry options
 	Then I have selected '<Transportation>' radio option
 	Then I select the '<FerryRoute>' radio option
+    And I verify the Scheduled departure time heading
 	And I have provided Scheduled departure time
 	When I click save and continue button from route checke page
 	Then I should see an error message "Select the ferry you are checking" in route checking page

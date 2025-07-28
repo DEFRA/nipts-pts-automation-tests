@@ -219,5 +219,12 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             Assert.True(_routeCheckingPage?.VerifyTheHeaderText(HeaderText), "Header Text not matching");
         }
+
+        [When(@"I verify the Scheduled departure time heading")]
+        [Then(@"I verify the Scheduled departure time heading")]
+        public void ThenIVerifyTheScheduledDepartureHeading()
+        {
+            Assert.True(_routeCheckingPage?.VerifyScheduledDepartureHeading(), "Scheduled departure time Heading not matching");
+        }
     }
 }
