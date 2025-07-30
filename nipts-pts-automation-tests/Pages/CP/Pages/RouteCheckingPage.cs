@@ -25,10 +25,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement rdoCairnryan => _driver.WaitForElement(By.XPath("//label[normalize-space()='Cairnryan to Larne (P&O)']"));
         private IWebElement rdoLochRyan => _driver.WaitForElement(By.XPath("//label[normalize-space()='Loch Ryan to Belfast (Stena)']"));
         private IWebElement btnSaveAndContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Save and continue']"));
-        private By hourDropdownEle => By.XPath("//label[@for='sailingHour']");
-        private IWebElement hourDropdown => _driver.WaitForElement(By.CssSelector("#sailingHour"));
-        private By minuteDropdownEle => By.XPath("//label[@for='sailingMinutes']");
-        private IWebElement minuteDropdown => _driver.WaitForElement(By.CssSelector("#sailingMinutes"));
+        private By hourEle => By.XPath("//label[@for='sailingHour']");
+        private IWebElement hourInput => _driver.WaitForElement(By.XPath("//input[@id='sailingHour']"));
+        private By minuteEle => By.XPath("//label[@for='sailingMinutes']");
+        private IWebElement minuteInput => _driver.WaitForElement(By.XPath("//input[@id='sailingMinutes']"));
         private IWebElement txtBoxFlighterNumber => _driver.WaitForElement(By.XPath("//input[@id='routeFlight']"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
         private IWebElement txtScheduleDepartureDay => _driver.WaitForElement(By.Id("departureDateDay"));
@@ -87,14 +87,14 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var hour = DateTime.Now.ToString("HH");
             var minutes = DateTime.Now.ToString("mm");
             string departureTime = $"'{hour}':'{minutes}'";
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourDropdown);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
 
-            if (_driver.FindElements(hourDropdownEle).Count >0 || _driver.FindElements(minuteDropdownEle).Count >0)
-            { 
-                SelectElement selectHour = new SelectElement(hourDropdown);
-                selectHour.SelectByValue(hour);
-                SelectElement selectMinute = new SelectElement(minuteDropdown);
-                selectMinute.SelectByValue(minutes);
+            if (_driver.FindElements(hourEle).Count >0 || _driver.FindElements(minuteEle).Count >0)
+            {
+                //SelectElement selectHour = new SelectElement(hourInput);
+                hourInput.SendKeys(hour);
+                //SelectElement selectMinute = new SelectElement(minuteInput);
+                minuteInput.SendKeys(minutes);
             }
             return departureTime;
         }
@@ -104,11 +104,11 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var hour = DateTime.Now.ToString("HH");
             var minutes = DateTime.Now.ToString("mm");
 
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourDropdown);
-            SelectElement selectHour = new SelectElement(hourDropdown);
-            selectHour.SelectByValue(hour);
-            SelectElement selectMinute = new SelectElement(minuteDropdown);
-            selectMinute.SelectByValue(minutes);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
+            //SelectElement selectHour = new SelectElement(hourInput);
+            hourInput.SendKeys(hour);
+            //SelectElement selectMinute = new SelectElement(minuteInput);
+            minuteInput.SendKeys(minutes);
         }
 
         public void SelectSaveAndContinue()
@@ -148,7 +148,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         public void SelectDropDownDepartureTimeMinuteOnly()
         {
 
-            SelectElement selectMinute = new SelectElement(minuteDropdown);
+            SelectElement selectMinute = new SelectElement(minuteInput);
             selectMinute.SelectByValue("30");
         }
 
@@ -158,10 +158,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var minutes = DateTime.Now.ToString("mm");
             string departureTime = $"'{hour}':'{minutes}'";
 
-            SelectElement selectHour = new SelectElement(hourDropdown);
-            selectHour.SelectByValue(hour);
-            SelectElement selectMinute = new SelectElement(minuteDropdown);
-            selectMinute.SelectByValue(minutes);
+            //SelectElement selectHour = new SelectElement(hourInput);
+            hourInput.SendKeys(hour);
+            //SelectElement selectMinute = new SelectElement(minuteInput);
+            minuteInput.SendKeys(minutes);
 
             return departureTime;
         }
@@ -186,12 +186,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var hour = DateTime.Now.ToString("HH");
             var minutes = DateTime.Now.AddMinutes(1).ToString("mm");
             string departureTime = $"'{hour}':'{minutes}'";
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourDropdown);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
 
-            SelectElement selectHour = new SelectElement(hourDropdown);
-            selectHour.SelectByValue(hour);
-            SelectElement selectMinute = new SelectElement(minuteDropdown);
-            selectMinute.SelectByValue(minutes);
+            //SelectElement selectHour = new SelectElement(hourInput);
+            hourInput.SendKeys(hour);
+            //SelectElement selectMinute = new SelectElement(minuteInput);
+            minuteInput.SendKeys(minutes);
 
             return departureTime;
         }
@@ -201,12 +201,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var hour = DateTime.Now.ToString("HH");
             var minutes = DateTime.Now.AddMinutes(-1).ToString("mm");
             string departureTime = $"'{hour}':'{minutes}'";
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourDropdown);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
 
-            SelectElement selectHour = new SelectElement(hourDropdown);
-            selectHour.SelectByValue(hour);
-            SelectElement selectMinute = new SelectElement(minuteDropdown);
-            selectMinute.SelectByValue(minutes);
+            //SelectElement selectHour = new SelectElement(hourInput);
+            hourInput.SendKeys(hour);
+            //SelectElement selectMinute = new SelectElement(minuteInput);
+            minuteInput.SendKeys(minutes);
 
             return departureTime;
         }
