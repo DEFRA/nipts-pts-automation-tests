@@ -93,6 +93,15 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [Then(@"I should see hint text ""([^""]*)"" in route checking page")]
+        public void ThenIShouldSeeHintTextInRouteCheckingPage(string hintText)
+        {
+            if (!string.IsNullOrEmpty(hintText))
+            {
+                Assert.True(_routeCheckingPage?.VerifyHintText(hintText), $"There is no hint Text found with - {hintText}");
+            }
+        }
+
         [Then(@"I should see an error message ""([^""]*)"" in route checking page")]
         public void ThenIShouldSeeAnErrorMessageInRouteCheckingPage(string errorMessage)
         {

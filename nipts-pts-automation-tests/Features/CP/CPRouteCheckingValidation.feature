@@ -123,8 +123,9 @@ Scenario Outline: Verify validation text for date field when user enter the date
 	Then I provided exact date less than 48 hours from the current date
 	Then I provide the '<Flight number>' in the box
 	And  I have provided Scheduled departure time
+	And I should see hint text "Enter the scheduled departure time using the 24-hour clock format, for example 15:30 or 01:05" in route checking page
 	When I click save and continue button from route checke page
-	Then I should see an error message "The flight or ferry must have departed in the past 48 hours or departs within the next 24 hours" in route checking page
+	Then I should navigate to Welcome page
 Examples:
 	| Transportation | Flight number |
 	| Flight         | 1234          |
@@ -146,7 +147,8 @@ Scenario Outline: Verify validation text for blank Schedule Departure Time
 	Then I have selected '<ScheduledDepartureDay>''<ScheduledDepartureMonth>''<ScheduledDepartureYear>'Date option
 	Then I provide the '<Flight number>' in the box
 	When I click save and continue button from route checke page
-	Then I should see an error message "Enter the scheduled departure time, for example 15:30" in route checking page
+	Then I should see an error message "Enter the scheduled departure time in the correct 24-hour clock format, for example 06:04 or 18:00" in route checking page
+	Then I should see hint text "Enter the scheduled departure time using the 24-hour clock format, for example 15:30 or 01:05" in route checking page
 Examples:
 	| ScheduledDepartureDay | ScheduledDepartureMonth | ScheduledDepartureYear | Transportation | Flight number |
 	| 19                    | 10                      | 2024                   | Flight         | 1234          |
@@ -156,7 +158,8 @@ Scenario Outline: Verify validation text for blank hour field and enter value in
 	Then I provide the '<Flight number>' in the box
 	And  I have provided Scheduled departure time in hours field only
 	When I click save and continue button from route checke page
-	Then I should see an error message "Enter the scheduled departure time, for example 15:30" in route checking page
+	Then I should see an error message "Enter the scheduled departure time in the correct 24-hour clock format, for example 06:04 or 18:00" in route checking page
+	Then I should see hint text "Enter the scheduled departure time using the 24-hour clock format, for example 15:30 or 01:05" in route checking page
 Examples:
 	| ScheduledDepartureDay | ScheduledDepartureMonth | ScheduledDepartureYear | Transportation | Flight number |
 	| 19                    | 10                      | 2024                   | Flight         | 1234          |
@@ -221,6 +224,7 @@ Scenario Outline: Verify positive flow for date field when user enter the date a
 	Then I provided date that exceeds 24 hours from the current date
 	Then I provide the '<Flight number>' in the box
 	And  I provided time that exceeds 23 hours and 59 minute from the current time
+	Then I should see hint text "Enter the scheduled departure time using the 24-hour clock format, for example 15:30 or 01:05" in route checking page
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 Examples:

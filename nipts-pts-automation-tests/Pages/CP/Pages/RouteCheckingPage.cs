@@ -25,10 +25,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement rdoCairnryan => _driver.WaitForElement(By.XPath("//label[normalize-space()='Cairnryan to Larne (P&O)']"));
         private IWebElement rdoLochRyan => _driver.WaitForElement(By.XPath("//label[normalize-space()='Loch Ryan to Belfast (Stena)']"));
         private IWebElement btnSaveAndContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Save and continue']"));
-        private By hourEle => By.XPath("//label[@for='sailingHour']");
-        private IWebElement hourInput => _driver.WaitForElement(By.XPath("//input[@id='sailingHour']"));
-        private By minuteEle => By.XPath("//label[@for='sailingMinutes']");
-        private IWebElement minuteInput => _driver.WaitForElement(By.XPath("//input[@id='sailingMinutes']"));
+        private By hourEle => By.XPath("//label[@for='sailingHour'][contains(text(),'Hours')]");
+        private IWebElement hourInput => _driver.WaitForElement(By.XPath("//input[contains(@Class,'govuk-input--width-2')][@id='sailingHour']"));
+        private By minuteEle => By.XPath("//label[@for='sailingMinutes'][contains(text(),'Minutes')]");
+        private IWebElement minuteInput => _driver.WaitForElement(By.XPath("//input[contains(@Class,'govuk-input--width-2')][@id='sailingMinutes']"));
         private IWebElement txtBoxFlighterNumber => _driver.WaitForElement(By.XPath("//input[@id='routeFlight']"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
         private IWebElement txtScheduleDepartureDay => _driver.WaitForElement(By.Id("departureDateDay"));
@@ -39,6 +39,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement txtFlightFilterMsg3 => _driver.WaitForElement(By.XPath("(//ul[contains(@class,'govuk-list govuk-list--bullet')]//li)[3]"));
         private IWebElement txtFlightFilterHeaderMsg => _driver.WaitForElement(By.XPath("//div[contains(@class,'govuk-grid-column-two-thirds')]//p"));
         private By ScheduledDepartureHeading => By.XPath("//fieldset[@aria-describedby='sailingHourHint']//h2[contains(text(),'Scheduled departure time')]");
+        private IWebElement sailingHourHintText => _driver.WaitForElement(By.XPath("//div[@id='sailingHourHint'][contains(@class,'govuk-hint')]"));
         #endregion
 
         #region Methods
@@ -91,9 +92,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
             if (_driver.FindElements(hourEle).Count >0 || _driver.FindElements(minuteEle).Count >0)
             {
-                //SelectElement selectHour = new SelectElement(hourInput);
                 hourInput.SendKeys(hour);
-                //SelectElement selectMinute = new SelectElement(minuteInput);
                 minuteInput.SendKeys(minutes);
             }
             return departureTime;
@@ -105,9 +104,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var minutes = DateTime.Now.ToString("mm");
 
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
-            //SelectElement selectHour = new SelectElement(hourInput);
             hourInput.SendKeys(hour);
-            //SelectElement selectMinute = new SelectElement(minuteInput);
             minuteInput.SendKeys(minutes);
         }
 
@@ -135,6 +132,11 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return false;
         }
 
+        public bool VerifyHintText(string hintText)
+        { 
+            return sailingHourHintText.Text.Contains(hintText);
+        }
+
         public void SelectScheduledDepartureDate(string departureDay, string departureMonth, string departureYear)
         {
             txtScheduleDepartureDay.Clear();
@@ -147,9 +149,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void SelectDropDownDepartureTimeMinuteOnly()
         {
-
-            SelectElement selectMinute = new SelectElement(minuteInput);
-            selectMinute.SelectByValue("30");
+            minuteInput.SendKeys("30");
         }
 
         public string SelectfutureDropDownDepartureTime()
@@ -158,9 +158,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var minutes = DateTime.Now.ToString("mm");
             string departureTime = $"'{hour}':'{minutes}'";
 
-            //SelectElement selectHour = new SelectElement(hourInput);
             hourInput.SendKeys(hour);
-            //SelectElement selectMinute = new SelectElement(minuteInput);
             minuteInput.SendKeys(minutes);
 
             return departureTime;
@@ -188,9 +186,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string departureTime = $"'{hour}':'{minutes}'";
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
 
-            //SelectElement selectHour = new SelectElement(hourInput);
             hourInput.SendKeys(hour);
-            //SelectElement selectMinute = new SelectElement(minuteInput);
             minuteInput.SendKeys(minutes);
 
             return departureTime;
@@ -203,9 +199,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string departureTime = $"'{hour}':'{minutes}'";
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
 
-            //SelectElement selectHour = new SelectElement(hourInput);
             hourInput.SendKeys(hour);
-            //SelectElement selectMinute = new SelectElement(minuteInput);
             minuteInput.SendKeys(minutes);
 
             return departureTime;

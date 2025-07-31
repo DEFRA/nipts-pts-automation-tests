@@ -20,5 +20,6 @@
         public bool VerifyFilterFlightHeaderMsg(string FlightHeaderMsg);
         bool VerifyTheHeaderText(string headerText);
         bool VerifyScheduledDepartureHeading();
+        bool VerifyHintText(string hintText);
     }
 }

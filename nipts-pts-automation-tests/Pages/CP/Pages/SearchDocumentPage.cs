@@ -20,6 +20,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement pageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')]"));
         private IWebElement btnSearch => _driver.WaitForElement(By.XPath("//button[normalize-space()='Search']"));
         private IWebElement btnClearSearch => _driver.WaitForElement(By.XPath("//a[@id='clearSearchButton']"));
+        private By txtPTDSearchBoxLabel => By.XPath("//label[@for='ptdNumberSearch'][contains(text(),'PTD number, not including the GB826 prefix')]");
+        private By txtApplicationNumberSearchBoxLabel => By.XPath("//label[@for='applicationNumberSearch'][contains(text(),'Application number')]");
+        private By txtMicrochipNumberSearchBoxLabel => By.XPath("//label[@for='microchipNumber'][contains(text(),'Microchip number')]");
         private IWebElement txtPTDSearchBox => _driver.WaitForElementExists(By.XPath("//input[@id='ptdNumberSearch']"));
         private IWebElement txtApplicationNumberSearchBox => _driver.WaitForElement(By.XPath("//input[@id='applicationNumberSearch']"));
         private IWebElement txtMicrochipNumberSearchBox => _driver.WaitForElement(By.XPath("//input[@id='microchipNumber']"));
@@ -69,18 +72,27 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         }
         public void EnterPTDNumber(string ptdNumber1)
         {
-            txtPTDSearchBox.SendKeys(ptdNumber1);
+            if (_driver.FindElements(txtPTDSearchBoxLabel).Count > 0)
+            {
+                txtPTDSearchBox.SendKeys(ptdNumber1);
+            }
         }
 
         public void EnterMicrochipNumber(string microchipNumber)
         {
-            txtMicrochipNumberSearchBox.SendKeys(microchipNumber);
+            if (_driver.FindElements(txtMicrochipNumberSearchBoxLabel).Count > 0)
+            {
+                txtMicrochipNumberSearchBox.SendKeys(microchipNumber);
+            }
         }
 
         public void EnterApplicationNumber(string applicationNumber)
         {
-            
-            txtApplicationNumberSearchBox.SendKeys(applicationNumber);
+
+            if (_driver.FindElements(txtApplicationNumberSearchBoxLabel).Count > 0)
+            {
+                txtApplicationNumberSearchBox.SendKeys(applicationNumber);
+            }
         }
 
         public void SearchButton()
