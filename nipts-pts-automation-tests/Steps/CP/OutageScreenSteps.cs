@@ -47,6 +47,13 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.IsTrue(outagePage?.VerifyHeadingOnPage(text), "Heading not matching");
         }
 
+
+        [Then(@"verify Header text '([^']*)' on page")]
+        public void ThenVerifyHeaderTextOnPage(string text)
+        {
+            Assert.IsTrue(outagePage?.VerifyHeaderTextOnPage(text), "Header Text not matching");
+        }
+
         [Then(@"verify Account and SignOut links not visible on page")]
         public void ThenVerifyAccountAndSignOutLinksOnPage()
         {

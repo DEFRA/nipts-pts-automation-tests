@@ -93,7 +93,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             if (_driver.FindElements(hourEle).Count >0 || _driver.FindElements(minuteEle).Count >0)
             {
                 hourInput.SendKeys(hour);
+                Thread.Sleep(1000);
                 minuteInput.SendKeys(minutes);
+                Thread.Sleep(1000);
             }
             return departureTime;
         }
@@ -105,7 +107,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
             hourInput.SendKeys(hour);
+            Thread.Sleep(1000);
             minuteInput.SendKeys(minutes);
+            Thread.Sleep(1000);
         }
 
         public void SelectSaveAndContinue()
@@ -159,7 +163,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string departureTime = $"'{hour}':'{minutes}'";
 
             hourInput.SendKeys(hour);
+            Thread.Sleep(1000);
             minuteInput.SendKeys(minutes);
+            Thread.Sleep(1000);
 
             return departureTime;
         }
@@ -187,7 +193,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
 
             hourInput.SendKeys(hour);
+            Thread.Sleep(1000);
             minuteInput.SendKeys(minutes);
+            Thread.Sleep(1000);
 
             return departureTime;
         }
@@ -200,7 +208,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
 
             hourInput.SendKeys(hour);
+            Thread.Sleep(1000);
             minuteInput.SendKeys(minutes);
+            Thread.Sleep(1000);
 
             return departureTime;
         }
