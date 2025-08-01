@@ -73,7 +73,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         [Then(@"I should navigate to the AccessibilityStatement details correct page")]
         public void ThenIShouldNavigateToTheAccessibilityStatementDetailsCorrectPage()
         {
-            var pageTitle = "Accessibility statement for taking a dog, cat or ferret from Great Britain to Northern Ireland";
+            var pageTitle = "Accessibility statement for ‘Taking a dog, cat or ferret from Great Britain to Northern Ireland’";
             Assert.IsTrue(HomePage?.IsNextPageLoaded(pageTitle), $"The page {pageTitle} not loaded!");
         }
 
