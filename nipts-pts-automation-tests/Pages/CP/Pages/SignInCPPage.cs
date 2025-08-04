@@ -27,7 +27,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement SignIn => _driver.WaitForElement(By.XPath("//button[contains(@id,'continue')]"));
         private IWebElement txtLoging => _driver.WaitForElement(By.XPath("//input[@id='password']"));
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Continue']"));
-        private IWebElement SignOut => _driver.WaitForElement(By.XPath("//a[@href='/signout']"));
+        private IWebElement SignOut => _driver.WaitForElement(By.XPath("//a[@href='/signout'] | //button[contains(text(),'Sign out')]"));
         private IWebElement AcceptAdditionalCookies => _driver.WaitForElement(By.XPath("//button[contains(text(),'Accept analytics cookies')]"));
         private IWebElement HideCookieMessage => _driver.WaitForElement(By.XPath("//a[contains(text(),'Hide cookie message')]"));
         private IWebElement lnkAccessibilityStatement => _driver.WaitForElement(By.XPath("//p[@class='govuk-body']//a"));
@@ -92,6 +92,14 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             lnkAccessibilityStatement.Click();
             
+        }
+
+        public bool VerifySignoutButtonNotVisibleOnCPWAFPage()
+        {
+            if(_driver.FindElements(By.XPath("//button[contains(text(),'Sign out')]")).Count > 0)
+                return false;
+            else
+                return true;
         }
         #endregion
 
