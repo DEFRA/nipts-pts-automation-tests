@@ -92,10 +92,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
             if (_driver.FindElements(hourEle).Count >0 || _driver.FindElements(minuteEle).Count >0)
             {
-                hourInput.SendKeys(hour);
-                Thread.Sleep(1000);
-                minuteInput.SendKeys(minutes);
-                Thread.Sleep(1000);
+                //hourInput.SendKeys(hour);
+                //Thread.Sleep(1000);
+                //minuteInput.SendKeys(minutes);
+                //Thread.Sleep(1000);
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", hourInput, hour);
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", minuteInput, minutes);
             }
             return departureTime;
         }
@@ -106,10 +108,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var minutes = DateTime.Now.ToString("mm");
 
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
-            hourInput.SendKeys(hour);
-            Thread.Sleep(1000);
-            minuteInput.SendKeys(minutes);
-            Thread.Sleep(1000);
+            //hourInput.SendKeys(hour);
+            //Thread.Sleep(1000);
+            //minuteInput.SendKeys(minutes);
+            //Thread.Sleep(1000);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", hourInput, hour);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", minuteInput, minutes);
         }
 
         public void SelectSaveAndContinue()
@@ -162,10 +166,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var minutes = DateTime.Now.ToString("mm");
             string departureTime = $"'{hour}':'{minutes}'";
 
-            hourInput.SendKeys(hour);
-            Thread.Sleep(1000);
-            minuteInput.SendKeys(minutes);
-            Thread.Sleep(1000);
+            //hourInput.SendKeys(hour);
+            //Thread.Sleep(1000);
+            //minuteInput.SendKeys(minutes);
+            //Thread.Sleep(1000);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", hourInput, hour);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", minuteInput, minutes);
 
             return departureTime;
         }
@@ -192,10 +198,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string departureTime = $"'{hour}':'{minutes}'";
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
 
-            hourInput.SendKeys(hour);
-            Thread.Sleep(1000);
-            minuteInput.SendKeys(minutes);
-            Thread.Sleep(1000);
+            //hourInput.SendKeys(hour);
+            //Thread.Sleep(1000);
+            //minuteInput.SendKeys(minutes);
+            //Thread.Sleep(1000);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", hourInput, hour);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", minuteInput, minutes);
 
             return departureTime;
         }
@@ -207,10 +215,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string departureTime = $"'{hour}':'{minutes}'";
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
 
-            hourInput.SendKeys(hour);
-            Thread.Sleep(1000);
-            minuteInput.SendKeys(minutes);
-            Thread.Sleep(1000);
+            //hourInput.SendKeys(hour);
+            //Thread.Sleep(1000);
+            //minuteInput.SendKeys(minutes);
+            //Thread.Sleep(1000);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", hourInput, hour);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", minuteInput, minutes);
 
             return departureTime;
         }
