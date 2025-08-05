@@ -108,6 +108,14 @@ namespace nipts_pts_automation_tests.Steps.CP
 
         }
 
+        [Then(@"verify bulleted points under Checks on search result page")]
+        public void ThenVerifyBulletedPointOnSearchResultsPage()
+        {
+
+            Assert.IsTrue(_searchResultsPassFailPage?.VerifyBulletedPointOnSearchResultsPage(), $"Bulleted Points mismatch on view results page");
+
+        }
+
     }
 }
 

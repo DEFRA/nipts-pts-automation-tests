@@ -91,7 +91,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         [Then(@"I verify signout button not visible on CP WAF Page")]
         public void ThenIVerifySignoutButtonNotVisibleOnCPWAFPage()
         {
-            Assert.True(_signInCPPage?.VerifySignoutButtonNotVisibleOnCPWAFPage(), "Not able to sign out");
+            Assert.True(_signInCPPage?.VerifySignoutButtonNotVisibleOnCPWAFPage(), "Sign out button is visible");
         }
     }
 }
