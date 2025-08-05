@@ -181,7 +181,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         public string SelectDropDownDepartureTimeJustOneMinuteLaterThanCurrent()
         {
             var hour = DateTime.Now.ToString("HH");
-            var minutes = DateTime.Now.AddMinutes(2).ToString("mm");
+            var minutes = DateTime.Now.AddMinutes(4).ToString("mm");
             string departureTime = $"'{hour}':'{minutes}'";
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
 
