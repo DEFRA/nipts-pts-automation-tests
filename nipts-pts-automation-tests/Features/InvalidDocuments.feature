@@ -377,11 +377,12 @@ Scenario Outline: Verify latest application is displayed at the top on Invalid d
 	And   I should see the application on pets in 'Yn aros' status
 	When  I have clicked the View hyperlink from home page
 	Then  verify next page 'Crynodeb o' is loaded
-	When  Revoke an application via backend
+	When  Approve an application via backend
 	Then  click on back
-	And   I should not see the application in the Dashboard
+	And   I should see the application in 'cymeradwyo' status
+	When  Revoke Approved application via backend
+	Then   I should not see the application in the Dashboard
 	When  click View Invalid documents link in WELSH
-	Then  verify next page 'Dogfennau annilys' is loaded
 	Then  verify order of new application is displayed at the top of the page 
 	And   click on signout button and verify the signout message on pets
 
