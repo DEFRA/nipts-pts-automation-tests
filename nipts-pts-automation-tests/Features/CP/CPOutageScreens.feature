@@ -11,10 +11,11 @@ Scenario Outline: Verify CP 403 Outage page
 	Then verify heading '<Heading>' on page
 	And verify Header text '<HeaderText>' on page
 	And verify text '<text1>' on page
+    And click on signout button on CP and verify the signout message
 
 	Examples:
-	| Heading                                            | HeaderText                           | OutageLink                   | text1                                      | 
-	| You cannot access this page or perform this action | Check a pet travelling from GB to NI | go back to the previous page | Contact your team leader with any queries. | 
+	| Heading                                            | HeaderText                           | text1                                      | 
+	| You cannot access this page or perform this action | Check a pet travelling from GB to NI | Contact your team leader with any queries. | 
 
 Scenario Outline: Verify CP 404 Outage page
 	Given I navigate to the port checker application

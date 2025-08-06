@@ -14,8 +14,8 @@ namespace nipts_pts_automation_tests.Pages
         #region Page Objects
 
         private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading'] | //h1[@class='govuk-panel__title']"));
-        private By Englishclick => By.XPath("//a[contains(@id,'localeEn')]");
-        private By Welshclick =By.XPath("//a[contains(@id,'localeCy')]");
+        private By Englishclick => By.XPath("//a[contains(@id,'localeEn')] | //span[text()='English']");
+        private By Welshclick =By.XPath("//a[contains(@id,'localeCy')] | //span[contains(text(),'Cymraeg')]");
         private IWebElement ApplyForADocEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Apply for a document')] | //button[contains(text(),'Gwneud cais am ddogfen')]"));
         private IWebElement ContinueWelshEle => _driver.WaitForElement(By.XPath("//button[contains(text(),'Parhau')] | //button[contains(text(),'Continue')]"));
         private IWebElement BackWelshEle => _driver.WaitForElement(By.XPath("//a[contains(text(),'Yn ôl')]"));

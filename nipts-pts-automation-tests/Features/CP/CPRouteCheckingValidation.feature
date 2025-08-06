@@ -122,7 +122,7 @@ Scenario Outline: Verify validation text for date field when user enter the date
 	Then I have selected '<Transportation>' radio option
 	Then I provided exact date less than 48 hours from the current date
 	Then I provide the '<Flight number>' in the box
-	And  I have provided Scheduled departure time
+	And  I provided time that exceeds 24 hours and 1 minute from the current time
 	And I should see hint text "Enter the scheduled departure time using the 24-hour clock format, for example 15:30 or 01:05" in route checking page
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page

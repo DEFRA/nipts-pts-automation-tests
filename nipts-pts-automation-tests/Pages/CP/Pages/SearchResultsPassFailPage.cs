@@ -28,6 +28,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement PetMicrochipNumEle => _driver.WaitForElementExists(By.XPath("//dt[contains(text(),'Microchip number')]/following-sibling::dd"));
         private IWebElement PetMicrochipDateEle => _driver.WaitForElementExists(By.XPath("//dt[contains(text(),'Implant or scan date')]/following-sibling::dd"));
         private IWebElement PetsDateOfBirthEle => _driver.WaitForElementExists(By.XPath("//dt[contains(text(),'Date of birth')]/following-sibling::dd"));
+        private IWebElement ChecksBullet1 => _driver.WaitForElementExists(By.XPath("//h2[@class='govuk-heading-l']/../..//li[1]"));
+        private IWebElement ChecksBullet2 => _driver.WaitForElementExists(By.XPath("//h2[@class='govuk-heading-l']/../..//li[2]"));
 
         #endregion
 
@@ -86,6 +88,15 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             string PetMicrochipDate = PetMicrochipDateEle.Text;
             return PetMicrochipDateEle.Text.Contains(petMicrochipDate);
+        }
+
+        public bool VerifyBulletedPointOnSearchResultsPage()
+        {
+            if (ChecksBullet1.Text.Contains("there's a microchip and it matches the PTD")
+                && ChecksBullet2.Text.Contains("the species matches the PTD"))
+                return true;
+            else
+                return false;
         }
 
         #endregion
