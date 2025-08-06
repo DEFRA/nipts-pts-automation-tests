@@ -75,6 +75,7 @@ namespace nipts_pts_automation_tests.Hooks
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PetSpeciesPage, IPetSpeciesPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<CheckYourAnswersDeclarationPage, ICheckYourAnswersDeclarationPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<ManualAddressPage, IManualAddressPage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<InvalidDocumentsPage, IInvalidDocumentsPage>());
 
             //AP GB
             //_objectContainer.RegisterInstanceAs(GetBaseWithContainer<UserObject, IUserObject>());
