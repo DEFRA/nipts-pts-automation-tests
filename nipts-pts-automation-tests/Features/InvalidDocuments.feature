@@ -72,9 +72,11 @@ Scenario Outline: Verify canceled status on Invalid documents page in WELSH
 	And   I should see the application on pets in 'Yn aros' status
 	When  I have clicked the View hyperlink from home page
 	Then  verify next page 'Crynodeb o' is loaded
-	When  Revoke an application via backend
+	When  Approve an application via backend
 	Then  click on back
-	And   I should not see the application in the Dashboard
+	And   I should see the application in 'cymeradwyo' status
+	When  Revoke Approved application via backend
+	Then   I should not see the application in the Dashboard
 	When  click View Invalid documents link in WELSH
 	Then  verify next page 'Dogfennau annilys' is loaded
 	Then  I should see the application in 'canslo' status 
@@ -226,15 +228,18 @@ Scenario Outline: Verify canceled status PTD on Invalid documents page in WELSH
 	And   I should see the application on pets in 'Yn aros' status
 	When  I have clicked the View hyperlink from home page
 	Then  verify next page 'Crynodeb o' is loaded
-	When  Revoke an application via backend
+	When  Approve an application via backend
 	Then  click on back
-	And   I should not see the application in the Dashboard
+	And   I should see the application in 'cymeradwyo' status
+	When  Revoke Approved application via backend
+	Then  I should not see the application in the Dashboard
 	When  click View Invalid documents link in WELSH
 	Then  verify next page 'Dogfennau annilys' is loaded
 	Then  I should see the application in 'canslo' status 
 	When  I have clicked the View hyperlink from invalid documents page
 	Then  verify next page 'Dogfen teithio' is loaded
 	Then  verify status on the application summary as 'Statws' 'canslo' on Invalid documents page 
+	And   verify print and download links are not displayed on PTD
 	And   click on signout button and verify the signout message on pets
 
 Examples:
@@ -307,6 +312,7 @@ Scenario Outline: Verify unsuccessful status PTD on Invalid documents page in WE
 	When  I have clicked the View hyperlink from invalid documents page
 	Then  verify next page 'Crynodeb o' is loaded
 	Then  verify status on the application summary as 'Statws' 'aflwyddiannus' on Invalid documents page 
+	And   verify print and download links are not displayed on PTD
 	And   click on signout button and verify the signout message on pets
 
 Examples:
