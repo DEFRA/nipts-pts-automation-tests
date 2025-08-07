@@ -1,4 +1,5 @@
-﻿Feature: InvalidDocuments
+﻿@Regression
+Feature: InvalidDocuments
 
 Verify Invalid documents on Application Portal
 
