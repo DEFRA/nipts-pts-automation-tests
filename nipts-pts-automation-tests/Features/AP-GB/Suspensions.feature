@@ -207,7 +207,7 @@ Scenario Outline: Verify suspended status, print & download links on suspended P
 	When I have clicked the View hyperlink from home page
 	Then verify status on the application summary as 'Status' 'Suspended'
 	And verify Issuing Authority is not displayed on suspended user PTD
-	And verify print and download links are not displayed on suspended user PTD
+	And verify print and download links are not displayed on PTD
 	And Approve suspended application with PTDNumber via backend
 	And click on signout button and verify the signout message on pets
 
