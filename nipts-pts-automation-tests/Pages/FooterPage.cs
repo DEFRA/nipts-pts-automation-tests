@@ -36,8 +36,7 @@ namespace nipts_pts_automation_tests.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,2000)", "");
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             jsExecutor.ExecuteScript("arguments[0].click();", CookiesLink);
-            //return PageHeading.Text.Contains("Cwcis");
-            return true;
+            return PageHeading.Text.Contains("Cwcis");
         }
 
         public bool ClickOnAccessibilityFooterLink()
@@ -45,16 +44,14 @@ namespace nipts_pts_automation_tests.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,2000)", "");
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             jsExecutor.ExecuteScript("arguments[0].click();", AccessibilityLink);
-            //return AccessibilityLink.Text.Contains("Datganiad hygyrchedd");
-            return true;
+            return AccessibilityLink.Text.Contains("Datganiad hygyrchedd");
         }
 
         public bool ClickOnPrivacyFooterLink()
         {
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             jsExecutor.ExecuteScript("arguments[0].click();", PrivacyLink);
-            //return PrivacyLink.Text.Contains("Hysbysiad preifatrwydd");
-            return true;
+            return PrivacyLink.Text.Contains("Hysbysiad preifatrwydd");
         }
 
         public bool ClickOnTCsFooterLink()
@@ -62,8 +59,7 @@ namespace nipts_pts_automation_tests.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,2000)", "");
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             jsExecutor.ExecuteScript("arguments[0].click();", TermsAndConditionsLink);
-            //return TermsAndConditionsLink.Text.Contains("Telerau ac amodau");
-            return true;
+            return TermsAndConditionsLink.Text.Contains("Telerau ac amodau");
         }
 
         public bool VerifyFooterText(string FooterHintText)
@@ -90,6 +86,22 @@ namespace nipts_pts_automation_tests.Pages
                 }
             }
             return status;
+        }
+
+        public void OpenAccessibilityLinkPage()
+        {
+            string url = "https://tst-take-your-pet-from-gb-to-ni.azure.defra.cloud/Content/AccessibilityStatement";
+            _driver?.Navigate().GoToUrl(url);
+        }
+        public void OpenCookiesLinkPage()
+        {
+            string url = "https://tst-take-your-pet-from-gb-to-ni.azure.defra.cloud/Content/Cookies";
+            _driver?.Navigate().GoToUrl(url);
+        }
+        public void OpenTCsLinkPage()
+        {
+            string url = "https://tst-take-your-pet-from-gb-to-ni.azure.defra.cloud/Content/TermsAndConditions";
+            _driver?.Navigate().GoToUrl(url);
         }
 
 

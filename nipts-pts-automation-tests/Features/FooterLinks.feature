@@ -4,37 +4,23 @@ Feature: FooterLinks
 Verify Footer links on Pets
 
 Scenario Outline: Verify Footer links and pages on Pets without login
-	Given that I navigate to the Pets application portal
+	Given open Cookies link page without login
 	When  click on Welsh language 
-	When  click privacy link on footer page
-	And   switch to next opened tab
-	Then  verify the page title in Footer page '<Privacy page title>'
-	And   verify the link in Footer page details '<Privacy Link 1>'
-	And   verify the link in Footer page details '<Privacy Link 2>'
-	And   Close Current tab
-	And   switch to previous tab
-	When  click cookies link on footer page
-	And   switch to next opened tab
 	Then  verify the page title in Footer page '<Cookies page Title>'
 	And   verify the link in Footer page details '<Cookies Link 1>'
-	And   Close Current tab
-	And   switch to previous tab
-	When  click accessibility link on footer page
-	And   switch to next opened tab
+	When  open Accessibility link page without login
 	Then  verify the page title in Footer page '<Accessibility page title>'
 	And   verify the link in Footer page details '<Accessibility Link 1>'
 	And   verify the link in Footer page details '<Accessibility Link 2>'
-	And   Close Current tab
-	And   switch to previous tab
-	When  click TCs link on footer page
-	And   switch to next opened tab
+	When  open TCs link page without login
+	When  click on Welsh language 
 	Then  verify the page title in Footer page '<TCs page title>'
 	Then  verify the link in Footer page details '<TCs Link 1>'
 	Then  verify the link in Footer page details '<TCs Link 2>'
 
 Examples: 
-    | logininfo | Privacy page title     | Privacy Link 1                             | Privacy Link 2               | Cookies page Title | Cookies Link 1                         | Accessibility page title                          | Accessibility Link 1 | Accessibility Link 2                            | TCs page title    | TCs Link 1             | TCs Link 2   |
-    | test      | Hysbysiad preifatrwydd | Hysbysiad Preifatrwydd Monitro Trafodiadau | Hysbysiad Preifatrwydd CThEF | Cwcis              | sut i reoli cwcis (yn agor tab newydd) | Datganiad hygyrchedd ar gyfer Porth y Llywodraeth | datganiad hygyrchedd | Canllawiau Hygyrchedd Cynnwys y We, fersiwn 2.1 | Telerau ac amodau | hysbysiad preifatrwydd | polisi cwcis |
+    | Cookies page Title | Cookies Link 1                                     | Accessibility page title                                           | Accessibility Link 1          | Accessibility Link 2                                     | TCs page title                                                       | TCs Link 1                                   | TCs Link 2                               |
+    | Cwcis              | r Comisiynydd Gwybodaeth (yn agor mewn tab newydd) | Taking a dog, cat or ferret from Great Britain to Northern Ireland | AbilityNet (opens in new tab) | contact the Equality Advisory and Support Service (EASS) | Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon | Fframwaith Windsor (yn agor mewn tab newydd) | Darllenwch ragor am symudiadau masnachol |
 
 
 Scenario Outline: Verify Footer links and pages on Pets

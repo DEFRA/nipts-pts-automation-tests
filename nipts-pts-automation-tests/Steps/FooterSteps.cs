@@ -67,6 +67,28 @@ namespace nipts_pts_automation_tests.Steps
             Assert.True(footerPage.VerifyPageTitle(pageTitle), "Page title not matching");
         }
 
+        [When(@"open TCs link page without login")]
+        [Then(@"open TCs link page without login")]
+        [Given(@"open TCs link page without login")]
+        public void OpenTCsLinkPage()
+        {
+            footerPage.OpenTCsLinkPage();
+        }
 
+        [Given(@"open Cookies link page without login")]
+        [Then(@"open Cookies link page without login")]
+        [Then(@"open Cookies link page without login")]
+        public void OpenCookiesLinkPage()
+        {
+            footerPage.OpenCookiesLinkPage();
+        }
+
+        [Given(@"open Accessibility link page without login")]
+        [When(@"open Accessibility link page without login")]
+        [Then(@"open Accessibility link page without login")]
+        public void OpenAccessibilityLinkPage()
+        {
+            footerPage.OpenAccessibilityLinkPage();
+        }
     }
 }

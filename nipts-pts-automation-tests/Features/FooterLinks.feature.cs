@@ -106,15 +106,11 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Footer links and pages on Pets without login")]
-        [NUnit.Framework.TestCaseAttribute("test", "Hysbysiad preifatrwydd", "Hysbysiad Preifatrwydd Monitro Trafodiadau", "Hysbysiad Preifatrwydd CThEF", "Cwcis", "sut i reoli cwcis (yn agor tab newydd)", "Datganiad hygyrchedd ar gyfer Porth y Llywodraeth", "datganiad hygyrchedd", "Canllawiau Hygyrchedd Cynnwys y We, fersiwn 2.1", "Telerau ac amodau", "hysbysiad preifatrwydd", "polisi cwcis", null)]
-        public async global::System.Threading.Tasks.Task VerifyFooterLinksAndPagesOnPetsWithoutLogin(string logininfo, string privacyPageTitle, string privacyLink1, string privacyLink2, string cookiesPageTitle, string cookiesLink1, string accessibilityPageTitle, string accessibilityLink1, string accessibilityLink2, string tCsPageTitle, string tCsLink1, string tCsLink2, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("Cwcis", "r Comisiynydd Gwybodaeth (yn agor mewn tab newydd)", "Taking a dog, cat or ferret from Great Britain to Northern Ireland", "AbilityNet (opens in new tab)", "contact the Equality Advisory and Support Service (EASS)", "Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon", "Fframwaith Windsor (yn agor mewn tab newydd)", "Darllenwch ragor am symudiadau masnachol", null)]
+        public async global::System.Threading.Tasks.Task VerifyFooterLinksAndPagesOnPetsWithoutLogin(string cookiesPageTitle, string cookiesLink1, string accessibilityPageTitle, string accessibilityLink1, string accessibilityLink2, string tCsPageTitle, string tCsLink1, string tCsLink2, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("logininfo", logininfo);
-            argumentsOfScenario.Add("Privacy page title", privacyPageTitle);
-            argumentsOfScenario.Add("Privacy Link 1", privacyLink1);
-            argumentsOfScenario.Add("Privacy Link 2", privacyLink2);
             argumentsOfScenario.Add("Cookies page Title", cookiesPageTitle);
             argumentsOfScenario.Add("Cookies Link 1", cookiesLink1);
             argumentsOfScenario.Add("Accessibility page title", accessibilityPageTitle);
@@ -135,84 +131,42 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 7
- await testRunner.GivenAsync("that I navigate to the Pets application portal", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("open Cookies link page without login", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 8
  await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 9
- await testRunner.WhenAsync("click privacy link on footer page", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 10
- await testRunner.AndAsync("switch to next opened tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 11
- await testRunner.ThenAsync(string.Format("verify the page title in Footer page \'{0}\'", privacyPageTitle), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 12
- await testRunner.AndAsync(string.Format("verify the link in Footer page details \'{0}\'", privacyLink1), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 13
- await testRunner.AndAsync(string.Format("verify the link in Footer page details \'{0}\'", privacyLink2), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 14
- await testRunner.AndAsync("Close Current tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 15
- await testRunner.AndAsync("switch to previous tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 16
- await testRunner.WhenAsync("click cookies link on footer page", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 17
- await testRunner.AndAsync("switch to next opened tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 18
  await testRunner.ThenAsync(string.Format("verify the page title in Footer page \'{0}\'", cookiesPageTitle), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 19
+#line 10
  await testRunner.AndAsync(string.Format("verify the link in Footer page details \'{0}\'", cookiesLink1), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 20
- await testRunner.AndAsync("Close Current tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 11
+ await testRunner.WhenAsync("open Accessibility link page without login", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 21
- await testRunner.AndAsync("switch to previous tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 22
- await testRunner.WhenAsync("click accessibility link on footer page", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 23
- await testRunner.AndAsync("switch to next opened tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 24
+#line 12
  await testRunner.ThenAsync(string.Format("verify the page title in Footer page \'{0}\'", accessibilityPageTitle), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 25
+#line 13
  await testRunner.AndAsync(string.Format("verify the link in Footer page details \'{0}\'", accessibilityLink1), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 26
+#line 14
  await testRunner.AndAsync(string.Format("verify the link in Footer page details \'{0}\'", accessibilityLink2), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 27
- await testRunner.AndAsync("Close Current tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 15
+ await testRunner.WhenAsync("open TCs link page without login", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 28
- await testRunner.AndAsync("switch to previous tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 16
+ await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 29
- await testRunner.WhenAsync("click TCs link on footer page", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 30
- await testRunner.AndAsync("switch to next opened tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 31
+#line 17
  await testRunner.ThenAsync(string.Format("verify the page title in Footer page \'{0}\'", tCsPageTitle), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 32
+#line 18
  await testRunner.ThenAsync(string.Format("verify the link in Footer page details \'{0}\'", tCsLink1), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 33
+#line 19
  await testRunner.ThenAsync(string.Format("verify the link in Footer page details \'{0}\'", tCsLink2), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -239,7 +193,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("TCs Link 1", tCsLink1);
             argumentsOfScenario.Add("TCs Link 2", tCsLink2);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Verify Footer links and pages on Pets", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 40
+#line 26
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -249,73 +203,73 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 41
+#line 27
  await testRunner.GivenAsync("that I navigate to the Pets application portal", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 42
+#line 28
  await testRunner.WhenAsync(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 43
+#line 29
  await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 44
+#line 30
  await testRunner.WhenAsync("click privacy link on footer page", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 45
+#line 31
  await testRunner.AndAsync("switch to next opened tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 46
+#line 32
  await testRunner.ThenAsync(string.Format("verify the page title in Footer page \'{0}\'", privacyPageTitle), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 47
+#line 33
  await testRunner.AndAsync(string.Format("verify the link in Footer page details \'{0}\'", privacyLink1), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 48
+#line 34
  await testRunner.AndAsync(string.Format("verify the link in Footer page details \'{0}\'", privacyLink2), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 49
+#line 35
  await testRunner.AndAsync("Close Current tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 50
+#line 36
  await testRunner.AndAsync("switch to previous tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 51
+#line 37
  await testRunner.WhenAsync("click cookies link on footer page", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 52
+#line 38
  await testRunner.ThenAsync(string.Format("verify the page title in Footer page \'{0}\'", cookiesPageTitle), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 53
+#line 39
  await testRunner.AndAsync(string.Format("verify the link in Footer page details \'{0}\'", cookiesLink1), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 54
+#line 40
  await testRunner.AndAsync("click on back", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 55
+#line 41
  await testRunner.WhenAsync("click accessibility link on footer page", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 56
+#line 42
  await testRunner.ThenAsync(string.Format("verify the page title in Footer page \'{0}\'", accessibilityPageTitle), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 57
+#line 43
  await testRunner.AndAsync(string.Format("verify the link in Footer page details \'{0}\'", accessibilityLink1), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 58
+#line 44
  await testRunner.AndAsync(string.Format("verify the link in Footer page details \'{0}\'", accessibilityLink2), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 59
+#line 45
  await testRunner.AndAsync("click on back", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 60
+#line 46
  await testRunner.WhenAsync("click TCs link on footer page", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 61
+#line 47
  await testRunner.ThenAsync(string.Format("verify the page title in Footer page \'{0}\'", tCsPageTitle), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 62
+#line 48
  await testRunner.ThenAsync(string.Format("verify the link in Footer page details \'{0}\'", tCsLink1), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 63
+#line 49
  await testRunner.ThenAsync(string.Format("verify the link in Footer page details \'{0}\'", tCsLink2), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -335,7 +289,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("FooterPageLink", footerPageLink);
             argumentsOfScenario.Add("FooterLogoLink", footerLogoLink);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Verify text and Logo on the footer of Sign up page", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 71
+#line 57
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -345,22 +299,22 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 72
+#line 58
  await testRunner.GivenAsync("that I navigate to the Pets application portal", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 73
+#line 59
  await testRunner.WhenAsync(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 74
+#line 60
  await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 75
+#line 61
  await testRunner.ThenAsync(string.Format("verify text \'{0}\' on the page footer", footerText), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 76
+#line 62
  await testRunner.ThenAsync(string.Format("verify the link in Footer page details \'{0}\'", footerPageLink), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 77
+#line 63
  await testRunner.ThenAsync(string.Format("verify the link in Footer page details \'{0}\'", footerLogoLink), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -378,7 +332,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("Status", status);
             argumentsOfScenario.Add("logininfo", logininfo);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Verify Welsh updated dashboard on home page", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 84
+#line 70
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -388,19 +342,19 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 85
+#line 71
  await testRunner.GivenAsync("that I navigate to the Pets application portal", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 86
+#line 72
  await testRunner.WhenAsync(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 87
+#line 73
  await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 88
+#line 74
  await testRunner.ThenAsync(string.Format("I verify PTD table heading \'{0}\' on homepage", petname), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 89
+#line 75
  await testRunner.ThenAsync(string.Format("I verify PTD table heading \'{0}\' on homepage", status), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
