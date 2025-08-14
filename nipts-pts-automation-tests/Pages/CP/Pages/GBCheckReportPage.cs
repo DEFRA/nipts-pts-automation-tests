@@ -17,7 +17,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
         private IWebElement pageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')]"));
-        private IWebElement clickSPSConduct => _driver.WaitForElement(By.XPath("//button[contains(text(),'Conduct an SPS check')]"));
+        private IWebElement clickUpdateReferralOutcome => _driver.WaitForElement(By.XPath("//button[contains(text(),'Update referral outcome')]\r\n"));
         private IWebElement BulletPassangerRefToDAERA => _driver.WaitForElement(By.XPath("//li[contains(text(),'Passenger referred to DAERA/SPS at NI port')]"));
         private IWebElement BulletPassengerAdvised => _driver.WaitForElement(By.XPath("//li[contains(text(),'Passenger advised not to travel')]"));
         private IWebElement BulletPassengerNoTravel => _driver.WaitForElement(By.XPath("//li[contains(text(),'Passenger says they will not travel')]"));
@@ -44,11 +44,11 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         
         }
 
-        public void ClickOnConductAnSPSCheck()
+        public void ClickOnUpdateReferralOutcome()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,3000)", "");
             Thread.Sleep(1000);
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", clickSPSConduct);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", clickUpdateReferralOutcome);
         }
 
         public bool VerifyMicrochipReason(string NumberMicrochipReason, string microchipReason,string NumberOtherIssues)

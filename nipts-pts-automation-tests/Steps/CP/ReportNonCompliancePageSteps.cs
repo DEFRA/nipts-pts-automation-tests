@@ -103,6 +103,13 @@ namespace nipts_pts_automation_tests.Steps.CP
             _reportNonCompliancePage.ClickOnSaveOutcome();
         }
 
+        [When(@"I click on Save on update referral")]
+        [Then(@"I click on Save on update referral")]
+        public void ThenClickOnSaveOnUpdateReferral()
+        {
+            _reportNonCompliancePage.ClickOnSaveOnUpdateReferral();
+        }
+
         [Then(@"verify hint text '([^']*)' for Other reason")]
         public void ThenVerifyOtherReasonHintText(string OtherReasonhintText)
         {

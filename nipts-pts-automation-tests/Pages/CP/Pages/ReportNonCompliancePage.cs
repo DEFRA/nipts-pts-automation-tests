@@ -40,7 +40,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement PotentialCommetcialMov => _driver.WaitForElementExists(By.XPath("//label[contains(text(),'Potential commercial movement')]/..//input"));
         private IWebElement AuthTravNoConfirmation => _driver.WaitForElementExists(By.XPath("//input[contains(@id,'oiFailAuthTravellerNoConfirmation')]"));
         private IWebElement OtherReason => _driver.WaitForElementExists(By.XPath("//input[contains(@id,'oiFailOther')]"));
-        private IWebElement DetailsOfOutCome => _driver.WaitForElementExists(By.Id("spsOutcomeDetails"));
+        private IWebElement DetailsOfOutCome => _driver.WaitForElementExists(By.XPath("//textarea[contains(@id,'detailsOfOutcome')] | //textarea[contains(@id,'spsOutcomeDetails')]"));
         By ReasonsHeadingEle => By.XPath("//div[contains(@class,'govuk-section-break')]//h2[@class='govuk-heading-l']");
         By MicrochipHeadingEle => By.XPath("//h3[@class='govuk-heading-m'][contains(text(),'Microchip')]");
         By MicrochipDetailsHeadingEle => By.XPath("//span[@class='govuk-details__summary-text'][contains(text(),'Microchip details')]");
@@ -52,6 +52,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         By RecordOutcomeHeadingEle => By.XPath("//h2[@class='govuk-heading-l'][contains(text(),'Record outcome')]");
         By AnyRelevantCommentsHeadingEle => By.XPath("//h2[@class='govuk-heading-l']//label[contains(text(),'Any relevant comments')]");
         By PetTravelDocumentHeadingEle => By.XPath("//h3[@class='govuk-heading-m'][contains(text(),'Pet Travel Document')]");
+        private IWebElement SaveOnUpdateReferral => _driver.WaitForElement(By.XPath("//button[contains(text(),'Save')]"));
         #endregion
 
         #region Methods
@@ -156,6 +157,13 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", btnSaveOutcome);
             btnSaveOutcome.Click();
         }
+
+        public void ClickOnSaveOnUpdateReferral()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", SaveOnUpdateReferral);
+            SaveOnUpdateReferral.Click();
+        }
+
         public bool VerifyOtherReasonHintTxt(string otherReasonHintTxt)
         {
             return txtOtherReasonHintTxt.Text.Contains(otherReasonHintTxt);

@@ -76,29 +76,15 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	When I click on PTD number of the application
 	Then verify next page '<nextPage1>' is loaded
 	Then I verify the header text 'Check a pet travelling from GB to NI'
-	When I click on Conduct an SPS check
-	Then I should see the application status in 'Approved'
-	Then I verify the header text 'Check a pet travelling from GB to NI'
-	When I select Fail radio button
-	And I click save and continue button from application status page
-	Then I should navigate to Report non-compliance page
-	Then I verify the header text 'Check a pet travelling from GB to NI'
-    And I verify the Reasons Heading structure
-    And I verify the Microchip Heading structure
-    And I click on Microchip details Heading structure
-    And I verify the Visual check Heading structure
-    And I click on Pet details Heading structure
-    And I verify the Other Issues Heading structure
-    And I verify the Passanger details Heading structure
-    And I click on Pet owner details Heading structure
-    And I verify the Any relevant comments Heading structure
-    And I verify the Record outcome Heading structure
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click 'Allowed' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
-	Then I verify the header text 'Check a pet travelling from GB to NI'
+	And I verify submiited message
+    And I verify submiited message image
+	And I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	Then I verify the header text 'Check a pet travelling from GB to NI'
@@ -106,8 +92,8 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |
-	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     | nextPage2               | DetailsOfOutCome        |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number | Update referral outcome | Test Details of Outcome |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Approved
 	When Create an application with Mandatory address only via backend
@@ -151,24 +137,23 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on PTD number of the application
-	And I click on Conduct an SPS check
-	And I should see the application status in 'Approved'
-	And I select Fail radio button
-	When I click save and continue button from application status page
-	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
+	And I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click 'Not allowed' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
+	Then I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| Transportation | FerryRoute               |  ApplicationRadio             |nextPage        | SPSOutcome  |
-	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Not allowed |
+	| Transportation | FerryRoute               | ApplicationRadio             | nextPage        | SPSOutcome  | nextPage2               | DetailsOfOutCome        |
+	| Ferry          | Cairnryan to Larne (P&O) | Search by application number | Referred to SPS | Not allowed | Update referral outcome | Test Details of Outcome |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Revoked
 	When Create an application via backend
@@ -223,35 +208,23 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on PTD number of the application
-	And I click on Conduct an SPS check
-	And I should see the application status in 'Cancelled'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	Then I verify the header text 'Check a pet travelling from GB to NI'
-    And I verify the Reasons Heading structure
-    And I verify the Pet Travel Document Heading structure
-    And I verify the Microchip Heading structure
-    And I click on Microchip details Heading structure
-    And I verify the Visual check Heading structure
-    And I click on Pet details Heading structure
-    And I verify the Other Issues Heading structure
-    And I verify the Passanger details Heading structure
-    And I click on Pet owner details Heading structure
-    And I verify the Any relevant comments Heading structure
-    And I verify the Record outcome Heading structure
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click 'Allowed' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
+	And I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| Transportation | FerryRoute               |  ApplicationRadio             | nextPage        | SPSOutcome |
-	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number | Referred to SPS | Allowed    |
+	| Transportation | FerryRoute               |  ApplicationRadio             | nextPage        | SPSOutcome |nextPage2               | DetailsOfOutCome        |
+	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number | Referred to SPS | Allowed    |Update referral outcome | Test Details of Outcome |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Application number - status in Unsuccessful
 	When Create an application via backend
@@ -307,35 +280,23 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Application nu
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on Reference number of the application
-	And I click on Conduct an SPS check
-	And I should see the application status in 'Unsuccessful'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	Then I verify the header text 'Check a pet travelling from GB to NI'
-    And I verify the Reasons Heading structure
-    And I verify the Pet Travel Document Heading structure
-    And I verify the Microchip Heading structure
-    And I click on Microchip details Heading structure
-    And I verify the Visual check Heading structure
-    And I click on Pet details Heading structure
-    And I verify the Other Issues Heading structure
-    And I verify the Passanger details Heading structure
-    And I click on Pet owner details Heading structure
-    And I verify the Any relevant comments Heading structure
-    And I verify the Record outcome Heading structure
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click 'Allowed' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
+	And I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| Transportation | FerryRoute               |  ApplicationRadio             |nextPage        | SPSOutcome |
-	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Allowed    |
+	| Transportation | FerryRoute               |  ApplicationRadio             |nextPage        | SPSOutcome |nextPage2               | DetailsOfOutCome        |
+	| Ferry          | Cairnryan to Larne (P&O) |  Search by application number |Referred to SPS | Allowed    |Update referral outcome | Test Details of Outcome |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Reference number - status in Pending
 	When Create an application via backend
@@ -391,35 +352,23 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Reference numb
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on Reference number of the application
-	And I click on Conduct an SPS check
-	And I should see the application status in 'Pending'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	Then I verify the header text 'Check a pet travelling from GB to NI'
-    And I verify the Reasons Heading structure
-    And I verify the Pet Travel Document Heading structure
-    And I verify the Microchip Heading structure
-    And I click on Microchip details Heading structure
-    And I verify the Visual check Heading structure
-    And I click on Pet details Heading structure
-    And I verify the Other Issues Heading structure
-    And I verify the Passanger details Heading structure
-    And I click on Pet owner details Heading structure
-    And I verify the Any relevant comments Heading structure
-    And I verify the Record outcome Heading structure
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click 'Allowed' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
+	And I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify Species 'Dog' and Colour 'Black' on Referred to SPS details
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
 Examples:
-	| Transportation | FerryRoute                    | ApplicationRadio			    |nextPage        | SPSOutcome |
-	| Ferry          | Birkenhead to Belfast (Stena) | Search by application number |Referred to SPS | Allowed    |
+	| Transportation | FerryRoute                    | ApplicationRadio			    |nextPage        | SPSOutcome |nextPage2               | DetailsOfOutCome        |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by application number |Referred to SPS | Allowed    |Update referral outcome | Test Details of Outcome |
 
 Scenario Outline: Verify navigation of back links in the application for GB user
 	When Create an application via backend
@@ -446,8 +395,8 @@ Scenario Outline: Verify navigation of back links in the application for GB user
 	And click on signout button on CP and verify the signout message
 	
 Examples:
-	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |
-	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |nextPage2               | DetailsOfOutCome        |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |Update referral outcome | Test Details of Outcome |
 
 Scenario Outline: Verify back link navigation for SPS user
 	When Create an application via backend
@@ -491,20 +440,15 @@ Scenario Outline: Verify back link navigation for SPS user
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on PTD number of the application
-	And I click on Conduct an SPS check
-	Then I should see the application status in 'Approved'
-	When I select Fail radio button
-	And I click save and continue button from application status page
-	Then I should navigate to Report non-compliance page
-	And I click on Back button
-	Then I should see the application status in 'Approved'
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click on Back button
 	Then verify next page '<nextPage1>' is loaded
 	 
 
 Examples:
-	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |
-	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |
+	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |nextPage2               | DetailsOfOutCome        |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |Update referral outcome | Test Details of Outcome |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details with Other Colour By PTD number - status in Approved
 	When Create an application via backend with Other Colour
@@ -552,21 +496,19 @@ Scenario Outline: Check GB to SPS PETS Travel Document details with Other Colour
 	And I verify Species 'Dog' and Colour 'Other' on Referred to SPS details
 	When I click on PTD number of the application
 	Then verify next page '<nextPage1>' is loaded
-	When I click on Conduct an SPS check
-	Then I should see the application status in 'Approved'
-	When I select Fail radio button
-	And I click save and continue button from application status page
-	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click 'Allowed' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |
-	| Ferry          | Cairnryan to Larne (P&O)      | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |
+	| Transportation | FerryRoute               | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     | nextPage2               | DetailsOfOutCome        |
+	| Ferry          | Cairnryan to Larne (P&O) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number | Update referral outcome | Test Details of Outcome |
 
