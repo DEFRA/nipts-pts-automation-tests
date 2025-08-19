@@ -96,23 +96,22 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on PTD number of the application
-	And I click on Conduct an SPS check
-	And I should see the application status in 'Approved'
-	And I select Fail radio button
-	When I click save and continue button from application status page
-	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click 'Allowed' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
+	And I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                   | ApplicationRadio           | nextPage        | SPSOutcome | TypeOfPassenger      |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Loch Ryan to Belfast (Stena) | Search by microchip number | Referred to SPS | Allowed    | Ferry foot passenger |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                   | ApplicationRadio           | nextPage        | SPSOutcome | TypeOfPassenger      |nextPage2               | DetailsOfOutCome        |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Loch Ryan to Belfast (Stena) | Search by microchip number | Referred to SPS | Allowed    | Ferry foot passenger |Update referral outcome | Test Details of Outcome |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip number - status in Revoked
 	Then I have selected '<Are your details correct>' option
@@ -197,22 +196,22 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on PTD number of the application
-	And I click on Conduct an SPS check
-	Then I should see the application status in 'Cancelled'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click 'Allowed' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
+	And I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  | nextPage        | SPSOutcome |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number | Referred to SPS | Allowed    |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  | nextPage        | SPSOutcome |nextPage2               | DetailsOfOutCome        |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number | Referred to SPS | Allowed    |Update referral outcome | Test Details of Outcome |
 
 	Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip number - status in Unsuccessful
 	Then I have selected '<Are your details correct>' option
@@ -296,22 +295,22 @@ Examples:
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on Reference number of the application
-	And I click on Conduct an SPS check
-	Then I should see the application status in 'Unsuccessful'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click 'Allowed' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
+	And I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |nextPage        | SPSOutcome |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Allowed    |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |nextPage        | SPSOutcome |nextPage2               | DetailsOfOutCome        |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Allowed    |Update referral outcome | Test Details of Outcome |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip number - status in Pending
 	Then I have selected '<Are your details correct>' option
@@ -394,22 +393,22 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on Reference number of the application
-	And I click on Conduct an SPS check
-	Then I should see the application status in 'Pending'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click 'Not allowed' on SPS outcome
-	And I select 'Cannot find microchip' as non compliance reason
-	And I click Report non-compliance button from Report non-compliance page
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
+	And I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |nextPage        | SPSOutcome     |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Not allowed    |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |nextPage        | SPSOutcome     |nextPage2               | DetailsOfOutCome        |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Not allowed    |Update referral outcome | Test Details of Outcome |
 
 	Scenario Outline: PTS port checker Pass application by Microchip number - status in Approved
 	Then I have selected '<Are your details correct>' option

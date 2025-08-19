@@ -36,5 +36,6 @@
         bool VerifyTheRecordOutcomeHeadingStructure();
         bool VerifyThePassengerDetailsHeadingStructure();
         bool VerifyThePetTravelDocumentHeadingStructure();
+        void ClickOnSaveOnUpdateReferral();
     }
 }

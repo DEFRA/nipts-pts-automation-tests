@@ -51,16 +51,15 @@ Scenario Outline: Veirfy backend entries for GB and SPS Outcome for Fail or Reff
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on Reference number of the application
-	And I click on Conduct an SPS check
-	And I should see the application status in 'Pending'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select MicrochipReason '<MicrochipNumberNoMatch>' on Report non-compliance page
-	And I select MicrochipReason '<CannotFindMicrochip>' on Report non-compliance page
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click '<SPSOutcome>' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
+	And I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
@@ -71,9 +70,9 @@ Scenario Outline: Veirfy backend entries for GB and SPS Outcome for Fail or Reff
 	And I verify backend SQL entries for SPS Outcome '<TypeOfPassenger>','<SPSOutcome>'
 
 	Examples:
-	| Transportation | FerryRoute                    | ApplicationRadio             | nextPage        | SPSOutcome  | TypeOfPassenger     |MicrochipNumberNoMatch | CannotFindMicrochip | AdditionalComment        | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel |
-	| Ferry          | Birkenhead to Belfast (Stena) | Search by application number | Referred to SPS | Allowed     | Ferry foot passenger|MicrochipNumberNoMatch | CannotFindMicrochip | Verify Additonal Comment | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel |
-	| Ferry          | Cairnryan to Larne (P&O)      | Search by application number | Referred to SPS | Not allowed | Vehicle on ferry    |MicrochipNumberNoMatch | No                  | None                     | PassengerReferredDAERA | No                       | PassengerWillNotTravel |
+	| Transportation | FerryRoute                    | ApplicationRadio             | nextPage        | SPSOutcome  | TypeOfPassenger      | MicrochipNumberNoMatch | CannotFindMicrochip | AdditionalComment        | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | nextPage2               | DetailsOfOutCome        |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by application number | Referred to SPS | Allowed     | Ferry foot passenger | MicrochipNumberNoMatch | CannotFindMicrochip | Verify Additonal Comment | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome |
+	| Ferry          | Cairnryan to Larne (P&O)      | Search by application number | Referred to SPS | Not allowed | Vehicle on ferry     | MicrochipNumberNoMatch | No                  | None                     | PassengerReferredDAERA | No                       | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome |
 
 		#@RunOnly
 Scenario Outline: Veirfy backend entries for GB outcome for Pass journey

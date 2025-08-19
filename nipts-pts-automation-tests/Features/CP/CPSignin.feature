@@ -57,22 +57,21 @@ Scenario: CPE2ECrossBrowser
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	When I click on PTD '<PTDNumber>' of the application
-	When I click on Conduct an SPS check
-	Then I should see the application status in 'Approved'
-	When I select Fail radio button
-	And I click save and continue button from application status page
-	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
-	And I click 'Allowed' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
+	And I click '<SPSOutcome>' on SPS outcome
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
+	And I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| Transportation | FerryRoute                    | PTDNumber | TypeOfPassenger      | SPSOutcome | ApplicationRadio     |
-	| Ferry          | Birkenhead to Belfast (Stena) | 05A888    | Ferry foot passenger | Allowed    | Search by PTD number |
+	| Transportation | FerryRoute                    | PTDNumber | TypeOfPassenger      | SPSOutcome | ApplicationRadio     | nextPage2               | DetailsOfOutCome     |
+	| Ferry          | Birkenhead to Belfast (Stena) | 05A888    | Ferry foot passenger | Allowed    | Search by PTD number | Update referral outcome | Test outcome details |
 
 #Scenario: API check
 #	When Create an application via backend
