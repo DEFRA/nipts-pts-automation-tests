@@ -70,8 +70,8 @@ Scenario: CPE2ECrossBrowser
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| Transportation | FerryRoute                    | PTDNumber | TypeOfPassenger      | SPSOutcome | ApplicationRadio     | nextPage2               |
-	| Ferry          | Birkenhead to Belfast (Stena) | 05A888    | Ferry foot passenger | Allowed    | Search by PTD number | Update referral outcome |
+	| Transportation | FerryRoute                    | PTDNumber | TypeOfPassenger      | SPSOutcome | ApplicationRadio     | nextPage2               | DetailsOfOutCome     |
+	| Ferry          | Birkenhead to Belfast (Stena) | 05A888    | Ferry foot passenger | Allowed    | Search by PTD number | Update referral outcome | Test outcome details |
 
 #Scenario: API check
 #	When Create an application via backend

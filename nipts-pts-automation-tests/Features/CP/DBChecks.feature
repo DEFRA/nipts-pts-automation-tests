@@ -70,9 +70,9 @@ Scenario Outline: Veirfy backend entries for GB and SPS Outcome for Fail or Reff
 	And I verify backend SQL entries for SPS Outcome '<TypeOfPassenger>','<SPSOutcome>'
 
 	Examples:
-	| Transportation | FerryRoute                    | ApplicationRadio             | nextPage        | SPSOutcome  | TypeOfPassenger      | MicrochipNumberNoMatch | CannotFindMicrochip | AdditionalComment        | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | nextPage2               |
-	| Ferry          | Birkenhead to Belfast (Stena) | Search by application number | Referred to SPS | Allowed     | Ferry foot passenger | MicrochipNumberNoMatch | CannotFindMicrochip | Verify Additonal Comment | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | Update referral outcome |
-	| Ferry          | Cairnryan to Larne (P&O)      | Search by application number | Referred to SPS | Not allowed | Vehicle on ferry     | MicrochipNumberNoMatch | No                  | None                     | PassengerReferredDAERA | No                       | PassengerWillNotTravel | Update referral outcome |
+	| Transportation | FerryRoute                    | ApplicationRadio             | nextPage        | SPSOutcome  | TypeOfPassenger      | MicrochipNumberNoMatch | CannotFindMicrochip | AdditionalComment        | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | nextPage2               | DetailsOfOutCome        |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by application number | Referred to SPS | Allowed     | Ferry foot passenger | MicrochipNumberNoMatch | CannotFindMicrochip | Verify Additonal Comment | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome |
+	| Ferry          | Cairnryan to Larne (P&O)      | Search by application number | Referred to SPS | Not allowed | Vehicle on ferry     | MicrochipNumberNoMatch | No                  | None                     | PassengerReferredDAERA | No                       | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome |
 
 		#@RunOnly
 Scenario Outline: Veirfy backend entries for GB outcome for Pass journey
