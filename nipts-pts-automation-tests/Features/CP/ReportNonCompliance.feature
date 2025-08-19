@@ -129,11 +129,11 @@ Scenario: Verify error messages for microchip number field on Report Non- Compli
 	Then I should see an error message '<ErrorMsg>' in Report non-compliance page
 	
 Examples:
-	| Transportation | FerryRoute                    | PassengerType | MichrochipNumber | ErrorMsg                                                | ApplicationRadio     |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       |                  | Enter the 15-digit microchip number                     | Search by PTD number |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       | 11233            | Enter the 15-digit microchip number, using only numbers | Search by PTD number |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       | 123@             | Enter the 15-digit microchip number, using only numbers | Search by PTD number |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       | wwqw             | Enter the 15-digit microchip number, using only numbers | Search by PTD number |
+	| Transportation | FerryRoute                    | PassengerType        | MichrochipNumber | ErrorMsg                                                | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger |                  | Enter the 15-digit microchip number                     | Search by PTD number |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | 11233            | Enter the 15-digit microchip number, using only numbers | Search by PTD number |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | 123@             | Enter the 15-digit microchip number, using only numbers | Search by PTD number |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | wwqw             | Enter the 15-digit microchip number, using only numbers | Search by PTD number |
 
 Scenario: Verify hint text and GB,SPS outcome error messages on Report Non- Compliance page
 	When Approve an application via backend
@@ -152,13 +152,8 @@ Scenario: Verify hint text and GB,SPS outcome error messages on Report Non- Comp
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And  verify hint text 'Any relevant comments' for Other reason
-	#And  verify hint text 'For GB staff to fill in' for GB outcome
-	#And  verify hint text 'For NI staff to fill in' for NI outcome
 	When click on Save outcome
 	Then I should see an error message 'Select at least one GB outcome' in Report non-compliance page
-	#When I click 'Allowed to travel under Windsor Framework' on SPS outcome
-	#And  click on Save outcome
-	#Then I should see an error message 'You cannot select an SPS outcome' in Report non-compliance page
 	
 Examples:
 	| Transportation | FerryRoute                    | PassengerType | MichrochipNumber | ApplicationRadio     |
@@ -189,8 +184,8 @@ Scenario: Verify error messages for any relevant comment field on Report Non- Co
 	Then I should see an error message '<ErrorMsg>' in Report non-compliance page
 	
 Examples:
-	| Transportation | FerryRoute                    | PassengerType | MichrochipNumber | ErrorMsg                                                | ApplicationRadio     | AdditionalComment   |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       | 111111111111111  | Relevant comments must be 500 characters or less        | Search by PTD number |	Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering				|
+	| Transportation | FerryRoute                    | PassengerType        | MichrochipNumber | ErrorMsg                                                | ApplicationRadio     | AdditionalComment   |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | 111111111111111  | Relevant comments must be 500 characters or less        | Search by PTD number |	Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering the 501 word count. Entering				|
 
 Scenario: Verify boundaries  for any relevant comment field on Report Non- Compliance page
 	When Approve an application via backend
@@ -217,8 +212,8 @@ Scenario: Verify boundaries  for any relevant comment field on Report Non- Compl
 	Then I should navigate to Welcome page
 	
 Examples:
-	| Transportation | FerryRoute                    | PassengerType | MichrochipNumber | ApplicationRadio     | AdditionalComment   |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       | 111111111111111  | Search by PTD number |	Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Enteri|
+	| Transportation | FerryRoute                    | PassengerType        | MichrochipNumber | ApplicationRadio     | AdditionalComment   |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | 111111111111111  | Search by PTD number |	Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Entering the 499 word count. Enteri|
 
 Scenario: Verify Validation positive check for details of outcome field on Report Non- Compliance page
 	When Approve an application via backend
@@ -245,8 +240,8 @@ Scenario: Verify Validation positive check for details of outcome field on Repor
 	Then I should navigate to Welcome page
 	
 Examples:
-	| Transportation | FerryRoute                    | PassengerType | MichrochipNumber | ApplicationRadio     | DetailsOfOutCome  |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       | 111111111111111  | Search by PTD number |Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit y|
+	| Transportation | FerryRoute                    | PassengerType       | MichrochipNumber | ApplicationRadio     | DetailsOfOutCome  |
+	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger| 111111111111111  | Search by PTD number |Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit for details of outcome Positive check with 500 char limit y|
 
 Scenario: Verify error message  for details of outcome field on Report Non- Compliance page
 	When Approve an application via backend
@@ -273,8 +268,8 @@ Scenario: Verify error message  for details of outcome field on Report Non- Comp
 	Then I should see an error message '<ErrorMsg>' in Report non-compliance page
 	
 Examples:
-	| Transportation | FerryRoute                    | PassengerType | MichrochipNumber | ErrorMsg                                        | ApplicationRadio     | DetailsOfOutCome                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       | 111111111111111  | Outcome summary must be 500 characters or less  | Search by PTD number | Entered 501 char limit for details of   outcomefield Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for detail |
+	| Transportation | FerryRoute                    | PassengerType    | MichrochipNumber | ErrorMsg                                        | ApplicationRadio     | DetailsOfOutCome                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+	| Ferry          | Birkenhead to Belfast (Stena) | Vehicle on ferry | 111111111111111  | Outcome summary must be 500 characters or less  | Search by PTD number | Entered 501 char limit for details of   outcomefield Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for details of outcome field Entered 501 char limit for detail |
 
 Scenario: Verify boundaries  check for details of outcome field on Report Non- Compliance page
 	When Approve an application via backend
@@ -301,6 +296,6 @@ Scenario: Verify boundaries  check for details of outcome field on Report Non- C
 	Then I should navigate to Welcome page
 	
 Examples:
-	| Transportation | FerryRoute                    | PassengerType | MichrochipNumber | ApplicationRadio     | DetailsOfOutCome  |
-	| Ferry          | Birkenhead to Belfast (Stena) | Airline       | 111111111111111  | Search by PTD number |Boundaries check with 499 char limit for details of outcome- Boundaries check with 499 char limit for details of outcome Boundaries check with 499 char limit for details of outcome Boundaries check with 499 char limit for details of outcome Boundaries check with 499 char limit for details of outcome Boundaries check with 499 char limit for details of outcome Boundaries check with 499 char limit for details of outcome Boundaries check with 499 char limit for details of outcome Boundaries check w|
+	| Transportation | FerryRoute                    | PassengerType    | MichrochipNumber | ApplicationRadio     | DetailsOfOutCome  |
+	| Ferry          | Birkenhead to Belfast (Stena) | Vehicle on ferry | 111111111111111  | Search by PTD number |Boundaries check with 499 char limit for details of outcome- Boundaries check with 499 char limit for details of outcome Boundaries check with 499 char limit for details of outcome Boundaries check with 499 char limit for details of outcome Boundaries check with 499 char limit for details of outcome Boundaries check with 499 char limit for details of outcome Boundaries check with 499 char limit for details of outcome Boundaries check with 499 char limit for details of outcome Boundaries check w|
 	

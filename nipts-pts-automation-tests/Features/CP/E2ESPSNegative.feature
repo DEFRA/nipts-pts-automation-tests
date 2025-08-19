@@ -28,9 +28,9 @@ Scenario Outline: Check SPS to GB PETS Travel Document details By PTD number - s
 	And I select Fail radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
-	And I click 'Allowed' on SPS outcome
+	#When I click '<TypeOfPassenger>' in Passenger details
+	When I select 'Cannot find microchip' as non compliance reason
+	#And I click 'Allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
 	And I should see departure date and time is not matching with latest referred to SPS
@@ -55,12 +55,11 @@ Scenario Outline: Check SPS behaviour PETS Travel Document details By PTD number
 	And I select Fail radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
-	And I click 'Allowed' on SPS outcome
+	When I select 'Cannot find microchip' as non compliance reason
+	#And I click 'Allowed' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
 	And I should see for Flights departure date and time is not matching with latest referred to SPS
 Examples:
-	| Transportation | Flight number | TypeOfPassenger | nextPage        | SPSOutcome  | ApplicationRadio     |
-	| Flight         | AI 123        | Airline         | Referred to SPS | Not allowed | Search by PTD number |
+	| Transportation | Flight number | nextPage        | SPSOutcome  | ApplicationRadio     |
+	| Flight         | AI 123        | Referred to SPS | Not allowed | Search by PTD number |
