@@ -43,6 +43,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         {
             var url = urlBuilder.Default("App").Build();
             _driver?.Navigate().GoToUrl(url);
+            signin?.SelectSignInMethod();
             Assert.True(landingPage?.IsPageLoaded("Private beta testing login"), "Application page not loaded");
         }
 

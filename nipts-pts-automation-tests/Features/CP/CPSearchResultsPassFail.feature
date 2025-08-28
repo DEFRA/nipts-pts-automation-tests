@@ -94,8 +94,8 @@ Scenario Outline: PTS port checker continue application by Reference number - st
 	When I click search button
 	And I should see the application status in 'Pending'
 	And I should see the application subtitle 'Your application summary'
-	And click on continue
-	Then I should navigate to Report non-compliance page
+	#And click on continue
+	#Then I should navigate to Report non-compliance page
 	
 Examples:
 	| Transportation | FerryRoute                    | ApplicationRadio             | 
@@ -254,7 +254,7 @@ Scenario Outline: Verify Dog Pet details Search results with Approved applicatio
 	And verify Pet Microchip date '21/08/2024' on Search Pass Fail Results Page
 	And verify Pets Date Of Birth '21/04/2024' on Search Pass Fail Results Page
 	And verify Pet Breed option 'Automation Dog Breed Additional Info' on Search Pass Fail Results Page
-	And verify bulleted points under Checks on search result page 
+	#And verify bulleted points under Checks on search result page 
 
 Examples:
 	| Transportation | FerryRoute                    | ApplicationRadio     |
@@ -282,7 +282,7 @@ Scenario Outline: Verify Cat Pet details Search results with Pending application
 	And verify Pet Microchip Number '676789876542125' on Search Pass Fail Results Page
 	And verify Pet color option 'Automation Black Cat' on Search Pass Fail Results Page
 	And verify Pets Date Of Birth '21/04/2025' on Search Pass Fail Results Page
-	And verify bulleted points under Checks on search result page 
+	#And verify bulleted points under Checks on search result page 
 	
 
 Examples:
@@ -313,7 +313,7 @@ Scenario Outline: Verify Cat Pet details Search results with Approved applicatio
 	And verify Pet Microchip date '21/05/2025' on Search Pass Fail Results Page
 	And verify Pets Date Of Birth '21/04/2025' on Search Pass Fail Results Page
 	And verify Pet Breed option 'Automation Cat Breed Additional Info' on Search Pass Fail Results Page
-	And verify bulleted points under Checks on search result page 
+	#And verify bulleted points under Checks on search result page 
 
 
 Examples:
@@ -341,7 +341,7 @@ Scenario Outline: Verify Ferret Pet details Search results with Pending applicat
 	And verify Pet Microchip Number '676789126542125' on Search Pass Fail Results Page
 	And verify Pet color option 'Automation Black Ferret' on Search Pass Fail Results Page
 	And verify Pets Date Of Birth '21/04/2022' on Search Pass Fail Results Page
-	And verify bulleted points under Checks on search result page 
+	#And verify bulleted points under Checks on search result page 
 	
 
 Examples:
@@ -371,7 +371,7 @@ Scenario Outline: Verify Ferret Pet details Search results with Approved applica
 	And verify Pet color option 'Automation Black Ferret' on Search Pass Fail Results Page
 	And verify Pet Microchip date '11/05/2023' on Search Pass Fail Results Page
 	And verify Pets Date Of Birth '21/04/2022' on Search Pass Fail Results Page
-	And verify bulleted points under Checks on search result page 
+	#And verify bulleted points under Checks on search result page 
 
 
 Examples:

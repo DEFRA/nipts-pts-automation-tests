@@ -31,11 +31,15 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             _objectContainer = container;
         }
 
-        public bool IsPageLoaded()
+        public void SelectSignInMethod()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
             Thread.Sleep(3000);
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
+        }
+
+        public bool IsPageLoaded()
+        {
             return PageHeading.Text.Contains("Sign in using Government Gateway");
         }
 

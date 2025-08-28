@@ -4,7 +4,6 @@ using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
 using SeleniumExtras.WaitHelpers;
-using Defra.UI.Framework.Driver;
 
 
 namespace nipts_pts_automation_tests.Pages.CP.Pages
@@ -50,6 +49,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
             Thread.Sleep(3000);
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
+            Thread.Sleep(2000);
         }
 
         public void IsSignedIn(string userName, string password)
