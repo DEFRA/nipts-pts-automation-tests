@@ -19,7 +19,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
         private IWebElement rdoPass => _driver.WaitForElementExists(By.XPath("//div[@role='radio']//label[normalize-space()='Pass']/..//input"));
-        private IWebElement rdoFail => _driver.WaitForElementExists(By.XPath("//div[@role='radio']//label[normalize-space()='Fail or referred to SPS']/..//input"));
+        private IWebElement rdoReferToSPS => _driver.WaitForElementExists(By.XPath("//div[@role='radio']//label[normalize-space()='Refer to SPS']/..//input"));
+        private IWebElement rdoIssueSUPTD => _driver.WaitForElementExists(By.XPath("//div[@role='radio']//label[normalize-space()='Issue SUPTD']/..//input"));
+        private IWebElement rdoFail => _driver.WaitForElementExists(By.XPath("//div[@role='radio']//label[normalize-space()='Fail']/..//input"));
         private IWebElement btnSaveAndContinue => _driver.WaitForElement(By.XPath("//*[@id='saveAndContinue']"));
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
@@ -61,11 +63,24 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", rdoPass);
             rdoPass.Click();
         }
+        public void SelectReferToSPSRadioButton()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", rdoReferToSPS);
+            rdoReferToSPS.Click();
+        }
+
+        public void SelectIssueSUPTDRadioButton()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", rdoIssueSUPTD);
+            rdoIssueSUPTD.Click();
+        }
+
         public void SelectFailRadioButton()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", rdoFail);
             rdoFail.Click();
         }
+
 
         public void SelectSaveAndContinue()
         {

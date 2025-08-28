@@ -34,7 +34,7 @@ Scenario: CPE2ECrossBrowser
 	When I click search button
 	And I should see the application status in 'Approved'
 	And I should see the application subtitle 'Lifelong pet travel document and declaration'
-	And I select Fail radio button
+	And I select Refer to SPS radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And I select 'Cannot find microchip' as non compliance reason

@@ -4,6 +4,7 @@ using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
 using SeleniumExtras.WaitHelpers;
+using Defra.UI.Framework.Driver;
 
 
 namespace nipts_pts_automation_tests.Pages.CP.Pages
@@ -31,6 +32,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement AcceptAdditionalCookies => _driver.WaitForElement(By.XPath("//button[contains(text(),'Accept analytics cookies')]"));
         private IWebElement HideCookieMessage => _driver.WaitForElement(By.XPath("//a[contains(text(),'Hide cookie message')]"));
         private IWebElement lnkAccessibilityStatement => _driver.WaitForElement(By.XPath("//p[@class='govuk-body']//a"));
+        private IWebElement signInGovernmentGateway => _driver.WaitForElement(By.XPath("//label[@for='scp']"));
+        private IWebElement signInContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Continue'][@id='continueReplacement']"));
+
         #endregion
 
         #region Methods
@@ -43,6 +47,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", AcceptAdditionalCookies);
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", HideCookieMessage);
             }
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
+            Thread.Sleep(3000);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
         }
 
         public void IsSignedIn(string userName, string password)

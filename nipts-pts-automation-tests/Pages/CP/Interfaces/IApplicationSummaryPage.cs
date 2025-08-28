@@ -4,7 +4,7 @@
     {
         bool VerifyTheExpectedStatus(string status);
         void SelectPassRadioButton();
-        void SelectFailRadioButton();
+        void SelectReferToSPSRadioButton();
         void SelectSaveAndContinue();
         bool IsError(string errorMessage);
         void SelectContinue();
@@ -26,5 +26,7 @@
         bool VerifyThePassButtonNotDisplayed();
         bool VerifyTheFailButtonNotDisplayed();
         public bool VerifyTheSearchResultsHeading(string SearchResultsHeading);
+        void SelectIssueSUPTDRadioButton();
+        void SelectFailRadioButton();
     }
 }

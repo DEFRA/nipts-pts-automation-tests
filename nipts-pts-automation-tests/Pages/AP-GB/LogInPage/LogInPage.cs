@@ -20,6 +20,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         private IWebElement CreateSignInDetails => _driver.WaitForElement(By.XPath("//a[contains(text(),'Create sign in')]"));
         private By Accept_Cookies => By.XPath("//button[text()='Accept analytics cookies'] | //button[contains(text(),'Accept additional cookies')]");
         private IWebElement Hide_Cookies => _driver.WaitForElement(By.XPath("//a[text()='Hide cookie message'] | //button[contains(text(),'Hide cookie message')]"));
+        private IWebElement signInGovernmentGateway => _driver.WaitForElement(By.XPath("//label[@for='scp']"));
+        private IWebElement signInContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Continue'][@id='continueReplacement']"));
         #endregion
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -31,6 +33,9 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
 
         public bool IsPageLoaded()
         {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
+            Thread.Sleep(3000);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
             return PageHeading.Text.Contains("Sign in using Government Gateway");
         }
 

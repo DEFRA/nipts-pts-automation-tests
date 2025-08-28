@@ -54,6 +54,20 @@ namespace nipts_pts_automation_tests.Steps.CP
             _applicationSummaryPage?.SelectPassRadioButton();
         }
 
+        [Then(@"I select Refer to SPS radio button")]
+        [When(@"I select Refer to SPS radio button")]
+        public void WhenISelectReferToSPSRadioButton()
+        {
+            _applicationSummaryPage?.SelectReferToSPSRadioButton();
+        }
+
+        [Then(@"I select Issue SUPTD radio button")]
+        [When(@"I select Issue SUPTD radio button")]
+        public void WhenISelectIssueSUPTDRadioButton()
+        {
+            _applicationSummaryPage?.SelectIssueSUPTDRadioButton();
+        }
+
         [Then(@"I select Fail radio button")]
         [When(@"I select Fail radio button")]
         public void WhenISelectFailRadioButton()

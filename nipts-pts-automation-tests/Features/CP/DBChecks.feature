@@ -26,13 +26,12 @@ Scenario Outline: Veirfy backend entries for GB and SPS Outcome for Fail or Reff
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
-	And I select Fail radio button
+	And I select Refer to SPS radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
-	When I select MicrochipReason '<MicrochipNumberNoMatch>' on Report non-compliance page
-	And I select MicrochipReason '<CannotFindMicrochip>' on Report non-compliance page
+	When I select MicrochipReason '<CannotFindMicrochip>' on Report non-compliance page
+	When I select Other issues '<AuthPersonButNoConfirmation>' on Report non-compliance page
 	And I click '<TypeOfPassenger>' in Passenger details
-	And I enter relevant comment '<AdditionalComment>'
 	And I select GB Outcome '<PassengerReferredDAERA>' on Report non-compliance page
 	And I select GB Outcome '<PassengerAdvisedNoTravel>' on Report non-compliance page
 	And I select GB Outcome '<PassengerWillNotTravel>' on Report non-compliance page
@@ -73,9 +72,9 @@ Scenario Outline: Veirfy backend entries for GB and SPS Outcome for Fail or Reff
 	And I verify backend SQL entries for SPS Outcome '<TypeOfPassenger>','<SPSOutcome>'
 
 	Examples:
-	| Transportation | FerryRoute                    | ApplicationRadio     | nextPage        | SPSOutcome  | TypeOfPassenger      | MicrochipNumberNoMatch | CannotFindMicrochip | AdditionalComment        | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | nextPage2               | DetailsOfOutCome        |
-	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number | Referred to SPS | Allowed     | Ferry foot passenger | MicrochipNumberNoMatch | CannotFindMicrochip | Verify Additonal Comment | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome |
-	| Ferry          | Cairnryan to Larne (P&O)      | Search by PTD number | Referred to SPS | Not allowed | Vehicle on ferry     | MicrochipNumberNoMatch | No                  | None                     | PassengerReferredDAERA | No                       | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome |
+	| Transportation | FerryRoute                    | ApplicationRadio     | nextPage        | SPSOutcome  | TypeOfPassenger      | CannotFindMicrochip | AuthPersonButNoConfirmation | RefusedToSignDeclaration | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | nextPage2               | DetailsOfOutCome        |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number | Referred to SPS | Allowed     | Ferry foot passenger | CannotFindMicrochip | AuthPersonButNoConfirmation | RefusedToSignDeclaration | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome |
+	| Ferry          | Cairnryan to Larne (P&O)      | Search by PTD number | Referred to SPS | Not allowed | Vehicle on ferry     | CannotFindMicrochip | No                          | RefusedToSignDeclaration | PassengerReferredDAERA | No                       | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome |
 
 		#@RunOnly
 Scenario Outline: Veirfy backend entries for GB outcome for Pass journey
@@ -127,7 +126,7 @@ Scenario Outline: Veirfy backend entries for SPS outcome and Summary table for S
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
-	And I select Fail radio button
+	And I select Refer to SPS radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	#When I click '<TypeOfPassenger>' in Passenger details
