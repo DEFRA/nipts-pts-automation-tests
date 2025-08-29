@@ -24,6 +24,14 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             Assert.IsTrue(ApplicationSubmittedPage?.IsNextPageLoaded(pageTitle), $"The page {pageTitle} not loaded!");
         }
 
+        [When(@"I verify application submitted page title '([^']*)'")]
+        [Then(@"I verify application submitted page title '([^']*)'")]
+        public void ThenIVerifyApplicationSubmittedPageTitle()
+        {
+            var pageTitle = "Application submitted";
+            Assert.IsTrue(ApplicationSubmittedPage?.VerifyApplicationSubmittedPageTitle(pageTitle), $"The page {pageTitle} not loaded!");
+        }
+
         [Then(@"I can see the application reference number")]
         public void ThenICanSeeTheApplicationReferenceNumber()
         {

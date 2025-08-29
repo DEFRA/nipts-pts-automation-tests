@@ -19,8 +19,8 @@ Scenario Outline: Verify Footer links and pages on Pets without login
 	Then  verify the link in Footer page details '<TCs Link 2>'
 
 Examples: 
-    | Cookies page Title | Cookies Link 1                                     | Accessibility page title                                           | Accessibility Link 1          | Accessibility Link 2                                     | TCs page title                                                       | TCs Link 1                                   | TCs Link 2                               |
-    | Cwcis              | r Comisiynydd Gwybodaeth (yn agor mewn tab newydd) | Taking a dog, cat or ferret from Great Britain to Northern Ireland | AbilityNet (opens in new tab) | contact the Equality Advisory and Support Service (EASS) | Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon | Fframwaith Windsor (yn agor mewn tab newydd) | Darllenwch ragor am symudiadau masnachol |
+    | Cookies page Title | Cookies Link 1                                     | Accessibility page title                              | Accessibility Link 1                 | Accessibility Link 2                                                | TCs page title                                                       | TCs Link 1                                   | TCs Link 2                               |
+    | Cwcis              | r Comisiynydd Gwybodaeth (yn agor mewn tab newydd) | chi, cath neu ffured o Brydain Fawr i Ogledd Iwerddon | AbilityNet (yn agor mewn tab newydd) | Rhagor o wybodaeth am daliadau am alwadau (yn agor mewn tab newydd) | Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon | Fframwaith Windsor (yn agor mewn tab newydd) | Darllenwch ragor am symudiadau masnachol |
 
 
 Scenario Outline: Verify Footer links and pages on Pets
@@ -49,8 +49,8 @@ Scenario Outline: Verify Footer links and pages on Pets
 	Then  verify the link in Footer page details '<TCs Link 2>'
 
 Examples: 
-    | logininfo | Privacy page title               | Privacy Link 1               | Privacy Link 2         | Cookies page Title | Cookies Link 1                                     | Accessibility page title                                           | Accessibility Link 1          | Accessibility Link 2                                     | TCs page title                                                       | TCs Link 1                                   | TCs Link 2                               |
-    | test      | Pet travel scheme privacy notice | data.protection@defra.gov.uk | www.legislation.gov.uk | Cwcis              | r Comisiynydd Gwybodaeth (yn agor mewn tab newydd) | Taking a dog, cat or ferret from Great Britain to Northern Ireland | AbilityNet (opens in new tab) | contact the Equality Advisory and Support Service (EASS) | Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon | Fframwaith Windsor (yn agor mewn tab newydd) | Darllenwch ragor am symudiadau masnachol |
+    | logininfo | Privacy page title               | Privacy Link 1               | Privacy Link 2         | Cookies page Title | Cookies Link 1                                     | Accessibility page title                              | Accessibility Link 1                 | Accessibility Link 2                                                | TCs page title                                                       | TCs Link 1                                   | TCs Link 2                               |
+    | test      | Pet travel scheme privacy notice | data.protection@defra.gov.uk | www.legislation.gov.uk | Cwcis              | r Comisiynydd Gwybodaeth (yn agor mewn tab newydd) | chi, cath neu ffured o Brydain Fawr i Ogledd Iwerddon | AbilityNet (yn agor mewn tab newydd) | Rhagor o wybodaeth am daliadau am alwadau (yn agor mewn tab newydd) | Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon | Fframwaith Windsor (yn agor mewn tab newydd) | Darllenwch ragor am symudiadau masnachol |
 
 
 

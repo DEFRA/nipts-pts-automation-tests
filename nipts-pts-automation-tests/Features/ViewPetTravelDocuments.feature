@@ -157,7 +157,7 @@ Scenario: View Pet travel documents in WELSH
 	And   click on continue
 	And   confirm the declaration checkbox
 	Then  click Accept and Send button from Declaration page
-	And   verify next page '<nextPage5>' is loaded
+	Then  I verify application submitted page title '<nextpage5>'
 	And   I can see the unique application reference number
 	When  click on View all lifelong pet travel document link
 	Then  verify next page '<nextPage>' is loaded

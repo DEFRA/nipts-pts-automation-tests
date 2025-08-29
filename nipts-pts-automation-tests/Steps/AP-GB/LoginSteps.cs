@@ -43,7 +43,6 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         {
             var url = urlBuilder.Default("App").Build();
             _driver?.Navigate().GoToUrl(url);
-            signin?.SelectSignInMethod();
             Assert.True(landingPage?.IsPageLoaded("Private beta testing login"), "Application page not loaded");
         }
 
@@ -59,6 +58,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         public void WhenIClickContinueButtonFromLandingPage()
         {
             landingPage?.ClickContinueButton();
+            signin?.SelectSignInMethod();
         }
 
         [Then(@"I should redirected to the Sign in using Government Gateway page")]

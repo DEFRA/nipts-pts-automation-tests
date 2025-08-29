@@ -57,7 +57,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with details co
 	And verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on application summary page
 	And I have ticked the I agree to the declaration checkbox
 	Then click Accept and Send button from Declaration page
-	Then verify next page '<nextpage9>' is loaded
+	Then I verify application submitted page title '<nextpage9>'
 	And I can see the unique application reference number
 	When click on View all lifelong pet travel document link
 	Then verify next page '<nextpage10>' is loaded
@@ -125,7 +125,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with details co
 	And verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on application summary page
 	And I have ticked the I agree to the declaration checkbox
 	Then click Accept and Send button from Declaration page
-	Then verify next page '<nextpage9>' is loaded
+	Then I verify application submitted page title '<nextpage9>'
 	And I can see the unique application reference number
 	When click on View all lifelong pet travel document link
 	Then verify next page '<nextpage10>' is loaded
@@ -193,7 +193,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with free text 
 	And verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on application summary page
 	And I have ticked the I agree to the declaration checkbox
 	Then click Accept and Send button from Declaration page
-	Then verify next page '<nextpage9>' is loaded
+	Then I verify application submitted page title '<nextpage9>'
 	And I can see the unique application reference number
 	When click on View all lifelong pet travel document link
 	Then verify next page '<nextpage10>' is loaded
@@ -263,7 +263,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with Other colo
 	And verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on application summary page
 	And I have ticked the I agree to the declaration checkbox
 	Then click Accept and Send button from Declaration page
-	Then verify next page '<nextpage9>' is loaded
+	Then I verify application submitted page title '<nextpage9>'
 	And I can see the unique application reference number
 	When click on View all lifelong pet travel document link
 	Then verify next page '<nextpage10>' is loaded
@@ -324,7 +324,7 @@ Scenario Outline: Create PETS Travel Document By Registered User and navigate to
 	Then verify next page '<nextpage8>' is loaded
 	And I have ticked the I agree to the declaration checkbox
 	Then click Accept and Send button from Declaration page
-	Then verify next page '<nextpage9>' is loaded
+	Then I verify application submitted page title '<nextpage9>'
 	And I can see the unique application reference number
 	And click on Apply for another lifelong pet travel document link
 	Then verify next page 'manylion chi' is loaded
@@ -386,7 +386,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with details no
 	And verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on application summary page
 	And I have ticked the I agree to the declaration checkbox
 	Then click Accept and Send button from Declaration page
-	Then verify next page '<nextpage9>' is loaded
+	Then I verify application submitted page title '<nextpage9>'
 	And I can see the unique application reference number
 	When click on View all lifelong pet travel document link
 	Then verify next page '<nextpage10>' is loaded
@@ -464,7 +464,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with enter addr
 	And verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on application summary page
 	And I have ticked the I agree to the declaration checkbox
 	Then click Accept and Send button from Declaration page
-	Then verify next page '<nextpage9>' is loaded
+	Then I verify application submitted page title '<nextpage9>'
 	And I can see the unique application reference number
 	When click on View all lifelong pet travel document link
 	Then verify next page '<nextpage10>' is loaded
@@ -531,7 +531,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with details co
 	And verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on application summary page
 	And I have ticked the I agree to the declaration checkbox
 	Then click Accept and Send button from Declaration page
-	Then verify next page '<nextpage9>' is loaded
+	Then I verify application submitted page title '<nextpage9>'
 	And I can see the unique application reference number
 	When click on View all lifelong pet travel document link
 	Then verify next page '<nextpage10>' is loaded
@@ -603,7 +603,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with details no
 	And verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on application summary page
 	And I have ticked the I agree to the declaration checkbox
 	Then click Accept and Send button from Declaration page
-	Then verify next page '<nextpage9>' is loaded
+	Then I verify application submitted page title '<nextpage9>'
 	And I can see the unique application reference number
 	When click on View all lifelong pet travel document link
 	Then verify next page '<nextpage10>' is loaded
@@ -676,7 +676,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with enter addr
 	And verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on application summary page
 	And I have ticked the I agree to the declaration checkbox
 	Then click Accept and Send button from Declaration page
-	Then verify next page '<nextpage9>' is loaded
+	Then I verify application submitted page title '<nextpage9>'
 	And I can see the unique application reference number
 	When click on View all lifelong pet travel document link
 	Then verify next page '<nextpage10>' is loaded

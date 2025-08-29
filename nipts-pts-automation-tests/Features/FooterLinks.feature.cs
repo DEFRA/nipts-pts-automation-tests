@@ -106,7 +106,7 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Footer links and pages on Pets without login")]
-        [NUnit.Framework.TestCaseAttribute("Cwcis", "r Comisiynydd Gwybodaeth (yn agor mewn tab newydd)", "Taking a dog, cat or ferret from Great Britain to Northern Ireland", "AbilityNet (opens in new tab)", "contact the Equality Advisory and Support Service (EASS)", "Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon", "Fframwaith Windsor (yn agor mewn tab newydd)", "Darllenwch ragor am symudiadau masnachol", null)]
+        [NUnit.Framework.TestCaseAttribute("Cwcis", "r Comisiynydd Gwybodaeth (yn agor mewn tab newydd)", "chi, cath neu ffured o Brydain Fawr i Ogledd Iwerddon", "AbilityNet (yn agor mewn tab newydd)", "Rhagor o wybodaeth am daliadau am alwadau (yn agor mewn tab newydd)", "Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon", "Fframwaith Windsor (yn agor mewn tab newydd)", "Darllenwch ragor am symudiadau masnachol", null)]
         public async global::System.Threading.Tasks.Task VerifyFooterLinksAndPagesOnPetsWithoutLogin(string cookiesPageTitle, string cookiesLink1, string accessibilityPageTitle, string accessibilityLink1, string accessibilityLink2, string tCsPageTitle, string tCsLink1, string tCsLink2, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -175,7 +175,7 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify Footer links and pages on Pets")]
-        [NUnit.Framework.TestCaseAttribute("test", "Pet travel scheme privacy notice", "data.protection@defra.gov.uk", "www.legislation.gov.uk", "Cwcis", "r Comisiynydd Gwybodaeth (yn agor mewn tab newydd)", "Taking a dog, cat or ferret from Great Britain to Northern Ireland", "AbilityNet (opens in new tab)", "contact the Equality Advisory and Support Service (EASS)", "Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon", "Fframwaith Windsor (yn agor mewn tab newydd)", "Darllenwch ragor am symudiadau masnachol", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Pet travel scheme privacy notice", "data.protection@defra.gov.uk", "www.legislation.gov.uk", "Cwcis", "r Comisiynydd Gwybodaeth (yn agor mewn tab newydd)", "chi, cath neu ffured o Brydain Fawr i Ogledd Iwerddon", "AbilityNet (yn agor mewn tab newydd)", "Rhagor o wybodaeth am daliadau am alwadau (yn agor mewn tab newydd)", "Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon", "Fframwaith Windsor (yn agor mewn tab newydd)", "Darllenwch ragor am symudiadau masnachol", null)]
         public async global::System.Threading.Tasks.Task VerifyFooterLinksAndPagesOnPets(string logininfo, string privacyPageTitle, string privacyLink1, string privacyLink2, string cookiesPageTitle, string cookiesLink1, string accessibilityPageTitle, string accessibilityLink1, string accessibilityLink2, string tCsPageTitle, string tCsLink1, string tCsLink2, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
