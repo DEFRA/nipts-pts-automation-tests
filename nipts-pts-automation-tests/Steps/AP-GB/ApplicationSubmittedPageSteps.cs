@@ -26,9 +26,8 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
 
         [When(@"I verify application submitted page title '([^']*)'")]
         [Then(@"I verify application submitted page title '([^']*)'")]
-        public void ThenIVerifyApplicationSubmittedPageTitle()
+        public void ThenIVerifyApplicationSubmittedPageTitle(string pageTitle)
         {
-            var pageTitle = "Application submitted";
             Assert.IsTrue(ApplicationSubmittedPage?.VerifyApplicationSubmittedPageTitle(pageTitle), $"The page {pageTitle} not loaded!");
         }
 
