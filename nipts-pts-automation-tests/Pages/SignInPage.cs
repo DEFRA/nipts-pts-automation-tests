@@ -46,7 +46,7 @@ namespace nipts_pts_automation_tests.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
             Thread.Sleep(1000);
 
-@?:            UserId.SendKeys(userId);
+            UserId.SendKeys(userId);
             Password.SendKeys(password);
             _driver.WaitForElementCondition(ExpectedConditions.ElementToBeClickable(SignIn)).Click();
             int count = _driver.WaitForElements(SignInConfirmBy).Count;
