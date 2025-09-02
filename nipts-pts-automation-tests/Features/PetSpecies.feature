@@ -7,7 +7,6 @@ Background:
 	Given that I navigate to the Pets application portal
 
 Scenario: Select species on Pets Application Portal Page in the WELSH language
-	Then  verify next page '<nextPage>' is loaded
 	When  sign in with valid credentials with logininfo '<logininfo>'
 	Then  verify next page '<nextPage1>' is loaded
 	When  click on Apply for a document

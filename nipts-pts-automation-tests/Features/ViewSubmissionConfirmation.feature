@@ -41,7 +41,7 @@ Scenario: View Submission confirmation page in WELSH
 	And  verify next page '<nextPage8>' is loaded
 	And confirm the declaration checkbox
 	Then click Accept and Send button from Declaration page
-	Then I verify application submitted page title '<nextpage9>'
+	Then I verify application submitted page title '<nextPage9>'
 	And I verify the link '<Link1>' on page
 	Then click on Apply for another lifelong pet travel document link
 	And  verify next page 'manylion chi' is loaded
@@ -95,7 +95,7 @@ Scenario: View Submission confirmation page in WELSH
 	And   click on continue
 	And   confirm the declaration checkbox
 	Then  click Accept and Send button from Declaration page
-	Then  I verify application submitted page title '<nextpage5>'
+	Then  I verify application submitted page title '<nextPage5>'
 	Then  click on Apply for another lifelong pet travel document link
 	And   verify next page 'Newid eich manylion' is loaded
 	And   verify displayed language at page footer '<FooterLang1>'

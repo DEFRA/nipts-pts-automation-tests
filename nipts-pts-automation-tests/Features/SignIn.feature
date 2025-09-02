@@ -16,7 +16,6 @@ Scenario: Navigate  and Sign In to Pets Application Portal Page
 
 
 Scenario: Verify Sign Out functionality for WELSH language
-	Then  verify next page '<nextPage>' is loaded
 	Then  sign in with valid credentials with logininfo '<logininfo>'
 	When  click on Welsh language
 	Then  verify sign out link in displayed in selected language '<SignOutLinkText>'

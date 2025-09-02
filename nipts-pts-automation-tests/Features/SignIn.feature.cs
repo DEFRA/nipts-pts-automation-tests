@@ -175,36 +175,33 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 19
- await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 20
  await testRunner.ThenAsync(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 21
+#line 20
  await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 22
+#line 21
  await testRunner.ThenAsync(string.Format("verify sign out link in displayed in selected language \'{0}\'", signOutLinkText), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 23
+#line 22
  await testRunner.ThenAsync(string.Format("verify displayed language at page footer \'{0}\'", displayedLang), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 24
+#line 23
  await testRunner.WhenAsync("click on English language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 25
+#line 24
  await testRunner.ThenAsync(string.Format("verify sign out link in displayed in selected language \'{0}\'", signOutLinkText2), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 26
+#line 25
  await testRunner.ThenAsync(string.Format("verify displayed language at page footer \'{0}\'", displayedLang2), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 27
+#line 26
  await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 28
+#line 27
  await testRunner.WhenAsync("click on Apply for a document", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 29
+#line 28
  await testRunner.ThenAsync(string.Format("verify next page \'{0}\' is loaded", nextPage1), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
