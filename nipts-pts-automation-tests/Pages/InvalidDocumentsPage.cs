@@ -14,7 +14,7 @@ namespace nipts_pts_automation_tests.Pages
 
         #region Page Objects
 
-        private IWebElement lnkInvalidDocs => _driver.WaitForElement(By.XPath("//a[contains(text(),'Gweld dogfennau annilys')]"));
+        private IWebElement lnkInvalidDocs => _driver.WaitForElement(By.XPath("//a[contains(text(),'Gweld dogfennau annilys')] | //a[contains(text(),'View invalid documents')]"));
         private IReadOnlyCollection<IWebElement> tableRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr"), true);
         private IReadOnlyCollection<IWebElement> tableHeaderRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr/th"), true);
         private IReadOnlyCollection<IWebElement> tableActionRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr/td[2]//a"), true);

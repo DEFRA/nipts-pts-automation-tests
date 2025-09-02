@@ -274,7 +274,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with Other colo
 	And verify WELSH summary on the application summary page with field name 'Enw' and field value '<PetName>'
 	And verify WELSH summary on the application summary page with field name 'Rhywogaeth' and field value '<Pet>'
 	And verify WELSH summary on the application summary page with field name 'Brid' and field value '<PetBreed>'
-		And verify gender on the application summary in WELSH as 'Rhyw' '<Gender>'
+	And verify gender on the application summary in WELSH as 'Rhyw' '<Gender>'
 	And verify WELSH summary on the application summary page with field name 'Lliw' and field value 'Unique Color'
 	And verify WELSH summary on the application summary page with field name 'Nodweddion arwyddocaol' and field value '<IsSignificantFeatures>'
 	And verify WELSH text for Michrochip Date 'Dyddiad mewnblannu neu sganio' and Michrochip Date on application summary page
@@ -408,6 +408,24 @@ Scenario Outline: Create PETS Travel Document By Registered User with details no
 	When Revoke an application via backend
 	Then click on back
 	And I should not see the application in the Dashboard
+	When click View Invalid documents link in WELSH
+	Then verify next page 'Dogfennau annilys' is loaded	
+	Then I should see the application on pets in 'u canslo' status
+	When I have clicked the View hyperlink from home page
+	Then verify next page 'Dogfen teithio a datganiad ar gyfer anifail anwes gydol oes' is loaded	
+	And verify WELSH summary on the application summary page with field name 'Lleoliad y mewnblaniad' and field value 'O dan y croen'
+	And verify WELSH summary on the application summary page with field name 'Statws' and field value 'u canslo'
+	And verify WELSH summary on the application summary page with field name 'Enw' and field value '<PetName>'
+	And verify WELSH summary on the application summary page with field name 'Rhywogaeth' and field value '<Pet>'
+	And verify WELSH summary on the application summary page with field name 'Brid' and field value '<PetBreed>'
+	And verify gender on the application summary in WELSH as 'Rhyw' '<Gender>'
+	And verify WELSH summary on the application summary page with field name 'Lliw' and field value '<Color>'
+	And verify WELSH summary on the application summary page with field name 'Nodweddion arwyddocaol' and field value '<IsSignificantFeatures>'
+	And verify pet owner details on the application summary in WELSH as 'Enw' '<FullName>'
+	And verify WELSH summary on the application summary page with field name 'ffôn' and field value '<PhoneNumber>'
+	And verify WELSH summary on the application summary page with field name 'Cyfeiriad' and field value '<PostCode>'
+	And verify WELSH text for Michrochip Date 'Dyddiad mewnblannu neu sganio' and Michrochip Date on application summary page
+	And verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on application summary page
 	And click on signout button and verify the signout message on pets
 
 Examples:
@@ -468,7 +486,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with enter addr
 	And I can see the unique application reference number
 	When click on View all lifelong pet travel document link
 	Then verify next page '<nextpage10>' is loaded
-	And I should see the application on pets in 'Yn aros' status
+	Then I should see the application on pets in 'Yn aros' status
 	When I have clicked the View hyperlink from home page
 	Then verify next page 'Crynodeb o' is loaded
 	And verify WELSH summary on the application summary page with field name 'Lleoliad y mewnblaniad' and field value 'O dan y croen'
@@ -486,6 +504,24 @@ Scenario Outline: Create PETS Travel Document By Registered User with enter addr
 	When Reject an application via backend
 	Then click on back
 	And I should not see the application in the Dashboard
+	When click View Invalid documents link in WELSH
+	Then verify next page 'Dogfennau annilys' is loaded	
+	Then I should see the application on pets in 'Yn aflwyddiannus' status
+	When I have clicked the View hyperlink from home page
+	Then verify next page 'Crynodeb o' is loaded
+	And verify WELSH summary on the application summary page with field name 'Lleoliad y mewnblaniad' and field value 'O dan y croen'
+	And verify WELSH summary on the application summary page with field name 'Statws' and field value 'Yn aflwyddiannus'
+	And verify WELSH summary on the application summary page with field name 'Enw' and field value '<PetName>'
+	And verify WELSH summary on the application summary page with field name 'Rhywogaeth' and field value '<Pet>'
+	And verify WELSH summary on the application summary page with field name 'Brid' and field value '<PetBreed>'
+	And verify gender on the application summary in WELSH as 'Rhyw' '<Gender>'
+	And verify WELSH summary on the application summary page with field name 'Lliw' and field value '<Color>'
+	And verify WELSH summary on the application summary page with field name 'Nodweddion arwyddocaol' and field value '<IsSignificantFeatures>'
+	And verify pet owner details on the application summary in WELSH as 'Enw' '<FullName>'
+	And verify WELSH summary on the application summary page with field name 'ffôn' and field value '<PhoneNumber>'
+	And verify WELSH summary on the application summary page with field name 'Cyfeiriad' and field value '<PostCode>'
+	And verify WELSH text for Michrochip Date 'Dyddiad mewnblannu neu sganio' and Michrochip Date on application summary page
+	And verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on application summary page
 	And click on signout button and verify the signout message on pets
 
 Examples:
@@ -624,6 +660,11 @@ Scenario Outline: Create PETS Travel Document By Registered User with details no
 	When Revoke an application via backend
 	Then click on back
 	And I should not see the application in the Dashboard
+	When click View Invalid documents link in WELSH
+	Then verify next page 'Dogfennau annilys' is loaded	
+	Then I should see the application on pets in 'u canslo' status
+	When I have clicked the View hyperlink from home page
+	Then verify next page 'Dogfen teithio a datganiad ar gyfer anifail anwes gydol oes' is loaded	
 	And click on signout button and verify the signout message on pets
 
 Examples:
@@ -698,6 +739,11 @@ Scenario Outline: Create PETS Travel Document By Registered User with enter addr
 	When Reject an application via backend
 	Then click on back
 	And I should not see the application in the Dashboard
+	When click View Invalid documents link in WELSH
+	Then verify next page 'Dogfennau annilys' is loaded	
+	Then I should see the application on pets in 'Yn aflwyddiannus' status
+	When I have clicked the View hyperlink from home page
+	Then verify next page 'Crynodeb o' is loaded	
 	And click on signout button and verify the signout message on pets
 
 Examples:

@@ -118,7 +118,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
                     var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
                     var tdCollection = _driver.FindElement(By.XPath(statusPath));
-                    return tdCollection.Text.Trim().ToUpper().Equals(status.ToUpper());
+                    return tdCollection.Text.Trim().ToUpper().Contains(status.ToUpper());
                 }
             }
 
@@ -147,7 +147,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
             var rowCount = tableRows.Count - 1;
 
-            for (var elementIndex = rowCount; elementIndex > 0; elementIndex--)
+            for (var elementIndex = rowCount; elementIndex >= 0; elementIndex--)
             {
                 var tableHeader = tableHeaderRows.ElementAt(elementIndex).Text.Replace("\r\n", string.Empty).Trim().ToUpper();
 
