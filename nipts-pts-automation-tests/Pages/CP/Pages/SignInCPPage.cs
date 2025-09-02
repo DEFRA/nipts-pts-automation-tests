@@ -46,10 +46,14 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", AcceptAdditionalCookies);
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", HideCookieMessage);
             }
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
-            Thread.Sleep(3000);
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
-            Thread.Sleep(2000);
+
+            if (PageHeading.Text.Contains("How do you want to sign in?"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
+                Thread.Sleep(3000);
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
+                Thread.Sleep(2000);
+            }
         }
 
         public void IsSignedIn(string userName, string password)

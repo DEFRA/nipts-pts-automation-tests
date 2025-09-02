@@ -39,17 +39,20 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         public void SelectSignInMethod(string signInMethod)
         {
             Thread.Sleep(1000);
-            if (signInMethod.Equals("OneLogIn"))
+            if (PageHeading.Text.Contains("How do you want to sign in?"))
             {
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovUKOneLogin);
+                if (signInMethod.Equals("OneLogIn"))
+                {
+                    ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovUKOneLogin);
+                }
+                else
+                {
+                    ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
+                }
+                Thread.Sleep(1000);
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
+                Thread.Sleep(1000);
             }
-            else
-            {
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
-            }
-            Thread.Sleep(1000);
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
-            Thread.Sleep(1000);
         }
 
         public void ClickOnSignInOnOneLoginPage()
