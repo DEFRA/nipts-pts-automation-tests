@@ -20,8 +20,13 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         private IWebElement CreateSignInDetails => _driver.WaitForElement(By.XPath("//a[contains(text(),'Create sign in')]"));
         private By Accept_Cookies => By.XPath("//button[text()='Accept analytics cookies'] | //button[contains(text(),'Accept additional cookies')]");
         private IWebElement Hide_Cookies => _driver.WaitForElement(By.XPath("//a[text()='Hide cookie message'] | //button[contains(text(),'Hide cookie message')]"));
+        private IWebElement signInGovUKOneLogin => _driver.WaitForElement(By.XPath("//label[@for='one']"));
         private IWebElement signInGovernmentGateway => _driver.WaitForElement(By.XPath("//label[@for='scp']"));
         private IWebElement signInContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Continue'][@id='continueReplacement']"));
+        private IWebElement oneLoginSignIn => _driver.WaitForElement(By.XPath("//button[@id='sign-in-button']"));
+        private IWebElement OneLoginEmailAddress => _driver.WaitForElement(By.XPath("//input[@id='email']"));
+        private IWebElement OneLoginPassword => _driver.WaitForElement(By.XPath("//input[@id='password']"));
+        private IWebElement oneLoginContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Continue']"));
         #endregion
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
@@ -31,11 +36,35 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             _objectContainer = container;
         }
 
-        public void SelectSignInMethod()
+        public void SelectSignInMethod(string signInMethod)
         {
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
+            if (signInMethod.Equals("OneLogIn"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovUKOneLogin);
+            }
+            else
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
+            }
+            Thread.Sleep(1000);
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
+            Thread.Sleep(1000);
+        }
+
+        public void ClickOnSignInOnOneLoginPage()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", oneLoginSignIn);
+        }
+
+        public void EnterOneLoginEmailAddress(string LoginEmailAddress,string LoginPassword)
+        {
+            OneLoginEmailAddress.SendKeys(LoginEmailAddress);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", oneLoginContinue);
+            Thread.Sleep(2000);
+            OneLoginPassword.SendKeys(LoginPassword);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", oneLoginContinue);
+            Thread.Sleep(1000);
         }
 
         public bool IsPageLoaded()
