@@ -473,7 +473,7 @@ Scenario Outline: Validate ascending order on Reffered to SPS page
 	Then I should navigate to Report non-compliance page
 	And I select 'Cannot find microchip' as non compliance reason
 	And I click '<TypeOfPassenger>' in Passenger details
-	And I click on GB outcome
+	And I click on GB outcomeRefused to sign declaration
 	When I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
 	When I click on view on Checks page

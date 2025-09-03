@@ -147,7 +147,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
             var rowCount = tableRows.Count - 1;
 
-            for (var elementIndex = rowCount; elementIndex >= 0; elementIndex--)
+            for (var elementIndex = 0; elementIndex <= rowCount; elementIndex++)
             {
                 var tableHeader = tableHeaderRows.ElementAt(elementIndex).Text.Replace("\r\n", string.Empty).Trim().ToUpper();
 

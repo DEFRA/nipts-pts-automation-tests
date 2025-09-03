@@ -28,5 +28,6 @@
         public bool VerifyTheSearchResultsHeading(string SearchResultsHeading);
         void SelectIssueSUPTDRadioButton();
         void SelectFailRadioButton();
+        bool VerifyWarningMessageOnSearchResultPage(string status);
     }
 }

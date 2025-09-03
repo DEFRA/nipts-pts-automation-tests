@@ -333,6 +333,7 @@ Scenario Outline: Verify Ferret Pet details Search results with Pending applicat
 	And I provided the Reference number of the application
 	When I click search button
 	Then I should see the application status in 'Pending'
+	And I verify warning message on search results page for status 'Pending'
 	And verify Pet Name 'Automation Pet Ferret' on Search Pass Fail Results Page
 	And verify Pet Species 'Ferret' on Search Pass Fail Results Page
 	And verify Pet Sex 'Female' on Search Pass Fail Results Page
@@ -377,3 +378,24 @@ Scenario Outline: Verify Ferret Pet details Search results with Approved applica
 Examples:
 	| Transportation | FerryRoute                    | ApplicationRadio     |
 	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |
+
+Scenario Outline: PTS port checker Issue SUPTD application by PTD number - status in Approved
+	When Create an application via backend
+	When Approve an application via backend
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the PTD number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
+	And I should see the application subtitle 'Lifelong pet travel document and declaration'
+	And I select Issue SUPTD radio button
+	When I click save and continue button from application status page
+	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image

@@ -409,5 +409,12 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             Assert.IsTrue(_applicationSummaryPage?.VerifyTheFailButtonNotDisplayed(), "Fail button should not displayed on Search Result page");
         }
+
+        [Then(@"I verify warning message on search results page for status '([^']*)'")]
+        [When(@"I verify warning message on search results page for status '([^']*)'")]
+        public void ThenIVerifyWarningMessageOnSearchResultPage(string status)
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyWarningMessageOnSearchResultPage(status), "Waring message not matching on Search Result page");
+        }
     }
 }

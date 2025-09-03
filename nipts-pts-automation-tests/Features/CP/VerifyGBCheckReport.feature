@@ -42,7 +42,7 @@ Scenario Outline: Validate GB Check Report page fields for GB User
 	And I click on PTD number of the application
 	Then I verify GB check report with MicrochipReason '<NumberMicrochipReasons>','<CannotFindMicrochip>','<NumberOtherIssues>'
 	And I verify GB check report with Other issues '<NumberOtherIssues>','<AuthPersonButNoConfirmation>','<NumberMicrochipReasons>'
-	#And I verify GB check report with Other issues '<NumberOtherIssues>','<RefusedToSignDeclaration>','<NumberMicrochipReasons>'
+	And I verify GB check report with Other issues '<NumberOtherIssues>','<RefusedToSignDeclaration>','<NumberMicrochipReasons>'
 	And I verify GB check report with details of outcome '<DetailsOfOutcome>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerReferredDAERA>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerAdvisedNoTravel>'
@@ -97,7 +97,7 @@ Scenario Outline: Validate GB Check Report page fields for SPS User
 	When I click on PTD number of the application
 	Then I verify GB check report with MicrochipReason '<NumberMicrochipReasons>','<CannotFindMicrochip>','<NumberOtherIssues>'
 	And I verify GB check report with Other issues '<NumberOtherIssues>','<AuthPersonButNoConfirmation>','<NumberMicrochipReasons>'
-	#And I verify GB check report with Other issues '<NumberOtherIssues>','<RefusedToSignDeclaration>','<NumberMicrochipReasons>'
+	And I verify GB check report with Other issues '<NumberOtherIssues>','<RefusedToSignDeclaration>','<NumberMicrochipReasons>'
 	And I verify GB check report with details of outcome '<DetailsOfOutcome>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerReferredDAERA>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerAdvisedNoTravel>'
@@ -156,7 +156,7 @@ Scenario Outline: Validate GB Check Report page fields for duplicate checks for 
 	And I click on PTD number of the application
 	Then I verify GB check report with MicrochipReason '<NumberMicrochipReasons>','<CannotFindMicrochip>','<NumberOtherIssues>'
 	And I verify GB check report with Other issues '<NumberOtherIssues>','<AuthPersonButNoConfirmation>','<NumberMicrochipReasons>'
-	#And I verify GB check report with Other issues '<NumberOtherIssues>','<RefusedToSignDeclaration>','<NumberMicrochipReasons>'
+	And I verify GB check report with Other issues '<NumberOtherIssues>','<RefusedToSignDeclaration>','<NumberMicrochipReasons>'
 	And I verify GB check report with details of outcome '<DetailsOfOutcome>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerReferredDAERA>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerAdvisedNoTravel>'
@@ -226,7 +226,7 @@ Scenario Outline: Validate GB Check Report page fields for duplicate checks for 
 	When I click on PTD number of the application
 	Then I verify GB check report with MicrochipReason '<NumberMicrochipReasons>','<CannotFindMicrochip>','<NumberOtherIssues>'
 	And I verify GB check report with Other issues '<NumberOtherIssues>','<AuthPersonButNoConfirmation>','<NumberMicrochipReasons>'
-	#And I verify GB check report with Other issues '<NumberOtherIssues>','<RefusedToSignDeclaration>','<NumberMicrochipReasons>'
+	And I verify GB check report with Other issues '<NumberOtherIssues>','<RefusedToSignDeclaration>','<NumberMicrochipReasons>'
 	And I verify GB check report with details of outcome '<DetailsOfOutcome>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerReferredDAERA>'
 	And I verify GB check report with GB Outcome '<NumberGBOutcome>','<PassengerAdvisedNoTravel>'

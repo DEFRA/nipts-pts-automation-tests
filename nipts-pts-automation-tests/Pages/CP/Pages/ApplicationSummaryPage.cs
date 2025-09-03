@@ -38,7 +38,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement RoleIdentification => _driver.WaitForElement(By.XPath("//span[contains(@class,'idm-table__cell--access-level-content')]"));
         private IWebElement SuspendedWarningText => _driver.WaitForElement(By.XPath("//div[@class='govuk-warning-text']"));
         private IWebElement ChecksOnSearchResults => _driver.WaitForElementExists(By.XPath("//h2[contains(@class,'govuk-heading-l')] [@id='search-results-heading']"));
-
+        private IWebElement WarningOnSearchResults => _driver.WaitForElementExists(By.XPath("//strong[@class='govuk-warning-text__text']"));
         #endregion
 
         #region Methods
@@ -804,6 +804,16 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 return false;
             else
                 return true;
+        }
+
+        public bool VerifyWarningMessageOnSearchResultPage(string status)
+        { 
+            string warningText = WarningOnSearchResults.Text;
+            string warningMessgae = $"Because the PTD is ‘"  + status + "’, you should check whether you can issue a SUPTD";
+            if (warningText.Contains(warningMessgae))
+                return true;
+            else
+                return false;
         }
 
         #endregion
