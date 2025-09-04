@@ -194,7 +194,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private bool ValidateGBOutcomeWithSQLBackend(string checkOutcomeId)
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
-            string sqlQuery = $"SELECT MCNotFound,MCNotMatch,MCNotMatchActual,RelevantComments,GBRefersToDAERAOrSPS,GBAdviseNoTravel,GBPassengerSaysNoTravel FROM [dbo].[CheckOutcome]  Where Id = '{checkOutcomeId}'";
+            string sqlQuery = $"SELECT MCNotFound,GBRefersToDAERAOrSPS,GBAdviseNoTravel,GBPassengerSaysNoTravel FROM [dbo].[CheckOutcome]  Where Id = '{checkOutcomeId}'";
             DataTable sqlData = null;
             bool status = true;
             int i = 0;
@@ -217,33 +217,15 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                     }
                     else if (i == 1 && row[1].Equals(true))
                     {
-                        if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
-                            status = false;
-                    }
-                    else if (i == 2 && row[2].Equals("123456789123456"))
-                    {
-                        if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
-                            status = false;
-                    }
-                    else if (i == 3)
-                    {
-                        if (!AdditionalComment.Text.Contains("None"))
-                        {
-                            if (!AdditionalComment.Text.Equals(row[3]))
-                                status = false;
-                        }
-                    }
-                    else if (i == 4 && row[4].Equals(true))
-                    {
                         if (!PassangerRefToDAERA.Text.Contains("Passenger referred to DAERA/SPS at NI port"))
                             status = false;
                     }
-                    else if (i == 5 && row[5].Equals(true))
+                    else if (i == 2 && row[2].Equals(true))
                     {
                         if (!PassengerAdvised.Text.Contains("Passenger advised not to travel"))
                             status = false;
                     }
-                    else if (i == 6 && row[6].Equals(true))
+                    else if (i == 3 && row[3].Equals(true))
                     {
                         if (!PassengerNoTravel.Text.Contains("Passenger says they will not travel"))
                             status = false;
@@ -253,10 +235,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return status;
         }
 
-        private bool ValidateSPSOutcomeWithSQLBackend(string checkOutcomeId, string TypeOfPassenger, string SPSOutcome)
+        private bool ValidateSPSOutcomeWithSQLBackend(string checkOutcomeId, string TypeOfPassenger, string SPSOutcome, string DetailsOfOutCome)
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
-            string sqlQuery = $"SELECT MCNotFound,MCNotMatch,MCNotMatchActual,PassengerTypeId,SPSOutcome FROM [dbo].[CheckOutcome]  Where Id = '{checkOutcomeId}'";
+            string sqlQuery = $"SELECT MCNotFound,PassengerTypeId,SPSOutcome,SPSOutcomeDetails FROM [dbo].[CheckOutcome]  Where Id = '{checkOutcomeId}'";
             DataTable sqlData = null;
             bool status = true;
             int i = 0;
@@ -280,53 +262,47 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                                 status = false;
                         }
                     }
-                    else if (i == 1 && row[1].Equals(true))
-                    {
-                        if (!TypeOfPassenger.Contains("Airline"))
-                        {
-                            if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
-                                status = false;
-                        }
-                    }
-                    else if (i == 2 && row[2].Equals("123456789123456"))
-                    {
-                        if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
-                            status = false;
-                    }
-                    else if (i == 3)
+                    else if (i == 1)
                     {
                         if (TypeOfPassenger.Contains("Ferry foot passenger"))
                         {
-                            if (row[3].Equals(1))
+                            if (row[1].Equals(1))
                                 status = true;
                             else
                                 status = false;
                         }
                         else if (TypeOfPassenger.Contains("Vehicle on ferry"))
                         {
-                            if (row[3].Equals(2))
+                            if (row[1].Equals(2))
                                 status = true;
                             else
                                 status = false;
                         }
                         else if (TypeOfPassenger.Contains("Airline"))
                         {
-                            if (row[3].Equals(3))
+                            if (row[1].Equals(3))
                                 status = true;
                             else
                                 status = false;
                         }
                     }
-                    else if (i == 4 && row[4].Equals(true))
+                    else if (i == 2 && row[2].Equals(true))
                     {
                         if (SPSOutcome.Contains("Allowed"))
                             status = true;
                         else
                             status = false;
                     }
-                    else if (i == 4 && row[4].Equals(false))
+                    else if (i == 2 && row[2].Equals(false))
                     {
                         if (SPSOutcome.Contains("Not allowed"))
+                            status = true;
+                        else
+                            status = false;
+                    }
+                    else if (i == 3 && DetailsOfOutCome!= "")
+                    {
+                        if (row[3].Equals(DetailsOfOutCome))
                             status = true;
                         else
                             status = false;
@@ -554,13 +530,13 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return ValidateGBOutcomeWithSQLBackend(CheckOutcomeId);
         }
 
-        public bool VerifySPSOutcomeWithSQLBackend(string AppReference, string TypeOfPassenger, string SPSOutcome)
+        public bool VerifySPSOutcomeWithSQLBackend(string AppReference, string TypeOfPassenger, string SPSOutcome, string DetailsOfOutCome)
         {
             string ApplicationId = GetApplId(AppReference);
             string TravelDocumentId = GetTravelDocumentId(ApplicationId);
             string SPSCheckerId = GetSPSCheckerId();
             string CheckOutcomeId = GetCheckOutcomeId(ApplicationId, TravelDocumentId, SPSCheckerId);
-            return ValidateSPSOutcomeWithSQLBackend(CheckOutcomeId, TypeOfPassenger, SPSOutcome);
+            return ValidateSPSOutcomeWithSQLBackend(CheckOutcomeId, TypeOfPassenger, SPSOutcome, DetailsOfOutCome);
         }
 
         public bool VerifyGBSummaryForPassApplWithSQLBackend(string AppReference)

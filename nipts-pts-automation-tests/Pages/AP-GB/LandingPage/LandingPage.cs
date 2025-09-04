@@ -50,8 +50,11 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LandingPage
         {
             By continueBy = By.XPath("//button[contains(text(),'Continue')]");
 
-            if (_driver.FindElements(continueBy).Count > 0)
-            btnContinue.Click();
+            if (PageHeading.Text.Contains("Private beta testing login"))
+            {
+                if (_driver.FindElements(continueBy).Count > 0)
+                    btnContinue.Click();
+            }
         }
 
         public bool VerifyNextPageIsLoaded(string pageName)

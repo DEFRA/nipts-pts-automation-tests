@@ -11,7 +11,7 @@
         bool VerifyTheExpectedSubtitle(string applicationSubtitle);
         string getNewID();
         public bool VerifyGBOutcomeWithSQLBackend(string AppReference);
-        public bool VerifySPSOutcomeWithSQLBackend(string AppReference,string TypeOfPassenger, string SPSOutcome);
+        public bool VerifySPSOutcomeWithSQLBackend(string AppReference,string TypeOfPassenger, string SPSOutcome,string DetailsOfOutCome);
         public bool VerifyGBSummaryOutputWithSQLBackend(string AppReference);
         public bool VerifySPSSummaryOutputWithSQLBackend(string AppReference);
         public bool VerifyGBSummaryForPassApplWithSQLBackend(string AppReference);

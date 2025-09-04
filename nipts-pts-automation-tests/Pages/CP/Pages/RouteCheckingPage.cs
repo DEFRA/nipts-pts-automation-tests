@@ -154,7 +154,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         public string SelectfutureDropDownDepartureTime()
         {
             var hour = DateTime.Now.AddHours(1).ToString("HH");
-            var minutes = DateTime.Now.ToString("mm");
+            var minutes = DateTime.Now.AddMinutes(3).ToString("mm");
             string departureTime = $"'{hour}':'{minutes}'";
 
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", hourInput, hour);
@@ -180,7 +180,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public string SelectDropDownDepartureTimeJustOneMinuteLaterThanCurrent()
         {
-            var hour = DateTime.Now.ToString("HH");
+            var hour = DateTime.Now.AddHours(1).ToString("HH");
             var minutes = DateTime.Now.AddMinutes(4).ToString("mm");
             string departureTime = $"'{hour}':'{minutes}'";
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);

@@ -399,3 +399,7 @@ Scenario Outline: PTS port checker Issue SUPTD application by PTD number - statu
 	Then I should navigate to Welcome page
 	And I verify submiited message
     And I verify submiited message image
+
+Examples:
+	| Transportation | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |

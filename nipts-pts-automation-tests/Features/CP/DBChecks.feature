@@ -69,12 +69,12 @@ Scenario Outline: Veirfy backend entries for GB and SPS Outcome for Fail or Reff
 	Then I verify backend SQL entries for GB Summary Table
 	And I verify backend SQL entries for SPS Summary Table
 	And I verify backend SQL entries for GB Outcome
-	And I verify backend SQL entries for SPS Outcome '<TypeOfPassenger>','<SPSOutcome>'
+	And I verify backend SQL entries for SPS Outcome '<TypeOfPassenger>','<SPSOutcome>','<DetailsOfOutCome>'
 
 	Examples:
-	| Transportation | FerryRoute                    | ApplicationRadio     | nextPage        | SPSOutcome  | TypeOfPassenger      | CannotFindMicrochip | AuthPersonButNoConfirmation | RefusedToSignDeclaration | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | nextPage2               | DetailsOfOutCome        |
-	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number | Referred to SPS | Allowed     | Ferry foot passenger | CannotFindMicrochip | AuthPersonButNoConfirmation | RefusedToSignDeclaration | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome |
-	| Ferry          | Cairnryan to Larne (P&O)      | Search by PTD number | Referred to SPS | Not allowed | Vehicle on ferry     | CannotFindMicrochip | No                          | RefusedToSignDeclaration | PassengerReferredDAERA | No                       | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome |
+	| Transportation | FerryRoute                    | ApplicationRadio     | nextPage        | SPSOutcome  | TypeOfPassenger      | CannotFindMicrochip | AuthPersonButNoConfirmation | RefusedToSignDeclaration | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | nextPage2               | DetailsOfOutCome                      |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number | Referred to SPS | Allowed     | Ferry foot passenger | CannotFindMicrochip | AuthPersonButNoConfirmation | RefusedToSignDeclaration | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome for Allow     |
+	| Ferry          | Cairnryan to Larne (P&O)      | Search by PTD number | Referred to SPS | Not allowed | Vehicle on ferry     | CannotFindMicrochip | No                          | RefusedToSignDeclaration | PassengerReferredDAERA | No                       | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome for Not Allowed|
 
 		#@RunOnly
 Scenario Outline: Veirfy backend entries for GB outcome for Pass journey
@@ -126,22 +126,19 @@ Scenario Outline: Veirfy backend entries for SPS outcome and Summary table for S
 	And I provided the PTD number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
-	And I select Refer to SPS radio button
+	And I select Fail radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
-	#When I click '<TypeOfPassenger>' in Passenger details
 	When I select 'Cannot find microchip' as non compliance reason
-	#And I click '<SPSOutcome>' on SPS outcome
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
 	And I verify backend SQL entries for SPS Summary Table
-	And I verify backend SQL entries for SPS Outcome '<TypeOfPassenger>','<SPSOutcome>'
+	And I verify backend SQL entries for SPS Outcome '<TypeOfPassenger>','<SPSOutcome>','<DetailsOfOutCome>'
 
 
 Examples:
-	| Transportation | Flight number | nextPage        | SPSOutcome  | ApplicationRadio     | TypeOfPassenger |
-	#| Flight         | AI 123        | Referred to SPS | Allowed     | Search by PTD number | Airline         |
-	| Flight         | AI 123        | Referred to SPS | Not allowed | Search by PTD number | Airline         |
+	| Transportation | Flight number | nextPage        | SPSOutcome  | ApplicationRadio     | TypeOfPassenger | DetailsOfOutCome |
+	| Flight         | AI 123        | Referred to SPS | Not allowed | Search by PTD number | Airline         |                  |
 
 Scenario Outline: Veirfy backend entries for application status while Suspensed 
 	When I have provided the CP credentials and signin for user 'SPSUser'

@@ -38,7 +38,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
 
         public void SelectSignInMethod(string signInMethod)
         {
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             if (PageHeading.Text.Contains("How do you want to sign in?"))
             {
                 if (signInMethod.Equals("OneLogIn"))

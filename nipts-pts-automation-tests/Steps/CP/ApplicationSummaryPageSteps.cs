@@ -278,12 +278,12 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(_applicationSummaryPage.VerifyGBOutcomeWithSQLBackend(AppReference), "GB Outcome not matching with SQL Backend data");
         }
 
-        [Then(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)'")]
-        [When(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)'")]
-        public void ThenIVerifySQLEntriesForSPSOutcome(string TypeOfPassenger, string SPSOutcome)
+        [Then(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)','([^']*)'")]
+        [When(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)','([^']*)'")]
+        public void ThenIVerifySQLEntriesForSPSOutcome(string TypeOfPassenger, string SPSOutcome, string DetailsOfOutCome)
         {
             string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
-            Assert.True(_applicationSummaryPage.VerifySPSOutcomeWithSQLBackend(AppReference, TypeOfPassenger, SPSOutcome), "SPS Outcome not matching with SQL Backend data");
+            Assert.True(_applicationSummaryPage.VerifySPSOutcomeWithSQLBackend(AppReference, TypeOfPassenger, SPSOutcome, DetailsOfOutCome), "SPS Outcome not matching with SQL Backend data");
         }
 
         [Then(@"I verify backend SQL entries for GB Summary Table")]
