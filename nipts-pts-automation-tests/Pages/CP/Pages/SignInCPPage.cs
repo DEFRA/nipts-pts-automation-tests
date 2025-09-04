@@ -40,13 +40,14 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         public void ClickSignInButton()
         {
             btnSignIn.Click();
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             if (_driver.FindElements(By.XPath("//button[contains(text(),'Accept analytics cookies')]")).Count() > 0)
             {
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", AcceptAdditionalCookies);
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", HideCookieMessage);
             }
 
+            Thread.Sleep(1000);
             if (PageHeading.Text.Contains("How do you want to sign in?"))
             {
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
