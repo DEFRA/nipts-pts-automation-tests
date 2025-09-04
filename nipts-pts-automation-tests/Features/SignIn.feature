@@ -12,7 +12,7 @@ Scenario: Navigate  and Sign In to Pets Application Portal Page
 
 	Examples: 
 	| nextPage                         | logininfo |
-	| Sign in using Government Gateway | test      |
+	| How do you want to sign in?      | test      |
 
 
 Scenario: Verify Sign Out functionality for WELSH language

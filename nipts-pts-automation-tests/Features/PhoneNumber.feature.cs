@@ -199,7 +199,7 @@ this.ScenarioInitialize(scenarioInfo);
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Verify error message for invalid contact Telephone Number")]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "07456789**", "fel 01632 960 001 neu 07700 900 982", null)]
-        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "", "Rhowch eich rhif ff", null)]
+        [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "", "fel 01632 960 001 neu 07700 900 982", null)]
         [NUnit.Framework.TestCaseAttribute("test", "Lifelong pet travel documents", "TestFullName", "SE1 7PB", "0745678976435847687465", "fel 01632 960 001 neu 07700 900 982", null)]
         public async global::System.Threading.Tasks.Task VerifyErrorMessageForInvalidContactTelephoneNumber(string logininfo, string nextPage, string fullname, string postcode, string phoneNumber, string errorMessage, string[] exampleTags)
         {

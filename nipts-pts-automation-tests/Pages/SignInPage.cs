@@ -40,6 +40,7 @@ namespace nipts_pts_automation_tests.Pages
 
         public bool IsSignedIn(string userId, string password)
         {
+            Thread.Sleep(1000);
             if (PageHeading.Text.Contains("How do you want to sign in?"))
             { 
                 Thread.Sleep(1000);

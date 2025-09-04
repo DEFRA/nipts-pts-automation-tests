@@ -51,7 +51,7 @@ Scenario: Verify error message for invalid contact Telephone Number
 	Examples: 
 	| logininfo | nextPage                      | fullname     | postcode | phoneNumber | errorMessage                        |
 	| test      | Lifelong pet travel documents | TestFullName | SE1 7PB  | 07456789**  |  fel 01632 960 001 neu 07700 900 982 |
-	| test      | Lifelong pet travel documents | TestFullName | SE1 7PB  |             | Rhowch eich rhif ff                 |
+	| test      | Lifelong pet travel documents | TestFullName | SE1 7PB  |             | fel 01632 960 001 neu 07700 900 982  |
 	| test      | Lifelong pet travel documents | TestFullName | SE1 7PB  | 0745678976435847687465  |  fel 01632 960 001 neu 07700 900 982 |
 
 	

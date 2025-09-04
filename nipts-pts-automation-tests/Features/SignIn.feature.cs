@@ -115,7 +115,7 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Navigate  and Sign In to Pets Application Portal Page")]
-        [NUnit.Framework.TestCaseAttribute("Sign in using Government Gateway", "test", null)]
+        [NUnit.Framework.TestCaseAttribute("How do you want to sign in?", "test", null)]
         public async global::System.Threading.Tasks.Task NavigateAndSignInToPetsApplicationPortalPage(string nextPage, string logininfo, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
