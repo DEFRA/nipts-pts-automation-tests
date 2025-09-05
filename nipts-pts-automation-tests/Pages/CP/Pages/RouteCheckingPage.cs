@@ -25,9 +25,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement rdoLochRyan => _driver.WaitForElement(By.XPath("//label[normalize-space()='Loch Ryan to Belfast (Stena)']"));
         private IWebElement btnSaveAndContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Save and continue']"));
         private By hourEle => By.XPath("//label[@for='sailingHour'][contains(text(),'Hours')]");
-        private IWebElement hourInput => _driver.WaitForElement(By.XPath("//input[contains(@Class,'govuk-input--width-2')][@id='sailingHour']"));
+        private IWebElement hourInput => _driver.WaitForElement(By.XPath("//input[@id='sailingHour']"));
         private By minuteEle => By.XPath("//label[@for='sailingMinutes'][contains(text(),'Minutes')]");
-        private IWebElement minuteInput => _driver.WaitForElement(By.XPath("//input[contains(@Class,'govuk-input--width-2')][@id='sailingMinutes']"));
+        private IWebElement minuteInput => _driver.WaitForElement(By.XPath("//input[@id='sailingMinutes']"));
         private IWebElement txtBoxFlighterNumber => _driver.WaitForElement(By.XPath("//input[@id='routeFlight']"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
         private IWebElement txtScheduleDepartureDay => _driver.WaitForElement(By.Id("departureDateDay"));
@@ -87,6 +87,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var hour = DateTime.Now.ToString("HH");
             var minutes = DateTime.Now.ToString("mm");
             string departureTime = $"'{hour}':'{minutes}'";
+            Thread.Sleep(1000);
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
 
             if (_driver.FindElements(hourEle).Count >0 || _driver.FindElements(minuteEle).Count >0)
