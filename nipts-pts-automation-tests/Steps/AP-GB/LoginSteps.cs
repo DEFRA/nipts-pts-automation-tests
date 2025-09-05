@@ -58,6 +58,27 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         public void WhenIClickContinueButtonFromLandingPage()
         {
             landingPage?.ClickContinueButton();
+            signin?.SelectSignInMethod("GovernmentGateway");
+        }
+
+
+        [When(@"I select sign in method '([^']*)'")]
+        public void WhenISelectSignInMethod(string signInMethod)
+        {
+            landingPage?.ClickContinueButton();
+            signin?.SelectSignInMethod(signInMethod);
+        }
+
+        [When(@"I click on Sign In on OneLogIn page")]
+        public void WhenIClickOnSignInOnOneLoginPage()
+        {
+            signin?.ClickOnSignInOnOneLoginPage();
+        }
+
+        [When(@"I have provided the One Login credentials '([^']*)', '([^']*)'")]
+        public void WhenIHaveProvidedTheOneLoginCredentials(string LoginEmailAddress, string LoginPassword)
+        {
+            signin?.EnterOneLoginEmailAddress(LoginEmailAddress, LoginPassword);
         }
 
         [Then(@"I should redirected to the Sign in using Government Gateway page")]

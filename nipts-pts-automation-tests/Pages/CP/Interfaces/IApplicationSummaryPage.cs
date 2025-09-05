@@ -4,14 +4,14 @@
     {
         bool VerifyTheExpectedStatus(string status);
         void SelectPassRadioButton();
-        void SelectFailRadioButton();
+        void SelectReferToSPSRadioButton();
         void SelectSaveAndContinue();
         bool IsError(string errorMessage);
         void SelectContinue();
         bool VerifyTheExpectedSubtitle(string applicationSubtitle);
         string getNewID();
         public bool VerifyGBOutcomeWithSQLBackend(string AppReference);
-        public bool VerifySPSOutcomeWithSQLBackend(string AppReference,string TypeOfPassenger, string SPSOutcome);
+        public bool VerifySPSOutcomeWithSQLBackend(string AppReference,string TypeOfPassenger, string SPSOutcome,string DetailsOfOutCome);
         public bool VerifyGBSummaryOutputWithSQLBackend(string AppReference);
         public bool VerifySPSSummaryOutputWithSQLBackend(string AppReference);
         public bool VerifyGBSummaryForPassApplWithSQLBackend(string AppReference);
@@ -26,5 +26,8 @@
         bool VerifyThePassButtonNotDisplayed();
         bool VerifyTheFailButtonNotDisplayed();
         public bool VerifyTheSearchResultsHeading(string SearchResultsHeading);
+        void SelectIssueSUPTDRadioButton();
+        void SelectFailRadioButton();
+        bool VerifyWarningMessageOnSearchResultPage(string status);
     }
 }

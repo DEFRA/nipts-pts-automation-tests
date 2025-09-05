@@ -58,7 +58,7 @@ Scenario Outline: Verify pet owner phone number page validations and should not 
 
 Examples:
 	| FullName |  Are your details correct | PostCode | PhoneNumber                                                        | ErrorMessage																	|
-	| PetCat's |  No                       | CV2 4NZ  |                                                                    | Enter your phone number														|
+	| PetCat's |  No                       | CV2 4NZ  |                                                                    | Enter your phone number, like 01632 960 001 or 07700 900 982|
 	| PetDog's |  No                       | CV1 4PY  | ABCDEFGHAD                                                         | Enter your phone number, like 01632 960 001 or 07700 900 982|
 	| PetDog's |  No                       | CV1 4PY  | 123456789123456789123 | Enter your phone number, like 01632 960 001 or 07700 900 982|
 

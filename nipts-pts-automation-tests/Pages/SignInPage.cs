@@ -26,6 +26,8 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement EnvPassword => _driver.WaitForElement(By.Id("EnteredPassword"));
         private IWebElement Continue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private By SignInConfirmBy => By.XPath("//a[@href='/User/OSignOut']");
+        private IWebElement signInGovernmentGateway => _driver.WaitForElement(By.XPath("//label[@for='scp']"));
+        private IWebElement signInContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Continue'][@id='continueReplacement']"));
 
         #endregion Page Objects
 
@@ -38,6 +40,15 @@ namespace nipts_pts_automation_tests.Pages
 
         public bool IsSignedIn(string userId, string password)
         {
+            Thread.Sleep(1000);
+            if (PageHeading.Text.Contains("How do you want to sign in?"))
+            { 
+                Thread.Sleep(1000);
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
+                Thread.Sleep(2000);
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
+                Thread.Sleep(1000);
+            }
             UserId.SendKeys(userId);
             Password.SendKeys(password);
             _driver.WaitForElementCondition(ExpectedConditions.ElementToBeClickable(SignIn)).Click();

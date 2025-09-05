@@ -31,17 +31,29 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement AcceptAdditionalCookies => _driver.WaitForElement(By.XPath("//button[contains(text(),'Accept analytics cookies')]"));
         private IWebElement HideCookieMessage => _driver.WaitForElement(By.XPath("//a[contains(text(),'Hide cookie message')]"));
         private IWebElement lnkAccessibilityStatement => _driver.WaitForElement(By.XPath("//p[@class='govuk-body']//a"));
+        private IWebElement signInGovernmentGateway => _driver.WaitForElement(By.XPath("//label[@for='scp']"));
+        private IWebElement signInContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Continue'][@id='continueReplacement']"));
+
         #endregion
 
         #region Methods
         public void ClickSignInButton()
         {
             btnSignIn.Click();
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             if (_driver.FindElements(By.XPath("//button[contains(text(),'Accept analytics cookies')]")).Count() > 0)
             {
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", AcceptAdditionalCookies);
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", HideCookieMessage);
+            }
+
+            Thread.Sleep(1000);
+            if (PageHeading.Text.Contains("How do you want to sign in?"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
+                Thread.Sleep(3000);
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
+                Thread.Sleep(2000);
             }
         }
 

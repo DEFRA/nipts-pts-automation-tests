@@ -53,7 +53,7 @@ Scenario Outline: Verify canceled status and PTD on Invalid documents page in WE
 	Then  verify next page '<nextpage8>' is loaded
 	And   I have ticked the I agree to the declaration checkbox
 	Then  click Accept and Send button from Declaration page
-	Then  verify next page '<nextpage9>' is loaded
+	Then  I verify application submitted page title '<nextpage9>'
 	And   I can see the unique application reference number
 	When  click on View all lifelong pet travel document link
 	Then  verify next page '<nextpage10>' is loaded
@@ -129,7 +129,7 @@ Scenario Outline: Verify unsuccessful status and PTD on Invalid documents page i
 	Then  verify next page '<nextpage8>' is loaded
 	And   I have ticked the I agree to the declaration checkbox
 	Then  click Accept and Send button from Declaration page
-	Then  verify next page '<nextpage9>' is loaded
+	Then  I verify application submitted page title '<nextpage9>'
 	And   I can see the unique application reference number
 	When  click on View all lifelong pet travel document link
 	Then  verify next page '<nextpage10>' is loaded

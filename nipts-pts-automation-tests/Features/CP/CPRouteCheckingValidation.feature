@@ -6,7 +6,6 @@ Validating the negative scenarios for Route Checking Information
 Background: 
 	Given I navigate to the port checker application
 	And I click signin button on port checker application
-	Then I should redirected to the Sign in using Government Gateway page
 	When I have provided the CP credentials and signin
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page

@@ -54,6 +54,20 @@ namespace nipts_pts_automation_tests.Steps.CP
             _applicationSummaryPage?.SelectPassRadioButton();
         }
 
+        [Then(@"I select Refer to SPS radio button")]
+        [When(@"I select Refer to SPS radio button")]
+        public void WhenISelectReferToSPSRadioButton()
+        {
+            _applicationSummaryPage?.SelectReferToSPSRadioButton();
+        }
+
+        [Then(@"I select Issue SUPTD radio button")]
+        [When(@"I select Issue SUPTD radio button")]
+        public void WhenISelectIssueSUPTDRadioButton()
+        {
+            _applicationSummaryPage?.SelectIssueSUPTDRadioButton();
+        }
+
         [Then(@"I select Fail radio button")]
         [When(@"I select Fail radio button")]
         public void WhenISelectFailRadioButton()
@@ -264,12 +278,12 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(_applicationSummaryPage.VerifyGBOutcomeWithSQLBackend(AppReference), "GB Outcome not matching with SQL Backend data");
         }
 
-        [Then(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)'")]
-        [When(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)'")]
-        public void ThenIVerifySQLEntriesForSPSOutcome(string TypeOfPassenger, string SPSOutcome)
+        [Then(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)','([^']*)'")]
+        [When(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)','([^']*)'")]
+        public void ThenIVerifySQLEntriesForSPSOutcome(string TypeOfPassenger, string SPSOutcome, string DetailsOfOutCome)
         {
             string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
-            Assert.True(_applicationSummaryPage.VerifySPSOutcomeWithSQLBackend(AppReference, TypeOfPassenger, SPSOutcome), "SPS Outcome not matching with SQL Backend data");
+            Assert.True(_applicationSummaryPage.VerifySPSOutcomeWithSQLBackend(AppReference, TypeOfPassenger, SPSOutcome, DetailsOfOutCome), "SPS Outcome not matching with SQL Backend data");
         }
 
         [Then(@"I verify backend SQL entries for GB Summary Table")]
@@ -394,6 +408,13 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenIVerifyFailButtonNotDisplayedOnSearchResultPage()
         {
             Assert.IsTrue(_applicationSummaryPage?.VerifyTheFailButtonNotDisplayed(), "Fail button should not displayed on Search Result page");
+        }
+
+        [Then(@"I verify warning message on search results page for status '([^']*)'")]
+        [When(@"I verify warning message on search results page for status '([^']*)'")]
+        public void ThenIVerifyWarningMessageOnSearchResultPage(string status)
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyWarningMessageOnSearchResultPage(status), "Waring message not matching on Search Result page");
         }
     }
 }

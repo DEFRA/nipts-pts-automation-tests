@@ -157,7 +157,7 @@ Scenario: View Pet travel documents in WELSH
 	And   click on continue
 	And   confirm the declaration checkbox
 	Then  click Accept and Send button from Declaration page
-	And   verify next page '<nextPage5>' is loaded
+	Then  I verify application submitted page title '<nextpage5>'
 	And   I can see the unique application reference number
 	When  click on View all lifelong pet travel document link
 	Then  verify next page '<nextPage>' is loaded
@@ -182,5 +182,5 @@ Scenario: View Pet travel documents in WELSH
 	Then  verify WELSH heading text 'Manylion perchennog yr anifail anwes' on Summary page 
 
 	Examples: 
-	| logininfo | nextPage          | nextPage1       | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3     | PetSex | nextPage4  | color | featureOption  | FooterLang1 | FooterLang2 | nextPage5 | fullname | postcode | phoneNumber  |
+	| logininfo | nextPage          | nextPage1       | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3     | PetSex | nextPage4  | color | featureOption  | FooterLang1 | FooterLang2 | nextpage5 | fullname | postcode | phoneNumber  |
 	| test      | Dogfennau teithio | ch manylion chi | Ci  | 676789876543321 | Basenji  | Yes             | Beth yw   | Testtoto| ch cyfeiriad? | Gwryw  | ch rhif ff | Du    | Nac oes        | English     | Cymraeg     | Cais wedi | New User | CV31 2EE | 07833861122  |
