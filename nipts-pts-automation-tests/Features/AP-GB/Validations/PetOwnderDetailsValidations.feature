@@ -19,8 +19,8 @@ Scenario Outline: Verify pet owner details page validations and should not moves
 	And click on signout button and verify the signout message on pets
 
 Examples:
-	 |  ErrorMessage						 |
-	 |  Select if your details are correct	 |
+	 |  ErrorMessage						     |
+	 |  Select yes if your details are correct	 |
 
 Scenario Outline: Verify full name should not allows exceed limits
 	Then I have selected '<Are your details correct>' option
@@ -76,11 +76,10 @@ Scenario Outline: Verify postcode search page validations and should not moves t
 
 Examples:
 	| FullName |  Are your details correct | PostCode                           | ErrorMessage																|
-	| PetCat's |  No                       |                                    | Enter your postcode															|
-	| PetCat's |  No                       | ABC121C                            | Enter your postcode in England, Scotland or Wales						    |
+	| PetCat's |  No                       |                                    | Enter your postcode												    		|
 	| PetDog's |  No                       | &&ABC1$$	        				| Enter your full postcode in the correct format, for example TF7 5AY or TF75AY|
 	| PetDog's |  No                       | ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGH | Enter your full postcode in the correct format, for example TF7 5AY or TF75AY|
-	| PetDog's |  No                       | IM1 1AX                            | Enter your postcode in England, Scotland or Wales							|
+	| PetDog's |  No                       | IM1 1AX                            | Enter your full postcode in the correct format, for example TF7 5AY or TF75AY|
 
 Scenario Outline: Verify postcode search page by not selecting an address from dropdownlist and should not moves to next page
 	Then I have selected '<Are your details correct>' option
@@ -96,8 +95,8 @@ Scenario Outline: Verify postcode search page by not selecting an address from d
 	And click on signout button and verify the signout message on pets
 
 Examples:
-	| FullName |  Are your details correct | PostCode | ErrorMessage                      |
-	| PetCat's |  No                       | CV2 4NY  | Select your address from the list |
+	| FullName |  Are your details correct | PostCode | ErrorMessage        |
+	| PetCat's |  No                       | CV2 4NY  | Select your address |
 
 Scenario Outline: Verify enter address manually validations with all fields blank
 	Then I have selected '<Are your details correct>' option
@@ -113,7 +112,7 @@ Scenario Outline: Verify enter address manually validations with all fields blan
 
 Examples:
 	| FullName |  Are your details correct | Address | ErrorMessages													    |
-	| PetDog's |  No                       |         | Enter line 1 of your address,Enter your town or city,Enter your postcode   |
+	| PetDog's |  No                       |         | Enter address line 1 of your address,Enter your town or city,Enter your postcode   |
 	
 Scenario Outline: Verify enter address manually validations with maximum limit characters for each fields
 	Then I have selected '<Are your details correct>' option
@@ -147,8 +146,8 @@ Scenario Outline: Verify enter address manually validations with invalid postcod
 	And click on signout button and verify the signout message on pets
 
 Examples:
-	| FullName |  Are your details correct | PostCode                           | ErrorMessages																     					  |
-	| PetCat's |  No                       |                                    | Enter your postcode																					  |
-	| PetCat's |  No                       | @ABC121C                           | Enter your full postcode in the correct format, for example TF7 5AY or TF75AY                          |
-	| PetDog's |  No                       | ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGH | Enter your full postcode in the correct format, for example TF7 5AY or TF75AY					      |
-	| PetDog's |  No                       | BT9 7EP                            | Enter your postcode in England, Scotland or Wales												      |
+	| FullName |  Are your details correct | PostCode                           | ErrorMessages																       |
+	| PetCat's |  No                       |                                    | Enter your postcode															   |
+	| PetCat's |  No                       | @ABC121C                           | Enter your full postcode in the correct format, for example TF7 5AY or TF75AY    |
+	| PetDog's |  No                       | ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGH | Enter your full postcode in the correct format, for example TF7 5AY or TF75AY    |
+	| PetDog's |  No                       | BT9 7EP                            | Enter your full postcode in the correct format, for example TF7 5AY or TF75AY    |

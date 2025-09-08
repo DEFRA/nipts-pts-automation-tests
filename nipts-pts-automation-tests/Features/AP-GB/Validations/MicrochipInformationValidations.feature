@@ -158,7 +158,7 @@ Scenario Outline: Verify error message for blank microchipped date
 	When I click Continue button from microchipped page
 	Then I should redirected to When was your pet microchipped or last scanned page
 	When I click Continue button from When was your pet microchipped page
-	Then I should see an error message "Enter a date in the correct format, for example 11 4 2021" in pets microchipped or last scanned page
+	Then I should see an error message "Enter the date your pet was microchipped or the date it was last scanned. For example, 11 4 2021" in pets microchipped or last scanned page
 	And click on signout button and verify the signout message on pets
 
 Examples:

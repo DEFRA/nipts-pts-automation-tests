@@ -44,8 +44,8 @@ Scenario: Verify error message for invalid postcode
 	Examples: 
 	| logininfo | nextPage                                        | fullname     | postcode | errorMessage                        |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | TestFullName |          | Rhowch eich cod post                |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | TestFullName | SE10 1EE | Rhowch god post yng Nghymru         |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | TestFullName | SE1 7PBABCDEFGHIJKLMNOP  |Rhowch god post llawn yn y fformat cywir   |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | TestFullName | SE10 1EE | Rhowch god post llawn yn y fformat cywir, er enghraifft TF7 5AY neu TF75AY         |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | TestFullName | SE1 7PBABCDEFGHIJKLMNOP  |Rhowch god post llawn yn y fformat cywir, er enghraifft TF7 5AY neu TF75AY   |
 
 Scenario: Change postcode on what is your address page
 	Given that I navigate to the Pets application portal

@@ -106,14 +106,16 @@ namespace nipts_pts_automation_tests.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Check header page links")]
-        [NUnit.Framework.TestCaseAttribute("test", "Mynd ag anifail anwes o Brydain Fawr i Ogledd Iwerddon", "Mae hwn yn wasanaeth newydd - bydd", null)]
-        public async global::System.Threading.Tasks.Task CheckHeaderPageLinks(string logininfo, string title, string bannerText, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("test", "Mynd ag anifail anwes o Brydain Fawr i Ogledd Iwerddon", "Mae hwn yn wasanaeth newydd. Bydd eich", "Taking a pet from Great Britain to Northern Ireland", "This is a new service. Help us improve it and", null)]
+        public async global::System.Threading.Tasks.Task CheckHeaderPageLinks(string logininfo, string title, string bannerText, string gBtitle, string gBbannerText, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("logininfo", logininfo);
             argumentsOfScenario.Add("title", title);
             argumentsOfScenario.Add("bannerText", bannerText);
+            argumentsOfScenario.Add("GBtitle", gBtitle);
+            argumentsOfScenario.Add("GBbannerText", gBbannerText);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Check header page links", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 7
  this.ScenarioInitialize(scenarioInfo);
@@ -132,37 +134,43 @@ namespace nipts_pts_automation_tests.Features
  await testRunner.WhenAsync(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 10
- await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.ThenAsync(string.Format("verify header title \'{0}\'", gBtitle), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 11
- await testRunner.ThenAsync(string.Format("verify header title \'{0}\'", title), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync(string.Format("verify header banner \'{0}\'", gBbannerText), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 12
- await testRunner.ThenAsync(string.Format("verify header banner \'{0}\'", bannerText), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 13
- await testRunner.WhenAsync("click on the feedback link", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.ThenAsync(string.Format("verify header title \'{0}\'", title), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 14
- await testRunner.AndAsync("switch to next opened tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.ThenAsync(string.Format("verify header banner \'{0}\'", bannerText), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 15
- await testRunner.ThenAsync("verify feedback page is loaded", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.WhenAsync("click on the feedback link", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 16
+ await testRunner.AndAsync("switch to next opened tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 17
+ await testRunner.ThenAsync("verify feedback page is loaded", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 18
  await testRunner.AndAsync("verify feedback page text \'Your feedback will help us improve the service.\' is co" +
                         "rrect", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 17
+#line 19
  await testRunner.AndAsync("verify link \'Accessibility statement (opens in a new tab)\' on feedback page text", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 18
+#line 20
  await testRunner.WhenAsync("switch to previous tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 19
+#line 21
  await testRunner.AndAsync("Click on GOV.UK link in the header of the page", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 20
+#line 22
  await testRunner.ThenAsync("verify generic GOV page is loaded", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -180,7 +188,7 @@ namespace nipts_pts_automation_tests.Features
             argumentsOfScenario.Add("title", title);
             argumentsOfScenario.Add("cookiesText", cookiesText);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Verify Cookies Banner in WELSH", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 27
+#line 29
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -190,22 +198,22 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 28
+#line 30
  await testRunner.GivenAsync("delete browser cookies", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 29
+#line 31
  await testRunner.GivenAsync("that I navigate to the Pets application portal", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 30
+#line 32
  await testRunner.WhenAsync(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 31
+#line 33
  await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 32
+#line 34
  await testRunner.ThenAsync(string.Format("verify header title \'{0}\'", title), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 33
+#line 35
  await testRunner.ThenAsync(string.Format("verify cookies banner \'{0}\' in WELSH", cookiesText), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -225,7 +233,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("SelectedCookiesText", selectedCookiesText);
             argumentsOfScenario.Add("CookiesPrefBtn", cookiesPrefBtn);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Verify text for accepted cookies Banner in WELSH", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 39
+#line 41
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -235,28 +243,28 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 40
+#line 42
  await testRunner.GivenAsync("delete browser cookies", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 41
+#line 43
  await testRunner.GivenAsync("that I navigate to the Pets application portal", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 42
+#line 44
  await testRunner.WhenAsync(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 43
+#line 45
  await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 44
+#line 46
  await testRunner.ThenAsync(string.Format("verify header title \'{0}\'", title), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 45
+#line 47
  await testRunner.ThenAsync(string.Format("verify cookies banner \'{0}\' in WELSH", cookiesText), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 46
+#line 48
  await testRunner.AndAsync(string.Format("click on cookies preference button \'{0}\' button in WELSH on cookies banner", cookiesPrefBtn), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 47
+#line 49
  await testRunner.ThenAsync(string.Format("verify text on the cookies preference banner \'{0}\'", selectedCookiesText), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -276,7 +284,7 @@ this.ScenarioInitialize(scenarioInfo);
             argumentsOfScenario.Add("SelectedCookiesText", selectedCookiesText);
             argumentsOfScenario.Add("CookiesPrefBtn", cookiesPrefBtn);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Verify text for rejected cookies Banner in WELSH", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 53
+#line 55
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -286,28 +294,28 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 54
+#line 56
  await testRunner.GivenAsync("delete browser cookies", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 55
+#line 57
  await testRunner.GivenAsync("that I navigate to the Pets application portal", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 56
+#line 58
  await testRunner.WhenAsync(string.Format("sign in with valid credentials with logininfo \'{0}\'", logininfo), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 57
+#line 59
  await testRunner.WhenAsync("click on Welsh language", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 58
+#line 60
  await testRunner.ThenAsync(string.Format("verify header title \'{0}\'", title), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 59
+#line 61
  await testRunner.ThenAsync(string.Format("verify cookies banner \'{0}\' in WELSH", cookiesText), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 60
+#line 62
  await testRunner.AndAsync(string.Format("click on cookies preference button \'{0}\' button in WELSH on cookies banner", cookiesPrefBtn), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 61
+#line 63
  await testRunner.ThenAsync(string.Format("verify text on the cookies preference banner \'{0}\'", selectedCookiesText), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

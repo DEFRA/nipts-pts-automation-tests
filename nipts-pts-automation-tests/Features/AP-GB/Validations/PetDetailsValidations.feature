@@ -89,7 +89,7 @@ Scenario Outline: Verify if the pet type is not selected then should not move to
 	When I click Continue button from When was your pet microchipped page
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should see an error message "Select if you are taking a pet dog, cat or ferret" in Is your pet a dog, cat or ferret page
+	Then I should see an error message "Select if your pet is a cat, dog or ferret" in Is your pet a dog, cat or ferret page
 	And I should not be redirected to What breed is your '<Pet>' page
 	And click on signout button and verify the signout message on pets
 

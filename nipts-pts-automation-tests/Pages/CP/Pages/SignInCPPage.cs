@@ -47,7 +47,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", HideCookieMessage);
             }
 
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
             if (PageHeading.Text.Contains("How do you want to sign in?"))
             {
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
