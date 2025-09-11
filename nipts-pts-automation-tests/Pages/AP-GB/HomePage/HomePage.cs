@@ -197,7 +197,13 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
         }
         public bool VerifySuspendedWarningMsg(string warningMsg)
         {
-            return SuspendedMsgEle.Text.Contains(warningMsg);
+            String fontWeight = SuspendedMsgEle.GetCssValue("font-weight");
+            Console.WriteLine($"FontSize: {fontWeight}");
+            
+            if(Int32.Parse(fontWeight) > 600 && SuspendedMsgEle.Text.Contains(warningMsg))
+                return true;
+            else
+                return false;
         }
 
         public bool VerifyApplyBtnNotDisplayedSuspendedUser()
