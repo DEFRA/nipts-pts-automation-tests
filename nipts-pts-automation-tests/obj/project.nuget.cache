@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/huMZxcn7qmmHKwsRhLvJ8vzm50sXvOEhz8CbGVneuwtGiugfZpCmEyywFMQo/B33u+8gFt2L6Kjri8JMqiaMA==",
+  "dgSpecHash": "6aKYIh/JFbvgfl1yuR15C9RRnIjqRhJgxkUbGyUdxaAMvQX0bXtxjOifd2lV9R2d5QUohLdoZm0jBLNiIKAIrA==",
   "success": true,
   "projectFilePath": "C:\\Users\\payewale\\source\\repos\\nipts-pts-automation-tests\\nipts-pts-automation-tests\\nipts-pts-automation-tests.csproj",
   "expectedPackageFiles": [
@@ -73,7 +73,7 @@
     "C:\\Users\\payewale\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\payewale\\.nuget\\packages\\selenium.support\\4.17.0\\selenium.support.4.17.0.nupkg.sha512",
     "C:\\Users\\payewale\\.nuget\\packages\\selenium.webdriver\\4.17.0\\selenium.webdriver.4.17.0.nupkg.sha512",
-    "C:\\Users\\payewale\\.nuget\\packages\\selenium.webdriver.chromedriver\\138.0.7204.9400\\selenium.webdriver.chromedriver.138.0.7204.9400.nupkg.sha512",
+    "C:\\Users\\payewale\\.nuget\\packages\\selenium.webdriver.chromedriver\\140.0.7339.8200\\selenium.webdriver.chromedriver.140.0.7339.8200.nupkg.sha512",
     "C:\\Users\\payewale\\.nuget\\packages\\system.buffers\\4.5.0\\system.buffers.4.5.0.nupkg.sha512",
     "C:\\Users\\payewale\\.nuget\\packages\\system.clientmodel\\1.1.0\\system.clientmodel.1.1.0.nupkg.sha512",
     "C:\\Users\\payewale\\.nuget\\packages\\system.configuration.configurationmanager\\8.0.1\\system.configuration.configurationmanager.8.0.1.nupkg.sha512",

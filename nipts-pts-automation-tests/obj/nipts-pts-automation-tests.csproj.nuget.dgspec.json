@@ -80,7 +80,7 @@
             },
             "Selenium.WebDriver.ChromeDriver": {
               "target": "Package",
-              "version": "[138.0.7204.9400, )"
+              "version": "[140.0.7339.8200, )"
             }
           },
           "imports": [
@@ -203,7 +203,7 @@
             },
             "Selenium.WebDriver.ChromeDriver": {
               "target": "Package",
-              "version": "[138.0.7204.9400, )"
+              "version": "[140.0.7339.8200, )"
             },
             "System.Data.SqlClient": {
               "target": "Package",

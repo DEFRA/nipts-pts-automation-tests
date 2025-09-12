@@ -2,7 +2,7 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)system.text.json\8.0.5\buildTransitive\net6.0\System.Text.Json.targets" Condition="Exists('$(NuGetPackageRoot)system.text.json\8.0.5\buildTransitive\net6.0\System.Text.Json.targets')" />
-    <Import Project="$(NuGetPackageRoot)selenium.webdriver.chromedriver\138.0.7204.9400\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('$(NuGetPackageRoot)selenium.webdriver.chromedriver\138.0.7204.9400\build\Selenium.WebDriver.ChromeDriver.targets')" />
+    <Import Project="$(NuGetPackageRoot)selenium.webdriver.chromedriver\140.0.7339.8200\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('$(NuGetPackageRoot)selenium.webdriver.chromedriver\140.0.7339.8200\build\Selenium.WebDriver.ChromeDriver.targets')" />
     <Import Project="$(NuGetPackageRoot)selenium.webdriver\4.17.0\buildTransitive\Selenium.WebDriver.targets" Condition="Exists('$(NuGetPackageRoot)selenium.webdriver\4.17.0\buildTransitive\Selenium.WebDriver.targets')" />
     <Import Project="$(NuGetPackageRoot)reqnroll\2.4.1\build\Reqnroll.targets" Condition="Exists('$(NuGetPackageRoot)reqnroll\2.4.1\build\Reqnroll.targets')" />
     <Import Project="$(NuGetPackageRoot)reqnroll.tools.msbuild.generation\2.4.1\build\Reqnroll.Tools.MsBuild.Generation.targets" Condition="Exists('$(NuGetPackageRoot)reqnroll.tools.msbuild.generation\2.4.1\build\Reqnroll.Tools.MsBuild.Generation.targets')" />
