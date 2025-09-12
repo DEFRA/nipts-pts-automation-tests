@@ -1,4 +1,4 @@
-﻿using nipts_pts_automation_tests.Pages;
+﻿using nipts_pts_API_tests.Application;
 using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -14,6 +14,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         private readonly ScenarioContext _scenarioContext;
         private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
         private IHomePage? HomePage => _objectContainer.IsRegistered<IHomePage>() ? _objectContainer.Resolve<IHomePage>() : null;
+        private IApplicationData? AppData => _objectContainer.IsRegistered<IApplicationData>() ? _objectContainer.Resolve<IApplicationData>() : null;
 
         public HomePageSteps(ScenarioContext context, IObjectContainer container)
         {
@@ -166,7 +167,13 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         [Then(@"I verify warning message '([^']*)' on homepage for suspended user")]
         public void ThenVerifywarningMsdSuspendedUser(string warningMsg)
         {
-            Assert.True(HomePage?.VerifySuspendedWarningMsg(warningMsg), "Message mismatch for suspended user");
+            bool status = HomePage.VerifySuspendedWarningMsg(warningMsg);
+            if (!status)
+            {
+                string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
+                AppData.GetSuspendedApplicationToApprove(PTDNumber);
+            }
+            Assert.True(status, "Message mismatch for suspended user");
         }
 
         [Then(@"verify Apply for a document button is not displayed for suspended user")]
