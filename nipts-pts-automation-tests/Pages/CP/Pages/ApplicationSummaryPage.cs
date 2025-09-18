@@ -18,10 +18,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
-        private IWebElement rdoPass => _driver.WaitForElementExists(By.XPath("//div[@role='radio']//label[normalize-space()='Pass']/..//input"));
-        private IWebElement rdoReferToSPS => _driver.WaitForElementExists(By.XPath("//div[@role='radio']//label[normalize-space()='Refer to SPS']/..//input"));
-        private IWebElement rdoIssueSUPTD => _driver.WaitForElementExists(By.XPath("//div[@role='radio']//label[normalize-space()='Issue SUPTD']/..//input"));
-        private IWebElement rdoFail => _driver.WaitForElementExists(By.XPath("//div[@role='radio']//label[normalize-space()='Fail']/..//input"));
+        private IWebElement rdoPass => _driver.WaitForElementExists(By.XPath("//div[@class='govuk-radios__item']//label[normalize-space()='Pass']/..//input"));
+        private IWebElement rdoReferToSPS => _driver.WaitForElementExists(By.XPath("//div[@class='govuk-radios__item']//label[normalize-space()='Refer to SPS']/..//input"));
+        private IWebElement rdoIssueSUPTD => _driver.WaitForElementExists(By.XPath("//div[@class='govuk-radios__item']//label[normalize-space()='Issue SUPTD']/..//input"));
+        private IWebElement rdoFail => _driver.WaitForElementExists(By.XPath("//div[@class='govuk-radios__item']//label[normalize-space()='Fail']/..//input"));
         private IWebElement btnSaveAndContinue => _driver.WaitForElement(By.XPath("//*[@id='saveAndContinue']"));
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
