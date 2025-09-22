@@ -49,7 +49,7 @@ namespace nipts_pts_automation_tests.Hooks
         }
 
         private void BindAllPages()
-        {            
+        {
             // Objects
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<DataHelperConnections, IDataHelperConnections>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<UserObject, IUserObject>());
@@ -106,6 +106,8 @@ namespace nipts_pts_automation_tests.Hooks
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<SummaryPage, ISummaryPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<ManageAccountPage, IManageAccountPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<InvalidDocumentsGBPage, IInvalidDocumentsGBPage>());
+
+
             // CP Testing
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<SignInCPPage, ISignInCPPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<RouteCheckingPage, IRouteCheckingPage>());
