@@ -1,4 +1,4 @@
-﻿@Validations @APGBRegression 
+﻿@APGBRegression 
 Feature: AP Pets WAF rule validation
 
 Validating invalid characters

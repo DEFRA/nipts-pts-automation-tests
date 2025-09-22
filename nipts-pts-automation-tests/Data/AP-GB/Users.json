@@ -1,13 +1,13 @@
 {
   "Users": [
     {
-      "userId": "36 23 34 92 01 16",
-      "password": "Automation123$",
+      "userId": "31 52 01 34 91 61",
+      "password": "Test@12345",
       "logininfo": "test",
-      "UserName": "Automation User",
-      "UserEmail": "ptsdefra@gmail.com",
-      "Useraddress": "4 ORTS ROAD, READING, BERKSHIRE, RG1 3JN, United Kingdom",
-      "UserPhoneNumber": "07582487781",
+      "UserName": "pallavi TST yewale",
+      "UserEmail": "pallavi.yewale+automation1@capgemini.com",
+      "Useraddress": "FLAT 15, HOLLY COURT, GREENROOF WAY, GREATER LONDON, SE10 0BP",
+      "UserPhoneNumber": "+447424047400",
       "Environment": "tst",
       "HomePage": true
     }

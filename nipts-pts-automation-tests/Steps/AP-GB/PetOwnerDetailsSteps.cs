@@ -1,11 +1,11 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages.AP_GB.ApplicationSubmittedPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetOwnerAddressPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetOwnerNamePage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetOwnerPNumberPage;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps.AP_GB
 {
@@ -52,13 +52,13 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             Assert.True(petOwnerAddressPage?.IsNextPageLoaded("What is your postcode?"), "Application page not loaded");
         }
 
-        [Then(@"I should redirected to What is the pet keeper's postcode\?")]
+        [Then(@"I should redirected to What is the pet keeper's postcode?")]
         public void ThenIShouldRedirectedToWhatIsThePetKeepersPostcode()
         {
             Assert.True(petOwnerAddressPage?.IsNextPageLoaded("What is the pet keeper's postcode?"), "Application page not loaded");
         }
 
-        [When(@"I click Continue button from What is the pet keeper's postcode\?")]
+        [When(@"I click Continue button from What is the pet keeper's postcode?")]
         public void WhenIClickContinueButtonFromWhatIsThePetKeepersPostcode()
         {
             petOwnerAddressPage?.ClickContinueButton();

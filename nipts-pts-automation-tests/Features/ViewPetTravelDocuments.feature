@@ -50,7 +50,7 @@ Scenario: View Pet travel documents in WELSH
 		
 	Examples: 
 	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3       | PetSex | nextPage4    | nextPage5					    | nextPage6			       | color | nextPage7                     | featureOption | nextPage8              | nextPage10                    | FooterLang1 | FooterLang2 | nextPage9	 |
-	| test2     | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | sex is your pet | Gwryw  | Beth yw rhyw | dyddiad geni eich anifail anwes | Beth yw prif liw eich ci | Du    | unrhyw nodweddion arwyddocaol | Nac oes       | Gwiriwch eich atebion  | Lifelong pet travel documents | English     | Cymraeg     | manylion chi |
+	| test      | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | sex is your pet | Gwryw  | Beth yw rhyw | dyddiad geni eich anifail anwes | Beth yw prif liw eich ci | Du    | unrhyw nodweddion arwyddocaol | Nac oes       | Gwiriwch eich atebion  | Lifelong pet travel documents | English     | Cymraeg     | manylion chi |
 
 
 	
@@ -114,7 +114,7 @@ Scenario: View Pet travel documents in WELSH
 
 	Examples: 
 	| logininfo | nextPage                      | nextPage1              | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | PetSex | color | featureOption | FooterLang1 | FooterLang2 |
-	| test2     | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | Male   | Black | No            | English     | Cymraeg     |
+	| test      | Lifelong pet travel documents | What breed is your dog | Dog | 676789876543321 | Pug      | Yes             | name      | toto    | Male   | Black | No            | English     | Cymraeg     |
 
 	Scenario: View Pet travel documents in WELSH for Pending Application
 	Given that I navigate to the Pets application portal
@@ -157,7 +157,7 @@ Scenario: View Pet travel documents in WELSH
 	And   click on continue
 	And   confirm the declaration checkbox
 	Then  click Accept and Send button from Declaration page
-	And   verify next page '<nextPage5>' is loaded
+	Then  I verify application submitted page title '<nextpage5>'
 	And   I can see the unique application reference number
 	When  click on View all lifelong pet travel document link
 	Then  verify next page '<nextPage>' is loaded
@@ -165,6 +165,7 @@ Scenario: View Pet travel documents in WELSH
 	When  I have clicked the View hyperlink from home page
 	Then  verify WELSH heading text 'Cais' on Summary page 
 	Then  verify WELSH text for Reference Number 'Rhif cyfeirnod' and Reference Number on pending application
+	Then  verify WELSH summary of Pending Appl for field name 'Statws' and field value 'Yn aros'
 	Then  verify WELSH heading text 'Gwybodaeth am y microsglodyn' on Summary page 
 	Then  verify WELSH text for Michrochip Date 'Dyddiad mewnblannu neu sganio' and Michrochip Date on Pending Appl
 	Then  verify WELSH summary of Approved PTD field name 'Lleoliad y mewnblaniad' and field value 'O dan y croen'
@@ -181,5 +182,5 @@ Scenario: View Pet travel documents in WELSH
 	Then  verify WELSH heading text 'Manylion perchennog yr anifail anwes' on Summary page 
 
 	Examples: 
-	| logininfo | nextPage          | nextPage1       | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3     | PetSex | nextPage4  | color | featureOption  | FooterLang1 | FooterLang2 | nextPage5 | fullname | postcode | phoneNumber  |
-	| test2     | Dogfennau teithio | ch manylion chi | Ci  | 676789876543321 | Basenji  | Yes             | Beth yw   | Testtoto| ch cyfeiriad? | Gwryw  | ch rhif ff | Du    | Nac oes        | English     | Cymraeg     | Cais wedi | New User | CV31 2EE | 07833861122  |
+	| logininfo | nextPage          | nextPage1       | Pet | MicrochipNumber | PetBreed | MicrochipOption | nextPage2 | PetName | nextPage3     | PetSex | nextPage4  | color | featureOption  | FooterLang1 | FooterLang2 | nextpage5 | fullname | postcode | phoneNumber  |
+	| test      | Dogfennau teithio | ch manylion chi | Ci  | 676789876543321 | Basenji  | Yes             | Beth yw   | Testtoto| ch cyfeiriad? | Gwryw  | ch rhif ff | Du    | Nac oes        | English     | Cymraeg     | Cais wedi | New User | CV31 2EE | 07833861122  |

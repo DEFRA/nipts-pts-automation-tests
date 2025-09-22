@@ -13,6 +13,8 @@ Scenario Outline: Veirfy backend entries for GB and SPS Outcome for Fail or Reff
 	And I have provided the password for prototype research page
 	Then I should redirected to port route checke page
 	When Create an application via backend
+	And Approve an application via backend
+	And I have captured pet details
 	When I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
 	And I have provided Scheduled departure time
@@ -21,15 +23,15 @@ Scenario Outline: Veirfy backend entries for GB and SPS Outcome for Fail or Reff
 	When I click search button from footer
 	Then I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
-	And I provided the Reference number of the application
+	And I provided the PTD number of the application
 	When I click search button
-	And I should see the application status in 'Pending'
-	When I click continue button from application status page
+	And I should see the application status in 'Approved'
+	And I select Refer to SPS radio button
+	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
-	When I select MicrochipReason '<MicrochipNumberNoMatch>' on Report non-compliance page
-	And I select MicrochipReason '<CannotFindMicrochip>' on Report non-compliance page
+	When I select MicrochipReason '<CannotFindMicrochip>' on Report non-compliance page
+	When I select Other issues '<AuthPersonButNoConfirmation>' on Report non-compliance page
 	And I click '<TypeOfPassenger>' in Passenger details
-	And I enter relevant comment '<AdditionalComment>'
 	And I select GB Outcome '<PassengerReferredDAERA>' on Report non-compliance page
 	And I select GB Outcome '<PassengerAdvisedNoTravel>' on Report non-compliance page
 	And I select GB Outcome '<PassengerWillNotTravel>' on Report non-compliance page
@@ -50,30 +52,29 @@ Scenario Outline: Veirfy backend entries for GB and SPS Outcome for Fail or Reff
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	And I click on Reference number of the application
-	And I click on Conduct an SPS check
-	And I should see the application status in 'Pending'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select MicrochipReason '<MicrochipNumberNoMatch>' on Report non-compliance page
-	And I select MicrochipReason '<CannotFindMicrochip>' on Report non-compliance page
+	When I click on PTD number of the application
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click '<SPSOutcome>' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
+	And I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
-	And I click on Reference number of the application
+	When I click on PTD number of the application
 	Then I verify backend SQL entries for GB Summary Table
 	And I verify backend SQL entries for SPS Summary Table
 	And I verify backend SQL entries for GB Outcome
-	And I verify backend SQL entries for SPS Outcome '<TypeOfPassenger>','<SPSOutcome>'
+	And I verify backend SQL entries for SPS Outcome '<TypeOfPassenger>','<SPSOutcome>','<DetailsOfOutCome>'
 
 	Examples:
-	| Transportation | FerryRoute                    | ApplicationRadio             | nextPage        | SPSOutcome  | TypeOfPassenger     |MicrochipNumberNoMatch | CannotFindMicrochip | AdditionalComment        | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel |
-	| Ferry          | Birkenhead to Belfast (Stena) | Search by application number | Referred to SPS | Allowed     | Ferry foot passenger|MicrochipNumberNoMatch | CannotFindMicrochip | Verify Additonal Comment | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel |
-	| Ferry          | Cairnryan to Larne (P&O)      | Search by application number | Referred to SPS | Not allowed | Vehicle on ferry    |MicrochipNumberNoMatch | No                  | None                     | PassengerReferredDAERA | No                       | PassengerWillNotTravel |
+	| Transportation | FerryRoute                    | ApplicationRadio     | nextPage        | SPSOutcome  | TypeOfPassenger      | CannotFindMicrochip | AuthPersonButNoConfirmation | RefusedToSignDeclaration | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | nextPage2               | DetailsOfOutCome                      |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number | Referred to SPS | Allowed     | Ferry foot passenger | CannotFindMicrochip | AuthPersonButNoConfirmation | RefusedToSignDeclaration | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome for Allow     |
+	| Ferry          | Cairnryan to Larne (P&O)      | Search by PTD number | Referred to SPS | Not allowed | Vehicle on ferry     | CannotFindMicrochip | No                          | RefusedToSignDeclaration | PassengerReferredDAERA | No                       | PassengerWillNotTravel | Update referral outcome | Test Details Of OutCome for Not Allowed|
 
 		#@RunOnly
 Scenario Outline: Veirfy backend entries for GB outcome for Pass journey
@@ -128,17 +129,76 @@ Scenario Outline: Veirfy backend entries for SPS outcome and Summary table for S
 	And I select Fail radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
-	And I click '<SPSOutcome>' on SPS outcome
+	When I select 'Cannot find microchip' as non compliance reason
 	And I click Report non-compliance button from Report non-compliance page
 	Then I should navigate to Welcome page
 	And I verify backend SQL entries for SPS Summary Table
-	And I verify backend SQL entries for SPS Outcome '<TypeOfPassenger>','<SPSOutcome>'
+	And I verify backend SQL entries for SPS Outcome '<TypeOfPassenger>','<SPSOutcome>','<DetailsOfOutCome>'
 
 
 Examples:
-	| Transportation | Flight number | TypeOfPassenger | nextPage        | SPSOutcome  | ApplicationRadio     |
-	| Flight         | AI 123        | Airline         | Referred to SPS | Allowed     | Search by PTD number |
-	| Flight         | AI 123        | Airline         | Referred to SPS | Not allowed | Search by PTD number |
+	| Transportation | Flight number | nextPage        | SPSOutcome  | ApplicationRadio     | TypeOfPassenger | DetailsOfOutCome |
+	| Flight         | AI 123        | Referred to SPS | Not allowed | Search by PTD number | Airline         |                  |
 
+Scenario Outline: Veirfy backend entries for application status while Suspensed 
+	When I have provided the CP credentials and signin for user 'SPSUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	When Create an application via backend
+	And Approve an application via backend
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the PTD number of the application
+	When I click search button
+	Then I should see the application status in 'Approved'
+	When Suspend an Authorised application via backend
+	Then I verify backend SQL entries for Suspended Application
+	And Approve suspended application via backend
+	Then I verify backend SQL entries for Unsuspended Application
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the PTD number of the application
+	When I click search button
+	Then I should see the application status in 'Approved'
+
+Examples:
+	| Transportation | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |
+
+Scenario Outline: Veirfy backend entries for offline application status while Suspensed
+	When I have provided the CP credentials and signin for user 'SPSUser'
+	And I have provided the password for prototype research page
+	Then I should redirected to port route checke page
+	When Create an offline application via backend for 'Cat'
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	And I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the PTD number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
+	When Suspend an Authorised application via backend
+	Then I verify backend SQL entries for Suspended Application with PTD number
+	And Approve suspended application with PTDNumber via backend
+	Then I verify backend SQL entries for Unsuspended Application with PTD number
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the PTD number of the application
+	When I click search button
+	Then I should see the application status in 'Approved'
+
+Examples:
+	| Transportation | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |

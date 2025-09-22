@@ -7,6 +7,8 @@ Pets header page
 	Scenario: Check header page links
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
+	Then  verify header title '<GBtitle>'
+	Then  verify header banner '<GBbannerText>'
 	When  click on Welsh language 
 	Then  verify header title '<title>'
 	Then  verify header banner '<bannerText>'
@@ -20,8 +22,8 @@ Pets header page
 	Then  verify generic GOV page is loaded
 
 	Examples: 
-	| logininfo | title                                                  | bannerText                         |
-	| test      | Mynd ag anifail anwes o Brydain Fawr i Ogledd Iwerddon | Mae hwn yn wasanaeth newydd - bydd |
+	| logininfo | title                                                  | bannerText                             | GBtitle                                             | GBbannerText                                  |
+	| test      | Mynd ag anifail anwes o Brydain Fawr i Ogledd Iwerddon | Mae hwn yn wasanaeth newydd. Bydd eich | Taking a pet from Great Britain to Northern Ireland | This is a new service. Help us improve it and |
 
 
 Scenario: Verify Cookies Banner in WELSH

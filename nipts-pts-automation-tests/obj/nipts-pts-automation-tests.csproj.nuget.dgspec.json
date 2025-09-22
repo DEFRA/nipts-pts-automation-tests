@@ -54,13 +54,33 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "Reqnroll": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "Reqnroll.ExternalData": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "Reqnroll.NUnit": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "Reqnroll.SpecFlowCompatibility": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
             "RestSharp": {
               "target": "Package",
               "version": "[112.1.0, )"
             },
-            "SpecFlow": {
+            "Selenium.WebDriver.ChromeDriver": {
               "target": "Package",
-              "version": "[3.9.74, )"
+              "version": "[140.0.7339.8200, )"
             }
           },
           "imports": [
@@ -147,7 +167,7 @@
             },
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.1, )"
             },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
@@ -165,25 +185,25 @@
               "target": "Package",
               "version": "[4.5.0, )"
             },
+            "Reqnroll": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "Reqnroll.ExternalData": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "Reqnroll.NUnit": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "Reqnroll.SpecFlowCompatibility": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
             "Selenium.WebDriver.ChromeDriver": {
               "target": "Package",
-              "version": "[136.0.7103.4900, )"
-            },
-            "SpecFlow": {
-              "target": "Package",
-              "version": "[3.9.74, )"
-            },
-            "SpecFlow.ExternalData": {
-              "target": "Package",
-              "version": "[3.9.74, )"
-            },
-            "SpecFlow.NUnit": {
-              "target": "Package",
-              "version": "[3.9.74, )"
-            },
-            "SpecFlow.Plus.LivingDocPlugin": {
-              "target": "Package",
-              "version": "[3.9.57, )"
+              "version": "[140.0.7339.8200, )"
             },
             "System.Data.SqlClient": {
               "target": "Package",

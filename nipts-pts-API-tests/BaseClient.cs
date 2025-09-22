@@ -1,8 +1,6 @@
-﻿using BoDi;
-using nipts_pts_API_tests.Configuration;
+﻿using Reqnroll.BoDi;
 using System.Reflection;
 using RestSharp;
-using System.Net;
 
 namespace nipts_pts_API_tests
 {

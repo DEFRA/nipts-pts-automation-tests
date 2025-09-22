@@ -1,10 +1,9 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages.AP_GB.SummaryPage;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
-using nipts_pts_automation_tests.Pages.CP.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps.CP
 {
@@ -26,12 +25,14 @@ namespace nipts_pts_automation_tests.Steps.CP
             _objectContainer = container;
         }
 
+        [When(@"I navigate to Find a document page")]
         [Then(@"I navigate to Find a document page")]
         public void ThenINavigateToFindADocumentPage()
         {
             Assert.True(_searchDocumentPage?.IsPageLoaded(), "Find a document page not loaded");
         }
 
+        [When(@"I provided the PTD number of the application")]
         [Then(@"I provided the PTD number of the application")]
         public void ThenIProvidedThePTDNumberOfTheApplication()
         {
@@ -41,6 +42,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             _searchDocumentPage?.EnterPTDNumber(ptdNumber1);
         }
 
+        [When(@"I provided the Reference number of the application")]
         [Then(@"I provided the Reference number of the application")]
         public void ThenIProvidedTheReferenceNumberOfTheApplication()
         {
@@ -49,6 +51,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             _searchDocumentPage?.EnterApplicationNumber(referenceNumber);
         }
 
+        [When(@"I provided the Microchip number of the application")]
         [Then(@"I provided the Microchip number of the application")]
         public void ThenIProvidedTheMicrochipNumberOfTheApplication()
         {
@@ -68,18 +71,21 @@ namespace nipts_pts_automation_tests.Steps.CP
             _searchDocumentPage?.ClearSearchButton();
         }
 
+        [When(@"I provided the '([^']*)' of the application")]
         [Then(@"I provided the '([^']*)' of the application")]
         public void ThenIProvidedTheOfTheApplication(string ptdNumber)
         {
             _searchDocumentPage?.EnterPTDNumber(ptdNumber);
         }
 
+        [When(@"I provided the Reference number '([^']*)' of the application")]
         [Then(@"I provided the Reference number '([^']*)' of the application")]
         public void ThenIProvidedTheReferenceNumberOfTheApplication(string referenceNumber)
         {
             _searchDocumentPage?.EnterApplicationNumber(referenceNumber);
         }
 
+        [When(@"I provided the Microchip number '([^']*)' of the application")]
         [Then(@"I provided the Microchip number '([^']*)' of the application")]
         public void ThenIProvidedTheMicrochipNumberOfTheApplication(string microchipNumber)
         {
@@ -93,6 +99,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             _searchDocumentPage?.SelectSearchRadioOption(radioButton);
         }
 
+        [When(@"I provided the Application Number '([^']*)' of the application")]
         [Then(@"I provided the Application Number '([^']*)' of the application")]
         public void ThenIProvidedTheApplicationNumberOfTheApplication(string referenceNumber)
         {
@@ -105,6 +112,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(_searchDocumentPage?.IsError(errorMessage), $"There is no error message found with - {errorMessage}");
         }
 
+        [When(@"I provided the Invalid PTD number of the application")]
         [Then(@"I provided the Invalid PTD number of the application")]
         public void ThenIProvidedTheInvalidPTDNumberOfTheApplication()
         {
@@ -113,6 +121,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             _searchDocumentPage?.EnterPTDNumber(ptdNumber1);
         }
 
+        [When(@"I provided the Invalid Reference number of the application")]
         [Then(@"I provided the Invalid Reference number of the application")]
         public void ThenIProvidedTheInvalidReferenceNumberOfTheApplication()
         {
@@ -120,6 +129,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             _searchDocumentPage?.EnterApplicationNumber(referenceNumber);
         }
 
+        [When(@"I provided the Invalid Microchip number of the application")]
         [Then(@"I provided the Invalid Microchip number of the application")]
         public void ThenIProvidedTheInvalidMicrochipNumberOfTheApplication()
         {

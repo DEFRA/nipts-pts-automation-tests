@@ -1,10 +1,10 @@
-﻿using BoDi;
-using nipts_pts_automation_tests.Pages;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages.AP_GB.SummaryPage;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using TechTalk.SpecFlow;
+using Reqnroll;
+using System.Diagnostics;
 
 namespace nipts_pts_automation_tests.Steps.CP
 {
@@ -82,25 +82,32 @@ namespace nipts_pts_automation_tests.Steps.CP
             _reportNonCompliancePage?.ClickOnGBOutcome();
         }
 
-        [When(@"select Michrochip does not match the PTD checkbox")]
-        [Then(@"select Michrochip does not match the PTD checkbox")]
-        public void ThenIHaveTickedTheMicrochipDoesNotMatchThePTD()
-        {
-            _reportNonCompliancePage.TickMicrochipNoDoesNotMatchPTD();
-        }
+        //[When(@"select Michrochip does not match the PTD checkbox")]
+        //[Then(@"select Michrochip does not match the PTD checkbox")]
+        //public void ThenIHaveTickedTheMicrochipDoesNotMatchThePTD()
+        //{
+        //    _reportNonCompliancePage.TickMicrochipNoDoesNotMatchPTD();
+        //}
 
-        [When(@"Enter michrochip Number in Michrochip Does not match PTD field '([^']*)'")]
-        [Then(@"Enter michrochip Number in Michrochip Does not match PTD field '([^']*)'")]
-        public void WhenEnterMichrochipNo(string michrochipNo)
-        {
-            _reportNonCompliancePage.EnterMichrochipNoDoesNotMatchPTD(michrochipNo);
-        }
+        //[When(@"Enter michrochip Number in Michrochip Does not match PTD field '([^']*)'")]
+        //[Then(@"Enter michrochip Number in Michrochip Does not match PTD field '([^']*)'")]
+        //public void WhenEnterMichrochipNo(string michrochipNo)
+        //{
+        //    _reportNonCompliancePage.EnterMichrochipNoDoesNotMatchPTD(michrochipNo);
+        //}
 
         [When(@"click on Save outcome")]
         [Then(@"click on Save outcome")]
         public void ThenClickOnSaveOutcome()
         {
             _reportNonCompliancePage.ClickOnSaveOutcome();
+        }
+
+        [When(@"I click on Save on update referral")]
+        [Then(@"I click on Save on update referral")]
+        public void ThenClickOnSaveOnUpdateReferral()
+        {
+            _reportNonCompliancePage.ClickOnSaveOnUpdateReferral();
         }
 
         [Then(@"verify hint text '([^']*)' for Other reason")]
@@ -146,12 +153,12 @@ namespace nipts_pts_automation_tests.Steps.CP
             _reportNonCompliancePage.SelectMicrochipReason(MicrochipReason);
         }
 
-        [When(@"I enter relevant comment '([^']*)'")]
-        [Then(@"I enter relevant comment '([^']*)'")]
-        public void ThenEnterAdditionalComment(string AdditionalComment)
-        {
-            _reportNonCompliancePage.EnterAdditionalComment(AdditionalComment);
-        }
+        //[When(@"I enter relevant comment '([^']*)'")]
+        //[Then(@"I enter relevant comment '([^']*)'")]
+        //public void ThenEnterAdditionalComment(string AdditionalComment)
+        //{
+        //    _reportNonCompliancePage.EnterAdditionalComment(AdditionalComment);
+        //}
 
         [When(@"I select GB Outcome '([^']*)' on Report non-compliance page")]
         [Then(@"I select GB Outcome '([^']*)' on Report non-compliance page")]
@@ -160,12 +167,12 @@ namespace nipts_pts_automation_tests.Steps.CP
             _reportNonCompliancePage.SelectGBOutcome(GBOutcome);
         }
 
-        [When(@"I select Visual check '([^']*)' on Report non-compliance page")]
-        [Then(@"I select Visual check '([^']*)' on Report non-compliance page")]
-        public void ThenSelectVisualCheck(string VisualCheck)
-        {
-            _reportNonCompliancePage.SelectVisualCheck(VisualCheck);
-        }
+        //[When(@"I select Visual check '([^']*)' on Report non-compliance page")]
+        //[Then(@"I select Visual check '([^']*)' on Report non-compliance page")]
+        //public void ThenSelectVisualCheck(string VisualCheck)
+        //{
+        //    _reportNonCompliancePage.SelectVisualCheck(VisualCheck);
+        //}
 
         [When(@"I select Other issues '([^']*)' on Report non-compliance page")]
         [Then(@"I select Other issues '([^']*)' on Report non-compliance page")]
@@ -174,7 +181,6 @@ namespace nipts_pts_automation_tests.Steps.CP
             _reportNonCompliancePage.SelectOtherIssues(OtherIssues);
         }
 
-
         [When(@"I enter details of outcome '([^']*)'")]
         [Then(@"I enter details of outcome '([^']*)'")]
         public void ThenEnterDetailsOfOutCome(string DetailsOfOutCome)
@@ -182,5 +188,81 @@ namespace nipts_pts_automation_tests.Steps.CP
             _reportNonCompliancePage.EnterDetailsOfOutCome(DetailsOfOutCome);
         }
 
+        [When(@"I verify the Reasons Heading structure")]
+        [Then(@"I verify the Reasons Heading structure")]
+        public void ThenVerifyTheReasonsHeadingStructure()
+        {
+            Assert.True(_reportNonCompliancePage.VerifyTheReasonsHeadingStructure(), "Reasons Heading structure not matching");
+        }
+
+        [When(@"I verify the Microchip Heading structure")]
+        [Then(@"I verify the Microchip Heading structure")]
+        public void ThenVerifyTheMicrochipHeadingStructure()
+        {
+            Assert.True(_reportNonCompliancePage.VerifyTheMicrochipHeadingStructure(), "Microchip Heading structure not matching");
+        }
+
+        [When(@"I click on Microchip details Heading structure")]
+        [Then(@"I click on Microchip details Heading structure")]
+        public void ThenClickOnMicrochipDetailsStructure()
+        {
+            _reportNonCompliancePage.ClickOnTheMicrochipDetailsHeadingStructure();
+        }
+
+        //[When(@"I verify the Visual check Heading structure")]
+        //[Then(@"I verify the Visual check Heading structure")]
+        //public void ThenVerifyTheVisualCheckStructure()
+        //{
+        //    Assert.True(_reportNonCompliancePage.VerifyTheVisualCheckHeadingStructure(), "Visual check Heading structure not matching");
+        //}
+
+        //[When(@"I click on Pet details Heading structure")]
+        //[Then(@"I click on Pet details Heading structure")]
+        //public void ThenClickOnPetDetailsStructure()
+        //{
+        //    _reportNonCompliancePage.ClickOnPetDetailsHeadingStructure();
+        //}
+
+        [When(@"I verify the Other Issues Heading structure")]
+        [Then(@"I verify the Other Issues Heading structure")]
+        public void ThenVerifyTheOtherIssuesStructure()
+        {
+            Assert.True(_reportNonCompliancePage.VerifyTheOtherIssuesHeadingStructure(), "Other Issues Heading structure not matching");
+        }
+
+        [When(@"I click on Pet owner details Heading structure")]
+        [Then(@"I click on Pet owner details Heading structure")]
+        public void ThenClickOnPetOwnerDetailsStructure()
+        {
+            _reportNonCompliancePage.ClickOnPetOwnerDetailsHeadingStructure();
+        }
+
+        //[When(@"I verify the Any relevant comments Heading structure")]
+        //[Then(@"I verify the Any relevant comments Heading structure")]
+        //public void ThenVerifyTheAnyRelevantCommentsStructure()
+        //{
+        //    Assert.True(_reportNonCompliancePage.VerifyTheAnyRelevantCommentsHeadingStructure(), "Any relevant comments Heading structure not matching");
+        //}
+
+        [When(@"I verify the Record outcome Heading structure")]
+        [Then(@"I verify the Record outcome Heading structure")]
+        public void ThenVerifyTheRecordOutcomeStructure()
+        {
+            Assert.True(_reportNonCompliancePage.VerifyTheRecordOutcomeHeadingStructure(), "Record outcome Heading structure not matcging");
+        }
+
+        [When(@"I verify the Passanger details Heading structure")]
+        [Then(@"I verify the Passanger details Heading structure")]
+        public void ThenVerifyThePassengerDetailsStructure()
+        {
+            Assert.True(_reportNonCompliancePage.VerifyThePassengerDetailsHeadingStructure(), "Passanger details Heading structure not matcging");
+        }
+
+        [When(@"I verify the Pet Travel Document Heading structure")]
+        [Then(@"I verify the Pet Travel Document Heading structure")]
+        public void ThenVerifyThePetTravelDocumentStructure()
+        {
+            Assert.True(_reportNonCompliancePage.VerifyThePetTravelDocumentHeadingStructure(), "Pet Travel Document Heading structure not matcging");
+        }
     }
 }

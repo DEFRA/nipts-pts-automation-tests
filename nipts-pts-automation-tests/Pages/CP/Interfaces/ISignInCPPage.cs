@@ -6,5 +6,7 @@
         void IsSignedIn(string userName, string password);
         void EnterPassword();
         bool IsSignedOut();
+        void ClickAccessibilityStatementLink();
+        bool VerifySignoutButtonNotVisibleOnCPWAFPage();
     }
 }

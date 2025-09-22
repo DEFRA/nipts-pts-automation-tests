@@ -1,4 +1,4 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
 using nipts_pts_automation_tests.Pages.AP_GB.LandingPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetBreedPage;
@@ -13,10 +13,9 @@ using nipts_pts_automation_tests.Pages.AP_GB.PetOwnerPNumberPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetSexPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetSpeciesPage;
 using nipts_pts_automation_tests.Pages.AP_GB.SignificantFeaturesPage;
-using nipts_pts_automation_tests.Pages.CP.Pages;
 using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps.AP_GB
 {
@@ -82,7 +81,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             Assert.True(petMicrochipPage?.IsError(errorMessage), $"There is no error message found with - {errorMessage}");
         }
 
-        [Then(@"I should not be redirected to When was your pet microchipped or last scanned\? page")]
+        [Then(@"I should not be redirected to When was your pet microchipped or last scanned? page")]
         public void ThenIShouldNotBeRedirectedToWhenWasYourPetMicrochippedOrLastScannedPage()
         {
             var pageTitle = $"Is your pet microchipped";
@@ -95,7 +94,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             petMicrochipDatePage?.EnterDateMonthYear(DateTime.Now.AddDays(10));
         }
 
-        [Then(@"I should not be redirected to Is your pet a dog, cat or ferret\? page")]
+        [Then(@"I should not be redirected to Is your pet a dog, cat or ferret? page")]
         public void ThenIShouldNotBeRedirectedToIsYourPetADogCatOrFerretPage()
         {
             var pageTitle = $"When was your pet microchipped or last scanned?";

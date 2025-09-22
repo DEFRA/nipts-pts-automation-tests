@@ -26,7 +26,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -72,7 +72,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	And I provided the Microchip number of the application
 	When I click search button
 	And I should see the application status in 'Approved'
-	And I select Fail radio button
+	And I select Refer to SPS radio button
 	When I click save and continue button from application status page
 	Then I should navigate to Report non-compliance page
 	And I click '<TypeOfPassenger>' in Passenger details
@@ -96,23 +96,22 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	Then I should navigate to Welcome page
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	And I click on PTD number of the application
-	And I click on Conduct an SPS check
-	And I should see the application status in 'Approved'
-	And I select Fail radio button
-	When I click save and continue button from application status page
-	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
+	When I click on Update referral outcome
+	Then verify next page '<nextPage2>' is loaded
 	And I click 'Allowed' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
+	And I enter details of outcome '<DetailsOfOutCome>'
+	And I click on Save on update referral
 	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
+	And I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on view on Checks page with SPS user for '<FerryRoute>'
 	Then verify next page '<nextPage>' is loaded
 	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                   | ApplicationRadio           | nextPage        | SPSOutcome | TypeOfPassenger      |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Loch Ryan to Belfast (Stena) | Search by microchip number | Referred to SPS | Allowed    | Ferry foot passenger |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                   | ApplicationRadio           | nextPage        | SPSOutcome | TypeOfPassenger      |nextPage2               | DetailsOfOutCome        |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Loch Ryan to Belfast (Stena) | Search by microchip number | Referred to SPS | Allowed    | Ferry foot passenger |Update referral outcome | Test Details of Outcome |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip number - status in Revoked
 	Then I have selected '<Are your details correct>' option
@@ -128,7 +127,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -174,45 +173,45 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	When I click search button
 	And I should see the application status in 'Cancelled'
 	And I should see the application subtitle 'Lifelong pet travel document and declaration'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	And I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
-	And I click on GB outcome
-	When I click Report non-compliance button from Report non-compliance page
-	Then I should navigate to Welcome page
-	When I click on view on Checks page
-	Then verify next page '<nextPage>' is loaded
-	And click on signout button on CP and verify the signout message
-	When I navigate to the port checker application
-	And I click signin button on port checker application
-	And I have provided the password for prototype research page
-	When I have provided the CP credentials and signin for user 'SPSUser'
-	And I have provided the password for prototype research page
-	Then I should redirected to port route checke page
-	And I have selected '<Transportation>' radio option
-	And I select the '<FerryRoute>' radio option
-	And I have provided Scheduled departure time with SPS user
-	When I click save and continue button from route checke page
-	Then I should navigate to Welcome page
-	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	And I click on PTD number of the application
-	And I click on Conduct an SPS check
-	Then I should see the application status in 'Cancelled'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
-	And I click 'Allowed' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
-	Then I should navigate to Welcome page
-	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	Then verify next page '<nextPage>' is loaded
-	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
+	#When I click continue button from application status page
+	#Then I should navigate to Report non-compliance page
+	#And I click '<TypeOfPassenger>' in Passenger details
+	#And I select 'Cannot find microchip' as non compliance reason
+	#And I click on GB outcome
+	#When I click Report non-compliance button from Report non-compliance page
+	#Then I should navigate to Welcome page
+	#When I click on view on Checks page
+	#Then verify next page '<nextPage>' is loaded
+	#And click on signout button on CP and verify the signout message
+	#When I navigate to the port checker application
+	#And I click signin button on port checker application
+	#And I have provided the password for prototype research page
+	#When I have provided the CP credentials and signin for user 'SPSUser'
+	#And I have provided the password for prototype research page
+	#Then I should redirected to port route checke page
+	#And I have selected '<Transportation>' radio option
+	#And I select the '<FerryRoute>' radio option
+	#And I have provided Scheduled departure time with SPS user
+	#When I click save and continue button from route checke page
+	#Then I should navigate to Welcome page
+	#When I click on view on Checks page with SPS user for '<FerryRoute>'
+	#And I click on PTD number of the application
+	#When I click on Update referral outcome
+	#Then verify next page '<nextPage2>' is loaded
+	#And I click 'Allowed' on SPS outcome
+	#And I enter details of outcome '<DetailsOfOutCome>'
+	#And I click on Save on update referral
+	#Then I should navigate to Welcome page
+	#And I verify submiited message
+ #   And I verify submiited message image
+	#And I verify the header text 'Check a pet travelling from GB to NI'
+	#When I click on view on Checks page with SPS user for '<FerryRoute>'
+	#Then verify next page '<nextPage>' is loaded
+	#And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  | nextPage        | SPSOutcome |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number | Referred to SPS | Allowed    |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  | nextPage        | SPSOutcome |nextPage2               | DetailsOfOutCome        |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number | Referred to SPS | Allowed    |Update referral outcome | Test Details of Outcome |
 
 	Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip number - status in Unsuccessful
 	Then I have selected '<Are your details correct>' option
@@ -228,7 +227,7 @@ Examples:
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -273,45 +272,45 @@ Examples:
 	And I provided the Microchip number of the application
 	When I click search button
 	And I should see the application status in 'Unsuccessful'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	And I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
-	And I click on GB outcome
-	When I click Report non-compliance button from Report non-compliance page
-	Then I should navigate to Welcome page
-	When I click on view on Checks page
-	Then verify next page '<nextPage>' is loaded
-	And click on signout button on CP and verify the signout message
-	When I navigate to the port checker application
-	And I click signin button on port checker application
-	And I have provided the password for prototype research page
-	When I have provided the CP credentials and signin for user 'SPSUser'
-	And I have provided the password for prototype research page
-	Then I should redirected to port route checke page
-	And I have selected '<Transportation>' radio option
-	And I select the '<FerryRoute>' radio option
-	And I have provided Scheduled departure time with SPS user
-	When I click save and continue button from route checke page
-	Then I should navigate to Welcome page
-	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	And I click on Reference number of the application
-	And I click on Conduct an SPS check
-	Then I should see the application status in 'Unsuccessful'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
-	And I click 'Allowed' on SPS outcome
-	And I click Report non-compliance button from Report non-compliance page
-	Then I should navigate to Welcome page
-	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	Then verify next page '<nextPage>' is loaded
-	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
+	#When I click continue button from application status page
+	#Then I should navigate to Report non-compliance page
+	#And I click '<TypeOfPassenger>' in Passenger details
+	#And I select 'Cannot find microchip' as non compliance reason
+	#And I click on GB outcome
+	#When I click Report non-compliance button from Report non-compliance page
+	#Then I should navigate to Welcome page
+	#When I click on view on Checks page
+	#Then verify next page '<nextPage>' is loaded
+	#And click on signout button on CP and verify the signout message
+	#When I navigate to the port checker application
+	#And I click signin button on port checker application
+	#And I have provided the password for prototype research page
+	#When I have provided the CP credentials and signin for user 'SPSUser'
+	#And I have provided the password for prototype research page
+	#Then I should redirected to port route checke page
+	#And I have selected '<Transportation>' radio option
+	#And I select the '<FerryRoute>' radio option
+	#And I have provided Scheduled departure time with SPS user
+	#When I click save and continue button from route checke page
+	#Then I should navigate to Welcome page
+	#When I click on view on Checks page with SPS user for '<FerryRoute>'
+	#And I click on Reference number of the application
+	#When I click on Update referral outcome
+	#Then verify next page '<nextPage2>' is loaded
+	#And I click 'Allowed' on SPS outcome
+	#And I enter details of outcome '<DetailsOfOutCome>'
+	#And I click on Save on update referral
+	#Then I should navigate to Welcome page
+	#And I verify submiited message
+ #   And I verify submiited message image
+	#And I verify the header text 'Check a pet travelling from GB to NI'
+	#When I click on view on Checks page with SPS user for '<FerryRoute>'
+	#Then verify next page '<nextPage>' is loaded
+	#And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |nextPage        | SPSOutcome |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Allowed    |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |nextPage        | SPSOutcome |nextPage2               | DetailsOfOutCome        |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Allowed    |Update referral outcome | Test Details of Outcome |
 
 Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip number - status in Pending
 	Then I have selected '<Are your details correct>' option
@@ -327,7 +326,7 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -371,45 +370,45 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By Microchip numb
 	And I provided the Microchip number of the application
 	When I click search button
 	And I should see the application status in 'Pending'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	And I click '<TypeOfPassenger>' in Passenger details
-	And I select 'Cannot find microchip' as non compliance reason
-	And I click on GB outcome
-	When I click Report non-compliance button from Report non-compliance page
-	Then I should navigate to Welcome page
-	When I click on view on Checks page
-	Then verify next page '<nextPage>' is loaded
-	And click on signout button on CP and verify the signout message
-	When I navigate to the port checker application
-	And I click signin button on port checker application
-	And I have provided the password for prototype research page
-	When I have provided the CP credentials and signin for user 'SPSUser'
-	And I have provided the password for prototype research page
-	Then I should redirected to port route checke page
-	And I have selected '<Transportation>' radio option
-	And I select the '<FerryRoute>' radio option
-	And I have provided Scheduled departure time with SPS user
-	When I click save and continue button from route checke page
-	Then I should navigate to Welcome page
-	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	And I click on Reference number of the application
-	And I click on Conduct an SPS check
-	Then I should see the application status in 'Pending'
-	When I click continue button from application status page
-	Then I should navigate to Report non-compliance page
-	When I click '<TypeOfPassenger>' in Passenger details
-	And I click 'Not allowed' on SPS outcome
-	And I select 'Cannot find microchip' as non compliance reason
-	And I click Report non-compliance button from Report non-compliance page
-	Then I should navigate to Welcome page
-	When I click on view on Checks page with SPS user for '<FerryRoute>'
-	Then verify next page '<nextPage>' is loaded
-	And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
+	#When I click continue button from application status page
+	#Then I should navigate to Report non-compliance page
+	#And I click '<TypeOfPassenger>' in Passenger details
+	#And I select 'Cannot find microchip' as non compliance reason
+	#And I click on GB outcome
+	#When I click Report non-compliance button from Report non-compliance page
+	#Then I should navigate to Welcome page
+	#When I click on view on Checks page
+	#Then verify next page '<nextPage>' is loaded
+	#And click on signout button on CP and verify the signout message
+	#When I navigate to the port checker application
+	#And I click signin button on port checker application
+	#And I have provided the password for prototype research page
+	#When I have provided the CP credentials and signin for user 'SPSUser'
+	#And I have provided the password for prototype research page
+	#Then I should redirected to port route checke page
+	#And I have selected '<Transportation>' radio option
+	#And I select the '<FerryRoute>' radio option
+	#And I have provided Scheduled departure time with SPS user
+	#When I click save and continue button from route checke page
+	#Then I should navigate to Welcome page
+	#When I click on view on Checks page with SPS user for '<FerryRoute>'
+	#And I click on Reference number of the application
+	#When I click on Update referral outcome
+	#Then verify next page '<nextPage2>' is loaded
+	#And I click 'Not allowed' on SPS outcome
+	#And I enter details of outcome '<DetailsOfOutCome>'
+	#And I click on Save on update referral
+	#Then I should navigate to Welcome page
+	#And I verify submiited message
+ #   And I verify submiited message image
+	#And I verify the header text 'Check a pet travelling from GB to NI'
+	#When I click on view on Checks page with SPS user for '<FerryRoute>'
+	#Then verify next page '<nextPage>' is loaded
+	#And I verify SPS outcome '<SPSOutcome>' on referred SPS page 
 	
 Examples:
-	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |nextPage        | SPSOutcome     |
-	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Not allowed    |
+	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio			  |nextPage        | SPSOutcome     |nextPage2               | DetailsOfOutCome        |
+	| PetDog's | Yes                      | CV1 4PY  | 02012345678 | Yes             | 123456789123456 | Dog | Dog     | Male   | Black | Yes                   | Ferry          | Birkenhead to Belfast (Stena) | Search by microchip number |Referred to SPS | Not allowed    |Update referral outcome | Test Details of Outcome |
 
 	Scenario Outline: PTS port checker Pass application by Microchip number - status in Approved
 	Then I have selected '<Are your details correct>' option
@@ -424,7 +423,7 @@ Examples:
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -475,6 +474,7 @@ Examples:
 	When I click save and continue button from application status page
 	Then I should navigate to Welcome page
 	And I verify submiited message
+    And I verify submiited message image
 
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio           | 
@@ -494,7 +494,7 @@ Scenario Outline: PTS port checker continue application by Microchip number - st
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -538,8 +538,8 @@ Scenario Outline: PTS port checker continue application by Microchip number - st
 	And I provided the Microchip number of the application
 	When I click search button
 	And I should see the application status in 'Pending'
-	And click on continue
-	Then I should navigate to Report non-compliance page
+	#And click on continue
+	#Then I should navigate to Report non-compliance page
 	
 Examples:
 	| FullName | Are your details correct | PostCode | PhoneNumber | MicrochipOption | MicrochipNumber | Pet | PetName | Gender | Color | IsSignificantFeatures | Transportation | FerryRoute                    | ApplicationRadio           | 

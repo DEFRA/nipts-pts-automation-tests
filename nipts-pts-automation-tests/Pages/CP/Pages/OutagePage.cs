@@ -1,4 +1,4 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using Defra.UI.Framework.Driver;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
@@ -20,6 +20,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
         public By AccountLink => By.XPath("//a[@href='/account']");
         public By SignOutLink => By.XPath("//a[@href='/signout']");
+        private IWebElement pageHeading => _driver.WaitForElement(By.XPath("//h1[@class='govuk-heading-l']"));
+        private IWebElement headerText => _driver.WaitForElement(By.XPath("//div[contains(@class,'govuk-heading-l')]"));
 
         #endregion
 
@@ -51,11 +53,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public bool VerifyHeadingOnPage(string Heading)
         {
-            string outageLinkEle = $"//h1[contains(text(),'{Heading}')]";
-            if (_driver.FindElements(By.XPath(outageLinkEle)).Count > 0)
-                return true;
-            else
-                return false;
+            return pageHeading.Text.Contains(Heading);
+        }
+
+        public bool VerifyHeaderTextOnPage(string HeaderText)
+        {
+            return headerText.Text.Contains(HeaderText);
         }
 
         public bool VerifyAccountAndSignOutLinksOnPage()

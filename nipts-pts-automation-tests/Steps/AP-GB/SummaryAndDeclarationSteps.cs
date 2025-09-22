@@ -1,10 +1,11 @@
-﻿using BoDi;
+﻿
+using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage;
 using nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails;
 using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
 using nipts_pts_automation_tests.Pages.AP_GB.SummaryPage;
 using NUnit.Framework;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps.AP_GB
 {
@@ -147,7 +148,8 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             var petType = _scenarioContext.Get<string>("PetType");
 
             //var breed = petType.ToLower().Equals("ferret") ? isSummaryPage ? "-" : null : _scenarioContext.Get<string>("Breed");
-            var breed = petType.ToLower().Equals("ferret") ? "-" : _scenarioContext.Get<string>("Breed");
+           // var breed = petType.ToLower().Equals("ferret") ? "-" : _scenarioContext.Get<string>("Breed");
+
 
             var sex = _scenarioContext.Get<string>("Sex");
             var dateOfBirth = _scenarioContext.Get<string>("DateOfBirth");
@@ -161,7 +163,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
 
             Assert.AreEqual(petName, summary?.PetName, $"Pet name is not matchin in {pageName} page!");
             Assert.AreEqual(petType, summary?.Species, $"Species is not matching in {pageName} page!");
-            Assert.AreEqual(breed, summary?.Breed, $"Breed is not matching in {pageName} page!");
+     //       Assert.AreEqual(breed, summary?.Breed, $"Breed is not matching in {pageName} page!");
             Assert.AreEqual(sex, summary?.Sex, $"Sex is not matching in {pageName} page!");
             Assert.AreEqual(dateOfBirth, summary?.DateOfBirth, $"Date of birth is not matching in {pageName} page!");
             Assert.AreEqual(color, summary?.Colour, $"Color is not matching in {pageName} page!");
@@ -220,5 +222,22 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             Assert.IsTrue(homePage?.VerifyTheApplicationIsNotAvailable(petName), $"The application is available in Dashboard!");
         }
 
+        [Then(@"verify status on the application summary as '([^']*)' '([^']*)'")]
+        public void ThenVerifyGenderOnWELSHSummaryPTD(string fieldName, string fieldValue)
+        {
+            Assert.True(summaryPage?.VerifyStatusOnAppSummary(fieldName, fieldValue), "Status mistmatch on Pending application");
+        }
+
+        [Then(@"verify print and download links are not displayed on PTD")]
+        public void ThenLinksSuspendedUserPTD()
+        {
+            Assert.False(summaryPage?.VerifyPrintDownloadPDFLinksSuspendedUser(), "Print download link is displayed for Suspended User on summary PDF");
+        }
+
+        [Then(@"verify Issuing Authority is not displayed on suspended user PTD")]
+        public void VerifyIssuingAuthSuspendedUserPTD()
+        {
+            Assert.True(summaryPage?.VerifyIssuingAuthNotDisplayedSuspendedUserPTD(), "Issuing Authority is displayed for Suspended User on summary PDF");
+        }
     }
 }

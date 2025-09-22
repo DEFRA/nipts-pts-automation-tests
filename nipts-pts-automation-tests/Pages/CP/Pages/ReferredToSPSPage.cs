@@ -1,4 +1,4 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
@@ -22,7 +22,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement PTDNoEle => _driver.WaitForElement(By.XPath("//button[contains(@type,'submit')]"));
         private IWebElement PetTypeEle => _driver.WaitForElement(By.XPath("//tr[contains(@class,'govuk-table__row')]/td[1]"));
         private IWebElement MichrochipNoEle => _driver.WaitForElement(By.XPath("//tr[contains(@class,'govuk-table__row')]/td[2]"));
-        private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//header[@class='pts-location-bar']//p"));
+        private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//div[@class='pts-location-bar']//p"));
         private IWebElement spsDetails => _driver.WaitForElement(By.XPath("//caption[contains(@class, 'govuk-table__caption govuk-table__caption--m')]"));
         private IReadOnlyCollection<IWebElement> PTDRefNumbers => _driver.WaitForElements(By.XPath("//button[contains(@data-identifier,'referred')]"));
         private IWebElement PTDRefNumber => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Application reference number')]/following-sibling::dd | //dt[contains(text(),'PTD number')]/following-sibling::dd"));
@@ -76,6 +76,18 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                 status = false;
 
             return status;
+        }
+        public bool VerifyPetSpeciesAndColourOnReferredToSPSPage(string Species, string Colour)
+        {
+            string PetDetails = $"//tbody[contains(@class,'govuk-table__body')]//tr//td[1]";
+            if(_driver.FindElement(By.XPath(PetDetails)).Text.Contains(Species) && _driver.FindElement(By.XPath(PetDetails)).Text.Contains(Colour))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }   
         }
 
         public bool VerifySPSOutcome(string outcome)

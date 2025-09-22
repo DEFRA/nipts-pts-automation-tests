@@ -10,8 +10,8 @@
         bool IsError(string errorMessage);
         void ClickOnSPSOutcome(string SPSStatus);
         void ClickOnGBOutcome();
-        public void TickMicrochipNoDoesNotMatchPTD();
-        public void EnterMichrochipNoDoesNotMatchPTD(string michrochipNo);
+        //public void TickMicrochipNoDoesNotMatchPTD();
+        //public void EnterMichrochipNoDoesNotMatchPTD(string michrochipNo);
         public void ClickOnSaveOutcome();
         public void SelectNonComplianceReason(string nonComplianceReason);
         public bool VerifyOtherReasonHintTxt(string otherReasonHintTxt);
@@ -20,11 +20,22 @@
         bool VerifyPTDNumber(string ptdNumberNew);
         bool VerifyApplicationReferenceNumber(string AppRefNumber);
         void SelectMicrochipReason(string microchipReason);
-        void EnterAdditionalComment(string additionalComment);
+        //void EnterAdditionalComment(string additionalComment);
         void SelectGBOutcome(string gBOutcome);
-        void SelectVisualCheck(string visualCheck);
+        //void SelectVisualCheck(string visualCheck);
         void SelectOtherIssues(string otherIssues);
         void EnterDetailsOfOutCome(string detailsOfOutCome);
-
+        bool VerifyTheReasonsHeadingStructure();
+        bool VerifyTheMicrochipHeadingStructure();
+        void ClickOnTheMicrochipDetailsHeadingStructure();
+        //bool VerifyTheVisualCheckHeadingStructure();
+        //void ClickOnPetDetailsHeadingStructure();
+        bool VerifyTheOtherIssuesHeadingStructure();
+        void ClickOnPetOwnerDetailsHeadingStructure();
+        //bool VerifyTheAnyRelevantCommentsHeadingStructure();
+        bool VerifyTheRecordOutcomeHeadingStructure();
+        bool VerifyThePassengerDetailsHeadingStructure();
+        bool VerifyThePetTravelDocumentHeadingStructure();
+        void ClickOnSaveOnUpdateReferral();
     }
 }

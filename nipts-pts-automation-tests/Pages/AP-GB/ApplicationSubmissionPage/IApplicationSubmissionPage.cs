@@ -6,5 +6,6 @@
         string GetApplicationReferenceNumber();
         void ClickApplyForAnotherPetTravelDocument();
         void ClickViewAllSubmittedPetTravelDocument();
+        bool VerifyApplicationSubmittedPageTitle(string pageTitle);
     }
 }

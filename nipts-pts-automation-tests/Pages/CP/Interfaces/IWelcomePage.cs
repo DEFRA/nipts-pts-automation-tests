@@ -16,5 +16,7 @@
         bool VerifySelectedFerryRouteOnWelcomePage(string FerryRoute);
         bool VerifyNoViewLinkIfNoReferredToSPS();
         bool VerifyNoViewLinkIfNoReferredToSPSWithSPSUser();
+        bool VerifyScanLinkFromFooter();
+        bool VerifySubmiitedMessageImage();
     }
 }

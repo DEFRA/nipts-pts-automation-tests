@@ -1,4 +1,4 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
@@ -18,8 +18,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
-        private IWebElement rdoPass => _driver.WaitForElementExists(By.XPath("//label[normalize-space()='Pass']/..//input"));
-        private IWebElement rdoFail => _driver.WaitForElementExists(By.XPath("//label[normalize-space()='Fail or referred to SPS']/..//input"));
+        private IWebElement rdoPass => _driver.WaitForElementExists(By.XPath("//div[@class='govuk-radios__item']//label[normalize-space()='Pass']/..//input"));
+        private IWebElement rdoReferToSPS => _driver.WaitForElementExists(By.XPath("//div[@class='govuk-radios__item']//label[normalize-space()='Refer to SPS']/..//input"));
+        private IWebElement rdoIssueSUPTD => _driver.WaitForElementExists(By.XPath("//div[@class='govuk-radios__item']//label[normalize-space()='Issue SUPTD']/..//input"));
+        private IWebElement rdoFail => _driver.WaitForElementExists(By.XPath("//div[@class='govuk-radios__item']//label[normalize-space()='Fail']/..//input"));
         private IWebElement btnSaveAndContinue => _driver.WaitForElement(By.XPath("//*[@id='saveAndContinue']"));
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
@@ -31,9 +33,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement MicrochipNotFound => _driver.WaitForElement(By.XPath("//li[contains(text(),'Cannot find microchip')] | //p[contains(text(),'Cannot find microchip')]"));
         private IWebElement AdditionalComment => _driver.WaitForElement(By.XPath("//dt[text()='Additional comments']/..//p"));
         private IWebElement Route => _driver.WaitForElement(By.XPath("//dt[contains(text(),'Route')]/following-sibling::dd"));
-        private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//header[@class='pts-location-bar']//p"));
+        private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//div[@class='pts-location-bar']//p"));
         private IWebElement clickAccount => _driver.WaitForElement(By.XPath("//span[@id='account-text']"));
-
+        private IWebElement RoleIdentification => _driver.WaitForElement(By.XPath("//span[contains(@class,'idm-table__cell--access-level-content')]"));
+        private IWebElement SuspendedWarningText => _driver.WaitForElement(By.XPath("//div[@class='govuk-warning-text']"));
+        private IWebElement ChecksOnSearchResults => _driver.WaitForElementExists(By.XPath("//h2[contains(@class,'govuk-heading-l')] [@id='search-results-heading']"));
+        private IWebElement WarningOnSearchResults => _driver.WaitForElementExists(By.XPath("//strong[@class='govuk-warning-text__text']"));
         #endregion
 
         #region Methods
@@ -44,7 +49,13 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public bool VerifyTheExpectedSubtitle(string applicationSubtitle)
         {
-            return _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-panel__title')]/../following-sibling::h1")).Text.Trim().Equals(applicationSubtitle);
+            return _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-panel__title')]/../following-sibling::h2")).Text.Trim().Equals(applicationSubtitle);
+        }
+
+        public bool VerifyTheSearchResultsHeading(string SearchResultsHeading)
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", ChecksOnSearchResults);
+            return _driver.WaitForElement(By.XPath("//h2[contains(@class,'govuk-heading-l')] [@id='search-results-heading']")).Text.Trim().Equals(SearchResultsHeading);
         }
 
         public void SelectPassRadioButton()
@@ -52,11 +63,24 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", rdoPass);
             rdoPass.Click();
         }
+        public void SelectReferToSPSRadioButton()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", rdoReferToSPS);
+            rdoReferToSPS.Click();
+        }
+
+        public void SelectIssueSUPTDRadioButton()
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", rdoIssueSUPTD);
+            rdoIssueSUPTD.Click();
+        }
+
         public void SelectFailRadioButton()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", rdoFail);
             rdoFail.Click();
         }
+
 
         public void SelectSaveAndContinue()
         {
@@ -170,7 +194,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private bool ValidateGBOutcomeWithSQLBackend(string checkOutcomeId)
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
-            string sqlQuery = $"SELECT MCNotFound,MCNotMatch,MCNotMatchActual,RelevantComments,GBRefersToDAERAOrSPS,GBAdviseNoTravel,GBPassengerSaysNoTravel FROM [dbo].[CheckOutcome]  Where Id = '{checkOutcomeId}'";
+            string sqlQuery = $"SELECT MCNotFound,GBRefersToDAERAOrSPS,GBAdviseNoTravel,GBPassengerSaysNoTravel FROM [dbo].[CheckOutcome]  Where Id = '{checkOutcomeId}'";
             DataTable sqlData = null;
             bool status = true;
             int i = 0;
@@ -193,33 +217,15 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                     }
                     else if (i == 1 && row[1].Equals(true))
                     {
-                        if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
-                            status = false;
-                    }
-                    else if (i == 2 && row[2].Equals("123456789123456"))
-                    {
-                        if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
-                            status = false;
-                    }
-                    else if(i == 3)
-                    {
-                        if (!AdditionalComment.Text.Contains("None"))
-                        {
-                            if (!AdditionalComment.Text.Equals(row[3]))
-                                status = false;
-                        }
-                    }
-                    else if(i == 4 && row[4].Equals(true))
-                    {
                         if (!PassangerRefToDAERA.Text.Contains("Passenger referred to DAERA/SPS at NI port"))
                             status = false;
                     }
-                    else if(i == 5 && row[5].Equals(true))
+                    else if (i == 2 && row[2].Equals(true))
                     {
                         if (!PassengerAdvised.Text.Contains("Passenger advised not to travel"))
                             status = false;
                     }
-                    else if(i == 6 && row[6].Equals(true))
+                    else if (i == 3 && row[3].Equals(true))
                     {
                         if (!PassengerNoTravel.Text.Contains("Passenger says they will not travel"))
                             status = false;
@@ -229,10 +235,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return status;
         }
 
-        private bool ValidateSPSOutcomeWithSQLBackend(string checkOutcomeId,string TypeOfPassenger, string SPSOutcome)
+        private bool ValidateSPSOutcomeWithSQLBackend(string checkOutcomeId, string TypeOfPassenger, string SPSOutcome, string DetailsOfOutCome)
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
-            string sqlQuery = $"SELECT MCNotFound,MCNotMatch,MCNotMatchActual,PassengerTypeId,SPSOutcome FROM [dbo].[CheckOutcome]  Where Id = '{checkOutcomeId}'";
+            string sqlQuery = $"SELECT MCNotFound,PassengerTypeId,SPSOutcome,SPSOutcomeDetails FROM [dbo].[CheckOutcome]  Where Id = '{checkOutcomeId}'";
             DataTable sqlData = null;
             bool status = true;
             int i = 0;
@@ -256,53 +262,47 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                                 status = false;
                         }
                     }
-                    else if (i == 1 && row[1].Equals(true))
-                    {
-                        if (!TypeOfPassenger.Contains("Airline"))
-                        {
-                             if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
-                                status = false; 
-                        }
-                    }
-                    else if (i == 2 && row[2].Equals("123456789123456"))
-                    {
-                        if (!MicrochipDoesNotMatch.Text.Contains("Microchip number does not match the PTD"))
-                            status = false;
-                    }
-                    else if (i == 3)
+                    else if (i == 1)
                     {
                         if (TypeOfPassenger.Contains("Ferry foot passenger"))
-                        { 
-                            if (row[3].Equals(1))
+                        {
+                            if (row[1].Equals(1))
                                 status = true;
                             else
                                 status = false;
                         }
                         else if (TypeOfPassenger.Contains("Vehicle on ferry"))
                         {
-                            if (row[3].Equals(2))
+                            if (row[1].Equals(2))
                                 status = true;
                             else
                                 status = false;
                         }
                         else if (TypeOfPassenger.Contains("Airline"))
                         {
-                            if (row[3].Equals(3))
+                            if (row[1].Equals(3))
                                 status = true;
                             else
                                 status = false;
                         }
                     }
-                    else if (i == 4 && row[4].Equals(true))
+                    else if (i == 2 && row[2].Equals(true))
                     {
                         if (SPSOutcome.Contains("Allowed"))
                             status = true;
                         else
                             status = false;
                     }
-                    else if (i == 4 && row[4].Equals(false))
+                    else if (i == 2 && row[2].Equals(false))
                     {
                         if (SPSOutcome.Contains("Not allowed"))
+                            status = true;
+                        else
+                            status = false;
+                    }
+                    else if (i == 3 && DetailsOfOutCome!= "")
+                    {
+                        if (row[3].Equals(DetailsOfOutCome))
                             status = true;
                         else
                             status = false;
@@ -342,7 +342,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                     }
                     else if (i == 2)
                     {
-                        if(row[2].Equals(1) && !Route.Text.Contains("Birkenhead to Belfast (Stena)"))
+                        if (row[2].Equals(1) && !Route.Text.Contains("Birkenhead to Belfast (Stena)"))
                             status = false;
                         else if (row[2].Equals(2) && !Route.Text.Contains("Cairnryan to Larne (P&O)"))
                             status = false;
@@ -476,8 +476,8 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
                     if (i == 0)
                     {
-                        if(!row[0].Equals(true))
-                        status = false;
+                        if (!row[0].Equals(true))
+                            status = false;
                     }
                     else if (i == 1)
                     {
@@ -530,13 +530,13 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             return ValidateGBOutcomeWithSQLBackend(CheckOutcomeId);
         }
 
-        public bool VerifySPSOutcomeWithSQLBackend(string AppReference,string TypeOfPassenger, string SPSOutcome)
+        public bool VerifySPSOutcomeWithSQLBackend(string AppReference, string TypeOfPassenger, string SPSOutcome, string DetailsOfOutCome)
         {
             string ApplicationId = GetApplId(AppReference);
             string TravelDocumentId = GetTravelDocumentId(ApplicationId);
             string SPSCheckerId = GetSPSCheckerId();
             string CheckOutcomeId = GetCheckOutcomeId(ApplicationId, TravelDocumentId, SPSCheckerId);
-            return ValidateSPSOutcomeWithSQLBackend(CheckOutcomeId, TypeOfPassenger, SPSOutcome);
+            return ValidateSPSOutcomeWithSQLBackend(CheckOutcomeId, TypeOfPassenger, SPSOutcome, DetailsOfOutCome);
         }
 
         public bool VerifyGBSummaryForPassApplWithSQLBackend(string AppReference)
@@ -550,6 +550,246 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         public void ClickOnAccount()
         {
             clickAccount.Click();
+        }
+
+        public void VerifyRole(string role)
+        {
+            RoleIdentification.Text.Equals(role);
+        }
+
+        public bool VerifySuspendedApplicationWithSQLBackend(string AppReference)
+        {
+            string ApplicationId = GetApplId(AppReference);
+            return GetApplSummaryForSuspended(ApplicationId);
+        }
+
+        public bool VerifyUnSuspendedApplicationWithSQLBackend(string AppReference)
+        {
+            string ApplicationId = GetApplId(AppReference);
+            return GetApplSummaryForUnSuspended(ApplicationId);
+        }
+
+        public bool VerifySuspendedApplicationWithSQLBackendWithPTD(string PTDNumber)
+        {
+            return GetSuspendedApplicationWithSQLBackendWithPTD(PTDNumber);
+        }
+
+        public bool VerifyUnSuspendedApplicationWithSQLBackendWithPTD(string PTDNumber)
+        {
+            return GetUnSuspendedApplicationWithSQLBackendWithPTD(PTDNumber);
+        }
+
+        public bool GetApplSummaryForSuspended(string ApplicationId)
+        {
+            Thread.Sleep(7000);
+            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+            string sqlQuery = $"SELECT Status,DateSuspended  FROM [dbo].[Application] Where [Id] = '{ApplicationId}'";
+            DataTable sqlData = null;
+            bool status = true;
+            int i = 0;
+            string todaysDate = DateTime.Now.Day.ToString().Trim();
+
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery);
+            }
+
+            foreach (DataRow row in sqlData.Rows)
+            {
+                for (i = 0; i < sqlData.Columns.Count; i++)
+
+                {
+                    Console.WriteLine($"Row: {row[i]}");
+
+                    if (i == 0)
+                    {
+                        if (!row[0].Equals("Suspended"))
+                            status = false;
+                    }
+                    else if (i == 1)
+                    {
+                        if (row[1] == null)
+                        {
+                            status = false;
+                        }
+                    }
+                }
+            }
+
+            return status;
+        }
+
+        public bool GetApplSummaryForUnSuspended(string ApplicationId)
+        {
+            Thread.Sleep(7000);
+            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+            string sqlQuery = $"SELECT Status,DateUnsuspended  FROM [dbo].[Application] Where [Id] = '{ApplicationId}'";
+            DataTable sqlData = null;
+            bool status = true;
+            int i = 0;
+
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery);
+            }
+
+            foreach (DataRow row in sqlData.Rows)
+            {
+                for (i = 0; i < sqlData.Columns.Count; i++)
+
+                {
+                    Console.WriteLine($"Row: {row[i]}");
+
+                    if (i == 0)
+                    {
+                        if (!row[0].Equals("Authorised"))
+                            status = false;
+                    }
+                    else if (i == 1)
+                    {
+                        if (row[1] == null)
+                        {
+                            status = false;
+                        }
+                    }
+                }
+            }
+            return status;
+        }
+
+        public bool GetSuspendedApplicationWithSQLBackendWithPTD(string PTDNumber)
+        {
+            Thread.Sleep(7000);
+            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+            string sqlQuery1 = $"SELECT ApplicationId  FROM [dbo].[TravelDocument] Where [DocumentReferenceNumber] = '{PTDNumber}'";
+            string ApplicationId = "";
+            DataTable sqlData = null;
+            bool status = true;
+            int i = 0;
+
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                ApplicationId = dataHelperConnections.ExecuteQuery(connectionString, sqlQuery1);
+            }
+
+            string sqlQuery2 = $"SELECT Status,Datesuspended  FROM [dbo].[Application] Where [Id] = '{ApplicationId}'";
+
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery2);
+            }
+
+            foreach (DataRow row in sqlData.Rows)
+            {
+                for (i = 0; i < sqlData.Columns.Count; i++)
+
+                {
+                    Console.WriteLine($"Row: {row[i]}");
+
+                    if (i == 0)
+                    {
+                        if (!row[0].Equals("Suspended"))
+                            status = false;
+                    }
+                    else if (i == 1)
+                    {
+                        if (row[1] == null)
+                        {
+                            status = false;
+                        }
+                    }
+                }
+            }
+            return status;
+        }
+
+        public bool GetUnSuspendedApplicationWithSQLBackendWithPTD(string PTDNumber)
+        {
+            Thread.Sleep(7000);
+            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
+            string sqlQuery1 = $"SELECT ApplicationId  FROM [dbo].[TravelDocument] Where [DocumentReferenceNumber] = '{PTDNumber}'";
+            string ApplicationId = "";
+            DataTable sqlData = null;
+            bool status = true;
+            int i = 0;
+
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                ApplicationId = dataHelperConnections.ExecuteQuery(connectionString, sqlQuery1);
+            }
+
+            string sqlQuery2 = $"SELECT Status,DateUnsuspended  FROM [dbo].[Application] Where [Id] = '{ApplicationId}'";
+
+            if (ConfigSetup.BaseConfiguration != null)
+            {
+                sqlData = dataHelperConnections.ExecuteQueryData(connectionString, sqlQuery2);
+            }
+
+            foreach (DataRow row in sqlData.Rows)
+            {
+                for (i = 0; i < sqlData.Columns.Count; i++)
+
+                {
+                    Console.WriteLine($"Row: {row[i]}");
+
+                    if (i == 0)
+                    {
+                        if (!row[0].Equals("Authorised"))
+                            status = false;
+                    }
+                    else if (i == 1)
+                    {
+                        if (row[1] == null)
+                        {
+                            status = false;
+                        }
+                    }
+                }
+            }
+            return status;
+        }
+
+        public bool VerifyTheSuspendedApplicationWarning(string SuspendedApplicationWarning)
+        {
+            string text = SuspendedWarningText.Text;
+            if (SuspendedWarningText.Text.Contains(SuspendedApplicationWarning))
+                return true;
+            else
+                return false;
+        }
+
+        public bool VerifyTheContinueButtonNotDisplayed()
+        {
+            if (_driver.FindElements(By.XPath("//button[contains(text(),'Continue')]")).Count>0)
+                return false;
+            else
+                return true;
+        }
+
+        public bool VerifyThePassButtonNotDisplayed()
+        {
+            if (_driver.FindElements(By.XPath("//label[normalize-space()='Pass']/..//input")).Count > 0)
+                return false;
+            else
+                return true;
+        }
+
+        public bool VerifyTheFailButtonNotDisplayed()
+        {
+            if (_driver.FindElements(By.XPath("//label[normalize-space()='Fail or referred to SPS']/..//input")).Count > 0)
+                return false;
+            else
+                return true;
+        }
+
+        public bool VerifyWarningMessageOnSearchResultPage(string status)
+        { 
+            string warningText = WarningOnSearchResults.Text;
+            string warningMessgae = $"Because the PTD is ‘"  + status + "’, you should check whether you can issue a SUPTD";
+            if (warningText.Contains(warningMessgae))
+                return true;
+            else
+                return false;
         }
 
         #endregion

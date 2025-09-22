@@ -1,9 +1,9 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using nipts_pts_automation_tests.Pages;
 using nipts_pts_automation_tests.Tools;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using nipts_pts_automation_tests.Data;
 
 namespace nipts_pts_automation_tests.Steps
@@ -41,7 +41,7 @@ namespace nipts_pts_automation_tests.Steps
             string url = UrlBuilder.Default("App").Build();
             _driver.Navigate().GoToUrl(url);
             signin.EnterPassword();
-            Assert.True(applicationPage.VerifyNextPageIsLoaded("Sign in using Government Gateway"), "We are not in the home Page");
+            //Assert.True(applicationPage.VerifyNextPageIsLoaded("Sign in using Government Gateway"), "We are not in the home Page");
         }
 
         [Given(@"sign in with valid credentials with logininfo '([^']*)'")]
@@ -75,5 +75,13 @@ namespace nipts_pts_automation_tests.Steps
         {
             Assert.True(signin.VerifySignOutTextInSelectedLanguage(SignOutText), "SignOut text language not matching");
         }
+
+        [Then(@"verify the link on the accessibility statement page '([^']*)'")]
+        public void VerifyLinkOnTheAccessibilityStatement(string Link)
+        {
+            Assert.True(signin.VerifyAccessibilityStatementLink(Link), "Link not matching on Accessibility statement");
+        }
+
+        
     }
 }

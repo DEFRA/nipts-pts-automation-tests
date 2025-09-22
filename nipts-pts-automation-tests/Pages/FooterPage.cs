@@ -1,4 +1,4 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
@@ -13,11 +13,11 @@ namespace nipts_pts_automation_tests.Pages
 
         #region Page Objects
 
-        private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']"));
-        private IWebElement PrivacyLink => _driver.WaitForElement(By.XPath("//a[contains(text(),'Hysbysiad preifatrwydd')]"));
-        private IWebElement CookiesLink => _driver.WaitForElement(By.XPath("//a[@href='/Content/Cookies']"));
-        private IWebElement AccessibilityLink => _driver.WaitForElement(By.XPath("//a[@href='/Content/AccessibilityStatement']"));
-        private IWebElement TermsAndConditionsLink => _driver.WaitForElement(By.XPath("//a[@href='/Content/TermsAndConditions']"));
+        private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading'] | //h1[contains(@class,'govuk-heading-l')]"));
+        private IWebElement PrivacyLink => _driver.WaitForElement(By.XPath("//a[contains(text(),'Hysbysiad preifatrwydd')] | //a[@href='/privacy-notice']"));
+        private IWebElement CookiesLink => _driver.WaitForElement(By.XPath("//a[@href='/Content/Cookies'] | //a[@href='/cookies']"));
+        private IWebElement AccessibilityLink => _driver.WaitForElement(By.XPath("//a[@href='/Content/AccessibilityStatement'] | //a[@id='accessibility']"));
+        private IWebElement TermsAndConditionsLink => _driver.WaitForElement(By.XPath("//a[@href='/Content/TermsAndConditions'] | //a[@href='/terms-and-conditions']"));
         private IWebElement FooterText => _driver.WaitForElement(By.XPath("//span[contains(@class,'govuk-footer__licence-description')]"));
 
         #endregion Page Objects
@@ -36,7 +36,7 @@ namespace nipts_pts_automation_tests.Pages
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,2000)", "");
             IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
             jsExecutor.ExecuteScript("arguments[0].click();", CookiesLink);
-            return PageHeading.Text.Contains("Cookies");
+            return PageHeading.Text.Contains("Cwcis");
         }
 
         public bool ClickOnAccessibilityFooterLink()
@@ -86,6 +86,22 @@ namespace nipts_pts_automation_tests.Pages
                 }
             }
             return status;
+        }
+
+        public void OpenAccessibilityLinkPage()
+        {
+            string url = "https://tst-take-your-pet-from-gb-to-ni.azure.defra.cloud/Content/AccessibilityStatement";
+            _driver?.Navigate().GoToUrl(url);
+        }
+        public void OpenCookiesLinkPage()
+        {
+            string url = "https://tst-take-your-pet-from-gb-to-ni.azure.defra.cloud/Content/Cookies";
+            _driver?.Navigate().GoToUrl(url);
+        }
+        public void OpenTCsLinkPage()
+        {
+            string url = "https://tst-take-your-pet-from-gb-to-ni.azure.defra.cloud/Content/TermsAndConditions";
+            _driver?.Navigate().GoToUrl(url);
         }
 
 

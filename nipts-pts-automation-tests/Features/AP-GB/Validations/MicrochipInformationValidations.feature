@@ -1,4 +1,4 @@
-﻿@Validations @APGBRegression 
+﻿@APGBRegression 
 Feature: Microchip Information Validations
 
 Validating the negative scenarios for Microchip Information
@@ -23,7 +23,7 @@ Scenario Outline: Verify microchipped date should not allows future date
 	Then I should redirected to When was your pet microchipped or last scanned page
 	And I have provided future date of PETS microchipped
 	When I click Continue button from When was your pet microchipped page
-	Then I should see an error message "Enter a date that is in the past" in pets microchipped or last scanned page
+	Then I should see an error message "Date of microchipping or last scan must be in the past" in pets microchipped or last scanned page
 	And I should not be redirected to Is your pet a dog, cat or ferret? page
 	And click on signout button and verify the signout message on pets
 
@@ -77,7 +77,7 @@ Scenario Outline: Verify microchipped page validations and should not moves to n
 Examples:
 	| FullName |  Are your details correct | MicrochipOption | MicrochipNumber | ErrorMessage                                 |
 	| Pet Dog  |  Yes                      | Yes             |                 | Enter your pet’s 15-digit microchip number   |
-	| Pet Dog  |  Yes                      | Yes             | abc123def456fgh |                                              |
+	| Pet Dog  |  Yes                      | Yes             | abc123def456fgh | Enter your pet's 15-digit microchip number, using only numbers |
 
 Scenario Outline: Verify microchip number should not allows less or more than 15 digits
 	Then I have selected '<Are your details correct>' option
@@ -108,7 +108,7 @@ Scenario Outline: The date on the microchip should be a future date relative to 
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -148,3 +148,20 @@ Scenario Outline: Verify Get your pet microchipped before applying page
 Examples:
 	| IsRegisteredUser                | Are your details correct | MicrochipOption | Link1                                                     | Link2                               |
 	| Yes, I am the registered keeper | Yes                      | No              | Check how to get your pet microchipped (opens in new tab) | What did you think of this service? |
+
+Scenario Outline: Verify error message for blank microchipped date
+	Then I have selected '<Are your details correct>' option
+	When I click on continue button from Are your details correct page
+	Then I should redirected to the Is your pet microchipped page
+	And I selected the '<MicrochipOption>' option on pets
+	And I provided microchip number as '<MicrochipNumber>' on pets
+	When I click Continue button from microchipped page
+	Then I should redirected to When was your pet microchipped or last scanned page
+	When I click Continue button from When was your pet microchipped page
+	Then I should see an error message "Enter the date your pet was microchipped or the date it was last scanned. For example, 11 4 2021" in pets microchipped or last scanned page
+	And click on signout button and verify the signout message on pets
+
+Examples:
+	| FullName |  Are your details correct | MicrochipOption | MicrochipNumber |
+	| PetCat's |  Yes                      | Yes             | 123456789123485 |
+

@@ -1,4 +1,4 @@
-﻿@E2E @APGBRegression 
+﻿@APGBRegression 
 
 Feature: E2E Dog and Cat
 
@@ -28,7 +28,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with details co
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -87,7 +87,7 @@ Scenario Outline: Create CAT PETS Travel Document By Registered User with detail
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -153,7 +153,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with details no
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -190,6 +190,11 @@ Scenario Outline: Create PETS Travel Document By Registered User with details no
 	When Revoke an application via backend
 	Then I click on Back button in Pets Application
 	And I should not see the application in the Dashboard
+	When click View Invalid documents link in WELSH
+	Then verify next page 'Invalid documents' is loaded	
+	Then I should see the application on pets in 'Cancelled' status
+	When I have clicked the View hyperlink from home page
+	Then verify next page 'Lifelong pet travel document and declaration' is loaded	
 	And click on signout button and verify the signout message on pets
 
 
@@ -221,7 +226,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with enter addr
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -258,6 +263,11 @@ Scenario Outline: Create PETS Travel Document By Registered User with enter addr
 	When Reject an application via backend
 	Then I click on Back button in Pets Application
 	And I should not see the application in the Dashboard
+	When click View Invalid documents link in WELSH
+	Then verify next page 'Invalid documents' is loaded	
+	Then I should see the application on pets in 'Unsuccessful' status
+	When I have clicked the View hyperlink from home page
+	Then verify next page 'Your application summary' is loaded
 	And click on signout button and verify the signout message on pets
 
 Examples:
@@ -278,7 +288,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with enter free
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have provided freetext breed as '<Breed>'
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -336,7 +346,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with other colo
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have provided freetext breed as '<Breed>'
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -368,6 +378,7 @@ Scenario Outline: Create PETS Travel Document By Registered User with other colo
 	And I should see the application on pets in 'Pending' status
 	When I have clicked the View hyperlink from home page
 	Then The submitted application should be displayed in summary view
+	And verify status on the application summary as 'Status' 'Pending'
 	And I have verified microchip details in summary page
 	And I have verified pet details in summary page
 	And I have verified pet owner details in summary page
@@ -394,7 +405,7 @@ Scenario Outline: Create PETS Travel Document and navigate to Pets Owner details
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have provided freetext breed as '<Breed>'
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page

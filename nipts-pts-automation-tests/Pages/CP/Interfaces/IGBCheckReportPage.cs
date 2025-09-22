@@ -3,12 +3,11 @@
     public interface IGBCheckReportPage
     {
         void VerifyGBCheckReport();
-        void ClickOnConductAnSPSCheck();
+        void ClickOnUpdateReferralOutcome();
         bool VerifyMicrochipReason(string NumberMicrochipReason, string microchipReason,string NumberOtherIssues);
         bool VerifyAdditionalComment(string additionalComment);
         bool VerifyGBOutcome(string NumberGBOutcome,string gBOutcome);
-        bool? VerifyVisualCheck(string petDoesNotMatchThePTD);
-        bool? VerifyOtherIssues(string numberOtherIssues, string otherIssues);
+        bool? VerifyOtherIssues(string numberOtherIssues, string otherIssues, string NumberMicrochipReason);
         bool? VerifyDetailsOfOutcome(string detailsOfOutcome);
     }
 }

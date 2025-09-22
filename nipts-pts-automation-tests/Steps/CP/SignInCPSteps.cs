@@ -1,10 +1,10 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Data;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps.CP
 {
@@ -80,5 +80,18 @@ namespace nipts_pts_automation_tests.Steps.CP
             _signInCPPage?.IsSignedIn(userObject.UserId, userObject.password);
         }
 
+        [When(@"I click on accessibility statement link")]
+        [Then(@"I click on accessibility statement link")]
+        public void ThenClickOnAccessibilityLink()
+        {
+            _signInCPPage?.ClickAccessibilityStatementLink();
+        }
+
+        [When(@"I verify signout button not visible on CP WAF Page")]
+        [Then(@"I verify signout button not visible on CP WAF Page")]
+        public void ThenIVerifySignoutButtonNotVisibleOnCPWAFPage()
+        {
+            Assert.True(_signInCPPage?.VerifySignoutButtonNotVisibleOnCPWAFPage(), "Sign out button is visible");
+        }
     }
 }

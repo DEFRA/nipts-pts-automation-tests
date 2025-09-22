@@ -1,4 +1,4 @@
-﻿@ChangeDetails @APGBRegression 
+﻿@APGBRegression 
 Feature: Update Pet Details
 
 Modify the Pet details before submitting the application
@@ -87,7 +87,7 @@ Scenario Outline: Modify Species of the pet By Registered User with details corr
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -140,7 +140,7 @@ Scenario Outline: Modify breed of the pet By Registered User with details correc
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -450,7 +450,7 @@ Scenario Outline: Modify PETS colour By Registered User with details correct
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -515,7 +515,7 @@ Scenario Outline: Modify PETS date of birth By Registered User with details corr
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -580,7 +580,7 @@ Scenario Outline: Modify PETS Sex By Registered User with details correct
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -645,7 +645,7 @@ Scenario Outline: Modify PETS Name By Registered User with details correct
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -710,7 +710,7 @@ Scenario Outline: Modify PETS significant features By Registered User with detai
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page

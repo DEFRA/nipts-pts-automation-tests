@@ -1,4 +1,4 @@
-﻿@ChangeDetails @APGBRegression 
+﻿@APGBRegression 
 Feature: Update Pet Owner Details
 
 Modify the Pet owner details before submitting the application
@@ -26,7 +26,7 @@ Scenario Outline: Modify Name of the pet owner By Registered User with details c
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -79,7 +79,7 @@ Scenario Outline: Modify Address of the pet owner By Registered User with detail
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page
@@ -134,7 +134,7 @@ Scenario Outline: Modify Phone number of the pet owner By Registered User with d
 	Then I should redirected to the Is your pet a cat, dog or ferret page
 	And I have selected an option as '<Pet>' for pets
 	When I click on continue button from Is your pet a cat, dog or ferret page
-	Then I should redirected to the What breed is your '<Pet>'? page
+	Then I should redirected to the What breed is your '<Pet>' page
 	And I have selected 1 as breed index from breed dropdownlist
 	When I click on continue button from What is your pet's breed page
 	Then I should redirected to the What is your pet's name page

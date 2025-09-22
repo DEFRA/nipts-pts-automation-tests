@@ -10,8 +10,13 @@
   <ItemGroup>
     <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.18.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Reqnroll" Version="2.4.1" />
+    <PackageReference Include="Reqnroll.ExternalData" Version="2.4.1" />
+    <PackageReference Include="Reqnroll.NUnit" Version="2.4.1" />
+    <PackageReference Include="Reqnroll.SpecFlowCompatibility" Version="2.4.1" />
     <PackageReference Include="RestSharp" Version="112.1.0" />
-    <PackageReference Include="SpecFlow" Version="3.9.74" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="140.0.7339.8200" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +51,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RequestJson\CreateOwner.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="RequestJson\CreatePerOtherColour.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RequestJson\CreatePet.json">

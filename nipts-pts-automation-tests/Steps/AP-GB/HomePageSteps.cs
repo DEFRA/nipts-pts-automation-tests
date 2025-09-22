@@ -1,8 +1,9 @@
-﻿using BoDi;
+﻿using nipts_pts_API_tests.Application;
 using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using TechTalk.SpecFlow;
+using Reqnroll;
+using Reqnroll.BoDi;
 
 namespace nipts_pts_automation_tests.Steps.AP_GB
 {
@@ -13,6 +14,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         private readonly ScenarioContext _scenarioContext;
         private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
         private IHomePage? HomePage => _objectContainer.IsRegistered<IHomePage>() ? _objectContainer.Resolve<IHomePage>() : null;
+        private IApplicationData? AppData => _objectContainer.IsRegistered<IApplicationData>() ? _objectContainer.Resolve<IApplicationData>() : null;
 
         public HomePageSteps(ScenarioContext context, IObjectContainer container)
         {
@@ -72,7 +74,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         [Then(@"I should navigate to the AccessibilityStatement details correct page")]
         public void ThenIShouldNavigateToTheAccessibilityStatementDetailsCorrectPage()
         {
-            var pageTitle = "Accessibility statement for taking a dog, cat or ferret from Great Britain to Northern Ireland";
+            var pageTitle = "Accessibility statement for ‘Taking a dog, cat or ferret from Great Britain to Northern Ireland’";
             Assert.IsTrue(HomePage?.IsNextPageLoaded(pageTitle), $"The page {pageTitle} not loaded!");
         }
 
@@ -161,5 +163,23 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             Assert.IsTrue(HomePage?.VerifyPTDTableHeading(heading), "PTD table heading not matching ");
         }
 
+
+        [Then(@"I verify warning message '([^']*)' on homepage for suspended user")]
+        public void ThenVerifywarningMsdSuspendedUser(string warningMsg)
+        {
+            bool status = HomePage.VerifySuspendedWarningMsg(warningMsg);
+            if (!status)
+            {
+                string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
+                AppData.GetSuspendedApplicationToApprove(PTDNumber);
+            }
+            Assert.True(status, "Message mismatch for suspended user");
+        }
+
+        [Then(@"verify Apply for a document button is not displayed for suspended user")]
+        public void ThenVerifyApplyForDocBtnNotPresent()
+        {
+            Assert.False(HomePage?.VerifyApplyBtnNotDisplayedSuspendedUser(), "Apply New Document button displayed for suspended user");
+        }
     }
 }

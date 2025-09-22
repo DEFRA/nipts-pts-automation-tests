@@ -38,7 +38,7 @@ Scenario: Validate microchip Number error message with no option
 	Examples: 
 	| logininfo | nextPage                                        | MicrochipOption | nextPage1             | nextPage2                                                        |
 	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Nac oes         | Oes microsglodyn wedi | Trefnwch osod microsglodyn ar eich anifail anwes cyn gwneud cais |
-
+	
 Scenario: Verify error messages on invalid microchip number
 	Given that I navigate to the Pets application portal
 	When  sign in with valid credentials with logininfo '<logininfo>'
@@ -56,8 +56,8 @@ Scenario: Verify error messages on invalid microchip number
 
 	Examples: 
 	| logininfo | nextPage                                        | nextPage1             | MicrochipNumber        | MicrochipOption | errorMessage                                         |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi |                        | Oes             | Rhowch rif microsglodyn 15 digid eich anifail anwes  |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi | ABCDEFGHIJKLMNOPHDJHGDFJKGFDKJBVKJDFNBKJFDHGKJSDHFGKDJHFKJSDHFKJHDSKJFHDKJHKJDHFKDHGJGJHSDFVJSDHFJDBFJEDDIUFGEISEHFKSDNFSBDFJFGFGFGHGHDHBVCJXCVKJDFGVKDFDGFVJHMDBFVJDFBVDFBVJHDFBVJDFBVJDFBVKJJHDFVJHDFVFDVDFVFDVFDVDFVDFVDFVDFNVKJDFBVJHDFJVHBDFJHJHDFVJHDFBVJHDDFGFDHGFHGJHJGHFTYTRYRDGDFGERTEERGRDFGDFGFDHFGHFGH | Oes             | Rhowch rif 15 digid, gan ddefnyddio rhifau yn unig   |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi |                        | Oes             | Rhaid i rif microsglodyn eich anifail anwes fod yn 15 digid o hyd  |
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi | ABCDEFGHIJKLMNOPHDJHGDFJKGFDKJBVKJDFNBKJFDHGKJSDHFGKDJHFKJSDHFKJHDSKJFHDKJHKJDHFKDHGJGJHSDFVJSDHFJDBFJEDDIUFGEISEHFKSDNFSBDFJFGFGFGHGHDHBVCJXCVKJDFGVKDFDGFVJHMDBFVJDFBVDFBVJHDFBVJDFBVJDFBVKJJHDFVJHDFVFDVDFVFDVFDVDFVDFVDFVDFNVKJDFBVJHDFJVHBDFJHJHDFVJHDFBVJHDDFGFDHGFHGJHJGHFTYTRYRDGDFGERTEERGRDFGDFGFDHFGHFGH | Oes             | Rhaid i rif microsglodyn eich anifail anwes fod yn 15 digid o hyd   |
 
 Scenario: Verify WAF error message on microchip number
 	Given that I navigate to the Pets application portal
@@ -93,7 +93,7 @@ Scenario: Verify error messages for not selecting any option on microchip number
 
 	Examples: 
 	| logininfo | nextPage                                        | nextPage1             | errorMessage                      |
-	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi | Select if your pet is microchipped|
+	| test      | Dogfennau teithio gydol oes i anifeiliaid anwes | Oes microsglodyn wedi | Dwedwch a oes gan eich anifail anwes ficrosglodyn|
 
 Scenario Outline: Verify Get your pet microchipped before applying page
 	Given that I navigate to the Pets application portal

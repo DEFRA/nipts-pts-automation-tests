@@ -1,11 +1,10 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Data;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
-using nipts_pts_automation_tests.Pages.CP.Pages;
 using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps.CP
 {
@@ -91,6 +90,15 @@ namespace nipts_pts_automation_tests.Steps.CP
             if (!string.IsNullOrEmpty(errorMessage))
             {
                 Assert.True(_routeCheckingPage?.IsError(errorMessage), $"There is no error message found with - {errorMessage}");
+            }
+        }
+
+        [Then(@"I should see hint text ""([^""]*)"" in route checking page")]
+        public void ThenIShouldSeeHintTextInRouteCheckingPage(string hintText)
+        {
+            if (!string.IsNullOrEmpty(hintText))
+            {
+                Assert.True(_routeCheckingPage?.VerifyHintText(hintText), $"There is no hint Text found with - {hintText}");
             }
         }
 
@@ -212,6 +220,20 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenVerifyFilterFlightHeaderMsgOnHomepage(string FilterFlightHeaderMsg)
         {
             Assert.True(_routeCheckingPage.VerifyFilterFlightHeaderMsg(FilterFlightHeaderMsg), "Invalid Message for filter Flight on homepage");
+        }
+
+        [When(@"I verify the header text '([^']*)'")]
+        [Then(@"I verify the header text '([^']*)'")]
+        public void ThenIVerifyTheHeaderText(string HeaderText)
+        {
+            Assert.True(_routeCheckingPage?.VerifyTheHeaderText(HeaderText), "Header Text not matching");
+        }
+
+        [When(@"I verify the Scheduled departure time heading")]
+        [Then(@"I verify the Scheduled departure time heading")]
+        public void ThenIVerifyTheScheduledDepartureHeading()
+        {
+            Assert.True(_routeCheckingPage?.VerifyScheduledDepartureHeading(), "Scheduled departure time Heading not matching");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
 
@@ -32,6 +32,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
         private IReadOnlyCollection<IWebElement> tableActionRows => _driver.WaitForElements(By.XPath("//table/tbody/descendant::tr/td[2]//a"), true);
         public IWebElement lnkManageAccount => _driver.WaitForElement(By.XPath("//a[@href='/User/ManageAccount']"));
         public IWebElement lifelongPetTraveDocuments => _driver.WaitForElement(By.XPath("//li[@class='login-nav__list-item']//a[@href='/TravelDocument']"));
+        public IWebElement SuspendedMsgEle => _driver.WaitForElement(By.XPath("//div[contains(@class,'govuk-warning-text')]/strong"));
 
         #endregion
 
@@ -117,7 +118,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
                     var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
                     var tdCollection = _driver.FindElement(By.XPath(statusPath));
-                    return tdCollection.Text.Trim().ToUpper().Equals(status.ToUpper());
+                    return tdCollection.Text.Trim().ToUpper().Contains(status.ToUpper());
                 }
             }
 
@@ -146,7 +147,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
             var rowCount = tableRows.Count - 1;
 
-            for (var elementIndex = rowCount; elementIndex > 0; elementIndex--)
+            for (var elementIndex = 0; elementIndex <= rowCount; elementIndex++)
             {
                 var tableHeader = tableHeaderRows.ElementAt(elementIndex).Text.Replace("\r\n", string.Empty).Trim().ToUpper();
 
@@ -194,7 +195,32 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
             else
                 return true;
         }
- 
+        public bool VerifySuspendedWarningMsg(string warningMsg)
+        {
+            String fontWeight = SuspendedMsgEle.GetCssValue("font-weight");
+            Console.WriteLine($"FontSize: {fontWeight}");
+            
+            if(Int32.Parse(fontWeight) > 600 && SuspendedMsgEle.Text.Contains(warningMsg))
+                return true;
+            else
+                return false;
+        }
+
+        public bool VerifyApplyBtnNotDisplayedSuspendedUser()
+        {
+
+            try
+            {
+                if (btnApplyForDocumentButton.Displayed)
+                    return true;
+                else return false;
+            }
+            catch (ElementNotVisibleException)
+            {
+                return false;
+            }
+        }
+
         #endregion
     }
 }

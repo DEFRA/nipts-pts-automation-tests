@@ -1,9 +1,8 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
-using nipts_pts_automation_tests.Pages.CP.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps.CP
 {
@@ -46,6 +45,13 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenVerifyHeadingOnPage(string text)
         {
             Assert.IsTrue(outagePage?.VerifyHeadingOnPage(text), "Heading not matching");
+        }
+
+
+        [Then(@"verify Header text '([^']*)' on page")]
+        public void ThenVerifyHeaderTextOnPage(string text)
+        {
+            Assert.IsTrue(outagePage?.VerifyHeaderTextOnPage(text), "Header Text not matching");
         }
 
         [Then(@"verify Account and SignOut links not visible on page")]

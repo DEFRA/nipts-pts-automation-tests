@@ -33,6 +33,7 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 	When I click save and continue button from application status page
 	Then I should navigate to Welcome page
 	And I verify submiited message
+    And I verify submiited message image
 	And I verify count '1' for Pass Checks
 	When I click search button from footer
 	Then I navigate to Find a document page
@@ -47,11 +48,12 @@ Scenario Outline: PTS port checker Pass application by PTD number - status in Ap
 	When I click save and continue button from application status page
 	Then I should navigate to Welcome page
 	And I verify submiited message
+    And I verify submiited message image
 	And I verify count '2' for Pass Checks
 
 Examples:
 	| Transportation | FerryRoute                    | ApplicationRadio     | PTDNumber1 |
-	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |  D4F115    |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |  C5A036    |
 
 Scenario Outline: PTS port checker Pass application by Reference number - status in Approved
 	When Create an application via backend
@@ -72,6 +74,7 @@ Scenario Outline: PTS port checker Pass application by Reference number - status
 	When I click save and continue button from application status page
 	Then I should navigate to Welcome page
 	And I verify submiited message
+    And I verify submiited message image
 	
 Examples:
 	|Transportation | FerryRoute                    | ApplicationRadio             | 
@@ -91,8 +94,8 @@ Scenario Outline: PTS port checker continue application by Reference number - st
 	When I click search button
 	And I should see the application status in 'Pending'
 	And I should see the application subtitle 'Your application summary'
-	And click on continue
-	Then I should navigate to Report non-compliance page
+	#And click on continue
+	#Then I should navigate to Report non-compliance page
 	
 Examples:
 	| Transportation | FerryRoute                    | ApplicationRadio             | 
@@ -178,6 +181,7 @@ Scenario Outline: Verify no View link for no Referred to SPS record
 	When I click save and continue button from application status page
 	Then I should navigate to Welcome page
 	And I verify submiited message
+    And I verify submiited message image
 	And I verify count '1' for Pass Checks
     And I verify No View link if No Referred to SPS
 	And click on signout button on CP and verify the signout message
@@ -250,7 +254,7 @@ Scenario Outline: Verify Dog Pet details Search results with Approved applicatio
 	And verify Pet Microchip date '21/08/2024' on Search Pass Fail Results Page
 	And verify Pets Date Of Birth '21/04/2024' on Search Pass Fail Results Page
 	And verify Pet Breed option 'Automation Dog Breed Additional Info' on Search Pass Fail Results Page
-
+	#And verify bulleted points under Checks on search result page 
 
 Examples:
 	| Transportation | FerryRoute                    | ApplicationRadio     |
@@ -278,6 +282,7 @@ Scenario Outline: Verify Cat Pet details Search results with Pending application
 	And verify Pet Microchip Number '676789876542125' on Search Pass Fail Results Page
 	And verify Pet color option 'Automation Black Cat' on Search Pass Fail Results Page
 	And verify Pets Date Of Birth '21/04/2025' on Search Pass Fail Results Page
+	#And verify bulleted points under Checks on search result page 
 	
 
 Examples:
@@ -308,6 +313,7 @@ Scenario Outline: Verify Cat Pet details Search results with Approved applicatio
 	And verify Pet Microchip date '21/05/2025' on Search Pass Fail Results Page
 	And verify Pets Date Of Birth '21/04/2025' on Search Pass Fail Results Page
 	And verify Pet Breed option 'Automation Cat Breed Additional Info' on Search Pass Fail Results Page
+	#And verify bulleted points under Checks on search result page 
 
 
 Examples:
@@ -327,6 +333,7 @@ Scenario Outline: Verify Ferret Pet details Search results with Pending applicat
 	And I provided the Reference number of the application
 	When I click search button
 	Then I should see the application status in 'Pending'
+	And I verify warning message on search results page for status 'Pending'
 	And verify Pet Name 'Automation Pet Ferret' on Search Pass Fail Results Page
 	And verify Pet Species 'Ferret' on Search Pass Fail Results Page
 	And verify Pet Sex 'Female' on Search Pass Fail Results Page
@@ -335,6 +342,7 @@ Scenario Outline: Verify Ferret Pet details Search results with Pending applicat
 	And verify Pet Microchip Number '676789126542125' on Search Pass Fail Results Page
 	And verify Pet color option 'Automation Black Ferret' on Search Pass Fail Results Page
 	And verify Pets Date Of Birth '21/04/2022' on Search Pass Fail Results Page
+	#And verify bulleted points under Checks on search result page 
 	
 
 Examples:
@@ -364,7 +372,33 @@ Scenario Outline: Verify Ferret Pet details Search results with Approved applica
 	And verify Pet color option 'Automation Black Ferret' on Search Pass Fail Results Page
 	And verify Pet Microchip date '11/05/2023' on Search Pass Fail Results Page
 	And verify Pets Date Of Birth '21/04/2022' on Search Pass Fail Results Page
+	#And verify bulleted points under Checks on search result page 
 
+
+Examples:
+	| Transportation | FerryRoute                    | ApplicationRadio     |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |
+
+Scenario Outline: PTS port checker Issue SUPTD application by PTD number - status in Approved
+	When Create an application via backend
+	When Approve an application via backend
+	And I have selected '<Transportation>' radio option
+	And I select the '<FerryRoute>' radio option
+	And I have provided Scheduled departure time
+	When I click save and continue button from route checke page
+	Then I should navigate to Welcome page
+	When I click search button from footer
+	Then I navigate to Find a document page
+	And I click search by '<ApplicationRadio>' radio button
+	And I provided the PTD number of the application
+	When I click search button
+	And I should see the application status in 'Approved'
+	And I should see the application subtitle 'Lifelong pet travel document and declaration'
+	And I select Issue SUPTD radio button
+	When I click save and continue button from application status page
+	Then I should navigate to Welcome page
+	And I verify submiited message
+    And I verify submiited message image
 
 Examples:
 	| Transportation | FerryRoute                    | ApplicationRadio     |

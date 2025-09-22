@@ -3,6 +3,25 @@ Feature: FooterLinks
 
 Verify Footer links on Pets
 
+Scenario Outline: Verify Footer links and pages on Pets without login
+	Given open Cookies link page without login
+	When  click on Welsh language 
+	Then  verify the page title in Footer page '<Cookies page Title>'
+	And   verify the link in Footer page details '<Cookies Link 1>'
+	When  open Accessibility link page without login
+	Then  verify the page title in Footer page '<Accessibility page title>'
+	And   verify the link in Footer page details '<Accessibility Link 1>'
+	And   verify the link in Footer page details '<Accessibility Link 2>'
+	When  open TCs link page without login
+	When  click on Welsh language 
+	Then  verify the page title in Footer page '<TCs page title>'
+	Then  verify the link in Footer page details '<TCs Link 1>'
+	Then  verify the link in Footer page details '<TCs Link 2>'
+
+Examples: 
+    | Cookies page Title | Cookies Link 1                                     | Accessibility page title                              | Accessibility Link 1                 | Accessibility Link 2                                                | TCs page title                                                       | TCs Link 1                                   | TCs Link 2                               |
+    | Cwcis              | r Comisiynydd Gwybodaeth (yn agor mewn tab newydd) | chi, cath neu ffured o Brydain Fawr i Ogledd Iwerddon | AbilityNet (yn agor mewn tab newydd) | Rhagor o wybodaeth am daliadau am alwadau (yn agor mewn tab newydd) | Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon | Fframwaith Windsor (yn agor mewn tab newydd) | Darllenwch ragor am symudiadau masnachol |
+
 
 Scenario Outline: Verify Footer links and pages on Pets
 	Given that I navigate to the Pets application portal
@@ -17,7 +36,7 @@ Scenario Outline: Verify Footer links and pages on Pets
 	And   switch to previous tab
 	When  click cookies link on footer page
 	Then  verify the page title in Footer page '<Cookies page Title>'
-	#And   verify the link in Footer page details '<Cookies Link 1>'
+	And   verify the link in Footer page details '<Cookies Link 1>'
 	And   click on back
 	When  click accessibility link on footer page
 	Then  verify the page title in Footer page '<Accessibility page title>'
@@ -27,10 +46,11 @@ Scenario Outline: Verify Footer links and pages on Pets
 	When  click TCs link on footer page
 	Then  verify the page title in Footer page '<TCs page title>'
 	Then  verify the link in Footer page details '<TCs Link 1>'
+	Then  verify the link in Footer page details '<TCs Link 2>'
 
 Examples: 
-    | logininfo | Privacy page title              |Privacy Link 1		   	   |Privacy Link 2        |Cookies page Title |Cookies Link 1                     |Accessibility page title                |Accessibility Link 1         |Accessibility Link 2                                    | TCs page title                       |TCs Link 1 |
-	| test      | Pet travel scheme privacy notice|data.protection@defra.gov.uk|www.legislation.gov.uk|Cookies            |opt out of Google Analytics cookies|Accessibility statement for taking a dog|AbilityNet (opens in new tab)|contact the Equality Advisory and Support Service (EASS)| Northern Ireland Pet Travel Scheme terms and conditions| Windsor Framework  |
+    | logininfo | Privacy page title               | Privacy Link 1               | Privacy Link 2         | Cookies page Title | Cookies Link 1                                     | Accessibility page title                              | Accessibility Link 1                 | Accessibility Link 2                                                | TCs page title                                                       | TCs Link 1                                   | TCs Link 2                               |
+    | test      | Pet travel scheme privacy notice | data.protection@defra.gov.uk | www.legislation.gov.uk | Cwcis              | r Comisiynydd Gwybodaeth (yn agor mewn tab newydd) | chi, cath neu ffured o Brydain Fawr i Ogledd Iwerddon | AbilityNet (yn agor mewn tab newydd) | Rhagor o wybodaeth am daliadau am alwadau (yn agor mewn tab newydd) | Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon | Fframwaith Windsor (yn agor mewn tab newydd) | Darllenwch ragor am symudiadau masnachol |
 
 
 

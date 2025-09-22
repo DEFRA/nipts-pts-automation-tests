@@ -1,4 +1,4 @@
-﻿@E2E @APGBRegression 
+﻿@APGBRegression 
 Feature: E2E Ferret
 
 Create a PETS travel document for the travel from Great Britain to Northern Ireland
@@ -127,6 +127,11 @@ Scenario Outline: Create PETS Travel Document By Registered User with details no
 	When Reject an application via backend
 	Then I click on Back button in Pets Application
 	And I should not see the application in the Dashboard
+	When click View Invalid documents link in WELSH
+	Then verify next page 'Invalid documents' is loaded	
+	Then I should see the application on pets in 'Unsuccessful' status
+	When I have clicked the View hyperlink from home page
+	Then verify next page 'Your application summary' is loaded
 	And click on signout button and verify the signout message on pets
 
 Examples:
@@ -190,6 +195,11 @@ Scenario Outline: Create PETS Travel Document By Registered User with enter addr
 	When Revoke an application via backend
 	Then I click on Back button in Pets Application
 	And I should not see the application in the Dashboard
+	When click View Invalid documents link in WELSH
+	Then verify next page 'Invalid documents' is loaded	
+	Then I should see the application on pets in 'Cancelled' status
+	When I have clicked the View hyperlink from home page
+	Then verify next page 'Lifelong pet travel document and declaration' is loaded	
 	And click on signout button and verify the signout message on pets
 
 Examples:

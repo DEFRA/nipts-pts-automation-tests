@@ -1,10 +1,10 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_API_tests.Application;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps.CP
 {
@@ -40,11 +40,32 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.IsTrue(_applicationSummaryPage?.VerifyTheExpectedSubtitle(applicationSubtitle), "The submitted application is not in expected subtitle");
         }
 
+        [Then(@"I should see the Search Results Heading '([^']*)'")]
+        [When(@"I should see the Search Results Heading '([^']*)'")]
+        public void ThenIShouldSeeTheSearchResultsHeading(string SearchResultsHeading)
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyTheSearchResultsHeading(SearchResultsHeading), "The submitted application is not in expected subtitle");
+        }
+
         [Then(@"I select Pass radio button")]
         [When(@"I select Pass radio button")]
         public void WhenISelectPassRadioButton()
         {
             _applicationSummaryPage?.SelectPassRadioButton();
+        }
+
+        [Then(@"I select Refer to SPS radio button")]
+        [When(@"I select Refer to SPS radio button")]
+        public void WhenISelectReferToSPSRadioButton()
+        {
+            _applicationSummaryPage?.SelectReferToSPSRadioButton();
+        }
+
+        [Then(@"I select Issue SUPTD radio button")]
+        [When(@"I select Issue SUPTD radio button")]
+        public void WhenISelectIssueSUPTDRadioButton()
+        {
+            _applicationSummaryPage?.SelectIssueSUPTDRadioButton();
         }
 
         [Then(@"I select Fail radio button")]
@@ -76,6 +97,7 @@ namespace nipts_pts_automation_tests.Steps.CP
 
         [Given(@"Approve an application via backend")]
         [When(@"Approve an application via backend")]
+        [Then(@"Approve an application via backend")]
         public void ThenApproveApplicationViaBackend()
         {
             lock (_lock)
@@ -87,7 +109,56 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [Given(@"Approve suspended application via backend")]
+        [When(@"Approve suspended application via backend")]
+        [Then(@"Approve suspended application via backend")]
+        public void ThenApproveSuspendedApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                AppData.GetApplicationToApprove(AppReference);
+            }
+        }
+
+        [Given(@"Approve suspended application with PTDNumber via backend")]
+        [When(@"Approve suspended application with PTDNumber via backend")]
+        [Then(@"Approve suspended application with PTDNumber via backend")]
+        public void ThenApproveSuspendedApplicationWithPTDNumberViaBackend()
+        {
+            lock (_lock)
+            {
+                string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
+                AppData.GetSuspendedApplicationToApprove(PTDNumber);
+            }
+        }
+
+        [Given(@"Suspend an Awaiting application via backend")]
+        [When(@"Suspend an Awaiting application via backend")]
+        [Then(@"Suspend an Awaiting application via backend")]
+        public void ThenSuspendAwaitingApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+                AppData.GetAwaitingApplicationToSuspend(AppReference);
+            }
+        }
+
+        [Given(@"Suspend an Authorised application via backend")]
+        [When(@"Suspend an Authorised application via backend")]
+        [Then(@"Suspend an Authorised application via backend")]
+        public void ThenSuspendAuthorisedApplicationViaBackend()
+        {
+            lock (_lock)
+            {
+                string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
+                AppData.GetAuthorisedApplicationToSuspend(PTDNumber);
+            }
+        }
+
         [When(@"Revoke an application via backend")]
+        [Then(@"Revoke an application via backend")]
         public void ThenRevokeApplicationViaBackend()
         {
             lock (_lock)
@@ -98,6 +169,7 @@ namespace nipts_pts_automation_tests.Steps.CP
             }
         }
 
+        [When(@"Revoke Approved application via backend")]
         [When(@"Revoke Approved application via backend")]
         public void ThenRevokeApprovedApplicationViaBackend()
         {
@@ -120,7 +192,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         }
 
         [Given(@"Get an application via backend")]
-        [When(@"Get an application via backend")]
+        [Then(@"Get an application via backend")]
         public void ThenGetApplicationViaBackend()
         {
             lock (_lock)
@@ -143,6 +215,20 @@ namespace nipts_pts_automation_tests.Steps.CP
                 Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
             }
         }
+
+        [Given(@"Create an application via backend with Other Colour")]
+        [When(@"Create an application via backend with Other Colour")]
+        public void ThenCreateApplicationViaBackendWithOtherColour()
+        {
+            lock (_lock)
+            {
+                string AppId = _applicationSummaryPage.getNewID();
+                string APIAppReference = AppData.CreateApplicationAPIWithOtherColour(AppId);
+                _scenarioContext.Add("ReferenceNumber", APIAppReference);
+                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
+            }
+        }
+
 
         [Given(@"Create an application via backend with significant features option as No")]
         [When(@"Create an application via backend with significant features option as No")]
@@ -192,12 +278,12 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(_applicationSummaryPage.VerifyGBOutcomeWithSQLBackend(AppReference), "GB Outcome not matching with SQL Backend data");
         }
 
-        [Then(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)'")]
-        [When(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)'")]
-        public void ThenIVerifySQLEntriesForSPSOutcome(string TypeOfPassenger, string SPSOutcome)
+        [Then(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)','([^']*)'")]
+        [When(@"I verify backend SQL entries for SPS Outcome '([^']*)','([^']*)','([^']*)'")]
+        public void ThenIVerifySQLEntriesForSPSOutcome(string TypeOfPassenger, string SPSOutcome, string DetailsOfOutCome)
         {
             string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
-            Assert.True(_applicationSummaryPage.VerifySPSOutcomeWithSQLBackend(AppReference, TypeOfPassenger, SPSOutcome), "SPS Outcome not matching with SQL Backend data");
+            Assert.True(_applicationSummaryPage.VerifySPSOutcomeWithSQLBackend(AppReference, TypeOfPassenger, SPSOutcome, DetailsOfOutCome), "SPS Outcome not matching with SQL Backend data");
         }
 
         [Then(@"I verify backend SQL entries for GB Summary Table")]
@@ -233,6 +319,7 @@ namespace nipts_pts_automation_tests.Steps.CP
                 string randonNumber = Utils.GenerateRandomApplicationNumber();
                 string PTDNumber = AppData.writeOfflineApplicationToQueue(randonNumber, Species);
                 _scenarioContext.Add("PTDNumber", PTDNumber);
+                Console.WriteLine($"PTDNumber: {PTDNumber}");
             }
         }
 
@@ -254,6 +341,80 @@ namespace nipts_pts_automation_tests.Steps.CP
                 _scenarioContext.Add("ReferenceNumber", APIAppReference);
                 Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
             }
+        }
+
+        [Given(@"verify role '([^']*)' on manage account page")]
+        [Then(@"verify role '([^']*)' on manage account page")]
+        public void ThenIVerifyRole(string role)
+        {
+            _applicationSummaryPage.VerifyRole(role);
+        }
+
+        [Then(@"I verify backend SQL entries for Suspended Application")]
+        [When(@"I verify backend SQL entries for Suspended Application")]
+        public void ThenIVerifySQLEntriesForSuspendedApplication()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifySuspendedApplicationWithSQLBackend(AppReference), "Suspended Application Summary not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for Unsuspended Application")]
+        [When(@"I verify backend SQL entries for Unsuspended Application")]
+        public void ThenIVerifySQLEntriesForUnSuspendedApplication()
+        {
+            string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
+            Assert.True(_applicationSummaryPage.VerifyUnSuspendedApplicationWithSQLBackend(AppReference), "UnSuspended Application Summary not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for Suspended Application with PTD number")]
+        [When(@"I verify backend SQL entries for Suspended Application with PTD number")]
+        public void ThenIVerifySQLEntriesForSuspendedApplicationWithPTD()
+        {
+            string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
+            Assert.True(_applicationSummaryPage.VerifySuspendedApplicationWithSQLBackendWithPTD(PTDNumber), "Suspended Application Summary not matching with SQL Backend data");
+        }
+
+        [Then(@"I verify backend SQL entries for Unsuspended Application with PTD number")]
+        [When(@"I verify backend SQL entries for Unsuspended Application with PTD number")]
+        public void ThenIVerifySQLEntriesForUnSuspendedApplicationWithPTD()
+        {
+            string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
+            Assert.True(_applicationSummaryPage.VerifyUnSuspendedApplicationWithSQLBackendWithPTD(PTDNumber), "UnSuspended Application Summary not matching with SQL Backend data");
+        }
+
+        [Then(@"I should see the suspended application warning '([^']*)'")]
+        [When(@"I should see the suspended application warning '([^']*)'")]
+        public void ThenIShouldSeeTheSuspendedApplicationWarning(string SuspendedApplicationWarning)
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyTheSuspendedApplicationWarning(SuspendedApplicationWarning), "The Suspended Application warning is not as expected");
+        }
+
+        [Then(@"I verify continue button not displayed on search result page")]
+        [When(@"I verify continue button not displayed on search result page")]
+        public void ThenIVerifyContinueButtonNotDisplayedOnSearchResultPage()
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyTheContinueButtonNotDisplayed(), "Continue button should not displayed on Search Result page");
+        }
+
+        [Then(@"I verify pass button not displayed on search result page")]
+        [When(@"I verify pass button not displayed on search result page")]
+        public void ThenIVerifyPassButtonNotDisplayedOnSearchResultPage()
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyThePassButtonNotDisplayed(), "Pass button should not displayed on Search Result page");
+        }
+
+        [Then(@"I verify fail button not displayed on search result page")]
+        [When(@"I verify fail button not displayed on search result page")]
+        public void ThenIVerifyFailButtonNotDisplayedOnSearchResultPage()
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyTheFailButtonNotDisplayed(), "Fail button should not displayed on Search Result page");
+        }
+
+        [Then(@"I verify warning message on search results page for status '([^']*)'")]
+        [When(@"I verify warning message on search results page for status '([^']*)'")]
+        public void ThenIVerifyWarningMessageOnSearchResultPage(string status)
+        {
+            Assert.IsTrue(_applicationSummaryPage?.VerifyWarningMessageOnSearchResultPage(status), "Waring message not matching on Search Result page");
         }
     }
 }

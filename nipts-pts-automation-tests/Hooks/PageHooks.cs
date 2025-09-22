@@ -1,4 +1,4 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage;
 using nipts_pts_automation_tests.Pages.AP_GB.ApplicationSubmittedPage;
 using nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails;
@@ -22,7 +22,7 @@ using nipts_pts_automation_tests.Data;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages;
 using nipts_pts_automation_tests.Tools;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using nipts_pts_automation_tests.Pages.CP.Pages;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using nipts_pts_automation_tests.Pages.AP_GB.PetSexPage;
@@ -75,6 +75,7 @@ namespace nipts_pts_automation_tests.Hooks
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<PetSpeciesPage, IPetSpeciesPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<CheckYourAnswersDeclarationPage, ICheckYourAnswersDeclarationPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<ManualAddressPage, IManualAddressPage>());
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<InvalidDocumentsPage, IInvalidDocumentsPage>());
 
             //AP GB
             //_objectContainer.RegisterInstanceAs(GetBaseWithContainer<UserObject, IUserObject>());

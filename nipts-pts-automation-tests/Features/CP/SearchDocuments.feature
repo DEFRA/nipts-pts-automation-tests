@@ -33,16 +33,23 @@ Examples:
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 	When I click search button from footer
-	Then I navigate to Find a document page
+	And I navigate to Find a document page
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber>' of the application
 	And I click search by '<ApplicationRadio2>' radio button
+	And I provided the Application Number '<ReferenceNumber>' of the application
 	Then I click search by '<ApplicationRadio>' radio button
 	And verify the text '<PTDNumber>' in the textbox for the selected radio button '<ApplicationRadio>'
-	
+    When I click search by '<ApplicationRadio3>' radio button
+	And I provided the Microchip number '<MicrochipNumber>' of the application
+	And I click search by '<ApplicationRadio2>' radio button
+	Then verify the text '<ReferenceNumber>' in the textbox for the selected radio button '<ApplicationRadio2>'
+    When I click search by '<ApplicationRadio3>' radio button
+	Then verify the text '<MicrochipNumber>' in the textbox for the selected radio button '<ApplicationRadio3>'
+
 Examples:
-	| Transportation | FerryRoute                    | ApplicationRadio     | PTDNumber | ApplicationRadio2            | AppNumber |
-	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number | C93213    | Search by application number | PSZLLSM3  |
+	| Transportation | FerryRoute                    | ApplicationRadio     | PTDNumber | ApplicationRadio2            | AppNumber | ReferenceNumber | ApplicationRadio3          | MicrochipNumber |
+	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number | C93213    | Search by application number | PSZLLSM3  | QRWD9DZQ        | Search by microchip number | 123456789123456 |
 
 	Scenario Outline: Verify validation text for blank PTD Number
 	Then I have selected '<Transportation>' radio option
@@ -103,7 +110,7 @@ Scenario Outline: Verify validation of alphabets other than A-F PTD Number forma
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the '<PTDNumber>' of the application
 	When I click search button
-	Then I should see an error message "Enter 6 characters after 'GB826', using only letters A to F and numbers" in Find a document page
+	Then I should see an error message "Enter 6 characters after 'GB826', using only letters A-F and numbers" in Find a document page
 Examples:
 	| Transportation | FerryRoute                    | PTDNumber | ApplicationRadio     |
 	| Ferry          | Birkenhead to Belfast (Stena) | C9321G    | Search by PTD number |
@@ -167,7 +174,7 @@ Scenario Outline: Verify validation of Wrong Application Number format
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Application Number '<ReferenceNumber>' of the application
 	When I click search button
-	Then I should see an error message "Enter 8 characters" in Find a document page
+	Then I should see an error message "Enter 8 characters using letters and numbers, for example MOG2TXF7" in Find a document page
 Examples:
 	| Transportation | FerryRoute                    | ReferenceNumber | ApplicationRadio			  |
 	| Ferry          | Birkenhead to Belfast (Stena) | QRWD9DZ		   | Search by application number |
@@ -183,7 +190,7 @@ Scenario Outline: Verify validation of special characters with Application numbe
 	And I click search by '<ApplicationRadio>' radio button
 	And I provided the Application Number '<ReferenceNumber>' of the application
 	When I click search button
-	Then I should see an error message "Enter 8 characters, using only letters and numbers" in Find a document page
+	Then I should see an error message "Enter 8 characters using letters and numbers" in Find a document page
 Examples:
 	| Transportation | FerryRoute                    | ReferenceNumber | ApplicationRadio			  |
 	| Ferry          | Birkenhead to Belfast (Stena) | @@@@@$$&		   | Search by application number |

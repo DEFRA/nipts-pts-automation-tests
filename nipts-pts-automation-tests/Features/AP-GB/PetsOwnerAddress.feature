@@ -1,4 +1,4 @@
-﻿@PETS @APGBRegression 
+﻿@APGBRegression 
 Feature: PetsOwnerAddress
 
 Create a PETS travel document to provide address when PETS Owner details are incorrect

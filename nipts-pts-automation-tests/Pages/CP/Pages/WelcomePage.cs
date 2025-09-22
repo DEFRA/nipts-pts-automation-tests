@@ -1,10 +1,10 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using OpenQA.Selenium;
 using System.Globalization;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Pages.CP.Pages
 {
@@ -28,9 +28,11 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement iconHome => _driver.WaitForElement(By.XPath("//span[normalize-space()='Home']"));
         private IWebElement lnkHeadersChange => _driver.WaitForElement(By.XPath("//a[normalize-space()='Change']"));
         private IReadOnlyCollection<IWebElement> viewLinks => _driver.WaitForElements(By.XPath("//button[contains(text(),'View')]"));
-        private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//header[@class='pts-location-bar']//p"));
+        private IWebElement headerDepartureTime => _driver.WaitForElement(By.XPath("//div[@class='pts-location-bar']//p"));
         private IReadOnlyCollection<IWebElement> DepartureDateTime => _driver.WaitForElements(By.XPath("//h2//b[contains(text(),'Departure:')]/.."));
         private IWebElement NoChecksMsg => _driver.WaitForElement(By.XPath("//p[contains(text(),'No animals have been checked in the past 48 hours.')]"));
+        private By ScanLink => By.XPath("//*[local-name()='svg'][@id='Layer_2'][@aria-labelledby='scan-text'][@role='img']");
+        private By submittedMessageImage => By.XPath("//*[local-name()='svg'][@class='ons-icon'][@aria-hidden='true'][@role='img']");
         #endregion
 
         #region Methods
@@ -42,6 +44,14 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         public void FooterSearchButton()
         {
             iconSearch.Click();
+        }
+
+        public bool VerifyScanLinkFromFooter()
+        {
+            if (_driver.FindElements(ScanLink).Count > 0)
+                return true;
+            else
+                return false;
         }
 
         public void HeadersChangeLink()
@@ -200,6 +210,14 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         public bool VerifySubmiitedMessage()
         {
             return submittedMessage.Text.Contains("Information has been successfully submitted");
+        }
+
+        public bool VerifySubmiitedMessageImage()
+        {
+            if(_driver.FindElements(submittedMessageImage).Count > 0)
+                return true;
+            else
+                return false;   
         }
 
         public bool VerifyEntriesOnCheckerPage()

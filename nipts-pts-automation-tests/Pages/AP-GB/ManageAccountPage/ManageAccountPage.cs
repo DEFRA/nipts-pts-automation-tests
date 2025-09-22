@@ -1,4 +1,4 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
@@ -18,15 +18,17 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ManageAccountPage
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
         public IWebElement lnkManageYourAccount => _driver.WaitForElement(By.XPath("//a[@href ='/User/RedirectToExternal']"), true);
-        public IWebElement lnkUpdateDetails => _driver.WaitForElement(By.XPath("//a[normalize-space(text()) ='Update details']"));
-        public IWebElement lnkChangePersonalInformation => _driver.WaitForElement(By.XPath("//*[normalize-space(text()) ='Personal Information']/following::a[1]"));
-        public IWebElement lnkChangePersonalAddress => _driver.WaitForElement(By.XPath("//*[normalize-space(text()) ='Personal Address']/following::a[1]"));
+        public IWebElement lnkUpdateDetails => _driver.WaitForElement(By.XPath("//a[@href='/management/account-management/me/update-details']"));
+        public IWebElement lnkPersonalInfChange => _driver.WaitForElement(By.XPath("//a[@href='update-details/personal-information']"));
+        public IWebElement lnkChangeName => _driver.WaitForElement(By.XPath("//a[@href='personal-information/name']"));
+        public IWebElement lnkChangePhone => _driver.WaitForElement(By.XPath("//a[@href='personal-information/phone']"));
+        public IWebElement lnkChangePersonalAddress => _driver.WaitForElement(By.XPath("//a[@href='personal-address-manual']"));
         public IWebElement txtboxPhoneNumber => _driver.WaitForElement(By.XPath("//*[normalize-space(text()) ='Telephone number']/following::input[1]"));
         public IWebElement btnContine => _driver.WaitForElement(By.XPath("//button[normalize-space(text()) ='Continue']"));
         public IWebElement btnBack => _driver.WaitForElement(By.XPath("//a[normalize-space(text())='Back']"));
         public IWebElement lnkTakinaAPetFromBritainToNorthernIreland => _driver.WaitForElement(By.XPath("//*[@id='link-taking-a-pet-from-great-britain-to-northern-ireland']"), true);
-        public IWebElement txtboxFirstName => _driver.WaitForElement(By.XPath("//*[normalize-space(text())='First or given name']/following::input[1]"));
-        public IWebElement txtboxSurname => _driver.WaitForElement(By.XPath("//*[normalize-space(text())='Surname or family name']/following::input[1]"));
+        public IWebElement txtboxFirstName => _driver.WaitForElement(By.XPath("//*[normalize-space(text())='First name']/following::input[1]"));
+        public IWebElement txtboxSurname => _driver.WaitForElement(By.XPath("//*[normalize-space(text())='Last name']/following::input[1]"));
         public IWebElement originalPostcode => _driver.WaitForElement(By.XPath("//*[normalize-space(text())='Zip or postal code']/following::input"));
         public IWebElement lnkSearchMyAddress => _driver.WaitForElement(By.XPath("//a[normalize-space(text())='Search for my address by UK Postcode']"));
         public IWebElement txtboxEnterPostcode => _driver.WaitForElement(By.XPath("//*[normalize-space(text())='Enter your postcode']/following::input[1]"));
@@ -43,11 +45,17 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ManageAccountPage
         public void ClickOnUpdatedetailsLink()
         {
             lnkUpdateDetails.Click();
+            lnkPersonalInfChange.Click();
         }
 
-        public void ClickOnChangePersonalInformationLink()
+        public void ClickOnChangeNameLink()
         {
-            lnkChangePersonalInformation.Click();
+            lnkChangeName.Click();
+        }
+
+        public void ClickOnChangePhoneLink()
+        {
+            lnkChangePhone.Click();
         }
 
         public void ClickOnChangePersonalAddressLink()

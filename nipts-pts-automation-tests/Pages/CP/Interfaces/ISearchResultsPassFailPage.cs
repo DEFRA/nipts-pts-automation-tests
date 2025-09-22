@@ -13,5 +13,6 @@ namespace nipts_pts_automation_tests.Pages.CP.Interfaces
         bool VerifyPetNameOption(string petName);
         bool VerifypetsDateOfBirth(string petsDateOfBirth);
         bool VerifyPetpetMicrochipDate(string petMicrochipDate);
+        bool VerifyBulletedPointOnSearchResultsPage();
     }
 }

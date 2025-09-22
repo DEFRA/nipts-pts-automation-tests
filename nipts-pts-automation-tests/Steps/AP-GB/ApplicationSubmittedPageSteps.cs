@@ -1,8 +1,8 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using nipts_pts_automation_tests.Pages.AP_GB.ApplicationSubmittedPage;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace nipts_pts_automation_tests.Steps.AP_GB
 {
@@ -22,6 +22,13 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         {
             var pageTitle = "Application submitted";
             Assert.IsTrue(ApplicationSubmittedPage?.IsNextPageLoaded(pageTitle), $"The page {pageTitle} not loaded!");
+        }
+
+        [When(@"I verify application submitted page title '([^']*)'")]
+        [Then(@"I verify application submitted page title '([^']*)'")]
+        public void ThenIVerifyApplicationSubmittedPageTitle(string pageTitle)
+        {
+            Assert.IsTrue(ApplicationSubmittedPage?.VerifyApplicationSubmittedPageTitle(pageTitle), $"The page {pageTitle} not loaded!");
         }
 
         [Then(@"I can see the application reference number")]

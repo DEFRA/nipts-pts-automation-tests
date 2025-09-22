@@ -1,4 +1,4 @@
-﻿@PETS @APGBRegression 
+﻿@APGBRegression 
 Feature: PTSignificantFeatures
 
 Create a PETS travel document providing PETS Significante Features to travel from Great Britain to Northern Ireland

@@ -1,4 +1,4 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using Defra.UI.Tests.Contracts;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
@@ -22,8 +22,9 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.SummaryPage
         private IReadOnlyCollection<IWebElement> divMicrochipInformation => _driver.WaitForElements(By.XPath("//div[@id='document-microchip-card']//dl/div"));
         private IReadOnlyCollection<IWebElement> divPetDetails => _driver.WaitForElements(By.XPath("//div[@id='document-pet-card']//dl/div"));
         private IReadOnlyCollection<IWebElement> divPetOwnerDetails => _driver.WaitForElements(By.XPath("//div[@id='document-owner-card']//dl/div"));
-        private IWebElement lnkPDFDownload => _driver.WaitForElement(By.XPath("//a[contains(text(),'Download your application')] | //a[contains(text(),'Download your document')]"));
-        private By lnkPrint => By.XPath("//button[contains(text(),'Print your application')] | //button[contains(text(),'Print your document')]");
+        private IWebElement lnkPDFDownload => _driver.WaitForElement(By.XPath("//a[contains(text(),'Download your application')] | //a[contains(text(),'Download your document')] | //a[contains(@href,'/TravelDocument/DownloadCertificatePdf')]"));
+        private By lnkPrint => By.XPath("//button[contains(text(),'Print your application')] | //button[contains(text(),'Print your document')] | //button[@id='print-this-page']");
+        
         #endregion
 
         #region Methods
@@ -44,6 +45,12 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.SummaryPage
                 return true;
             else
                 return false;
+        }
+        public bool VerifyStatusOnAppSummary(string fieldName, string fieldValue)
+        {
+            string FieldName = "(//dt[contains(text(),'Status')])";
+            string FieldValue = "((//dt[contains(text(),'Status')]))/following-sibling::dd[1]";
+            return (_driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue));
         }
 
         public Summary GetSummaryDetails()
@@ -160,6 +167,31 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.SummaryPage
 
             return summary;
         }
+        public bool VerifyPrintDownloadPDFLinksSuspendedUser()
+        {
+            try
+            {
+                if ((lnkPDFDownload.Displayed) ||(_driver.FindElement(By.XPath("//button[contains(text(),'Print your document')]")).Displayed))
+                    return true;
+                else return false;
+            }
+            catch (ElementNotVisibleException)
+            {
+                return false;
+            }
+
+        }
+        public bool VerifyIssuingAuthNotDisplayedSuspendedUserPTD()
+        {
+            bool IssuingAuth = true;
+                if (_driver.FindElements(By.XPath("//div[@id='document-authority-card']//h2")).Count > 0)
+                IssuingAuth = false;
+
+            return IssuingAuth;
+        }
+
     }
+
 }
+
 #endregion
