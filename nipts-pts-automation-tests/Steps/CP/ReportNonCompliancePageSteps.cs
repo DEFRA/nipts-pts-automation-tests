@@ -128,8 +128,8 @@ namespace nipts_pts_automation_tests.Steps.CP
             Assert.True(_reportNonCompliancePage.VerifyNIOutcomeHintTxt(niOutcomeMsg), "Invalid NI Outcome Message on Report Non Compliance page");
         }
 
-        [When(@"I Verify PTD number on Report non-compliance page")]
-        [Then(@"I Verify PTD number on Report non-compliance page")]
+        [When(@"I Verify PTD number on Pet Travel document details link")]
+        [Then(@"I Verify PTD number on Pet Travel document details link")]
         public void ThenVerifyPTDNumber()
         {
             var ptdNumber = _scenarioContext.Get<string>("PTDNumber");

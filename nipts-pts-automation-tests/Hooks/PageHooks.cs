@@ -1,36 +1,37 @@
-﻿using Reqnroll.BoDi;
+﻿using nipts_pts_automation_tests.Configuration;
+using nipts_pts_automation_tests.Data;
+using nipts_pts_automation_tests.HelperMethods;
+using nipts_pts_automation_tests.Pages;
 using nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage;
 using nipts_pts_automation_tests.Pages.AP_GB.ApplicationSubmittedPage;
 using nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails;
 using nipts_pts_automation_tests.Pages.AP_GB.GetYourPetMicrochippedPage;
 using nipts_pts_automation_tests.Pages.AP_GB.HomePage;
+using nipts_pts_automation_tests.Pages.AP_GB.InvalidDocumentsGBPage;
 using nipts_pts_automation_tests.Pages.AP_GB.LandingPage;
+using nipts_pts_automation_tests.Pages.AP_GB.LogInPage;
 using nipts_pts_automation_tests.Pages.AP_GB.ManageAccountPage;
+using nipts_pts_automation_tests.Pages.AP_GB.PetBreedPage;
+using nipts_pts_automation_tests.Pages.AP_GB.PetColourPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetDOBPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetMicrochipDatePage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetMicrochipPage;
+using nipts_pts_automation_tests.Pages.AP_GB.PetNamePage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetOwnerAddressManuallyPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetOwnerAddressPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetOwnerDetailsPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetOwnerNamePage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetOwnerPNumberPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetOwnerPostCodePage;
-using nipts_pts_automation_tests.Pages.AP_GB.SignificantFeaturesPage;
-using nipts_pts_automation_tests.Pages.AP_GB.SummaryPage;
-using nipts_pts_automation_tests.Configuration;
-using nipts_pts_automation_tests.Data;
-using nipts_pts_automation_tests.HelperMethods;
-using nipts_pts_automation_tests.Pages;
-using nipts_pts_automation_tests.Tools;
-using Reqnroll;
-using nipts_pts_automation_tests.Pages.CP.Pages;
-using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using nipts_pts_automation_tests.Pages.AP_GB.PetSexPage;
 using nipts_pts_automation_tests.Pages.AP_GB.PetSpeciesPage;
-using nipts_pts_automation_tests.Pages.AP_GB.LogInPage;
-using nipts_pts_automation_tests.Pages.AP_GB.PetBreedPage;
-using nipts_pts_automation_tests.Pages.AP_GB.PetNamePage;
-using nipts_pts_automation_tests.Pages.AP_GB.PetColourPage;
+using nipts_pts_automation_tests.Pages.AP_GB.SignificantFeaturesPage;
+using nipts_pts_automation_tests.Pages.AP_GB.SummaryPage;
+using nipts_pts_automation_tests.Pages.CP.Interfaces;
+using nipts_pts_automation_tests.Pages.CP.Pages;
+using nipts_pts_automation_tests.Tools;
+using Reqnroll;
+using Reqnroll.BoDi;
 
 namespace nipts_pts_automation_tests.Hooks
 {
@@ -48,7 +49,7 @@ namespace nipts_pts_automation_tests.Hooks
         }
 
         private void BindAllPages()
-        {            
+        {
             // Objects
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<DataHelperConnections, IDataHelperConnections>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<UserObject, IUserObject>());
@@ -104,7 +105,7 @@ namespace nipts_pts_automation_tests.Hooks
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<ChangeDetailsPage, IChangeDetailsPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<SummaryPage, ISummaryPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<ManageAccountPage, IManageAccountPage>());
-
+            _objectContainer.RegisterInstanceAs(GetBaseWithContainer<InvalidDocumentsGBPage, IInvalidDocumentsGBPage>());
             // CP Testing
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<SignInCPPage, ISignInCPPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<RouteCheckingPage, IRouteCheckingPage>());
@@ -124,4 +125,3 @@ namespace nipts_pts_automation_tests.Hooks
         (TU)Activator.CreateInstance(typeof(T), _objectContainer);
     }
 }
-

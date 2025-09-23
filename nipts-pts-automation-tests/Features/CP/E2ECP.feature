@@ -75,6 +75,9 @@ Scenario Outline: Check GB to SPS PETS Travel Document details By PTD number - s
 	Then I verify the header text 'Check a pet travelling from GB to NI'
 	When I click on Update referral outcome
 	Then verify next page '<nextPage2>' is loaded
+	And I click Pet Travel Document details link dropdown
+	And I Verify status 'Approved' on Report non-compliance page
+	And I Verify PTD number on Pet Travel document details link
 	And I click 'Allowed' on SPS outcome
 	And I enter details of outcome '<DetailsOfOutCome>'
 	And I click on Save on update referral
