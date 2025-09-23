@@ -106,8 +106,6 @@ namespace nipts_pts_automation_tests.Hooks
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<SummaryPage, ISummaryPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<ManageAccountPage, IManageAccountPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<InvalidDocumentsGBPage, IInvalidDocumentsGBPage>());
-
-
             // CP Testing
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<SignInCPPage, ISignInCPPage>());
             _objectContainer.RegisterInstanceAs(GetBaseWithContainer<RouteCheckingPage, IRouteCheckingPage>());
@@ -127,4 +125,3 @@ namespace nipts_pts_automation_tests.Hooks
         (TU)Activator.CreateInstance(typeof(T), _objectContainer);
     }
 }
-
