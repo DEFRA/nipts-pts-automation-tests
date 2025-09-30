@@ -54,7 +54,7 @@ Examples:
 	| Ferry          | Birkenhead to Belfast (Stena) | 0                      | No                  | Ferry foot passenger | 2               | PassengerReferredDAERA | No                       | PassengerWillNotTravel | 1                 | No                          | RefusedToSignDeclaration | Search by PTD number | None                      |
 	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | CannotFindMicrochip | Ferry foot passenger | 1               | PassengerReferredDAERA | No                       | No                     | 0                 | No                          | No                       | Search by PTD number | None                      |
 
-	@RunOnly
+	
 Scenario Outline: Validate GB Check Report page fields for SPS User
 	When I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
@@ -166,7 +166,7 @@ Examples:
 	| Transportation | FerryRoute                    | NumberMicrochipReasons | CannotFindMicrochip | PassengerType        | NumberGBOutcome | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | NumberOtherIssues | AuthPersonButNoConfirmation | RefusedToSignDeclaration | ApplicationRadio     | DetailsOfOutcome          |
 	| Ferry          | Birkenhead to Belfast (Stena) | 1                      | CannotFindMicrochip | Ferry foot passenger | 3               | PassengerReferredDAERA | PassengerAdvisedNoTravel | PassengerWillNotTravel | 2                 | AuthPersonButNoConfirmation | RefusedToSignDeclaration | Search by PTD number | Verify Details of Outcome |
 
-
+@RunOnly
 Scenario Outline: Validate GB Check Report page fields for duplicate checks for SPS User
 	When I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
