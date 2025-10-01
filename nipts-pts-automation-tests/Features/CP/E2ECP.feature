@@ -219,6 +219,7 @@ Examples:
 	| Transportation | FerryRoute                    | ApplicationRadio			    |nextPage        | SPSOutcome |nextPage2               | DetailsOfOutCome        |
 	| Ferry          | Birkenhead to Belfast (Stena) | Search by application number |Referred to SPS | Allowed    |Update referral outcome | Test Details of Outcome |
 
+	@RunOnly
 Scenario Outline: Verify navigation of back links in the application for GB user
 	When Create an application via backend
 	And Approve an application via backend
@@ -299,6 +300,7 @@ Examples:
 	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |nextPage2               | DetailsOfOutCome        |
 	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |Update referral outcome | Test Details of Outcome |
 
+	@RunOnly
 Scenario Outline: Check GB to SPS PETS Travel Document details with Other Colour By PTD number - status in Approved
 	When Create an application via backend with Other Colour
 	And Approve an application via backend

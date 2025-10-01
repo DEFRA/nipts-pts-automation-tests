@@ -83,6 +83,7 @@ Examples:
 	| Transportation | FerryRoute                    | PTDNumber | ApplicationRadio     |
 	| Ferry          | Birkenhead to Belfast (Stena) | 12345     | Search by PTD number |
 
+	@RunOnly
 Scenario Outline: Verify validation of more than 6 PTD Number format
 	Then I have selected '<Transportation>' radio option
 	Then I select the '<FerryRoute>' radio option

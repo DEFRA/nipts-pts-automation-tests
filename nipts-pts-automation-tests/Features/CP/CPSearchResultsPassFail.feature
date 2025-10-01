@@ -149,6 +149,7 @@ Examples:
 	| Transportation | FerryRoute                    | ApplicationRadio     |
 	| Ferry          | Birkenhead to Belfast (Stena) | Search by PTD number |
 
+@RunOnly
 Scenario Outline: Verify no entries on checker page after 24 hours and before 48 hours
 	When I have selected '<Transportation>' radio option
 	And I select the '<FerryRoute>' radio option
@@ -159,7 +160,7 @@ Scenario Outline: Verify no entries on checker page after 24 hours and before 48
 Examples:
 	|Transportation | FerryRoute                    | 
 	|Ferry          | Birkenhead to Belfast (Stena) |
-
+@RunOnly
 Scenario Outline: Verify no View link for no Referred to SPS record
 	When Create an application via backend
 	When Approve an application via backend

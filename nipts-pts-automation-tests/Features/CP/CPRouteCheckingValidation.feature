@@ -163,6 +163,7 @@ Examples:
 	| ScheduledDepartureDay | ScheduledDepartureMonth | ScheduledDepartureYear | Transportation | Flight number |
 	| 19                    | 10                      | 2024                   | Flight         | 1234          |
 
+	@RunOnly
 Scenario Outline: Verify validation text for date field when user enter the time field that exceeds 24 hours after
 	Then I have selected '<Transportation>' radio option
 	Then I provided date that exceeds 24 hours from the current date
