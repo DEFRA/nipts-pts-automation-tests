@@ -301,7 +301,7 @@ Examples:
 	| Transportation | FerryRoute                    | TypeOfPassenger      | nextPage        | SPSOutcome | nextPage1       | ApplicationRadio     |nextPage2               | DetailsOfOutCome        |
 	| Ferry          | Birkenhead to Belfast (Stena) | Ferry foot passenger | Referred to SPS | Allowed    | GB check report | Search by PTD number |Update referral outcome | Test Details of Outcome |
 
-	@RunOnly
+	
 Scenario Outline: Check GB to SPS PETS Travel Document details with Other Colour By PTD number - status in Approved
 	When Create an application via backend with Other Colour
 	And Approve an application via backend
