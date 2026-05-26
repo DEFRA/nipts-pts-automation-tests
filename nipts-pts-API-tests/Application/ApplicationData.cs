@@ -25,14 +25,36 @@ namespace nipts_pts_API_tests.Application
         public string GetApplicationToApprove(string AppReference)
         {
             Task<RestResponse> response = GetApplication(AppReference);
-            var responseString = response.Result.Content.ToString();
-            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
-            ApplicationId = dynamicObject.application.applicationId;
+            var restResponse = response.Result;
+            var responseString = restResponse.Content ?? string.Empty;
+
+            Console.WriteLine("=== GET APPLICATION TO APPROVE ===");
+            Console.WriteLine($"AppReference: {AppReference}");
+            Console.WriteLine($"Status: {restResponse.StatusCode}");
+            Console.WriteLine($"Response: {responseString}");
+            Console.WriteLine("==================================");
+
+            if (!restResponse.IsSuccessful || string.IsNullOrWhiteSpace(responseString))
+                throw new Exception($"GetApplicationToApprove: Failed to get application. AppReference: {AppReference}, Status: {restResponse.StatusCode}, Response: {responseString}");
+
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString);
+            if (dynamicObject == null)
+                throw new Exception($"GetApplicationToApprove: Failed to deserialize response. AppReference: {AppReference}, Response: {responseString}");
+
+            if (dynamicObject.application == null)
+                throw new Exception($"GetApplicationToApprove: 'application' is null in response. AppReference: {AppReference}, Response: {responseString}");
+
+            ApplicationId = dynamicObject.application.applicationId?.ToString()
+                ?? throw new Exception($"GetApplicationToApprove: 'applicationId' is null. AppReference: {AppReference}, Response: {responseString}");
+
             ApproveApplication(ApplicationId);
             Task<RestResponse> response2 = GetApplication(AppReference);
-            var responseString2 = response.Result.Content.ToString();
-            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString2.ToString())!;
-            PTDNumber = dynamicObject2.travelDocument.travelDocumentReferenceNumber;
+            var responseString2 = response2.Result.Content ?? string.Empty;
+            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString2);
+            if (dynamicObject2?.travelDocument?.travelDocumentReferenceNumber == null)
+                throw new Exception($"GetApplicationToApprove: 'travelDocumentReferenceNumber' is null after approval. AppReference: {AppReference}, Response: {responseString2}");
+
+            PTDNumber = dynamicObject2.travelDocument.travelDocumentReferenceNumber?.ToString();
             return PTDNumber;
         }
 
@@ -278,13 +300,20 @@ namespace nipts_pts_API_tests.Application
         {
             Task<RestResponse> response = null;
             string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint3;
-            var client = SetUrl("updateuser", APIEndPoint);
+            var (client, requestUrl) = SetUrlWithInfo("updateuser", APIEndPoint);
             var file = Path.Combine(RequestFolder, "UpdateUser.json");
             var requestJson = File.ReadAllText(file);
             var request = CreatePostRequest(requestJson);
             response = GetResponseAsync(client, request);
-            var responseString = response.Result.Content.ToString();
-            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            var restResponse = response.Result;
+            var responseString = restResponse.Content ?? string.Empty;
+
+            if (!restResponse.IsSuccessful)
+                throw new Exception($"updateUser: API call failed. URL: {requestUrl}, Status: {restResponse.StatusCode}, Error: {restResponse.ErrorMessage}, Response: {responseString}");
+
+            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString);
+            if (dynamicObject2 == null)
+                throw new Exception($"updateUser: Failed to deserialize response. URL: {requestUrl}, Response: {responseString}");
             UserId = dynamicObject2;
         }
 
@@ -292,13 +321,20 @@ namespace nipts_pts_API_tests.Application
         {
             Task<RestResponse> response = null;
             string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint3;
-            var client = SetUrl("createowner", APIEndPoint);
+            var (client, requestUrl) = SetUrlWithInfo("createowner", APIEndPoint);
             var file = Path.Combine(RequestFolder, "CreateOwner.json");
             var requestJson = File.ReadAllText(file);
             var request = CreatePostRequest(requestJson);
             response = GetResponseAsync(client, request);
-            var responseString = response.Result.Content.ToString();
-            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            var restResponse = response.Result;
+            var responseString = restResponse.Content ?? string.Empty;
+
+            if (!restResponse.IsSuccessful)
+                throw new Exception($"createOwner: API call failed. URL: {requestUrl}, Status: {restResponse.StatusCode}, Error: {restResponse.ErrorMessage}, Response: {responseString}");
+
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString);
+            if (dynamicObject == null)
+                throw new Exception($"createOwner: Failed to deserialize response. URL: {requestUrl}, Response: {responseString}");
             OwnerId = dynamicObject;
         }
 
@@ -306,13 +342,20 @@ namespace nipts_pts_API_tests.Application
         {
             Task<RestResponse> response = null;
             string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint3;
-            var client = SetUrl("createaddress", APIEndPoint);
+            var (client, requestUrl) = SetUrlWithInfo("createaddress", APIEndPoint);
             var file = Path.Combine(RequestFolder, "CreateAddress.json");
             var requestJson = File.ReadAllText(file);
             var request = CreatePostRequest(requestJson);
             response = GetResponseAsync(client, request);
-            var responseString = response.Result.Content.ToString();
-            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
+            var restResponse = response.Result;
+            var responseString = restResponse.Content ?? string.Empty;
+
+            if (!restResponse.IsSuccessful)
+                throw new Exception($"createAddress: API call failed. URL: {requestUrl}, Status: {restResponse.StatusCode}, Error: {restResponse.ErrorMessage}, Response: {responseString}");
+
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString);
+            if (dynamicObject == null)
+                throw new Exception($"createAddress: Failed to deserialize response. URL: {requestUrl}, Response: {responseString}");
             AddressId = dynamicObject;
         }
 
@@ -334,14 +377,25 @@ namespace nipts_pts_API_tests.Application
         {
             Task<RestResponse> response = null;
             string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint2;
-            var client = SetUrl("createpet", APIEndPoint);
+            var (client, requestUrl) = SetUrlWithInfo("createpet", APIEndPoint);
             var file = Path.Combine(RequestFolder, "CreatePet.json");
             var requestJson = File.ReadAllText(file);
-            var request = CreatePostRequest(requestJson);
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
+            string uniqueMicrochip = DateTime.Now.ToString("ddMMyyHHmmssfff");
+            dynamicObject.petIdentification.microchipNumber = uniqueMicrochip;
+            dynamicObject.petMicrochip.microchipNumber = uniqueMicrochip;
+            var request = CreatePostRequest(JsonConvert.SerializeObject(dynamicObject));
             response = GetResponseAsync(client, request);
-            var responseString = response.Result.Content.ToString();
-            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
-            PetId = dynamicObject;
+            var restResponse = response.Result;
+            var responseString = restResponse.Content ?? string.Empty;
+
+            if (!restResponse.IsSuccessful)
+                throw new Exception($"createPet: API call failed. URL: {requestUrl}, Status: {restResponse.StatusCode}, Error: {restResponse.ErrorMessage}, Response: {responseString}");
+
+            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString);
+            if (dynamicObject2 == null)
+                throw new Exception($"createPet: Failed to deserialize response. URL: {requestUrl}, Response: {responseString}");
+            PetId = dynamicObject2;
         }
 
         public void createPetWithOtherColour()
@@ -362,7 +416,7 @@ namespace nipts_pts_API_tests.Application
         {
             Task<RestResponse> response = null;
             string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint1;
-            var client = SetUrl("application", APIEndPoint);
+            var (client, requestUrl) = SetUrlWithInfo("application", APIEndPoint);
             var file = Path.Combine(RequestFolder, "CreateApplication.json");
             var requestJson = File.ReadAllText(file);
             var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
@@ -371,12 +425,53 @@ namespace nipts_pts_API_tests.Application
             dynamicObject.userId = UserId;
             dynamicObject.ownerId = OwnerId;
             dynamicObject.ownerAddressId = AddressId;
-            var request = CreatePostRequest(JsonConvert.SerializeObject(dynamicObject));
+
+            // Generate unique reference number and update timestamps
+            var uniqueRef = "A" + DateTime.Now.ToString("ddHHmmss");
+            dynamicObject.referenceNumber = uniqueRef;
+            // Use current UTC time for dates
+            var currentDateTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+            dynamicObject.dateOfApplication = currentDateTime;
+            dynamicObject.createdOn = currentDateTime;
+            dynamicObject.updatedOn = currentDateTime;
+
+            // Use the actual userId for createdBy/updatedBy
+            dynamicObject.createdBy = UserId;
+            dynamicObject.updatedBy = UserId;
+
+            var requestPayload = JsonConvert.SerializeObject(dynamicObject);
+
+            // Log the values being sent
+            Console.WriteLine("=== CREATE APPLICATION REQUEST ===");
+            Console.WriteLine($"URL: {requestUrl}");
+            Console.WriteLine($"AppId: {AppId}");
+            Console.WriteLine($"PetId: {PetId}");
+            Console.WriteLine($"UserId: {UserId}");
+            Console.WriteLine($"OwnerId: {OwnerId}");
+            Console.WriteLine($"AddressId: {AddressId}");
+            Console.WriteLine($"Request Payload: {requestPayload}");
+            Console.WriteLine("=================================");
+
+            var request = CreatePostRequest(requestPayload);
             response = GetResponseAsync(client, request);
-            var responseString = response.Result.Content.ToString();
-            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
-            QueueId = dynamicObject2.id;
-            AppReferenceNumber = dynamicObject2.referenceNumber;
+            var restResponse = response.Result;
+            var responseString = restResponse.Content ?? string.Empty;
+
+            if (!restResponse.IsSuccessful)
+                throw new Exception($"createApplication: API call failed. URL: {requestUrl}, Status: {restResponse.StatusCode}, Error: {restResponse.ErrorMessage}, Response: {responseString}, Request: {requestPayload}");
+
+            if (string.IsNullOrWhiteSpace(responseString))
+                throw new Exception($"createApplication: Empty response received. URL: {requestUrl}, Status: {restResponse.StatusCode}");
+
+            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString);
+            if (dynamicObject2 == null)
+                throw new Exception($"createApplication: Failed to deserialize response. Response: {responseString}");
+            if (dynamicObject2 is string)
+                throw new Exception($"createApplication returned unexpected response: {responseString}");
+            QueueId = dynamicObject2.id?.ToString() 
+                ?? throw new Exception($"createApplication: 'id' is null. Response: {responseString}");
+            AppReferenceNumber = dynamicObject2.referenceNumber?.ToString() 
+                ?? throw new Exception($"createApplication: 'referenceNumber' is null. Response: {responseString}");
             return AppReferenceNumber;
         }
 
@@ -384,14 +479,30 @@ namespace nipts_pts_API_tests.Application
         {
             Task<RestResponse> response = null;
             string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint4;
-            var client = SetUrl("writetoqueue", APIEndPoint);
+            var (client, requestUrl) = SetUrlWithInfo("writetoqueue", APIEndPoint);
             var file = Path.Combine(RequestFolder, "ApplicationToQueue.json");
             var requestJson = File.ReadAllText(file);
             var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
             dynamicObject.applicationId = QueueId;
-            var request = CreatePostRequest(JsonConvert.SerializeObject(dynamicObject));
+            var requestPayload = JsonConvert.SerializeObject(dynamicObject);
+            var request = CreatePostRequest(requestPayload);
             response = GetResponseAsync(client, request);
-            var responseString = response.Result.Content.ToString();
+            var restResponse = response.Result;
+            var responseString = restResponse.Content ?? string.Empty;
+
+            Console.WriteLine("=== WRITE TO QUEUE REQUEST ===");
+            Console.WriteLine($"URL: {requestUrl}");
+            Console.WriteLine($"QueueId: {QueueId}");
+            Console.WriteLine($"Status: {restResponse.StatusCode}");
+            Console.WriteLine($"Response: {responseString}");
+            Console.WriteLine("==============================");
+
+            if (!restResponse.IsSuccessful)
+            {
+                Console.WriteLine($"writeApplicationToQueue: API call failed. URL: {requestUrl}, Status: {restResponse.StatusCode}, Error: {restResponse.ErrorMessage}, Response: {responseString}");
+                return false;
+            }
+
             if (responseString.Contains("Added Message to Queue Successfully"))
                 return true;
             else

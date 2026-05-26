@@ -1,5 +1,6 @@
 ﻿using Reqnroll.BoDi;
 using System.Reflection;
+using Newtonsoft.Json;
 using RestSharp;
 
 namespace nipts_pts_API_tests
@@ -20,11 +21,18 @@ namespace nipts_pts_API_tests
             RequestFolder = Path.Combine(jsonPath, "RequestJson");
         }
 
+        public (RestClient Client, string Url) SetUrlWithInfo(string endpoint, string ApiEndpoint)
+        {
+            var baseUrl = ApiEndpoint?.TrimEnd('/') ?? string.Empty;
+            var url = $"{baseUrl}/{endpoint}";
+            client = new RestClient(url);
+            return (client, url);
+        }
+
         public RestClient SetUrl(string endpoint, string ApiEndpoint)
         {
-            var url = Path.Combine(ApiEndpoint, endpoint);
-            client = new RestClient(url);
-            return client;
+            var (restClient, _) = SetUrlWithInfo(endpoint, ApiEndpoint);
+            return restClient;
         }
 
         public RestRequest CreateGetRequest()
@@ -46,9 +54,9 @@ namespace nipts_pts_API_tests
                 Method = Method.Post
             };
             request.AddHeader("accept", "application/json");
+            request.AddHeader("Content-Type", "application/json");
             request.AddHeader("x-api-version", "1");
-            request.AddBody(payload);
-            request.RequestFormat = DataFormat.Json;
+            request.AddStringBody(payload as string ?? JsonConvert.SerializeObject(payload), ContentType.Json);
             return request;
         }
 
