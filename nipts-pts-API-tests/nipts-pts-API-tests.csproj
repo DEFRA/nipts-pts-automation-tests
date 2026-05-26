@@ -23,6 +23,9 @@
     <None Update="RequestJson\ApplicationToQueue.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="RequestJson\CreateApplication.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="RequestJson\ApplRequest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -36,9 +39,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RequestJson\CreateAddressMandatoryOnly.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="RequestJson\CreateApplication.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="RequestJson\CreateOfflineApplicationCat.json">
