@@ -1,5 +1,6 @@
 ﻿using Reqnroll.BoDi;
 using nipts_pts_API_tests.Application;
+using nipts_pts_API_tests.Configuration;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
@@ -155,6 +156,24 @@ namespace nipts_pts_automation_tests.Steps.CP
                 string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
                 AppData.GetAuthorisedApplicationToSuspend(PTDNumber);
             }
+        }
+
+        [Given(@"Authorise application with Id '([^']*)' via backend")]
+        [When(@"Authorise application with Id '([^']*)' via backend")]
+        [Then(@"Authorise application with Id '([^']*)' via backend")]
+        public async Task ThenAuthoriseApplicationWithIdViaBackend(string applicationId)
+        {
+            Assert.IsFalse(string.IsNullOrWhiteSpace(applicationId), "An applicationId must be provided to authorise an application.");
+
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
+            string todaysDate = DateTime.Now.ToString("yyyy-MM-dd");
+            string dynamicId = Guid.NewGuid().ToString();
+
+            string messageBody = $"{{ \"Application.Id \": \"{applicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Authorised\", \"Application.DateAuthorised\": \"{todaysDate}\" }}";
+
+            Console.WriteLine($"Sending Authorise message for ApplicationId: {applicationId} to queue: {queueName}");
+            await ServiceBusConnection.SendMessageToQueue(messageBody, queueName);
+            Console.WriteLine($"Authorise message sent for ApplicationId: {applicationId}");
         }
 
         [When(@"Revoke an application via backend")]

@@ -16,7 +16,6 @@ namespace nipts_pts_automation_tests.Pages
         private IWebElement GOVLink => _driver.WaitForElement(By.XPath("//*[name()='svg' and @class='govuk-header__logotype']"));
         private IWebElement Feedbacktext => _driver.WaitForElement(By.XPath("//div[@class='QuestionText BorderColor']//p"));
         private IWebElement FeedbackHeading => _driver.WaitForElement(By.XPath("//div[@class='QuestionText BorderColor']//h1"));
-        private IWebElement GOVUKPage => _driver.WaitForElement(By.XPath("//a[@href='https://www.gov.uk']"));
         private IWebElement GenericGOVPage => _driver.WaitForElement(By.XPath("//span[contains(@class,'homepage-header__intro')]"));
         private IWebElement feedbacklink => _driver.WaitForElement(By.XPath("//a[contains(text(),' adborth (yn agor mewn tab newydd)')]"));
         private IWebElement HeaderTitle => _driver.WaitForElement(By.XPath("//div[@class='govuk-header__content']/a[contains(@class,'govuk-header')]"));
@@ -66,7 +65,8 @@ namespace nipts_pts_automation_tests.Pages
 
         public bool VerifyGenericGOVPageLoaded()
         {
-            if (GOVUKPage.Enabled && GenericGOVPage.Text.Contains("The best place to find government services and information"))
+            if (_driver.Url.TrimEnd('/').Equals("https://www.gov.uk", StringComparison.OrdinalIgnoreCase)
+                && GenericGOVPage.Text.Contains("The best place to find government services and information"))
                 return true;
             else
                 return false;

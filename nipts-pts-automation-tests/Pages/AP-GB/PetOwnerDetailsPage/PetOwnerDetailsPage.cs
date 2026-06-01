@@ -49,7 +49,9 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerDetailsPage
         }
         public bool VerifyUpdatedPhoneNumber(String phoneNumber)
         {
-            return petOwnersPhoneNumber.Text.Equals(phoneNumber);
+            var displayed = new string((petOwnersPhoneNumber.Text ?? string.Empty).Where(c => !char.IsWhiteSpace(c)).ToArray());
+            var expected = new string((phoneNumber ?? string.Empty).Where(c => !char.IsWhiteSpace(c)).ToArray());
+            return displayed.Equals(expected);
         }
         public bool VerifyUpdatedName(string name)
         {

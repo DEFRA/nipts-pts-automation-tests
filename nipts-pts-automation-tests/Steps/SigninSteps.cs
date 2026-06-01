@@ -31,7 +31,7 @@ namespace nipts_pts_automation_tests.Steps
         {
             string url = UrlBuilder.Default("Com").Build();
             _driver.Navigate().GoToUrl(url);
-            Assert.True(applicationPage.VerifyNextPageIsLoaded("Check a pet from"), "We are not in the home Page");
+            Assert.True(applicationPage.VerifyNextPageIsLoaded("Check a pet travelling from"), "We are not in the home Page");
         }
 
         [Given(@"that I navigate to the Pets application portal")]
