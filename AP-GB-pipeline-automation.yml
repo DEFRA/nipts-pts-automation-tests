@@ -27,7 +27,7 @@ parameters:
     default: 'latest'
   - name: Target
     type: string
-    default: 'Chrome'
+    default: 'Edge'
 
 schedules:
 - cron: "0 2 * * Mon,Tue,Wed,Thu,Fri"
@@ -60,7 +60,7 @@ stages:
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{ parameters.SeleniumGrid }} 
+        SeleniumGrid: ''
         TestDeviceName: ${{parameters.DeviceName}}
         OSVersionName: ${{parameters.BSOSVersion}}
         BrowserVersionName: ${{parameters.BSBrowserVersion}}
@@ -76,7 +76,7 @@ stages:
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{ parameters.SeleniumGrid }}
+        SeleniumGrid: ''
         TestDeviceName: ${{parameters.DeviceName}}
         OSVersionName: ${{parameters.BSOSVersion}}
         BrowserVersionName: ${{parameters.BSBrowserVersion}}
@@ -92,7 +92,7 @@ stages:
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{ parameters.SeleniumGrid }}
+        SeleniumGrid: ''
         TestDeviceName: ${{parameters.DeviceName}}
         OSVersionName: ${{parameters.BSOSVersion}}
         BrowserVersionName: ${{parameters.BSBrowserVersion}}
