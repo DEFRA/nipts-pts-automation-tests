@@ -1,5 +1,8 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Safari;
 using OpenQA.Selenium;
 using nipts_pts_automation_tests.Configuration;
 using Reqnroll;
@@ -10,7 +13,6 @@ namespace nipts_pts_automation_tests.Capabilities
     {
         private static ScenarioContext _scenarioContext;
         private BaseConfiguration _configuration => ConfigSetup.BaseConfiguration;
-        private readonly Dictionary<string, object> _capDictionary = [];
         private readonly Dictionary<string, object> _browserstackOptions = [];
         private static readonly string[] _osList = ["WINDOWS", "OS X"];
 
@@ -35,35 +37,50 @@ namespace nipts_pts_automation_tests.Capabilities
             GetProjectDriverOptions();
             GetTestNameDriverOptions();
 
-            _browserstackOptions.Add("acceptInsecureCerts", true);
+            bool isDesktop = _osList.Contains(_deviceName.ToUpper());
 
-            _capDictionary.Add("autoGrantPermission:", true);
-            _capDictionary.Add("osVersion", _bs_os_version);
-            _browserstackOptions.Add("osVersion", _bs_os_version);
-
-            if (_osList.Contains(_deviceName.ToUpper()))
+            if (isDesktop)
             {
-                _capDictionary.Add("os", _deviceName);
-                _browserstackOptions.Add("os", _deviceName);
-                _browserstackOptions.Add("browserName", _target);
-                _browserstackOptions.Add("browserVersion", _bs_browser_version);
+                _browserstackOptions["os"] = _deviceName;
+                _browserstackOptions["osVersion"] = _bs_os_version;
             }
             else
             {
-                _capDictionary.Add("deviceName", _deviceName);
-                _browserstackOptions.Add("deviceName", _deviceName);
-                _browserstackOptions.Add("browserName", _target);
-                _browserstackOptions.Add("deviceOrientation", "portrait");
+                _browserstackOptions["deviceName"] = _deviceName;
+                _browserstackOptions["osVersion"] = _bs_os_version;
+                _browserstackOptions["deviceOrientation"] = "portrait";
+                _browserstackOptions["realMobile"] = "true";
             }
 
-            _browserstackOptions.Add("local", "false");
+            _browserstackOptions["local"] = "false";
 
-            var driverOptions = new ChromeOptions();
-            AddDictionaryValuesInDriverOptions(driverOptions, _capDictionary);
+            var driverOptions = BuildBrowserOptions(isDesktop);
+            driverOptions.AcceptInsecureCertificates = true;
             driverOptions.AddAdditionalOption("bstack:options", _browserstackOptions);
 
             return driverOptions;
         }
+
+        // Pick the correct W3C DriverOptions subclass for the target browser so
+        // BrowserStack sees a consistent top-level browserName (it now enforces
+        // this strictly and rejects mismatched ChromeOptions for Edge/Firefox/Safari).
+        private DriverOptions BuildBrowserOptions(bool isDesktop)
+        {
+            var target = (_target ?? string.Empty).Trim();
+            DriverOptions options = target.ToLowerInvariant() switch
+            {
+                "edge" => new EdgeOptions(),
+                "firefox" => new FirefoxOptions(),
+                "safari" => new SafariOptions(),
+                _ => new ChromeOptions(),
+            };
+            if (isDesktop && !string.IsNullOrWhiteSpace(_bs_browser_version))
+            {
+                options.BrowserVersion = _bs_browser_version;
+            }
+            return options;
+        }
+
 
         private void GetBrowserStackConfig()
         {
@@ -74,7 +91,6 @@ namespace nipts_pts_automation_tests.Capabilities
                 _browserstackOptions.Add("accessKey", _configuration.BrowserStackConfiguration.CloudDeviceUserKey);
                 _browserstackOptions.Add("idleTimeout", 300);
             }
-            _capDictionary.Add("acceptSslCerts", "true");
         }
 
         private void GetProjectDriverOptions()
@@ -90,18 +106,6 @@ namespace nipts_pts_automation_tests.Capabilities
         {
             if (!_browserstackOptions.ContainsKey("sessionName"))
                 _browserstackOptions.Add("sessionName", TestContext.CurrentContext.Test.ClassName);
-        }
-
-        private void AddDictionaryValuesInDriverOptions(DriverOptions driverOptions, Dictionary<string, object> capDictionary)
-        {
-            if (capDictionary != null)
-            {
-                foreach (var androidDictionary in capDictionary)
-                {
-                    driverOptions.AddAdditionalOption(androidDictionary.Key.ToString(), androidDictionary.Value);
-                }
-
-            }
         }
 
 
