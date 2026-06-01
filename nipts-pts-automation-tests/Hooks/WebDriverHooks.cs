@@ -62,12 +62,15 @@ namespace nipts_pts_automation_tests.Hooks
             }
             finally
             {
-                if (takeScreenShot)
+                if (Driver != null)
                 {
-                    AttachScreenShotToXmlReport();
+                    if (takeScreenShot)
+                    {
+                        AttachScreenShotToXmlReport();
+                    }
+                    Driver.Close();
+                    Driver.Quit();
                 }
-                Driver.Close();
-                Driver.Quit();
             }
         }
 
