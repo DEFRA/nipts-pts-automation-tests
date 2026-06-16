@@ -104,25 +104,27 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
             Thread.Sleep(TimeSpan.FromSeconds(5));
 
-            var reversedTrCollection = tableRows.Reverse();
-
-            foreach (var element in reversedTrCollection)
+            // The results table can re-render after load (especially on slower mobile/Android
+            // sessions), invalidating element references. Retry on stale element by re-querying
+            // fresh rows each attempt instead of holding onto a previously captured collection.
+            return _driver.RetryOnStaleElement(() =>
             {
-                var tableHeader = element.FindElement(By.TagName("th"));
+                var reversedTrCollection = tableRows.Reverse();
 
-                if (tableHeader.Text.Replace("\r\n", string.Empty).Trim().ToUpper().Equals(petName.ToUpper()))
+                foreach (var element in reversedTrCollection)
                 {
-                    //var tdCollection = element.FindElements(By.TagName("td"));
+                    var tableHeader = element.FindElement(By.TagName("th"));
 
-                    //return tdCollection[2].Text.Replace("\r\n", string.Empty).Trim().ToUpper().Equals(status.ToUpper());
-
-                    var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
-                    var tdCollection = _driver.FindElement(By.XPath(statusPath));
-                    return tdCollection.Text.Trim().ToUpper().Contains(status.ToUpper());
+                    if (tableHeader.Text.Replace("\r\n", string.Empty).Trim().ToUpper().Equals(petName.ToUpper()))
+                    {
+                        var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
+                        var tdCollection = _driver.FindElement(By.XPath(statusPath));
+                        return tdCollection.Text.Trim().ToUpper().Contains(status.ToUpper());
+                    }
                 }
-            }
 
-            return false;
+                return false;
+            });
         }
 
         public bool VerifyTheApplicationIsNotAvailable(string petName)
@@ -143,21 +145,28 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
         public void ClickViewLink(string petName)
         {
-            IWebElement? lnkview = null;
-
-            var rowCount = tableRows.Count - 1;
-
-            for (var elementIndex = 0; elementIndex <= rowCount; elementIndex++)
+            // Re-query the row collections on each attempt so a DOM re-render between
+            // capturing the rows and clicking the link does not throw a stale element error.
+            var lnkview = _driver.RetryOnStaleElement(() =>
             {
-                var tableHeader = tableHeaderRows.ElementAt(elementIndex).Text.Replace("\r\n", string.Empty).Trim().ToUpper();
+                IWebElement? link = null;
 
-                if (tableHeader.Equals(petName.ToUpper()))
+                var rowCount = tableRows.Count - 1;
+
+                for (var elementIndex = 0; elementIndex <= rowCount; elementIndex++)
                 {
-                    lnkview = tableActionRows.ElementAt(elementIndex);
+                    var tableHeader = tableHeaderRows.ElementAt(elementIndex).Text.Replace("\r\n", string.Empty).Trim().ToUpper();
 
-                    break;
+                    if (tableHeader.Equals(petName.ToUpper()))
+                    {
+                        link = tableActionRows.ElementAt(elementIndex);
+
+                        break;
+                    }
                 }
-            }
+
+                return link;
+            });
 
             lnkview?.Click();
             Thread.Sleep(2000);

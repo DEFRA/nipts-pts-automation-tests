@@ -41,6 +41,33 @@ namespace nipts_pts_automation_tests.HelperMethods
             }
         }
 
+        /// <summary>
+        /// Executes the supplied function and retries it if a
+        /// <see cref="StaleElementReferenceException"/> is thrown. This protects against
+        /// elements being re-rendered between being located and being used, which happens
+        /// frequently on slower (e.g. mobile/Android) BrowserStack sessions.
+        /// The function should re-query any elements it uses on each attempt so that fresh,
+        /// non-stale references are obtained.
+        /// </summary>
+        public static TResult RetryOnStaleElement<TResult>(this IWebDriver driver, Func<TResult> action, int maxAttempts = 3)
+        {
+            StaleElementReferenceException? lastException = null;
+            for (var attempt = 1; attempt <= maxAttempts; attempt++)
+            {
+                try
+                {
+                    return action();
+                }
+                catch (StaleElementReferenceException ex)
+                {
+                    lastException = ex;
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
+                }
+            }
+
+            throw lastException ?? new StaleElementReferenceException("Element remained stale after retries");
+        }
+
         public static TResult WaitForElementCondition<TResult>(this IWebDriver driver, Func<IWebDriver, TResult> condition)
         {
             try
