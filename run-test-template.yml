@@ -91,7 +91,11 @@ jobs:
         encoding: auto
         writeBOM: true
         escapeType: json
-        actionOnMissing: fail
+        # warn rather than fail: mobile runs intentionally pass an empty BSBrowserVersion.
+        # Once all artifacts are rebuilt with the updated appsettings.json (which no longer
+        # contains non-secret tokens), only BrowserStackUserName and BrowserStackAccessKey
+        # tokens will remain and both will always be present from Key Vault.
+        actionOnMissing: warn
         keepToken: false
         tokenPrefix: '#{{'
         tokenSuffix: '}}'
@@ -110,10 +114,14 @@ jobs:
         $json.AppSettings.TestConfiguration.Headless         = $true
         $json.AppSettings.TestConfiguration.DeviceName       = "$(DeviceName)"
         $json.AppSettings.TestConfiguration.BSOSVersion      = "$(BSOSVersion)"
-        $json.AppSettings.TestConfiguration.BSBrowserVersion = "$(BSBrowserVersion)"
         $json.AppSettings.TestConfiguration.Build            = "$(Build)"
         $json.AppSettings.UiFrameworkConfiguration.SeleniumGrid = "$(SeleniumGrid)"
         $json.AppSettings.UiFrameworkConfiguration.Target    = "$(Target)"
+
+        # BSBrowserVersion is intentionally empty for mobile/Android runs.
+        if (-not [string]::IsNullOrEmpty("$(BSBrowserVersion)")) {
+          $json.AppSettings.TestConfiguration.BSBrowserVersion = "$(BSBrowserVersion)"
+        }
 
         $json | ConvertTo-Json -Depth 10 | Set-Content $filePath
         Write-Host "CI settings injected into appsettings.json successfully."
