@@ -168,7 +168,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                 return link;
             });
 
-            lnkview?.Click();
+            if (lnkview != null)
+                _driver.SafeClick(lnkview);
             Thread.Sleep(2000);
         }
 
