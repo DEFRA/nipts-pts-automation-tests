@@ -25,19 +25,35 @@ namespace nipts_pts_automation_tests.Configuration
         {
             var builder = new ConfigurationBuilder();
             builder.AddJsonFile("appsettings.json", false, true);
+            // Optional local overrides for developers (never committed - see .gitignore).
+            builder.AddJsonFile("appsettings.local.json", true, true);
+            // Allow secrets (e.g. BrowserStack credentials) to be supplied via environment
+            // variables, e.g. AppSettings__BrowserStackConfiguration__CloudDeviceUserKey.
+            builder.AddEnvironmentVariables();
             var settings = builder.Build();
             DebugAppSettings(settings);
             return settings.GetSection("AppSettings").Get<BaseConfiguration>();
         }
+
+        // Config key fragments whose values must never be written to logs/console.
+        private static readonly string[] _sensitiveKeyParts =
+        [
+            "Password", "UserKey", "AccessKey", "ConnString", "Connectionstring", "Secret", "Token"
+        ];
 
         private static void DebugAppSettings(IConfigurationRoot configurationRoot)
         {
             Console.WriteLine("Appsettings.json >>>>>>>>>>");
             foreach (var keyValuePair in configurationRoot.GetSection("AppSettings").AsEnumerable())
             {
-                Console.WriteLine($"{keyValuePair.Key} === {keyValuePair.Value}");
+                var value = IsSensitive(keyValuePair.Key) ? "***REDACTED***" : keyValuePair.Value;
+                Console.WriteLine($"{keyValuePair.Key} === {value}");
             }
         }
+
+        private static bool IsSensitive(string key) =>
+            !string.IsNullOrEmpty(key) &&
+            _sensitiveKeyParts.Any(part => key.Contains(part, StringComparison.OrdinalIgnoreCase));
         private static void UiFrameworkConfigurationBinding()
         {
             FrameworkConfiguration.Configuration = BaseConfiguration.UiFrameworkConfiguration;

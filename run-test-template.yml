@@ -40,22 +40,16 @@ jobs:
         BrowserVersion: ${{parameters.BrowserVersionName}}
 
   steps:
-    
-    # - task: AzureKeyVault@2
-    #   displayName: Get Secrets from TST Keyvault 
-    #   inputs:
-    #     azureSubscription: ${{ parameters.envConfigParam}}
-    #     azureSubscription: 'AZD-TRD-TST1'
-    #     connectedServiceName: 'AZD-TRD-TST1'
-    #     keyvaultName: 'TSTTRDINFKV1001'
-    #     SecretsFilter: 'RemosDbConnectionString' #-'DBConnectionstring'
-    #     RunAsPreJob: false
 
-    # - powershell: echo "##vso[task.setvariable variable= RemosDbConnectionString;isOutput=true]$(RemosDbConnectionString)"
-    #   name: setvarStep
-      
-    # - script: echo $(RemosDbConnectionString)
-    #   name: echovar
+    - task: AzureKeyVault@2
+      displayName: 'Get BrowserStack credentials from Key Vault'
+      inputs:
+        # NOTE: confirm this is the correct service connection for the subscription
+        # that hosts DEVTRDINFKV1001 (following the AZD-TRD-<ENV>1 naming convention).
+        azureSubscription: 'AZD-TRD-DEV1'
+        KeyVaultName: 'DEVTRDINFKV1001'
+        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password'
+        RunAsPreJob: false
 
     - task: DownloadBuildArtifacts@0
       displayName: TestArtifact
@@ -85,14 +79,19 @@ jobs:
         overwriteExistingFiles: true
     
     - task: replacetokens@3
-      displayName: Replace Tokens
+      displayName: 'Inject BrowserStack credentials from Key Vault'
+      env:
+        # Secret variables are not exposed to tasks as environment variables by
+        # default, so map the Key Vault secrets explicitly for token replacement.
+        BrowserStackUserName: $(Nipts-BrowserStack-Username)
+        BrowserStackAccessKey: $(Nipts-BrowserStack-Password)
       inputs:
         rootDirectory: '$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests'
         targetFiles: 'appsettings.json'
         encoding: auto
         writeBOM: true
         escapeType: json
-        actionOnMissing: warn
+        actionOnMissing: fail
         keepToken: false
         tokenPrefix: '#{{'
         tokenSuffix: '}}'
@@ -100,11 +99,40 @@ jobs:
         enableTelemetry: false
 
     - powershell: |
-        $jsonString = Get-Content "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/appsettings.json" | Out-String
-        $tr = $jsonString.replace("`"DBConnectionstring`": `"`"", "`"DBConnectionstring`": `"`"");
-        $tr | Out-file -Filepath "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/appsettings.json"
-        Write-Host $tr
-      displayName: 'Display appsettings.json'
+        # Inject CI-specific settings into appsettings.json.
+        # appsettings.json holds local-runnable defaults; this step overrides only
+        # what differs in CI without using tokens for non-secret values.
+        $filePath = "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/appsettings.json"
+        $json = Get-Content $filePath | ConvertFrom-Json
+
+        $json.AppSettings.TestConfiguration.ComPortalUrl     = "https://$(Environment)-check-a-pet-from-gb-to-ni.azure.defra.cloud/"
+        $json.AppSettings.TestConfiguration.AppPortalUrl     = "https://$(Environment)-take-your-pet-from-gb-to-ni.azure.defra.cloud/"
+        $json.AppSettings.TestConfiguration.Headless         = $true
+        $json.AppSettings.TestConfiguration.DeviceName       = "$(DeviceName)"
+        $json.AppSettings.TestConfiguration.BSOSVersion      = "$(BSOSVersion)"
+        $json.AppSettings.TestConfiguration.BSBrowserVersion = "$(BSBrowserVersion)"
+        $json.AppSettings.TestConfiguration.Build            = "$(Build)"
+        $json.AppSettings.UiFrameworkConfiguration.SeleniumGrid = "$(SeleniumGrid)"
+        $json.AppSettings.UiFrameworkConfiguration.Target    = "$(Target)"
+
+        $json | ConvertTo-Json -Depth 10 | Set-Content $filePath
+        Write-Host "CI settings injected into appsettings.json successfully."
+      displayName: 'Inject CI settings into appsettings.json'
+
+    - powershell: |
+        # Verify no unreplaced tokens remain, then print a redacted copy to logs.
+        $content = Get-Content "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/appsettings.json" | Out-String
+        if ($content -match '#\{\{') {
+          Write-Error "appsettings.json still contains unreplaced tokens - check the Key Vault task and secret names."
+          exit 1
+        }
+        Write-Host "Token replacement verified - no unreplaced tokens found."
+
+        $sensitiveKeys = @('UserName', 'UserKey', 'Password', 'AccessKey', 'ConnString', 'ConnectionString', 'Secret', 'Token')
+        $pattern = '(' + ($sensitiveKeys -join '|') + ')'
+        $redacted = $content -replace "(`"[^`"]*$pattern[^`"]*`"\s*:\s*)`"[^`"]*`"", '$1"***REDACTED***"'
+        Write-Host $redacted
+      displayName: 'Verify and display appsettings.json'
     
     - powershell: |
         Set-Location -Path "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests"
