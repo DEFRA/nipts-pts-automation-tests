@@ -156,7 +156,36 @@ jobs:
         $redacted = $content -replace "(`"[^`"]*$pattern[^`"]*`"\s*:\s*)`"[^`"]*`"", '$1"***REDACTED***"'
         Write-Host $redacted
       displayName: 'Verify and display appsettings.json'
-    
+
+    - powershell: |
+        # Verify the BrowserStack credentials themselves are valid by calling the
+        # Automate plan API directly. This isolates an auth/credential problem from
+        # the rest of the test stack so failures are diagnosed quickly. The username
+        # and access key are never written to the log.
+        if ([string]::IsNullOrWhiteSpace($env:BS_USERNAME) -or [string]::IsNullOrWhiteSpace($env:BS_ACCESSKEY)) {
+          Write-Error "BrowserStack credentials are empty - check the Key Vault secrets 'Nipts-BrowserStack-Username' and 'Nipts-BrowserStack-Password'."
+          exit 1
+        }
+
+        $pair = "$($env:BS_USERNAME):$($env:BS_ACCESSKEY)"
+        $b64  = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($pair))
+        try {
+          $resp = Invoke-RestMethod -Uri 'https://api.browserstack.com/automate/plan.json' `
+                    -Headers @{ Authorization = "Basic $b64" } -Method Get
+          Write-Host "BrowserStack auth OK."
+          Write-Host "Parallel sessions running: $($resp.parallel_sessions_running) / max allowed $($resp.parallel_sessions_max_allowed)"
+          Write-Host "Queued sessions: $($resp.queued_sessions) / max queued $($resp.parallel_sessions_max_allowed)"
+        }
+        catch {
+          $status = $_.Exception.Response.StatusCode.value__
+          Write-Error "BrowserStack credential check failed (HTTP $status). The credentials in Key Vault are likely invalid or expired."
+          exit 1
+        }
+      env:
+        BS_USERNAME: $(Nipts-BrowserStack-Username)
+        BS_ACCESSKEY: $(Nipts-BrowserStack-Password)
+      displayName: 'Verify BrowserStack credentials'
+
     - powershell: |
         Set-Location -Path "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests"
         dotnet test "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml"
