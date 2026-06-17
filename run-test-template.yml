@@ -38,13 +38,6 @@ jobs:
         TestDevice: ${{parameters.TestDeviceName}}
         OSVersion: ${{parameters.OSVersionName}}
         BrowserVersion: ${{parameters.BrowserVersionName}}
-    # Resolve the branch to download the test artifact from at runtime so PR
-    # validation tests the PR's own build, not a hardcoded branch. For PR runs
-    # System.PullRequest.SourceBranch is the source branch (the build pipeline
-    # builds branch heads, not the merge ref); otherwise fall back to the branch
-    # that triggered this run, then finally to the branchName parameter.
-    - name: artifactBranch
-      value: $[ coalesce(variables['System.PullRequest.SourceBranch'], variables['Build.SourceBranch'], '${{ parameters.branchName }}') ]
 
   steps:
 
@@ -65,7 +58,7 @@ jobs:
         project: '023a3c95-20fd-49b4-b068-4706843ba0d7'
         pipeline: '7383'
         buildVersionToDownload: 'latestFromBranch'
-        branchName: $(artifactBranch)
+        branchName: ${{ parameters.branchName }}
         downloadType: 'single'
         artifactName: 'drop'
         downloadPath: '$(System.ArtifactsDirectory)'
