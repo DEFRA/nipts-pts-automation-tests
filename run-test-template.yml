@@ -19,6 +19,14 @@ parameters:
     type: string
   - name: targetBrowserName
     type: string
+  # Caps how many tests run in parallel within a single job. Each parallel test
+  # opens its own BrowserStack session, so this directly bounds the job's session
+  # demand. Overrides NumberOfTestWorkers in the artifact's runsettings at run time.
+  # Keep the total across all concurrently-running jobs under the account's parallel
+  # session limit (currently 13) to avoid "Remote WebDriver not been set properly".
+  - name: maxParallelSessions
+    type: number
+    default: 2
 
 jobs: 
 
@@ -228,7 +236,10 @@ jobs:
 
     - powershell: |
         Set-Location -Path "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests"
-        dotnet test "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml"
+        # NUnit.NumberOfTestWorkers is overridden on the command line to cap how many
+        # BrowserStack sessions this job opens concurrently, regardless of the value
+        # baked into the artifact's runsettings.
+        dotnet test "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml" -- NUnit.NumberOfTestWorkers=${{ parameters.maxParallelSessions }}
       displayName: 'Execute Tests'
       failOnStderr: true
       ignoreLASTEXITCODE: true
