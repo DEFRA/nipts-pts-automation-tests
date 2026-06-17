@@ -180,6 +180,53 @@ jobs:
       displayName: 'Verify BrowserStack credentials'
 
     - powershell: |
+        # Capacity gate: the PR triggers many test pipelines at once, which together
+        # exceed the BrowserStack parallel-session limit and cause sessions to fail
+        # to start ("Remote WebDriver not been set properly"). This step throttles
+        # globally - every test job funnels through this template, so it waits here
+        # until a session slot is free before launching the tests.
+        $pair    = "$($env:BS_USERNAME):$($env:BS_ACCESSKEY)"
+        $b64     = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($pair))
+        $headers = @{ Authorization = "Basic $b64" }
+
+        # Random initial jitter (0-45s) so jobs that start together don't poll and
+        # claim slots in lockstep.
+        Start-Sleep -Seconds (Get-Random -Minimum 0 -Maximum 45)
+
+        $maxWaitMinutes = 40
+        $deadline       = (Get-Date).AddMinutes($maxWaitMinutes)
+
+        while ($true) {
+          try {
+            $plan    = Invoke-RestMethod -Uri 'https://api.browserstack.com/automate/plan.json' -Headers $headers -Method Get
+            $running = [int]$plan.parallel_sessions_running
+            $max     = [int]$plan.parallel_sessions_max_allowed
+          }
+          catch {
+            Write-Host "Could not query BrowserStack plan ($($_.Exception.Message)); proceeding without gating."
+            break
+          }
+
+          if ($running -lt $max) {
+            Write-Host "Slot available ($running/$max sessions running). Proceeding to tests."
+            break
+          }
+
+          if ((Get-Date) -ge $deadline) {
+            Write-Host "##vso[task.logissue type=warning]Waited $maxWaitMinutes min for a free BrowserStack slot ($running/$max in use). Proceeding anyway."
+            break
+          }
+
+          $wait = Get-Random -Minimum 20 -Maximum 40
+          Write-Host "All $max sessions in use ($running/$max). Waiting $wait s before re-checking..."
+          Start-Sleep -Seconds $wait
+        }
+      env:
+        BS_USERNAME: $(Nipts-BrowserStack-Username)
+        BS_ACCESSKEY: $(Nipts-BrowserStack-Password)
+      displayName: 'Wait for free BrowserStack session slot'
+
+    - powershell: |
         Set-Location -Path "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests"
         dotnet test "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml"
       displayName: 'Execute Tests'
