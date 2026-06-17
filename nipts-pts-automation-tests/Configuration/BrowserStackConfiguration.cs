@@ -6,7 +6,6 @@
         public string CloudCountryCode { get; set; }
         public string CloudDeviceUserName { get; set; }
         public string CloudDeviceUserKey { get; set; }
-        public string CloudDeviceIdentifier { get; set; }
     }
 
 }

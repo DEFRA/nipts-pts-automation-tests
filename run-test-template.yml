@@ -19,6 +19,14 @@ parameters:
     type: string
   - name: targetBrowserName
     type: string
+  # Caps how many tests run in parallel within a single job. Each parallel test
+  # opens its own BrowserStack session, so this directly bounds the job's session
+  # demand. Overrides NumberOfTestWorkers in the artifact's runsettings at run time.
+  # Keep the total across all concurrently-running jobs under the account's parallel
+  # session limit (currently 13) to avoid "Remote WebDriver not been set properly".
+  - name: maxParallelSessions
+    type: number
+    default: 2
 
 jobs: 
 
@@ -40,22 +48,16 @@ jobs:
         BrowserVersion: ${{parameters.BrowserVersionName}}
 
   steps:
-    
-    # - task: AzureKeyVault@2
-    #   displayName: Get Secrets from TST Keyvault 
-    #   inputs:
-    #     azureSubscription: ${{ parameters.envConfigParam}}
-    #     azureSubscription: 'AZD-TRD-TST1'
-    #     connectedServiceName: 'AZD-TRD-TST1'
-    #     keyvaultName: 'TSTTRDINFKV1001'
-    #     SecretsFilter: 'RemosDbConnectionString' #-'DBConnectionstring'
-    #     RunAsPreJob: false
 
-    # - powershell: echo "##vso[task.setvariable variable= RemosDbConnectionString;isOutput=true]$(RemosDbConnectionString)"
-    #   name: setvarStep
-      
-    # - script: echo $(RemosDbConnectionString)
-    #   name: echovar
+    - task: AzureKeyVault@2
+      displayName: 'Get BrowserStack credentials from Key Vault'
+      inputs:
+        # NOTE: confirm this is the correct service connection for the subscription
+        # that hosts DEVTRDINFKV1001 (following the AZD-TRD-<ENV>1 naming convention).
+        azureSubscription: 'AZD-TRD-DEV1'
+        KeyVaultName: 'DEVTRDINFKV1001'
+        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password'
+        RunAsPreJob: false
 
     - task: DownloadBuildArtifacts@0
       displayName: TestArtifact
@@ -85,13 +87,22 @@ jobs:
         overwriteExistingFiles: true
     
     - task: replacetokens@3
-      displayName: Replace Tokens
+      displayName: 'Inject BrowserStack credentials from Key Vault'
+      env:
+        # Secret variables are not exposed to tasks as environment variables by
+        # default, so map the Key Vault secrets explicitly for token replacement.
+        BrowserStackUserName: $(Nipts-BrowserStack-Username)
+        BrowserStackAccessKey: $(Nipts-BrowserStack-Password)
       inputs:
         rootDirectory: '$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests'
         targetFiles: 'appsettings.json'
         encoding: auto
         writeBOM: true
         escapeType: json
+        # warn rather than fail: mobile runs intentionally pass an empty BSBrowserVersion.
+        # Once all artifacts are rebuilt with the updated appsettings.json (which no longer
+        # contains non-secret tokens), only BrowserStackUserName and BrowserStackAccessKey
+        # tokens will remain and both will always be present from Key Vault.
         actionOnMissing: warn
         keepToken: false
         tokenPrefix: '#{{'
@@ -100,15 +111,135 @@ jobs:
         enableTelemetry: false
 
     - powershell: |
-        $jsonString = Get-Content "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/appsettings.json" | Out-String
-        $tr = $jsonString.replace("`"DBConnectionstring`": `"`"", "`"DBConnectionstring`": `"`"");
-        $tr | Out-file -Filepath "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/appsettings.json"
-        Write-Host $tr
-      displayName: 'Display appsettings.json'
-    
+        # Inject CI-specific settings into appsettings.json.
+        # appsettings.json holds local-runnable defaults; this step overrides only
+        # what differs in CI without using tokens for non-secret values.
+        # BrowserStack credentials are always written here so this step works
+        # regardless of whether the downloaded artifact was built before or after
+        # the token-placeholder approach was introduced.
+        $filePath = "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/appsettings.json"
+        $json = Get-Content $filePath | ConvertFrom-Json
+
+        $json.AppSettings.TestConfiguration.ComPortalUrl     = "https://$(Environment)-check-a-pet-from-gb-to-ni.azure.defra.cloud/"
+        $json.AppSettings.TestConfiguration.AppPortalUrl     = "https://$(Environment)-take-your-pet-from-gb-to-ni.azure.defra.cloud/"
+        $json.AppSettings.TestConfiguration.Headless         = $true
+        $json.AppSettings.TestConfiguration.DeviceName       = "$(DeviceName)"
+        $json.AppSettings.TestConfiguration.BSOSVersion      = "$(BSOSVersion)"
+        $json.AppSettings.TestConfiguration.Build            = "$(Build)"
+        $json.AppSettings.UiFrameworkConfiguration.SeleniumGrid = "$(SeleniumGrid)"
+        $json.AppSettings.UiFrameworkConfiguration.Target    = "$(Target)"
+        $json.AppSettings.BrowserStackConfiguration.CloudDeviceUserName = $env:BS_USERNAME
+        $json.AppSettings.BrowserStackConfiguration.CloudDeviceUserKey  = $env:BS_ACCESSKEY
+
+        # BSBrowserVersion is intentionally empty for mobile/Android runs.
+        if (-not [string]::IsNullOrEmpty("$(BSBrowserVersion)")) {
+          $json.AppSettings.TestConfiguration.BSBrowserVersion = "$(BSBrowserVersion)"
+        }
+
+        $json | ConvertTo-Json -Depth 10 | Set-Content $filePath
+        Write-Host "CI settings injected into appsettings.json successfully."
+      env:
+        BS_USERNAME: $(Nipts-BrowserStack-Username)
+        BS_ACCESSKEY: $(Nipts-BrowserStack-Password)
+      displayName: 'Inject CI settings into appsettings.json'
+
+    - powershell: |
+        # Verify no unreplaced tokens remain, then print a redacted copy to logs.
+        $content = Get-Content "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/appsettings.json" | Out-String
+        if ($content -match '#\{\{') {
+          Write-Error "appsettings.json still contains unreplaced tokens - check the Key Vault task and secret names."
+          exit 1
+        }
+        Write-Host "Token replacement verified - no unreplaced tokens found."
+
+        $sensitiveKeys = @('UserName', 'UserKey', 'Password', 'AccessKey', 'ConnString', 'ConnectionString', 'Secret', 'Token')
+        $pattern = '(' + ($sensitiveKeys -join '|') + ')'
+        $redacted = $content -replace "(`"[^`"]*$pattern[^`"]*`"\s*:\s*)`"[^`"]*`"", '$1"***REDACTED***"'
+        Write-Host $redacted
+      displayName: 'Verify and display appsettings.json'
+
+    - powershell: |
+        # Verify the BrowserStack credentials themselves are valid by calling the
+        # Automate plan API directly. This isolates an auth/credential problem from
+        # the rest of the test stack so failures are diagnosed quickly. The username
+        # and access key are never written to the log.
+        if ([string]::IsNullOrWhiteSpace($env:BS_USERNAME) -or [string]::IsNullOrWhiteSpace($env:BS_ACCESSKEY)) {
+          Write-Error "BrowserStack credentials are empty - check the Key Vault secrets 'Nipts-BrowserStack-Username' and 'Nipts-BrowserStack-Password'."
+          exit 1
+        }
+
+        $pair = "$($env:BS_USERNAME):$($env:BS_ACCESSKEY)"
+        $b64  = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($pair))
+        try {
+          $resp = Invoke-RestMethod -Uri 'https://api.browserstack.com/automate/plan.json' `
+                    -Headers @{ Authorization = "Basic $b64" } -Method Get
+          Write-Host "BrowserStack auth OK."
+          Write-Host "Parallel sessions running: $($resp.parallel_sessions_running) / max allowed $($resp.parallel_sessions_max_allowed)"
+          Write-Host "Queued sessions: $($resp.queued_sessions) / max queued $($resp.parallel_sessions_max_allowed)"
+        }
+        catch {
+          $status = $_.Exception.Response.StatusCode.value__
+          Write-Error "BrowserStack credential check failed (HTTP $status). The credentials in Key Vault are likely invalid or expired."
+          exit 1
+        }
+      env:
+        BS_USERNAME: $(Nipts-BrowserStack-Username)
+        BS_ACCESSKEY: $(Nipts-BrowserStack-Password)
+      displayName: 'Verify BrowserStack credentials'
+
+    - powershell: |
+        # Capacity gate: the PR triggers many test pipelines at once, which together
+        # exceed the BrowserStack parallel-session limit and cause sessions to fail
+        # to start ("Remote WebDriver not been set properly"). This step throttles
+        # globally - every test job funnels through this template, so it waits here
+        # until a session slot is free before launching the tests.
+        $pair    = "$($env:BS_USERNAME):$($env:BS_ACCESSKEY)"
+        $b64     = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($pair))
+        $headers = @{ Authorization = "Basic $b64" }
+
+        # Random initial jitter (0-45s) so jobs that start together don't poll and
+        # claim slots in lockstep.
+        Start-Sleep -Seconds (Get-Random -Minimum 0 -Maximum 45)
+
+        $maxWaitMinutes = 40
+        $deadline       = (Get-Date).AddMinutes($maxWaitMinutes)
+
+        while ($true) {
+          try {
+            $plan    = Invoke-RestMethod -Uri 'https://api.browserstack.com/automate/plan.json' -Headers $headers -Method Get
+            $running = [int]$plan.parallel_sessions_running
+            $max     = [int]$plan.parallel_sessions_max_allowed
+          }
+          catch {
+            Write-Host "Could not query BrowserStack plan ($($_.Exception.Message)); proceeding without gating."
+            break
+          }
+
+          if ($running -lt $max) {
+            Write-Host "Slot available ($running/$max sessions running). Proceeding to tests."
+            break
+          }
+
+          if ((Get-Date) -ge $deadline) {
+            Write-Host "##vso[task.logissue type=warning]Waited $maxWaitMinutes min for a free BrowserStack slot ($running/$max in use). Proceeding anyway."
+            break
+          }
+
+          $wait = Get-Random -Minimum 20 -Maximum 40
+          Write-Host "All $max sessions in use ($running/$max). Waiting $wait s before re-checking..."
+          Start-Sleep -Seconds $wait
+        }
+      env:
+        BS_USERNAME: $(Nipts-BrowserStack-Username)
+        BS_ACCESSKEY: $(Nipts-BrowserStack-Password)
+      displayName: 'Wait for free BrowserStack session slot'
+
     - powershell: |
         Set-Location -Path "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests"
-        dotnet test "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml"
+        # NUnit.NumberOfTestWorkers is overridden on the command line to cap how many
+        # BrowserStack sessions this job opens concurrently, regardless of the value
+        # baked into the artifact's runsettings.
+        dotnet test "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml" -- NUnit.NumberOfTestWorkers=${{ parameters.maxParallelSessions }}
       displayName: 'Execute Tests'
       failOnStderr: true
       ignoreLASTEXITCODE: true

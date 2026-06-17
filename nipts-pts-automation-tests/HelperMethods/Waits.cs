@@ -41,6 +41,103 @@ namespace nipts_pts_automation_tests.HelperMethods
             }
         }
 
+        /// <summary>
+        /// Executes the supplied function and retries it if a
+        /// <see cref="StaleElementReferenceException"/> is thrown. This protects against
+        /// elements being re-rendered between being located and being used, which happens
+        /// frequently on slower (e.g. mobile/Android) BrowserStack sessions.
+        /// The function should re-query any elements it uses on each attempt so that fresh,
+        /// non-stale references are obtained.
+        /// </summary>
+        public static TResult RetryOnStaleElement<TResult>(this IWebDriver driver, Func<TResult> action, int maxAttempts = 3)
+        {
+            StaleElementReferenceException? lastException = null;
+            for (var attempt = 1; attempt <= maxAttempts; attempt++)
+            {
+                try
+                {
+                    return action();
+                }
+                catch (StaleElementReferenceException ex)
+                {
+                    lastException = ex;
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
+                }
+            }
+
+            throw lastException ?? new StaleElementReferenceException("Element remained stale after retries");
+        }
+
+        private static readonly By TimeoutOverlayBy = By.CssSelector("#hmrc-timeout-overlay, .hmrc-timeout-overlay");
+        private static readonly By TimeoutKeepSignedInBy = By.CssSelector("#hmrc-timeout-keep-signin-btn, .hmrc-timeout-keep-signin-btn");
+
+        /// <summary>
+        /// The HMRC session timeout warning renders a full page overlay (id="hmrc-timeout-overlay")
+        /// that intercepts clicks. It appears more frequently on slower (e.g. mobile/Android)
+        /// BrowserStack sessions. This keeps the user signed in (when the option is available) and
+        /// waits for the overlay to disappear so subsequent clicks are not intercepted. It is
+        /// best-effort and never throws, so callers can safely invoke it before any click.
+        /// </summary>
+        public static void DismissTimeoutOverlayIfPresent(this IWebDriver driver)
+        {
+            try
+            {
+                var overlays = driver.FindElements(TimeoutOverlayBy);
+                if (!overlays.Any(o => o.Displayed))
+                    return;
+
+                // Keep the session alive by clicking "Stay signed in" when it is available.
+                var keepSignedIn = driver.FindElements(TimeoutKeepSignedInBy).FirstOrDefault(b => b.Displayed);
+                if (keepSignedIn != null)
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", keepSignedIn);
+
+                WebDriverWait driverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(GlobalWaits));
+                driverWait.Until(d =>
+                {
+                    try
+                    {
+                        var current = d.FindElements(TimeoutOverlayBy);
+                        return current.Count == 0 || current.All(o => !o.Displayed);
+                    }
+                    catch (StaleElementReferenceException)
+                    {
+                        return true;
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                // Best-effort dismissal - never fail a test purely because overlay handling errored.
+            }
+        }
+
+        /// <summary>
+        /// Clicks an element after dismissing the HMRC session timeout overlay if it is
+        /// intercepting clicks. Falls back to a JavaScript click when the native click is still
+        /// intercepted, which is common on slower mobile/Android sessions.
+        /// </summary>
+        public static void SafeClick(this IWebDriver driver, IWebElement element)
+        {
+            driver.DismissTimeoutOverlayIfPresent();
+            try
+            {
+                element.Click();
+            }
+            catch (ElementClickInterceptedException)
+            {
+                driver.DismissTimeoutOverlayIfPresent();
+                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView({block: 'center'});", element);
+                try
+                {
+                    element.Click();
+                }
+                catch (ElementClickInterceptedException)
+                {
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", element);
+                }
+            }
+        }
+
         public static TResult WaitForElementCondition<TResult>(this IWebDriver driver, Func<IWebDriver, TResult> condition)
         {
             try
