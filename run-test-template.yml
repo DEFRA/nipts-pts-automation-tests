@@ -135,6 +135,12 @@ jobs:
         # text and strip the BOM before parsing.
         $raw  = [System.IO.File]::ReadAllText($filePath)
         $raw  = $raw.TrimStart([char]0xFEFF)
+        # Windows PowerShell 5.1's ConvertFrom-Json (JavaScriptSerializer) is
+        # stricter than .NET's configuration JSON reader: it rejects trailing
+        # commas that the test app itself tolerates (AddJsonFile allows them).
+        # Strip any trailing comma before a closing } or ] so an artifact built
+        # before the appsettings.json fix still parses here.
+        $raw  = [regex]::Replace($raw, ',(\s*[}\]])', '$1')
         $json = $raw | ConvertFrom-Json
 
         $json.AppSettings.TestConfiguration.ComPortalUrl     = "https://$(Environment)-check-a-pet-from-gb-to-ni.azure.defra.cloud/"
@@ -145,8 +151,13 @@ jobs:
         $json.AppSettings.TestConfiguration.Build            = "$(Build)"
         $json.AppSettings.UiFrameworkConfiguration.SeleniumGrid = "$(SeleniumGrid)"
         $json.AppSettings.UiFrameworkConfiguration.Target    = "$(Target)"
-        $json.AppSettings.BrowserStackConfiguration.CloudDeviceUserName = $env:BS_USERNAME
-        $json.AppSettings.BrowserStackConfiguration.CloudDeviceUserKey  = $env:BS_ACCESSKEY
+        # BrowserStack credentials may be absent from the artifact's appsettings.json
+        # (they are normally populated from Key Vault at runtime), so add/overwrite
+        # the properties with Add-Member -Force rather than a plain assignment, which
+        # throws if the property does not already exist.
+        $bsConfig = $json.AppSettings.BrowserStackConfiguration
+        $bsConfig | Add-Member -NotePropertyName CloudDeviceUserName -NotePropertyValue $env:BS_USERNAME -Force
+        $bsConfig | Add-Member -NotePropertyName CloudDeviceUserKey  -NotePropertyValue $env:BS_ACCESSKEY -Force
 
         # BSBrowserVersion is intentionally empty for mobile/Android runs.
         if (-not [string]::IsNullOrEmpty("$(BSBrowserVersion)")) {
