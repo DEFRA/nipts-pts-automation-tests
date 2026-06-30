@@ -54,7 +54,7 @@ jobs:
       inputs:
         # NOTE: confirm this is the correct service connection for the subscription
         # that hosts TSTTRDINFKV1001 (following the AZD-TRD-<ENV>1 naming convention).
-        azureSubscription: 'AZD-TRD-DEV1'
+        azureSubscription: 'AZD-TRD-TST1'
         KeyVaultName: 'TSTTRDINFKV1001'
         # PTS-CP-OCP-APIM-SUBSCRIPTION-KEY  -> checker API (ApiEndpoint5)
         # Pts-Apim-SubscriptionKey          -> all other APIs
