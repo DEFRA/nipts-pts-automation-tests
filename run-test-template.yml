@@ -59,9 +59,9 @@ jobs:
         # PTS-CP-OCP-APIM-SUBSCRIPTION-KEY  -> checker API (ApiEndpoint5)
         # Pts-Apim-SubscriptionKey          -> all other APIs
         # Pts-B2C-Tenant-ClientSecret       -> backend (PTS tenant) bearer token audience
-        # Pts-B2C-Backend-Username/Password -> backend-enrolled test user for the API token login
+        # Nipts-Automations-Username/Password -> backend-enrolled test user for the API token login
         # PTS-CP-MAGIC-PASSWORD             -> shared sign-in password (TestConfiguration.EnvPassword)
-        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password,PTS-CP-OCP-APIM-SUBSCRIPTION-KEY,Pts-Apim-SubscriptionKey,Pts-B2C-Tenant-ClientSecret,Pts-B2C-Backend-Username,Pts-B2C-Backend-Password,PTS-CP-MAGIC-PASSWORD'
+        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password,PTS-CP-OCP-APIM-SUBSCRIPTION-KEY,Pts-Apim-SubscriptionKey,Pts-B2C-Tenant-ClientSecret,Nipts-Automations-Username,Nipts-Automations-Password,PTS-CP-MAGIC-PASSWORD'
         RunAsPreJob: false
 
     - task: DownloadBuildArtifacts@0
@@ -101,8 +101,8 @@ jobs:
         PtsCpOcpApimSubscriptionKey: $(PTS-CP-OCP-APIM-SUBSCRIPTION-KEY)
         PtsApimSubscriptionKey: $(Pts-Apim-SubscriptionKey)
         B2CClientSecret: $(Pts-B2C-Tenant-ClientSecret)
-        B2CBackendUsername: $(Pts-B2C-Backend-Username)
-        B2CBackendPassword: $(Pts-B2C-Backend-Password)
+        B2CBackendUsername: $(Nipts-Automations-Username)
+        B2CBackendPassword: $(Nipts-Automations-Password)
         PtsCpMagicPassword: $(PTS-CP-MAGIC-PASSWORD)
       inputs:
         rootDirectory: '$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests'
