@@ -129,7 +129,13 @@ jobs:
         # regardless of whether the downloaded artifact was built before or after
         # the token-placeholder approach was introduced.
         $filePath = "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/appsettings.json"
-        $json = Get-Content $filePath | ConvertFrom-Json
+        # The preceding replacetokens task writes a UTF-8 BOM (writeBOM: true).
+        # Windows PowerShell 5.1 reads that BOM into the first line, which breaks
+        # ConvertFrom-Json ("Invalid JSON primitive"). Read the whole file as raw
+        # text and strip the BOM before parsing.
+        $raw  = [System.IO.File]::ReadAllText($filePath)
+        $raw  = $raw.TrimStart([char]0xFEFF)
+        $json = $raw | ConvertFrom-Json
 
         $json.AppSettings.TestConfiguration.ComPortalUrl     = "https://$(Environment)-check-a-pet-from-gb-to-ni.azure.defra.cloud/"
         $json.AppSettings.TestConfiguration.AppPortalUrl     = "https://$(Environment)-take-your-pet-from-gb-to-ni.azure.defra.cloud/"
@@ -147,7 +153,7 @@ jobs:
           $json.AppSettings.TestConfiguration.BSBrowserVersion = "$(BSBrowserVersion)"
         }
 
-        $json | ConvertTo-Json -Depth 10 | Set-Content $filePath
+        $json | ConvertTo-Json -Depth 10 | Set-Content $filePath -Encoding UTF8
         Write-Host "CI settings injected into appsettings.json successfully."
       env:
         BS_USERNAME: $(Nipts-BrowserStack-Username)
