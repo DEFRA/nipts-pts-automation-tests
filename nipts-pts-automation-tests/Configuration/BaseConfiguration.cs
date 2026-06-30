@@ -11,6 +11,8 @@ namespace nipts_pts_automation_tests.Configuration
         public ServiceBusConnectionConfig ServiceBusConnectionConfig { get; set; }
         public SqlConnection ApplicationCon { get; set; }
         public AppConnectionString AppConnectionString { get; set; }
+        public B2CConfig B2CConfig { get; set; }
+        public KeyVaultConfiguration KeyVaultConfiguration { get; set; }
 
     }
 }

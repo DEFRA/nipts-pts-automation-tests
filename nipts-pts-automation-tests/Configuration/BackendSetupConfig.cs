@@ -9,5 +9,9 @@ namespace nipts_pts_automation_tests.Configuration
         public string ApiEndPoint3 { get; set; }
         public string ApiEndPoint4 { get; set; }
         public string ApiEndPoint5 { get; set; }
+        public string CheckerSubscriptionKey { get; set; }
+        public string CommonSubscriptionKey { get; set; }
+        public string BearerToken { get; set; }
+        public string CheckerBearerToken { get; set; }
     }
 }

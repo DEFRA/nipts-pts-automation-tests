@@ -1,6 +1,7 @@
 ﻿using Reqnroll.BoDi;
 using nipts_pts_API_tests.Application;
 using nipts_pts_API_tests.Configuration;
+using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
@@ -25,6 +26,16 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             _scenarioContext = context;
             _objectContainer = container;
+        }
+
+        /// <summary>
+        /// Lazily acquires the backend / pts-pet-checker bearer tokens before a backend call. CP
+        /// flows mint these on the route-checker page, but applicant-only flows never visit it, so
+        /// without this the checker calls go out unauthenticated and fail with 401.
+        /// </summary>
+        private void EnsureBackendTokens()
+        {
+            BackendTokenProvider.EnsureTokens(_driver);
         }
 
         [Then(@"I should see the application status in '([^']*)'")]
@@ -103,6 +114,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             lock (_lock)
             {
+                EnsureBackendTokens();
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
                 string PTDNumber = AppData.GetApplicationToApprove(AppReference);
                 _scenarioContext.Add("PTDNumber", PTDNumber);
@@ -117,6 +129,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             lock (_lock)
             {
+                EnsureBackendTokens();
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
                 AppData.GetApplicationToApprove(AppReference);
             }
@@ -129,6 +142,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             lock (_lock)
             {
+                EnsureBackendTokens();
                 string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
                 AppData.GetSuspendedApplicationToApprove(PTDNumber);
             }
@@ -141,6 +155,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             lock (_lock)
             {
+                EnsureBackendTokens();
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
                 AppData.GetAwaitingApplicationToSuspend(AppReference);
             }
@@ -153,6 +168,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             lock (_lock)
             {
+                EnsureBackendTokens();
                 string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
                 AppData.GetAuthorisedApplicationToSuspend(PTDNumber);
             }
@@ -182,6 +198,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             lock (_lock)
             {
+                EnsureBackendTokens();
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
                 string PTDNumber = AppData.GetApplicationToRevoke(AppReference);
                 _scenarioContext.Add("PTDNumber", PTDNumber);
@@ -194,6 +211,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             lock (_lock)
             {
+                EnsureBackendTokens();
                 string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
                 AppData.RevokeApprovedApplication(PTDNumber);
             }
@@ -204,6 +222,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             lock (_lock)
             {
+                EnsureBackendTokens();
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
                 string PTDNumber = AppData.GetApplicationToReject(AppReference);
                 _scenarioContext.Add("PTDNumber", PTDNumber);
@@ -216,9 +235,33 @@ namespace nipts_pts_automation_tests.Steps.CP
         {
             lock (_lock)
             {
+                EnsureBackendTokens();
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
                 AppData.GetApplication(AppReference);
 
+            }
+        }
+
+        /// <summary>
+        /// Shared backend application-creation flow: generates the app id, invokes the supplied
+        /// create call, stores the returned reference for later steps, then performs the queue
+        /// write. The queue write is treated as optional - the application itself is already
+        /// created, and the downstream dynamic-integration writetoqueue endpoint can return a
+        /// transient 500 - so a failure is logged as a warning rather than failing the scenario.
+        /// </summary>
+        private void CreateApplicationViaBackend(Func<string, string> createApplication)
+        {
+            lock (_lock)
+            {
+                string appId = _applicationSummaryPage.getNewID();
+                string apiAppReference = createApplication(appId);
+                _scenarioContext.Add("ReferenceNumber", apiAppReference);
+
+                // Queue write is optional - log warning if it fails but continue
+                if (!AppData.writeApplicationToQueue())
+                {
+                    Console.WriteLine("WARNING: writeApplicationToQueue failed, but application was created. Continuing...");
+                }
             }
         }
 
@@ -226,32 +269,14 @@ namespace nipts_pts_automation_tests.Steps.CP
         [When(@"Create an application via backend")]
         public void ThenCreateApplicationViaBackend()
         {
-            lock (_lock)
-            {
-                string AppId = _applicationSummaryPage.getNewID();
-                string APIAppReference = AppData.CreateApplicationAPI(AppId);
-                _scenarioContext.Add("ReferenceNumber", APIAppReference);
-
-                // Queue write is optional - log warning if it fails but continue
-                bool queueResult = AppData.writeApplicationToQueue();
-                if (!queueResult)
-                {
-                    Console.WriteLine("WARNING: writeApplicationToQueue failed, but application was created. Continuing...");
-                }
-            }
+            CreateApplicationViaBackend(AppData.CreateApplicationAPI);
         }
 
         [Given(@"Create an application via backend with Other Colour")]
         [When(@"Create an application via backend with Other Colour")]
         public void ThenCreateApplicationViaBackendWithOtherColour()
         {
-            lock (_lock)
-            {
-                string AppId = _applicationSummaryPage.getNewID();
-                string APIAppReference = AppData.CreateApplicationAPIWithOtherColour(AppId);
-                _scenarioContext.Add("ReferenceNumber", APIAppReference);
-                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
-            }
+            CreateApplicationViaBackend(AppData.CreateApplicationAPIWithOtherColour);
         }
 
 
@@ -259,26 +284,14 @@ namespace nipts_pts_automation_tests.Steps.CP
         [When(@"Create an application via backend with significant features option as No")]
         public void ThenCreateApplicationViaBackendSigFeaturesNo()
         {
-            lock (_lock)
-            {
-                string AppId = _applicationSummaryPage.getNewID();
-                string APIAppReference = AppData.CreateApplicationSigFNoAPI(AppId);
-                _scenarioContext.Add("ReferenceNumber", APIAppReference);
-                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
-            }
+            CreateApplicationViaBackend(AppData.CreateApplicationSigFNoAPI);
         }
 
         [Given(@"Create an application with Mandatory address only via backend")]
         [When(@"Create an application with Mandatory address only via backend")]
         public void ThenCreateApplicationWithMandatoryAddressViaBackend()
         {
-            lock (_lock)
-            {
-                string AppId = _applicationSummaryPage.getNewID();
-                string APIAppReference = AppData.CreateApplicationWithMandatoryAddressFieldsAPI(AppId);
-                _scenarioContext.Add("ReferenceNumber", APIAppReference);
-                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
-            }
+            CreateApplicationViaBackend(AppData.CreateApplicationWithMandatoryAddressFieldsAPI);
         }
 
         [Then(@"I have captured pet details")]
@@ -359,13 +372,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         [When(@"Create an application via backend for '([^']*)' with custom values")]
         public void ThenCreateApplicationViaBackendWithCustomValues(string PetSpecies)
         {
-            lock (_lock)
-            {
-                string AppId = _applicationSummaryPage.getNewID();
-                string APIAppReference = AppData.CreateApplicationWithPetCustomValues(AppId, PetSpecies);
-                _scenarioContext.Add("ReferenceNumber", APIAppReference);
-                Assert.True(AppData.writeApplicationToQueue(), "Pet Application not created through backend");
-            }
+            CreateApplicationViaBackend(appId => AppData.CreateApplicationWithPetCustomValues(appId, PetSpecies));
         }
 
         [Given(@"verify role '([^']*)' on manage account page")]

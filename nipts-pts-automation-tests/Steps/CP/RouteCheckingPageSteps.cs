@@ -1,5 +1,7 @@
 ﻿using Reqnroll.BoDi;
+using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.Data;
+using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
 using nipts_pts_automation_tests.Tools;
 using NUnit.Framework;
@@ -29,6 +31,8 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void ThenIShouldRedirectedToPortRouteCheckePage()
         {
             Assert.True(_routeCheckingPage?.IsPageLoaded(), "Port route checker Application page not loaded");
+
+            BackendTokenProvider.EnsureTokens(_driver);
         }
 
         [Given(@"I have selected '([^']*)' radio option")]

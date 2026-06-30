@@ -7,5 +7,9 @@
         string ApiEndPoint3 { get; set; }
         string ApiEndPoint4 { get; set; }
         string ApiEndPoint5 { get; set; }
+        string CheckerSubscriptionKey { get; set; }
+        string CommonSubscriptionKey { get; set; }
+        string BearerToken { get; set; }
+        string CheckerBearerToken { get; set; }
     }
 }
