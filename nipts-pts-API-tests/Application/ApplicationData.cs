@@ -159,14 +159,25 @@ namespace nipts_pts_API_tests.Application
         {
             Task<RestResponse> response = null;
             string APIEndPoint = DataSetupConfig.Configuration.ApiEndPoint2;
-            var client = SetUrl("createpet", APIEndPoint);
+            var (client, requestUrl) = SetUrlWithInfo("createpet", APIEndPoint);
             var file = Path.Combine(RequestFolder, "CreatePetSigFNo.json");
             var requestJson = File.ReadAllText(file);
-            var request = CreatePostRequest(requestJson);
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(requestJson.ToString())!;
+            string uniqueMicrochip = DateTime.Now.ToString("ddMMyyHHmmssfff");
+            dynamicObject.petIdentification.microchipNumber = uniqueMicrochip;
+            dynamicObject.petMicrochip.microchipNumber = uniqueMicrochip;
+            var request = CreatePostRequest(JsonConvert.SerializeObject(dynamicObject));
             response = GetResponseAsync(client, request);
-            var responseString = response.Result.Content.ToString();
-            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
-            PetId = dynamicObject;
+            var restResponse = response.Result;
+            var responseString = restResponse.Content ?? string.Empty;
+
+            if (!restResponse.IsSuccessful)
+                throw new Exception($"createPetSigFNo: API call failed. URL: {requestUrl}, Status: {restResponse.StatusCode}, Error: {restResponse.ErrorMessage}, Response: {responseString}");
+
+            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString);
+            if (dynamicObject2 == null)
+                throw new Exception($"createPetSigFNo: Failed to deserialize response. URL: {requestUrl}, Response: {responseString}");
+            PetId = dynamicObject2;
         }
 
 
@@ -486,19 +497,22 @@ namespace nipts_pts_API_tests.Application
             dynamicObject.applicationId = QueueId;
             var requestPayload = JsonConvert.SerializeObject(dynamicObject);
             var request = CreatePostRequest(requestPayload);
+            var correlationId = AttachCorrelationId(request);
             response = GetResponseAsync(client, request);
             var restResponse = response.Result;
             var responseString = restResponse.Content ?? string.Empty;
 
-            Console.WriteLine("=== WRITE TO QUEUE REQUEST ===");
-            Console.WriteLine($"URL: {requestUrl}");
-            Console.WriteLine($"QueueId: {QueueId}");
-            Console.WriteLine($"Status: {restResponse.StatusCode}");
-            Console.WriteLine($"Response: {responseString}");
-            Console.WriteLine("==============================");
+            Console.WriteLine($"writeApplicationToQueue correlation/trace id: {correlationId} (search this in the dynamic-integration App Insights to find the server-side exception)");
+            LogResponseDiagnostics("WRITE TO QUEUE", requestUrl, request, restResponse, requestPayload);
 
             if (!restResponse.IsSuccessful)
             {
+                // A 5xx through APIM normally returns an empty body. Re-issue the same request with
+                // Ocp-Apim-Trace so APIM emits a trace location URL pinpointing whether the 500 is
+                // a gateway policy failure or the backend service throwing.
+                if ((int)restResponse.StatusCode >= 500)
+                    TraceFailedQueueWrite(client, requestPayload, requestUrl);
+
                 Console.WriteLine($"writeApplicationToQueue: API call failed. URL: {requestUrl}, Status: {restResponse.StatusCode}, Error: {restResponse.ErrorMessage}, Response: {responseString}");
                 return false;
             }
@@ -507,6 +521,28 @@ namespace nipts_pts_API_tests.Application
                 return true;
             else
                 return false;
+        }
+
+        /// <summary>
+        /// Re-sends the writetoqueue request with the <c>Ocp-Apim-Trace</c> header so APIM returns a
+        /// gateway trace location (<c>Ocp-Apim-Trace-Location</c>). Opening that URL shows the full
+        /// inbound/backend/outbound pipeline for the failing call, which is the supported way to see
+        /// exactly where a 500 originates behind the gateway. Requires tracing to be allowed for the
+        /// subscription; if it is not, the header is simply ignored.
+        /// </summary>
+        private void TraceFailedQueueWrite(RestClient client, string requestPayload, string requestUrl)
+        {
+            try
+            {
+                var traceRequest = CreatePostRequest(requestPayload);
+                traceRequest.AddOrUpdateHeader("Ocp-Apim-Trace", "true");
+                var traceResponse = GetResponseAsync(client, traceRequest).Result;
+                LogResponseDiagnostics("WRITE TO QUEUE (APIM TRACE)", requestUrl, traceRequest, traceResponse, requestPayload);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"writeApplicationToQueue: APIM trace request failed: {ex.Message}");
+            }
         }
         public string GetPetDetails(string AppReference)
         {

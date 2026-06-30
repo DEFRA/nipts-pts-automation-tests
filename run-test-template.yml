@@ -50,13 +50,18 @@ jobs:
   steps:
 
     - task: AzureKeyVault@2
-      displayName: 'Get BrowserStack credentials from Key Vault'
+      displayName: 'Get BrowserStack credentials and APIM subscription keys from Key Vault'
       inputs:
         # NOTE: confirm this is the correct service connection for the subscription
-        # that hosts DEVTRDINFKV1001 (following the AZD-TRD-<ENV>1 naming convention).
+        # that hosts TSTTRDINFKV1001 (following the AZD-TRD-<ENV>1 naming convention).
         azureSubscription: 'AZD-TRD-DEV1'
-        KeyVaultName: 'DEVTRDINFKV1001'
-        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password'
+        KeyVaultName: 'TSTTRDINFKV1001'
+        # PTS-CP-OCP-APIM-SUBSCRIPTION-KEY  -> checker API (ApiEndpoint5)
+        # Pts-Apim-SubscriptionKey          -> all other APIs
+        # Pts-B2C-Tenant-ClientSecret       -> backend (PTS tenant) bearer token audience
+        # Pts-B2C-Backend-Username/Password -> backend-enrolled test user for the API token login
+        # PTS-CP-MAGIC-PASSWORD             -> shared sign-in password (TestConfiguration.EnvPassword)
+        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password,PTS-CP-OCP-APIM-SUBSCRIPTION-KEY,Pts-Apim-SubscriptionKey,Pts-B2C-Tenant-ClientSecret,Pts-B2C-Backend-Username,Pts-B2C-Backend-Password,PTS-CP-MAGIC-PASSWORD'
         RunAsPreJob: false
 
     - task: DownloadBuildArtifacts@0
@@ -87,12 +92,18 @@ jobs:
         overwriteExistingFiles: true
     
     - task: replacetokens@3
-      displayName: 'Inject BrowserStack credentials from Key Vault'
+      displayName: 'Inject BrowserStack credentials and APIM subscription keys from Key Vault'
       env:
         # Secret variables are not exposed to tasks as environment variables by
         # default, so map the Key Vault secrets explicitly for token replacement.
         BrowserStackUserName: $(Nipts-BrowserStack-Username)
         BrowserStackAccessKey: $(Nipts-BrowserStack-Password)
+        PtsCpOcpApimSubscriptionKey: $(PTS-CP-OCP-APIM-SUBSCRIPTION-KEY)
+        PtsApimSubscriptionKey: $(Pts-Apim-SubscriptionKey)
+        B2CClientSecret: $(Pts-B2C-Tenant-ClientSecret)
+        B2CBackendUsername: $(Pts-B2C-Backend-Username)
+        B2CBackendPassword: $(Pts-B2C-Backend-Password)
+        PtsCpMagicPassword: $(PTS-CP-MAGIC-PASSWORD)
       inputs:
         rootDirectory: '$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests'
         targetFiles: 'appsettings.json'
