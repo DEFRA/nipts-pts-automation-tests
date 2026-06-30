@@ -135,6 +135,12 @@ jobs:
         # text and strip the BOM before parsing.
         $raw  = [System.IO.File]::ReadAllText($filePath)
         $raw  = $raw.TrimStart([char]0xFEFF)
+        # Windows PowerShell 5.1's ConvertFrom-Json (JavaScriptSerializer) is
+        # stricter than .NET's configuration JSON reader: it rejects trailing
+        # commas that the test app itself tolerates (AddJsonFile allows them).
+        # Strip any trailing comma before a closing } or ] so an artifact built
+        # before the appsettings.json fix still parses here.
+        $raw  = [regex]::Replace($raw, ',(\s*[}\]])', '$1')
         $json = $raw | ConvertFrom-Json
 
         $json.AppSettings.TestConfiguration.ComPortalUrl     = "https://$(Environment)-check-a-pet-from-gb-to-ni.azure.defra.cloud/"
