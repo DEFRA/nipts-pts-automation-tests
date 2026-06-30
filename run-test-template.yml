@@ -151,8 +151,13 @@ jobs:
         $json.AppSettings.TestConfiguration.Build            = "$(Build)"
         $json.AppSettings.UiFrameworkConfiguration.SeleniumGrid = "$(SeleniumGrid)"
         $json.AppSettings.UiFrameworkConfiguration.Target    = "$(Target)"
-        $json.AppSettings.BrowserStackConfiguration.CloudDeviceUserName = $env:BS_USERNAME
-        $json.AppSettings.BrowserStackConfiguration.CloudDeviceUserKey  = $env:BS_ACCESSKEY
+        # BrowserStack credentials may be absent from the artifact's appsettings.json
+        # (they are normally populated from Key Vault at runtime), so add/overwrite
+        # the properties with Add-Member -Force rather than a plain assignment, which
+        # throws if the property does not already exist.
+        $bsConfig = $json.AppSettings.BrowserStackConfiguration
+        $bsConfig | Add-Member -NotePropertyName CloudDeviceUserName -NotePropertyValue $env:BS_USERNAME -Force
+        $bsConfig | Add-Member -NotePropertyName CloudDeviceUserKey  -NotePropertyValue $env:BS_ACCESSKEY -Force
 
         # BSBrowserVersion is intentionally empty for mobile/Android runs.
         if (-not [string]::IsNullOrEmpty("$(BSBrowserVersion)")) {
