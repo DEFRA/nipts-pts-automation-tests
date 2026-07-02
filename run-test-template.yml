@@ -49,6 +49,78 @@ jobs:
 
   steps:
 
+    - powershell: |
+        # Cross-pipeline serialize lock (YAML-only, no portal check required).
+        #
+        # All BrowserStack pipelines share one BrowserStack account, so only one run
+        # should execute at a time. Each run tags itself with a shared build tag and
+        # then waits until it is the OLDEST tagged run still in progress before doing
+        # any work. Because Build.BuildId is a strict, monotonically increasing order,
+        # exactly one run is the "lowest id" at any moment - it proceeds while every
+        # newer run waits and re-polls. This gives sequential, in-queue-order execution
+        # with no deadlock. A newer run can never overtake, because its id is higher.
+        #
+        # The lock is held for the WHOLE run: a lower-id run stays "in progress" until
+        # it finishes, so higher-id runs keep waiting at this gate across both stages.
+        #
+        # Prerequisites (defaults are usually already in place):
+        #   - The job can access the OAuth token ($(System.AccessToken)).
+        #   - The build identity has "View builds" on the serialized pipelines, which
+        #     must live in this same project ($(System.TeamProject)).
+        $ErrorActionPreference = 'Stop'
+        $org     = "$(System.CollectionUri)"
+        $project = "$(System.TeamProject)"
+        $buildId = [int]"$(Build.BuildId)"
+        $tag     = 'browserstack-serial'
+        $headers = @{ Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN" }
+
+        # Opt this run into the shared lock so other pipelines can discover it.
+        Write-Host "##vso[build.addbuildtag]$tag"
+
+        # Jitter so runs that start together have time to publish their tag before the
+        # first lock check, reducing the chance two runs both think they are oldest.
+        Start-Sleep -Seconds (Get-Random -Minimum 5 -Maximum 20)
+
+        $maxWaitMinutes = 180
+        $deadline       = (Get-Date).AddMinutes($maxWaitMinutes)
+
+        while ($true) {
+          $uri = "$org$project/_apis/build/builds?statusFilter=inProgress&tagFilters=$tag&api-version=7.0"
+          try {
+            $resp = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get
+          }
+          catch {
+            Write-Host "##vso[task.logissue type=warning]Could not query in-progress builds ($($_.Exception.Message)); proceeding without serialization."
+            break
+          }
+
+          # Server-side tagFilters can be permissive, so confirm the tag client-side.
+          $builds = @($resp.value | Where-Object { $_.tags -contains $tag })
+          if ($builds.Count -eq 0) {
+            Write-Host "No tagged in-progress builds found; proceeding."
+            break
+          }
+
+          $minId = ($builds | Measure-Object -Property id -Minimum).Minimum
+          if ($buildId -le $minId) {
+            Write-Host "This run (build $buildId) holds the lock - it is the oldest of $($builds.Count) in-progress run(s). Proceeding."
+            break
+          }
+
+          if ((Get-Date) -ge $deadline) {
+            Write-Host "##vso[task.logissue type=warning]Waited $maxWaitMinutes min for the serialize lock (oldest id $minId, mine $buildId). Proceeding anyway."
+            break
+          }
+
+          $ahead = @($builds | Where-Object { $_.id -lt $buildId }).Count
+          $wait  = Get-Random -Minimum 20 -Maximum 40
+          Write-Host "Waiting for $ahead earlier run(s) to finish (oldest id $minId, mine $buildId). Re-checking in $wait s..."
+          Start-Sleep -Seconds $wait
+        }
+      displayName: 'Serialize pipeline runs (wait for earlier runs)'
+      env:
+        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
     - task: AzureKeyVault@2
       displayName: 'Get BrowserStack credentials and APIM subscription keys from Key Vault'
       inputs:
@@ -214,6 +286,72 @@ jobs:
         BS_USERNAME: $(Nipts-BrowserStack-Username)
         BS_ACCESSKEY: $(Nipts-BrowserStack-Password)
       displayName: 'Verify BrowserStack credentials'
+
+    # Only the EnvironmentCheck job clears stale sessions. It runs first (Regression
+    # depends on it), so at this point no session from THIS pipeline run exists yet -
+    # the only running sessions are orphans left behind by earlier/aborted runs whose
+    # lingering browser state can make an otherwise-valid sign-in be flagged as failed.
+    # NOTE: BrowserStack sessions are account-wide, so this also stops sessions from
+    # any OTHER pipeline run that happens to be executing right now. That is acceptable
+    # for the environment-check baseline; it is deliberately NOT run for Regression.
+    - ${{ if eq(parameters.jobName, 'EnvironmentCheck') }}:
+      - powershell: |
+          # Terminate any still-running BrowserStack Automate sessions before the
+          # environment check so a leftover/authenticated session cannot interfere
+          # with the sign-in under test. Failures here must never fail the job - this
+          # is best-effort cleanup - so every call is wrapped and errors are warnings.
+          $pair    = "$($env:BS_USERNAME):$($env:BS_ACCESSKEY)"
+          $b64     = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($pair))
+          $headers = @{ Authorization = "Basic $b64" }
+          $currentBuild = "$(Build)"
+
+          try {
+            $builds = Invoke-RestMethod -Uri 'https://api.browserstack.com/automate/builds.json?status=running' -Headers $headers -Method Get
+          }
+          catch {
+            Write-Host "##vso[task.logissue type=warning]Could not list running BrowserStack builds ($($_.Exception.Message)); skipping stale-session cleanup."
+            return
+          }
+
+          $stopped = 0
+          foreach ($b in $builds) {
+            $build = $b.automation_build
+            if (-not $build) { continue }
+
+            # Never touch this run's own build (it has no sessions yet, but guard anyway).
+            if ($build.name -eq $currentBuild) {
+              Write-Host "Skipping current build '$($build.name)'."
+              continue
+            }
+
+            try {
+              $sessions = Invoke-RestMethod -Uri "https://api.browserstack.com/automate/builds/$($build.hashed_id)/sessions.json?status=running" -Headers $headers -Method Get
+            }
+            catch {
+              Write-Host "Could not list sessions for build '$($build.name)' ($($_.Exception.Message)); continuing."
+              continue
+            }
+
+            foreach ($s in $sessions) {
+              $session = $s.automation_session
+              if (-not $session) { continue }
+              try {
+                Invoke-RestMethod -Uri "https://api.browserstack.com/automate/sessions/$($session.hashed_id).json" -Headers $headers -Method Delete | Out-Null
+                $stopped++
+                Write-Host "Stopped stale session $($session.hashed_id) (build '$($build.name)')."
+              }
+              catch {
+                Write-Host "Could not stop session $($session.hashed_id) ($($_.Exception.Message))."
+              }
+            }
+          }
+
+          Write-Host "BrowserStack stale-session cleanup complete. Sessions stopped: $stopped."
+        env:
+          BS_USERNAME: $(Nipts-BrowserStack-Username)
+          BS_ACCESSKEY: $(Nipts-BrowserStack-Password)
+        displayName: 'Terminate stale BrowserStack sessions'
+        continueOnError: true
 
     - powershell: |
         # Capacity gate: the PR triggers many test pipelines at once, which together
