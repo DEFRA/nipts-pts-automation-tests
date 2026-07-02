@@ -68,6 +68,9 @@ jobs:
         #   - The build identity has "View builds" on the serialized pipelines, which
         #     must live in this same project ($(System.TeamProject)).
         $ErrorActionPreference = 'Stop'
+        # Windows PowerShell 5.1 defaults to TLS 1.0/1.1, which modern HTTPS endpoints
+        # (including Azure DevOps) reject at the handshake. Force TLS 1.2 first.
+        [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
         $org     = "$(System.CollectionUri)"
         $project = "$(System.TeamProject)"
         $buildId = [int]"$(Build.BuildId)"
@@ -268,6 +271,12 @@ jobs:
           exit 1
         }
 
+        # Windows PowerShell 5.1 (the self-hosted agent's default shell) negotiates
+        # TLS 1.0/1.1 by default, which the BrowserStack API rejects at the handshake.
+        # That surfaces as an exception with NO HTTP response, so it must not be
+        # mistaken for an auth failure. Force TLS 1.2 before any HTTPS call.
+        [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+
         $pair = "$($env:BS_USERNAME):$($env:BS_ACCESSKEY)"
         $b64  = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($pair))
         try {
@@ -278,8 +287,19 @@ jobs:
           Write-Host "Queued sessions: $($resp.queued_sessions) / max queued $($resp.parallel_sessions_max_allowed)"
         }
         catch {
-          $status = $_.Exception.Response.StatusCode.value__
-          Write-Error "BrowserStack credential check failed (HTTP $status). The credentials in Key Vault are likely invalid or expired."
+          $status = $null
+          if ($_.Exception.Response) { $status = [int]$_.Exception.Response.StatusCode }
+
+          if ($status -eq 401 -or $status -eq 403) {
+            Write-Error "BrowserStack credential check failed (HTTP $status). The credentials in Key Vault are invalid or expired."
+          }
+          elseif ($status) {
+            Write-Error "BrowserStack API returned HTTP $status. This is not necessarily a credential problem - check BrowserStack service status. Details: $($_.Exception.Message)"
+          }
+          else {
+            # No HTTP response at all: TLS/DNS/proxy/network problem, NOT the credentials.
+            Write-Error "Could not reach the BrowserStack API (no HTTP response - likely TLS, proxy, or network). This is NOT a credential problem. Details: $($_.Exception.Message)"
+          }
           exit 1
         }
       env:
@@ -300,6 +320,9 @@ jobs:
           # environment check so a leftover/authenticated session cannot interfere
           # with the sign-in under test. Failures here must never fail the job - this
           # is best-effort cleanup - so every call is wrapped and errors are warnings.
+          # Force TLS 1.2 - Windows PowerShell 5.1 otherwise fails the BrowserStack
+          # handshake, which would look like an API error rather than a TLS problem.
+          [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
           $pair    = "$($env:BS_USERNAME):$($env:BS_ACCESSKEY)"
           $b64     = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($pair))
           $headers = @{ Authorization = "Basic $b64" }
@@ -359,6 +382,8 @@ jobs:
         # to start ("Remote WebDriver not been set properly"). This step throttles
         # globally - every test job funnels through this template, so it waits here
         # until a session slot is free before launching the tests.
+        # Force TLS 1.2 so the BrowserStack API call succeeds on Windows PowerShell 5.1.
+        [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
         $pair    = "$($env:BS_USERNAME):$($env:BS_ACCESSKEY)"
         $b64     = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($pair))
         $headers = @{ Authorization = "Basic $b64" }
