@@ -376,12 +376,15 @@ jobs:
       displayName: 'Verify BrowserStack credentials'
 
     # Only the EnvironmentCheck job clears stale sessions. It runs first (Regression
-    # depends on it), so at this point no session from THIS pipeline run exists yet -
-    # the only running sessions are orphans left behind by earlier/aborted runs whose
-    # lingering browser state can make an otherwise-valid sign-in be flagged as failed.
-    # NOTE: BrowserStack sessions are account-wide, so this also stops sessions from
-    # any OTHER pipeline run that happens to be executing right now. That is acceptable
-    # for the environment-check baseline; it is deliberately NOT run for Regression.
+    # depends on it), so at this point no session from THIS pipeline run exists yet
+    # unless a prior attempt of the SAME run was retried (Build.BuildNumber - and so
+    # the BrowserStack build name - is stable across retries), which can leave orphaned
+    # sessions whose lingering browser state makes an otherwise-valid sign-in be flagged
+    # as failed. This cleanup is therefore SCOPED to this run's own build only.
+    # NOTE: BrowserStack sessions are account-wide, so terminating another build would
+    # kill a concurrently-running pipeline's LIVE sessions and surface as "Remote
+    # WebDriver not been set properly" in that other run - so other builds are never
+    # touched. It is deliberately NOT run for Regression.
     - ${{ if eq(parameters.jobName, 'EnvironmentCheck') }}:
       - powershell: |
           # Terminate any still-running BrowserStack Automate sessions before the
@@ -409,9 +412,12 @@ jobs:
             $build = $b.automation_build
             if (-not $build) { continue }
 
-            # Never touch this run's own build (it has no sessions yet, but guard anyway).
-            if ($build.name -eq $currentBuild) {
-              Write-Host "Skipping current build '$($build.name)'."
+            # Only clean up THIS run's own build. Sessions here can only exist if a
+            # previous attempt of the same run was retried (the build name is stable
+            # across retries). Every OTHER build is skipped: BrowserStack sessions are
+            # account-wide, so stopping another build would terminate a concurrently
+            # running pipeline's live sessions and break that run.
+            if ($build.name -ne $currentBuild) {
               continue
             }
 
