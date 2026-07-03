@@ -18,6 +18,7 @@ namespace nipts_pts_automation_tests.Configuration
         {
             BaseConfiguration = LoadConfigurationFromAppSettings();
             ResolveSecretsFromKeyVault();
+            ValidateRequiredSecrets();
             UiFrameworkConfigurationBinding();
             DataSetupConfigurationBinding();
             DBSetupConfigurationBinding();
@@ -143,6 +144,68 @@ namespace nipts_pts_automation_tests.Configuration
             TryApplySecret(client, kv.VaultName, kv.CpApimSubscriptionKeySecretName,
                 "BackendSetupConfig.CheckerSubscriptionKey",
                 value => BaseConfiguration.BackendSetupConfig.CheckerSubscriptionKey = value);
+        }
+
+        /// <summary>
+        /// Fails fast if any secret-backed configuration value is still empty after the Key Vault
+        /// overlay. These values are supplied either by the pipeline (injected into appsettings.json)
+        /// or by the runtime Key Vault resolution; when both are unavailable (e.g. a self-hosted
+        /// agent without a managed identity) the missing value otherwise surfaces later as a cryptic
+        /// null/SendKeys/401/timeout failure mid-scenario. Reporting every missing secret here in a
+        /// single actionable message makes the real cause obvious up front.
+        /// </summary>
+        private static void ValidateRequiredSecrets()
+        {
+            if (BaseConfiguration == null)
+            {
+                throw new Exception("Configuration failed to load - BaseConfiguration is null.");
+            }
+
+            var test = BaseConfiguration.TestConfiguration;
+            var b2c = BaseConfiguration.B2CConfig;
+            var backend = BaseConfiguration.BackendSetupConfig;
+            var browserStack = BaseConfiguration.BrowserStackConfiguration;
+
+            var required = new Dictionary<string, string?>
+            {
+                ["TestConfiguration.EnvPassword"] = test?.EnvPassword,
+                ["B2CConfig.BackendUsername"] = b2c?.BackendUsername,
+                ["B2CConfig.BackendPassword"] = b2c?.BackendPassword,
+                ["B2CConfig.ClientId"] = b2c?.ClientId,
+                ["B2CConfig.ClientSecret"] = b2c?.ClientSecret,
+                ["B2CConfig.ServiceId"] = b2c?.ServiceId,
+                ["B2CConfig.Policy"] = b2c?.Policy,
+                ["B2CConfig.CPClientId"] = b2c?.CPClientId,
+                ["B2CConfig.CPClientSecret"] = b2c?.CPClientSecret,
+                ["BackendSetupConfig.CommonSubscriptionKey"] = backend?.CommonSubscriptionKey,
+                ["BackendSetupConfig.CheckerSubscriptionKey"] = backend?.CheckerSubscriptionKey,
+            };
+
+            // BrowserStack credentials are only needed when running against the BrowserStack cloud;
+            // local browser runs (CloudDeviceTarget != true) do not require them.
+            if (string.Equals(browserStack?.CloudDeviceTarget, "true", StringComparison.OrdinalIgnoreCase))
+            {
+                required["BrowserStackConfiguration.CloudDeviceUserName"] = browserStack?.CloudDeviceUserName;
+                required["BrowserStackConfiguration.CloudDeviceUserKey"] = browserStack?.CloudDeviceUserKey;
+            }
+
+            var missing = required
+                .Where(kvp => string.IsNullOrWhiteSpace(kvp.Value))
+                .Select(kvp => kvp.Key)
+                .ToList();
+
+            if (missing.Count > 0)
+            {
+                throw new Exception(
+                    "Required configuration values are missing after loading appsettings.json and the Key Vault overlay: " +
+                    string.Join(", ", missing) + ". " +
+                    "These are secret-backed values supplied by the pipeline (injected into appsettings.json) or by " +
+                    "runtime Key Vault resolution. On self-hosted agents without a managed identity the runtime Key " +
+                    "Vault path fails, so ensure the pipeline injects each value, or provide it via appsettings.local.json " +
+                    "for local runs.");
+            }
+
+            Console.WriteLine("Required secrets validated - all configured.");
         }
 
         /// <summary>

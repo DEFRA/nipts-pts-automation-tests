@@ -25,7 +25,11 @@ namespace nipts_pts_API_tests.Application
             }
             catch (Exception ex)
             {
+                // Do not swallow: a failed send previously looked like success and surfaced
+                // later as a misleading status-check failure. Rethrow so the failure is reported
+                // at the point the message could not be sent.
                 Console.WriteLine($"Exception: {ex.Message}");
+                throw;
             }
             finally
             {

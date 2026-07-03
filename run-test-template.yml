@@ -27,6 +27,14 @@ parameters:
   - name: maxParallelSessions
     type: number
     default: 2
+  # How many pipeline runs may execute concurrently across all BrowserStack
+  # pipelines. The serialize lock lets a run proceed once it is within the N
+  # oldest tagged in-progress runs (N = 1 restores strict serial execution).
+  # Keep maxConcurrentRuns * maxParallelSessions under the account's parallel
+  # session limit (currently 13). Default 5 * 2 = 10 sessions, leaving headroom.
+  - name: maxConcurrentRuns
+    type: number
+    default: 5
 
 jobs: 
 
@@ -49,6 +57,85 @@ jobs:
 
   steps:
 
+    - powershell: |
+        # Cross-pipeline serialize lock (YAML-only, no portal check required).
+        #
+        # All BrowserStack pipelines share one BrowserStack account, so only a
+        # bounded number of runs (maxConcurrentRuns) should execute at a time. Each
+        # run tags itself with a shared build tag and then waits until it is within
+        # the N OLDEST tagged runs still in progress before doing any work. Because
+        # Build.BuildId is a strict, monotonically increasing order, the N lowest ids
+        # proceed while every newer run waits and re-polls. This gives bounded,
+        # in-queue-order concurrency with no deadlock (the N oldest always proceed).
+        # with no deadlock. A newer run can never overtake, because its id is higher.
+        #
+        # The lock is held for the WHOLE run: a lower-id run stays "in progress" until
+        # it finishes, so higher-id runs keep waiting at this gate across both stages.
+        #
+        # Prerequisites (defaults are usually already in place):
+        #   - The job can access the OAuth token ($(System.AccessToken)).
+        #   - The build identity has "View builds" on the serialized pipelines, which
+        #     must live in this same project ($(System.TeamProject)).
+        $ErrorActionPreference = 'Stop'
+        # Windows PowerShell 5.1 defaults to TLS 1.0/1.1, which modern HTTPS endpoints
+        # (including Azure DevOps) reject at the handshake. Force TLS 1.2 first.
+        [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+        $org     = "$(System.CollectionUri)"
+        $project = "$(System.TeamProject)"
+        $buildId = [int]"$(Build.BuildId)"
+        $maxConcurrent = [int]"${{ parameters.maxConcurrentRuns }}"
+        if ($maxConcurrent -lt 1) { $maxConcurrent = 1 }
+        $tag     = 'browserstack-serial'
+        $headers = @{ Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN" }
+
+        # Opt this run into the shared lock so other pipelines can discover it.
+        Write-Host "##vso[build.addbuildtag]$tag"
+
+        # Jitter so runs that start together have time to publish their tag before the
+        # first lock check, reducing the chance two runs both think they are oldest.
+        Start-Sleep -Seconds (Get-Random -Minimum 5 -Maximum 20)
+
+        $maxWaitMinutes = 180
+        $deadline       = (Get-Date).AddMinutes($maxWaitMinutes)
+
+        while ($true) {
+          $uri = "$org$project/_apis/build/builds?statusFilter=inProgress&tagFilters=$tag&api-version=7.0"
+          try {
+            $resp = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get
+          }
+          catch {
+            Write-Host "##vso[task.logissue type=warning]Could not query in-progress builds ($($_.Exception.Message)); proceeding without serialization."
+            break
+          }
+
+          # Server-side tagFilters can be permissive, so confirm the tag client-side.
+          $builds = @($resp.value | Where-Object { $_.tags -contains $tag })
+          if ($builds.Count -eq 0) {
+            Write-Host "No tagged in-progress builds found; proceeding."
+            break
+          }
+
+          # Proceed once this run is within the N oldest tagged in-progress runs,
+          # i.e. fewer than maxConcurrent tagged runs are older (lower id) than it.
+          $ahead = @($builds | Where-Object { $_.id -lt $buildId }).Count
+          if ($ahead -lt $maxConcurrent) {
+            Write-Host "This run (build $buildId) is within the concurrency window: $ahead earlier run(s) in progress, limit $maxConcurrent. Proceeding."
+            break
+          }
+
+          if ((Get-Date) -ge $deadline) {
+            Write-Host "##vso[task.logissue type=warning]Waited $maxWaitMinutes min for a serialize slot ($ahead earlier run(s) ahead of mine $buildId, window $maxConcurrent). Proceeding anyway."
+            break
+          }
+
+          $wait  = Get-Random -Minimum 20 -Maximum 40
+          Write-Host "Concurrency window full: $ahead earlier run(s) in progress (limit $maxConcurrent), mine $buildId. Re-checking in $wait s..."
+          Start-Sleep -Seconds $wait
+        }
+      displayName: 'Serialize pipeline runs (wait for earlier runs)'
+      env:
+        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
     - task: AzureKeyVault@2
       displayName: 'Get BrowserStack credentials and APIM subscription keys from Key Vault'
       inputs:
@@ -58,10 +145,13 @@ jobs:
         KeyVaultName: 'TSTTRDINFKV1001'
         # PTS-CP-OCP-APIM-SUBSCRIPTION-KEY  -> checker API (ApiEndpoint5)
         # Pts-Apim-SubscriptionKey          -> all other APIs
-        # Pts-B2C-Tenant-ClientSecret       -> backend (PTS tenant) bearer token audience
+        # Pts-B2C-Tenant-ClientId/Secret    -> backend (PTS tenant) authorize + token exchange
+        # Pts-B2C-Tenant-ServiceId          -> backend authorize serviceId param
+        # PTS-CP-B2C-POLICY                 -> backend authorize B2C custom policy
+        # PTS-CP-B2C-CLIENT-ID/SECRET       -> CP pet-checker token (aud = CPClientId)
         # Nipts-Automations-Username/Password -> backend-enrolled test user for the API token login
         # PTS-CP-MAGIC-PASSWORD             -> shared sign-in password (TestConfiguration.EnvPassword)
-        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password,PTS-CP-OCP-APIM-SUBSCRIPTION-KEY,Pts-Apim-SubscriptionKey,Pts-B2C-Tenant-ClientSecret,Nipts-Automations-Username,Nipts-Automations-Password,PTS-CP-MAGIC-PASSWORD'
+        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password,PTS-CP-OCP-APIM-SUBSCRIPTION-KEY,Pts-Apim-SubscriptionKey,Pts-B2C-Tenant-ClientId,Pts-B2C-Tenant-ClientSecret,Pts-B2C-Tenant-ServiceId,PTS-CP-B2C-POLICY,PTS-CP-B2C-CLIENT-ID,PTS-CP-B2C-CLIENT-SECRET,Nipts-Automations-Username,Nipts-Automations-Password,PTS-CP-MAGIC-PASSWORD'
         RunAsPreJob: false
 
     - task: DownloadBuildArtifacts@0
@@ -159,7 +249,49 @@ jobs:
         $bsConfig | Add-Member -NotePropertyName CloudDeviceUserName -NotePropertyValue $env:BS_USERNAME -Force
         $bsConfig | Add-Member -NotePropertyName CloudDeviceUserKey  -NotePropertyValue $env:BS_ACCESSKEY -Force
 
-        # BSBrowserVersion is intentionally empty for mobile/Android runs.
+        # EnvPassword (the shared sign-in "magic" password) is normally populated
+        # from Key Vault at runtime via DefaultAzureCredential. That credential is
+        # unavailable on self-hosted agents (no managed identity / az login), which
+        # leaves EnvPassword null and makes SendKeys throw. Inject it here from the
+        # Key Vault secret so the value is present regardless of the runtime path.
+        $tstConfig = $json.AppSettings.TestConfiguration
+        $tstConfig | Add-Member -NotePropertyName EnvPassword -NotePropertyValue $env:MAGIC_PASSWORD -Force
+
+        # B2CConfig.BackendUsername/BackendPassword are the backend-enrolled API test
+        # user credentials used to acquire the backend API token. Like EnvPassword they
+        # are only populated from Key Vault at runtime via DefaultAzureCredential, which
+        # is unavailable on self-hosted agents. Inject them here so the backend token
+        # acquisition works regardless of the runtime path.
+        $b2cConfig = $json.AppSettings.B2CConfig
+        $b2cConfig | Add-Member -NotePropertyName BackendUsername -NotePropertyValue $env:B2C_BACKEND_USERNAME -Force
+        $b2cConfig | Add-Member -NotePropertyName BackendPassword -NotePropertyValue $env:B2C_BACKEND_PASSWORD -Force
+
+        # B2CConfig.ClientId/ServiceId/Policy/ClientSecret build the backend B2C authorize
+        # URL and the code-for-token exchange in TokenAcquirer. If any are empty the
+        # authorize URL is malformed, the Government Gateway credential page never loads,
+        # and the token acquisition times out after 60s. These are also only populated
+        # from Key Vault at runtime via DefaultAzureCredential (unavailable on self-hosted
+        # agents), so inject them here alongside the backend credentials.
+        $b2cConfig | Add-Member -NotePropertyName ClientId     -NotePropertyValue $env:B2C_CLIENT_ID -Force
+        $b2cConfig | Add-Member -NotePropertyName ClientSecret -NotePropertyValue $env:B2C_CLIENT_SECRET -Force
+        $b2cConfig | Add-Member -NotePropertyName ServiceId    -NotePropertyValue $env:B2C_SERVICE_ID -Force
+        $b2cConfig | Add-Member -NotePropertyName Policy        -NotePropertyValue $env:B2C_POLICY -Force
+
+        # B2CConfig.CPClientId/CPClientSecret mint the CP pet-checker token (aud = CPClientId)
+        # used by the "Reject/Revoke via backend" checker calls. Only populated from Key Vault
+        # at runtime via DefaultAzureCredential (unavailable on self-hosted agents), so inject
+        # them here.
+        $b2cConfig | Add-Member -NotePropertyName CPClientId     -NotePropertyValue $env:B2C_CP_CLIENT_ID -Force
+        $b2cConfig | Add-Member -NotePropertyName CPClientSecret -NotePropertyValue $env:B2C_CP_CLIENT_SECRET -Force
+
+        # BackendSetupConfig subscription keys are the APIM Ocp-Apim-Subscription-Key header
+        # values: CheckerSubscriptionKey for the pet-checker API (ApiEndpoint5) and
+        # CommonSubscriptionKey for all other backend APIs. Without them the APIM gateway
+        # returns 401 "missing subscription key". Only populated from Key Vault at runtime via
+        # DefaultAzureCredential (unavailable on self-hosted agents), so inject them here.
+        $backendConfig = $json.AppSettings.BackendSetupConfig
+        $backendConfig | Add-Member -NotePropertyName CheckerSubscriptionKey -NotePropertyValue $env:CHECKER_SUBSCRIPTION_KEY -Force
+        $backendConfig | Add-Member -NotePropertyName CommonSubscriptionKey  -NotePropertyValue $env:COMMON_SUBSCRIPTION_KEY -Force
         if (-not [string]::IsNullOrEmpty("$(BSBrowserVersion)")) {
           $json.AppSettings.TestConfiguration.BSBrowserVersion = "$(BSBrowserVersion)"
         }
@@ -169,6 +301,17 @@ jobs:
       env:
         BS_USERNAME: $(Nipts-BrowserStack-Username)
         BS_ACCESSKEY: $(Nipts-BrowserStack-Password)
+        MAGIC_PASSWORD: $(PTS-CP-MAGIC-PASSWORD)
+        B2C_BACKEND_USERNAME: $(Nipts-Automations-Username)
+        B2C_BACKEND_PASSWORD: $(Nipts-Automations-Password)
+        B2C_CLIENT_ID: $(Pts-B2C-Tenant-ClientId)
+        B2C_CLIENT_SECRET: $(Pts-B2C-Tenant-ClientSecret)
+        B2C_SERVICE_ID: $(Pts-B2C-Tenant-ServiceId)
+        B2C_POLICY: $(PTS-CP-B2C-POLICY)
+        B2C_CP_CLIENT_ID: $(PTS-CP-B2C-CLIENT-ID)
+        B2C_CP_CLIENT_SECRET: $(PTS-CP-B2C-CLIENT-SECRET)
+        CHECKER_SUBSCRIPTION_KEY: $(PTS-CP-OCP-APIM-SUBSCRIPTION-KEY)
+        COMMON_SUBSCRIPTION_KEY: $(Pts-Apim-SubscriptionKey)
       displayName: 'Inject CI settings into appsettings.json'
 
     - powershell: |
@@ -196,6 +339,12 @@ jobs:
           exit 1
         }
 
+        # Windows PowerShell 5.1 (the self-hosted agent's default shell) negotiates
+        # TLS 1.0/1.1 by default, which the BrowserStack API rejects at the handshake.
+        # That surfaces as an exception with NO HTTP response, so it must not be
+        # mistaken for an auth failure. Force TLS 1.2 before any HTTPS call.
+        [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+
         $pair = "$($env:BS_USERNAME):$($env:BS_ACCESSKEY)"
         $b64  = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($pair))
         try {
@@ -206,8 +355,19 @@ jobs:
           Write-Host "Queued sessions: $($resp.queued_sessions) / max queued $($resp.parallel_sessions_max_allowed)"
         }
         catch {
-          $status = $_.Exception.Response.StatusCode.value__
-          Write-Error "BrowserStack credential check failed (HTTP $status). The credentials in Key Vault are likely invalid or expired."
+          $status = $null
+          if ($_.Exception.Response) { $status = [int]$_.Exception.Response.StatusCode }
+
+          if ($status -eq 401 -or $status -eq 403) {
+            Write-Error "BrowserStack credential check failed (HTTP $status). The credentials in Key Vault are invalid or expired."
+          }
+          elseif ($status) {
+            Write-Error "BrowserStack API returned HTTP $status. This is not necessarily a credential problem - check BrowserStack service status. Details: $($_.Exception.Message)"
+          }
+          else {
+            # No HTTP response at all: TLS/DNS/proxy/network problem, NOT the credentials.
+            Write-Error "Could not reach the BrowserStack API (no HTTP response - likely TLS, proxy, or network). This is NOT a credential problem. Details: $($_.Exception.Message)"
+          }
           exit 1
         }
       env:
@@ -215,12 +375,89 @@ jobs:
         BS_ACCESSKEY: $(Nipts-BrowserStack-Password)
       displayName: 'Verify BrowserStack credentials'
 
+    # Only the EnvironmentCheck job clears stale sessions. It runs first (Regression
+    # depends on it), so at this point no session from THIS pipeline run exists yet
+    # unless a prior attempt of the SAME run was retried (Build.BuildNumber - and so
+    # the BrowserStack build name - is stable across retries), which can leave orphaned
+    # sessions whose lingering browser state makes an otherwise-valid sign-in be flagged
+    # as failed. This cleanup is therefore SCOPED to this run's own build only.
+    # NOTE: BrowserStack sessions are account-wide, so terminating another build would
+    # kill a concurrently-running pipeline's LIVE sessions and surface as "Remote
+    # WebDriver not been set properly" in that other run - so other builds are never
+    # touched. It is deliberately NOT run for Regression.
+    - ${{ if eq(parameters.jobName, 'EnvironmentCheck') }}:
+      - powershell: |
+          # Terminate any still-running BrowserStack Automate sessions before the
+          # environment check so a leftover/authenticated session cannot interfere
+          # with the sign-in under test. Failures here must never fail the job - this
+          # is best-effort cleanup - so every call is wrapped and errors are warnings.
+          # Force TLS 1.2 - Windows PowerShell 5.1 otherwise fails the BrowserStack
+          # handshake, which would look like an API error rather than a TLS problem.
+          [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+          $pair    = "$($env:BS_USERNAME):$($env:BS_ACCESSKEY)"
+          $b64     = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($pair))
+          $headers = @{ Authorization = "Basic $b64" }
+          $currentBuild = "$(Build)"
+
+          try {
+            $builds = Invoke-RestMethod -Uri 'https://api.browserstack.com/automate/builds.json?status=running' -Headers $headers -Method Get
+          }
+          catch {
+            Write-Host "##vso[task.logissue type=warning]Could not list running BrowserStack builds ($($_.Exception.Message)); skipping stale-session cleanup."
+            return
+          }
+
+          $stopped = 0
+          foreach ($b in $builds) {
+            $build = $b.automation_build
+            if (-not $build) { continue }
+
+            # Only clean up THIS run's own build. Sessions here can only exist if a
+            # previous attempt of the same run was retried (the build name is stable
+            # across retries). Every OTHER build is skipped: BrowserStack sessions are
+            # account-wide, so stopping another build would terminate a concurrently
+            # running pipeline's live sessions and break that run.
+            if ($build.name -ne $currentBuild) {
+              continue
+            }
+
+            try {
+              $sessions = Invoke-RestMethod -Uri "https://api.browserstack.com/automate/builds/$($build.hashed_id)/sessions.json?status=running" -Headers $headers -Method Get
+            }
+            catch {
+              Write-Host "Could not list sessions for build '$($build.name)' ($($_.Exception.Message)); continuing."
+              continue
+            }
+
+            foreach ($s in $sessions) {
+              $session = $s.automation_session
+              if (-not $session) { continue }
+              try {
+                Invoke-RestMethod -Uri "https://api.browserstack.com/automate/sessions/$($session.hashed_id).json" -Headers $headers -Method Delete | Out-Null
+                $stopped++
+                Write-Host "Stopped stale session $($session.hashed_id) (build '$($build.name)')."
+              }
+              catch {
+                Write-Host "Could not stop session $($session.hashed_id) ($($_.Exception.Message))."
+              }
+            }
+          }
+
+          Write-Host "BrowserStack stale-session cleanup complete. Sessions stopped: $stopped."
+        env:
+          BS_USERNAME: $(Nipts-BrowserStack-Username)
+          BS_ACCESSKEY: $(Nipts-BrowserStack-Password)
+        displayName: 'Terminate stale BrowserStack sessions'
+        continueOnError: true
+
     - powershell: |
         # Capacity gate: the PR triggers many test pipelines at once, which together
         # exceed the BrowserStack parallel-session limit and cause sessions to fail
         # to start ("Remote WebDriver not been set properly"). This step throttles
         # globally - every test job funnels through this template, so it waits here
         # until a session slot is free before launching the tests.
+        # Force TLS 1.2 so the BrowserStack API call succeeds on Windows PowerShell 5.1.
+        [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
         $pair    = "$($env:BS_USERNAME):$($env:BS_ACCESSKEY)"
         $b64     = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($pair))
         $headers = @{ Authorization = "Basic $b64" }
@@ -231,6 +468,12 @@ jobs:
 
         $maxWaitMinutes = 40
         $deadline       = (Get-Date).AddMinutes($maxWaitMinutes)
+        # This job opens up to maxParallelSessions BrowserStack sessions, so only
+        # start once that many slots are free rather than just one - otherwise
+        # concurrent runs can collectively exceed the account limit and fail with
+        # "Remote WebDriver not been set properly".
+        $need = [int]"${{ parameters.maxParallelSessions }}"
+        if ($need -lt 1) { $need = 1 }
 
         while ($true) {
           try {
@@ -243,18 +486,18 @@ jobs:
             break
           }
 
-          if ($running -lt $max) {
-            Write-Host "Slot available ($running/$max sessions running). Proceeding to tests."
+          if (($running + $need) -le $max) {
+            Write-Host "Enough slots available ($running/$max running, need $need). Proceeding to tests."
             break
           }
 
           if ((Get-Date) -ge $deadline) {
-            Write-Host "##vso[task.logissue type=warning]Waited $maxWaitMinutes min for a free BrowserStack slot ($running/$max in use). Proceeding anyway."
+            Write-Host "##vso[task.logissue type=warning]Waited $maxWaitMinutes min for $need free BrowserStack slot(s) ($running/$max in use). Proceeding anyway."
             break
           }
 
           $wait = Get-Random -Minimum 20 -Maximum 40
-          Write-Host "All $max sessions in use ($running/$max). Waiting $wait s before re-checking..."
+          Write-Host "Not enough free slots ($running/$max running, need $need). Waiting $wait s before re-checking..."
           Start-Sleep -Seconds $wait
         }
       env:
