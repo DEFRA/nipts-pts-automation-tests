@@ -154,31 +154,45 @@ namespace nipts_pts_automation_tests.HelperMethods
 
             // Step 1: wait until the credential page is reachable, handling the cookie banner and
             // the optional sign-in-method chooser whenever they appear during loading.
+            //
+            // The Government Gateway flow re-renders/navigates between polls, so an element located
+            // at the top of an iteration can go stale before we act on it. Ignore that transient
+            // staleness (re-poll with fresh references) rather than aborting the whole wait.
+            wait.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
             try
             {
                 wait.Until(d =>
                 {
-                    // Dismiss the cookie banner if present (best effort).
-                    TryClick(d, cookiesBy);
-
-                    // If the credential field is ready, we're done waiting.
-                    var userFields = d.FindElements(userIdBy);
-                    if (userFields.Count > 0 && userFields[0].Displayed)
-                        return true;
-
-                    // If the "How do you want to sign in?" chooser is showing, pick Government
-                    // Gateway and continue, then keep polling for the credential page.
-                    var chooser = d.FindElements(chooserBy);
-                    if (chooser.Count > 0 && chooser[0].Displayed)
+                    try
                     {
-                        ClickJs(d, chooser[0]);
-                        var continueBtn = d.FindElements(By.XPath("//button[@id='continueReplacement']")).FirstOrDefault()
-                                          ?? d.FindElements(By.XPath("//button[normalize-space()='Continue']")).FirstOrDefault();
-                        if (continueBtn != null)
-                            ClickJs(d, continueBtn);
-                    }
+                        // Dismiss the cookie banner if present (best effort).
+                        TryClick(d, cookiesBy);
 
-                    return false;
+                        // If the credential field is ready, we're done waiting.
+                        var userFields = d.FindElements(userIdBy);
+                        if (userFields.Count > 0 && userFields[0].Displayed)
+                            return true;
+
+                        // If the "How do you want to sign in?" chooser is showing, pick Government
+                        // Gateway and continue, then keep polling for the credential page.
+                        var chooser = d.FindElements(chooserBy);
+                        if (chooser.Count > 0 && chooser[0].Displayed)
+                        {
+                            ClickJs(d, chooser[0]);
+                            var continueBtn = d.FindElements(By.XPath("//button[@id='continueReplacement']")).FirstOrDefault()
+                                              ?? d.FindElements(By.XPath("//button[normalize-space()='Continue']")).FirstOrDefault();
+                            if (continueBtn != null)
+                                ClickJs(d, continueBtn);
+                        }
+
+                        return false;
+                    }
+                    catch (StaleElementReferenceException)
+                    {
+                        // Page re-rendered between locating an element and acting on it; re-poll
+                        // with fresh references on the next iteration instead of failing.
+                        return false;
+                    }
                 });
             }
             catch (WebDriverTimeoutException)
