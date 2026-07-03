@@ -148,9 +148,10 @@ jobs:
         # Pts-B2C-Tenant-ClientId/Secret    -> backend (PTS tenant) authorize + token exchange
         # Pts-B2C-Tenant-ServiceId          -> backend authorize serviceId param
         # PTS-CP-B2C-POLICY                 -> backend authorize B2C custom policy
+        # PTS-CP-B2C-CLIENT-ID/SECRET       -> CP pet-checker token (aud = CPClientId)
         # Nipts-Automations-Username/Password -> backend-enrolled test user for the API token login
         # PTS-CP-MAGIC-PASSWORD             -> shared sign-in password (TestConfiguration.EnvPassword)
-        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password,PTS-CP-OCP-APIM-SUBSCRIPTION-KEY,Pts-Apim-SubscriptionKey,Pts-B2C-Tenant-ClientId,Pts-B2C-Tenant-ClientSecret,Pts-B2C-Tenant-ServiceId,PTS-CP-B2C-POLICY,Nipts-Automations-Username,Nipts-Automations-Password,PTS-CP-MAGIC-PASSWORD'
+        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password,PTS-CP-OCP-APIM-SUBSCRIPTION-KEY,Pts-Apim-SubscriptionKey,Pts-B2C-Tenant-ClientId,Pts-B2C-Tenant-ClientSecret,Pts-B2C-Tenant-ServiceId,PTS-CP-B2C-POLICY,PTS-CP-B2C-CLIENT-ID,PTS-CP-B2C-CLIENT-SECRET,Nipts-Automations-Username,Nipts-Automations-Password,PTS-CP-MAGIC-PASSWORD'
         RunAsPreJob: false
 
     - task: DownloadBuildArtifacts@0
@@ -276,7 +277,21 @@ jobs:
         $b2cConfig | Add-Member -NotePropertyName ServiceId    -NotePropertyValue $env:B2C_SERVICE_ID -Force
         $b2cConfig | Add-Member -NotePropertyName Policy        -NotePropertyValue $env:B2C_POLICY -Force
 
-        # BSBrowserVersion is intentionally empty for mobile/Android runs.
+        # B2CConfig.CPClientId/CPClientSecret mint the CP pet-checker token (aud = CPClientId)
+        # used by the "Reject/Revoke via backend" checker calls. Only populated from Key Vault
+        # at runtime via DefaultAzureCredential (unavailable on self-hosted agents), so inject
+        # them here.
+        $b2cConfig | Add-Member -NotePropertyName CPClientId     -NotePropertyValue $env:B2C_CP_CLIENT_ID -Force
+        $b2cConfig | Add-Member -NotePropertyName CPClientSecret -NotePropertyValue $env:B2C_CP_CLIENT_SECRET -Force
+
+        # BackendSetupConfig subscription keys are the APIM Ocp-Apim-Subscription-Key header
+        # values: CheckerSubscriptionKey for the pet-checker API (ApiEndpoint5) and
+        # CommonSubscriptionKey for all other backend APIs. Without them the APIM gateway
+        # returns 401 "missing subscription key". Only populated from Key Vault at runtime via
+        # DefaultAzureCredential (unavailable on self-hosted agents), so inject them here.
+        $backendConfig = $json.AppSettings.BackendSetupConfig
+        $backendConfig | Add-Member -NotePropertyName CheckerSubscriptionKey -NotePropertyValue $env:CHECKER_SUBSCRIPTION_KEY -Force
+        $backendConfig | Add-Member -NotePropertyName CommonSubscriptionKey  -NotePropertyValue $env:COMMON_SUBSCRIPTION_KEY -Force
         if (-not [string]::IsNullOrEmpty("$(BSBrowserVersion)")) {
           $json.AppSettings.TestConfiguration.BSBrowserVersion = "$(BSBrowserVersion)"
         }
@@ -293,6 +308,10 @@ jobs:
         B2C_CLIENT_SECRET: $(Pts-B2C-Tenant-ClientSecret)
         B2C_SERVICE_ID: $(Pts-B2C-Tenant-ServiceId)
         B2C_POLICY: $(PTS-CP-B2C-POLICY)
+        B2C_CP_CLIENT_ID: $(PTS-CP-B2C-CLIENT-ID)
+        B2C_CP_CLIENT_SECRET: $(PTS-CP-B2C-CLIENT-SECRET)
+        CHECKER_SUBSCRIPTION_KEY: $(PTS-CP-OCP-APIM-SUBSCRIPTION-KEY)
+        COMMON_SUBSCRIPTION_KEY: $(Pts-Apim-SubscriptionKey)
       displayName: 'Inject CI settings into appsettings.json'
 
     - powershell: |
