@@ -242,6 +242,15 @@ jobs:
         $tstConfig = $json.AppSettings.TestConfiguration
         $tstConfig | Add-Member -NotePropertyName EnvPassword -NotePropertyValue $env:MAGIC_PASSWORD -Force
 
+        # B2CConfig.BackendUsername/BackendPassword are the backend-enrolled API test
+        # user credentials used to acquire the backend API token. Like EnvPassword they
+        # are only populated from Key Vault at runtime via DefaultAzureCredential, which
+        # is unavailable on self-hosted agents. Inject them here so the backend token
+        # acquisition works regardless of the runtime path.
+        $b2cConfig = $json.AppSettings.B2CConfig
+        $b2cConfig | Add-Member -NotePropertyName BackendUsername -NotePropertyValue $env:B2C_BACKEND_USERNAME -Force
+        $b2cConfig | Add-Member -NotePropertyName BackendPassword -NotePropertyValue $env:B2C_BACKEND_PASSWORD -Force
+
         # BSBrowserVersion is intentionally empty for mobile/Android runs.
         if (-not [string]::IsNullOrEmpty("$(BSBrowserVersion)")) {
           $json.AppSettings.TestConfiguration.BSBrowserVersion = "$(BSBrowserVersion)"
@@ -253,6 +262,8 @@ jobs:
         BS_USERNAME: $(Nipts-BrowserStack-Username)
         BS_ACCESSKEY: $(Nipts-BrowserStack-Password)
         MAGIC_PASSWORD: $(PTS-CP-MAGIC-PASSWORD)
+        B2C_BACKEND_USERNAME: $(Nipts-Automations-Username)
+        B2C_BACKEND_PASSWORD: $(Nipts-Automations-Password)
       displayName: 'Inject CI settings into appsettings.json'
 
     - powershell: |
