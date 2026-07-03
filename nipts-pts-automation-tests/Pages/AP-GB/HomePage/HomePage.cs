@@ -98,12 +98,29 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
         public bool VerifyTheExpectedStatus(string petName, string status)
         {
+            // Status transitions (e.g. Pending -> Approved) are driven by an asynchronous backend
+            // process (a Service Bus message consumed and written back to Dynamics), so the new
+            // status is not visible immediately. Poll by refreshing and re-checking until the
+            // expected status appears or the timeout elapses, rather than checking only once.
+            var timeout = TimeSpan.FromMinutes(6);
+            var pollInterval = TimeSpan.FromSeconds(5);
+            var deadline = DateTime.UtcNow + timeout;
 
-            _driver.Navigate().Refresh();
-            //_driver.WaitForPageToLoad();
+            do
+            {
+                _driver.Navigate().Refresh();
+                Thread.Sleep(pollInterval);
 
-            Thread.Sleep(TimeSpan.FromSeconds(5));
+                if (IsStatusDisplayed(petName, status))
+                    return true;
+            }
+            while (DateTime.UtcNow < deadline);
 
+            return false;
+        }
+
+        private bool IsStatusDisplayed(string petName, string status)
+        {
             // The results table can re-render after load (especially on slower mobile/Android
             // sessions), invalidating element references. Retry on stale element by re-querying
             // fresh rows each attempt instead of holding onto a previously captured collection.
