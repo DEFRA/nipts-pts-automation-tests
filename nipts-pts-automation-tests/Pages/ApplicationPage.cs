@@ -156,16 +156,25 @@ namespace nipts_pts_automation_tests.Pages
             var timeout = TimeSpan.FromMinutes(6);
             var pollInterval = TimeSpan.FromSeconds(5);
             var deadline = DateTime.UtcNow + timeout;
+            string? lastSeenStatus = null;
+            var attempts = 0;
+
+            Console.WriteLine($"=== POLLING FOR STATUS '{status}' (pet '{petName}', timeout {timeout.TotalMinutes} min) ===");
 
             do
             {
+                attempts++;
                 Thread.Sleep(pollInterval);
                 _driver.Navigate().Refresh();
 
                 try
                 {
-                    if (IsStatusDisplayed(petName, status))
+                    lastSeenStatus = GetDisplayedStatus(petName);
+                    if (lastSeenStatus != null && lastSeenStatus.Trim().ToUpper().Contains(status.ToUpper()))
+                    {
+                        Console.WriteLine($"=== STATUS '{status}' matched after {attempts} attempt(s) (saw '{lastSeenStatus.Trim()}') ===");
                         return true;
+                    }
                 }
                 catch (Exception ex) when (ex is StaleElementReferenceException || ex is NoSuchElementException)
                 {
@@ -175,10 +184,12 @@ namespace nipts_pts_automation_tests.Pages
             }
             while (DateTime.UtcNow < deadline);
 
+            Console.WriteLine($"=== STATUS POLL TIMED OUT after {attempts} attempt(s) (~{timeout.TotalMinutes} min). " +
+                              $"Expected '{status}' but last saw '{lastSeenStatus?.Trim() ?? "<row/status not found>"}' ===");
             return false;
         }
 
-        private bool IsStatusDisplayed(string petName, string status)
+        private string? GetDisplayedStatus(string petName)
         {
             var trCollection = tableBody.FindElements(By.TagName("tr"));
 
@@ -189,13 +200,11 @@ namespace nipts_pts_automation_tests.Pages
                 if (tableHeader.Text.Equals(petName))
                 {
                     var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
-                    var tdCollection = _driver.FindElement(By.XPath(statusPath));
-                    //var tdCollection = element.FindElements(By.TagName("td"));
-                    return tdCollection.Text.Trim().ToUpper().Contains(status.ToUpper());
+                    return _driver.FindElement(By.XPath(statusPath)).Text;
                 }
             }
 
-            return false;
+            return null;
         }
 
         public void ClickOnHelpWelshLink()
