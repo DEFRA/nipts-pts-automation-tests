@@ -234,6 +234,14 @@ jobs:
         $bsConfig | Add-Member -NotePropertyName CloudDeviceUserName -NotePropertyValue $env:BS_USERNAME -Force
         $bsConfig | Add-Member -NotePropertyName CloudDeviceUserKey  -NotePropertyValue $env:BS_ACCESSKEY -Force
 
+        # EnvPassword (the shared sign-in "magic" password) is normally populated
+        # from Key Vault at runtime via DefaultAzureCredential. That credential is
+        # unavailable on self-hosted agents (no managed identity / az login), which
+        # leaves EnvPassword null and makes SendKeys throw. Inject it here from the
+        # Key Vault secret so the value is present regardless of the runtime path.
+        $tstConfig = $json.AppSettings.TestConfiguration
+        $tstConfig | Add-Member -NotePropertyName EnvPassword -NotePropertyValue $env:MAGIC_PASSWORD -Force
+
         # BSBrowserVersion is intentionally empty for mobile/Android runs.
         if (-not [string]::IsNullOrEmpty("$(BSBrowserVersion)")) {
           $json.AppSettings.TestConfiguration.BSBrowserVersion = "$(BSBrowserVersion)"
@@ -244,6 +252,7 @@ jobs:
       env:
         BS_USERNAME: $(Nipts-BrowserStack-Username)
         BS_ACCESSKEY: $(Nipts-BrowserStack-Password)
+        MAGIC_PASSWORD: $(PTS-CP-MAGIC-PASSWORD)
       displayName: 'Inject CI settings into appsettings.json'
 
     - powershell: |
