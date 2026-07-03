@@ -27,6 +27,14 @@ parameters:
   - name: maxParallelSessions
     type: number
     default: 2
+  # How many pipeline runs may execute concurrently across all BrowserStack
+  # pipelines. The serialize lock lets a run proceed once it is within the N
+  # oldest tagged in-progress runs (N = 1 restores strict serial execution).
+  # Keep maxConcurrentRuns * maxParallelSessions under the account's parallel
+  # session limit (currently 13). Default 5 * 2 = 10 sessions, leaving headroom.
+  - name: maxConcurrentRuns
+    type: number
+    default: 5
 
 jobs: 
 
@@ -52,12 +60,13 @@ jobs:
     - powershell: |
         # Cross-pipeline serialize lock (YAML-only, no portal check required).
         #
-        # All BrowserStack pipelines share one BrowserStack account, so only one run
-        # should execute at a time. Each run tags itself with a shared build tag and
-        # then waits until it is the OLDEST tagged run still in progress before doing
-        # any work. Because Build.BuildId is a strict, monotonically increasing order,
-        # exactly one run is the "lowest id" at any moment - it proceeds while every
-        # newer run waits and re-polls. This gives sequential, in-queue-order execution
+        # All BrowserStack pipelines share one BrowserStack account, so only a
+        # bounded number of runs (maxConcurrentRuns) should execute at a time. Each
+        # run tags itself with a shared build tag and then waits until it is within
+        # the N OLDEST tagged runs still in progress before doing any work. Because
+        # Build.BuildId is a strict, monotonically increasing order, the N lowest ids
+        # proceed while every newer run waits and re-polls. This gives bounded,
+        # in-queue-order concurrency with no deadlock (the N oldest always proceed).
         # with no deadlock. A newer run can never overtake, because its id is higher.
         #
         # The lock is held for the WHOLE run: a lower-id run stays "in progress" until
@@ -74,6 +83,8 @@ jobs:
         $org     = "$(System.CollectionUri)"
         $project = "$(System.TeamProject)"
         $buildId = [int]"$(Build.BuildId)"
+        $maxConcurrent = [int]"${{ parameters.maxConcurrentRuns }}"
+        if ($maxConcurrent -lt 1) { $maxConcurrent = 1 }
         $tag     = 'browserstack-serial'
         $headers = @{ Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN" }
 
@@ -104,20 +115,21 @@ jobs:
             break
           }
 
-          $minId = ($builds | Measure-Object -Property id -Minimum).Minimum
-          if ($buildId -le $minId) {
-            Write-Host "This run (build $buildId) holds the lock - it is the oldest of $($builds.Count) in-progress run(s). Proceeding."
+          # Proceed once this run is within the N oldest tagged in-progress runs,
+          # i.e. fewer than maxConcurrent tagged runs are older (lower id) than it.
+          $ahead = @($builds | Where-Object { $_.id -lt $buildId }).Count
+          if ($ahead -lt $maxConcurrent) {
+            Write-Host "This run (build $buildId) is within the concurrency window: $ahead earlier run(s) in progress, limit $maxConcurrent. Proceeding."
             break
           }
 
           if ((Get-Date) -ge $deadline) {
-            Write-Host "##vso[task.logissue type=warning]Waited $maxWaitMinutes min for the serialize lock (oldest id $minId, mine $buildId). Proceeding anyway."
+            Write-Host "##vso[task.logissue type=warning]Waited $maxWaitMinutes min for a serialize slot ($ahead earlier run(s) ahead of mine $buildId, window $maxConcurrent). Proceeding anyway."
             break
           }
 
-          $ahead = @($builds | Where-Object { $_.id -lt $buildId }).Count
           $wait  = Get-Random -Minimum 20 -Maximum 40
-          Write-Host "Waiting for $ahead earlier run(s) to finish (oldest id $minId, mine $buildId). Re-checking in $wait s..."
+          Write-Host "Concurrency window full: $ahead earlier run(s) in progress (limit $maxConcurrent), mine $buildId. Re-checking in $wait s..."
           Start-Sleep -Seconds $wait
         }
       displayName: 'Serialize pipeline runs (wait for earlier runs)'
@@ -133,10 +145,12 @@ jobs:
         KeyVaultName: 'TSTTRDINFKV1001'
         # PTS-CP-OCP-APIM-SUBSCRIPTION-KEY  -> checker API (ApiEndpoint5)
         # Pts-Apim-SubscriptionKey          -> all other APIs
-        # Pts-B2C-Tenant-ClientSecret       -> backend (PTS tenant) bearer token audience
+        # Pts-B2C-Tenant-ClientId/Secret    -> backend (PTS tenant) authorize + token exchange
+        # Pts-B2C-Tenant-ServiceId          -> backend authorize serviceId param
+        # PTS-CP-B2C-POLICY                 -> backend authorize B2C custom policy
         # Nipts-Automations-Username/Password -> backend-enrolled test user for the API token login
         # PTS-CP-MAGIC-PASSWORD             -> shared sign-in password (TestConfiguration.EnvPassword)
-        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password,PTS-CP-OCP-APIM-SUBSCRIPTION-KEY,Pts-Apim-SubscriptionKey,Pts-B2C-Tenant-ClientSecret,Nipts-Automations-Username,Nipts-Automations-Password,PTS-CP-MAGIC-PASSWORD'
+        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password,PTS-CP-OCP-APIM-SUBSCRIPTION-KEY,Pts-Apim-SubscriptionKey,Pts-B2C-Tenant-ClientId,Pts-B2C-Tenant-ClientSecret,Pts-B2C-Tenant-ServiceId,PTS-CP-B2C-POLICY,Nipts-Automations-Username,Nipts-Automations-Password,PTS-CP-MAGIC-PASSWORD'
         RunAsPreJob: false
 
     - task: DownloadBuildArtifacts@0
@@ -251,6 +265,17 @@ jobs:
         $b2cConfig | Add-Member -NotePropertyName BackendUsername -NotePropertyValue $env:B2C_BACKEND_USERNAME -Force
         $b2cConfig | Add-Member -NotePropertyName BackendPassword -NotePropertyValue $env:B2C_BACKEND_PASSWORD -Force
 
+        # B2CConfig.ClientId/ServiceId/Policy/ClientSecret build the backend B2C authorize
+        # URL and the code-for-token exchange in TokenAcquirer. If any are empty the
+        # authorize URL is malformed, the Government Gateway credential page never loads,
+        # and the token acquisition times out after 60s. These are also only populated
+        # from Key Vault at runtime via DefaultAzureCredential (unavailable on self-hosted
+        # agents), so inject them here alongside the backend credentials.
+        $b2cConfig | Add-Member -NotePropertyName ClientId     -NotePropertyValue $env:B2C_CLIENT_ID -Force
+        $b2cConfig | Add-Member -NotePropertyName ClientSecret -NotePropertyValue $env:B2C_CLIENT_SECRET -Force
+        $b2cConfig | Add-Member -NotePropertyName ServiceId    -NotePropertyValue $env:B2C_SERVICE_ID -Force
+        $b2cConfig | Add-Member -NotePropertyName Policy        -NotePropertyValue $env:B2C_POLICY -Force
+
         # BSBrowserVersion is intentionally empty for mobile/Android runs.
         if (-not [string]::IsNullOrEmpty("$(BSBrowserVersion)")) {
           $json.AppSettings.TestConfiguration.BSBrowserVersion = "$(BSBrowserVersion)"
@@ -264,6 +289,10 @@ jobs:
         MAGIC_PASSWORD: $(PTS-CP-MAGIC-PASSWORD)
         B2C_BACKEND_USERNAME: $(Nipts-Automations-Username)
         B2C_BACKEND_PASSWORD: $(Nipts-Automations-Password)
+        B2C_CLIENT_ID: $(Pts-B2C-Tenant-ClientId)
+        B2C_CLIENT_SECRET: $(Pts-B2C-Tenant-ClientSecret)
+        B2C_SERVICE_ID: $(Pts-B2C-Tenant-ServiceId)
+        B2C_POLICY: $(PTS-CP-B2C-POLICY)
       displayName: 'Inject CI settings into appsettings.json'
 
     - powershell: |
@@ -414,6 +443,12 @@ jobs:
 
         $maxWaitMinutes = 40
         $deadline       = (Get-Date).AddMinutes($maxWaitMinutes)
+        # This job opens up to maxParallelSessions BrowserStack sessions, so only
+        # start once that many slots are free rather than just one - otherwise
+        # concurrent runs can collectively exceed the account limit and fail with
+        # "Remote WebDriver not been set properly".
+        $need = [int]"${{ parameters.maxParallelSessions }}"
+        if ($need -lt 1) { $need = 1 }
 
         while ($true) {
           try {
@@ -426,18 +461,18 @@ jobs:
             break
           }
 
-          if ($running -lt $max) {
-            Write-Host "Slot available ($running/$max sessions running). Proceeding to tests."
+          if (($running + $need) -le $max) {
+            Write-Host "Enough slots available ($running/$max running, need $need). Proceeding to tests."
             break
           }
 
           if ((Get-Date) -ge $deadline) {
-            Write-Host "##vso[task.logissue type=warning]Waited $maxWaitMinutes min for a free BrowserStack slot ($running/$max in use). Proceeding anyway."
+            Write-Host "##vso[task.logissue type=warning]Waited $maxWaitMinutes min for $need free BrowserStack slot(s) ($running/$max in use). Proceeding anyway."
             break
           }
 
           $wait = Get-Random -Minimum 20 -Maximum 40
-          Write-Host "All $max sessions in use ($running/$max). Waiting $wait s before re-checking..."
+          Write-Host "Not enough free slots ($running/$max running, need $need). Waiting $wait s before re-checking..."
           Start-Sleep -Seconds $wait
         }
       env:
