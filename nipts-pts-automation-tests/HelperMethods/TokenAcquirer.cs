@@ -204,17 +204,35 @@ namespace nipts_pts_automation_tests.HelperMethods
             // Step 2: enter credentials and submit, mirroring the proven CP SignInCPPage flow
             // exactly (no Clear(), scrollIntoView both fields, deliberate settle pauses, JS click
             // on the id*='continue' submit button).
+            //
+            // The credential page hydrates/re-renders client-side after it first appears, which on
+            // some browsers (notably Firefox) invalidates element references located here between
+            // the FindElement calls and the SendKeys/click. Re-locate and retry on that transient
+            // staleness instead of aborting the whole scenario.
             var signInBy = By.XPath("//button[contains(@id,'continue')]");
-            var userId = driver.FindElement(userIdBy);
-            var password = driver.FindElement(By.Id("password"));
-            var signIn = driver.FindElement(signInBy);
+            var credentialAttempts = 0;
+            while (true)
+            {
+                try
+                {
+                    var userId = driver.FindElement(userIdBy);
+                    var password = driver.FindElement(By.Id("password"));
+                    var signIn = driver.FindElement(signInBy);
 
-            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView()", signIn);
-            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView()", userId);
-            userId.SendKeys(config.BackendUsername);
-            password.SendKeys(config.BackendPassword);
-            Thread.Sleep(2000);
-            ClickJs(driver, signIn);
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView()", signIn);
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView()", userId);
+                    userId.SendKeys(config.BackendUsername);
+                    password.SendKeys(config.BackendPassword);
+                    Thread.Sleep(2000);
+                    ClickJs(driver, signIn);
+                    break;
+                }
+                catch (StaleElementReferenceException) when (credentialAttempts++ < 3)
+                {
+                    // Page re-rendered mid credential entry; let it settle then re-locate.
+                    Thread.Sleep(500);
+                }
+            }
 
             // Step 3: handle whatever Government Gateway shows after the credentials are submitted
             // - a direct redirect back to the app (no 2SV), a benign interstitial that just needs
