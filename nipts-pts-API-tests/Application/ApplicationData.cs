@@ -213,14 +213,36 @@ namespace nipts_pts_API_tests.Application
         public string GetApplicationToRevoke(string AppReference)
         {
             Task<RestResponse> response = GetApplication(AppReference);
-            var responseString = response.Result.Content.ToString();
-            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString.ToString())!;
-            ApplicationId = dynamicObject.application.applicationId;
+            var restResponse = response.Result;
+            var responseString = restResponse.Content ?? string.Empty;
+
+            Console.WriteLine("=== GET APPLICATION TO REVOKE ===");
+            Console.WriteLine($"AppReference: {AppReference}");
+            Console.WriteLine($"Status: {restResponse.StatusCode}");
+            Console.WriteLine($"Response: {responseString}");
+            Console.WriteLine("=================================");
+
+            if (!restResponse.IsSuccessful || string.IsNullOrWhiteSpace(responseString))
+                throw new Exception($"GetApplicationToRevoke: Failed to get application. AppReference: {AppReference}, Status: {restResponse.StatusCode}, Response: {responseString}");
+
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(responseString);
+            if (dynamicObject == null)
+                throw new Exception($"GetApplicationToRevoke: Failed to deserialize response. AppReference: {AppReference}, Response: {responseString}");
+
+            if (dynamicObject.application == null)
+                throw new Exception($"GetApplicationToRevoke: 'application' is null in response. AppReference: {AppReference}, Response: {responseString}");
+
+            ApplicationId = dynamicObject.application.applicationId?.ToString()
+                ?? throw new Exception($"GetApplicationToRevoke: 'applicationId' is null. AppReference: {AppReference}, Response: {responseString}");
+
             RevokeApplication(ApplicationId);
             Task<RestResponse> response2 = GetApplication(AppReference);
-            var responseString2 = response.Result.Content.ToString();
-            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString2.ToString())!;
-            PTDNumber = dynamicObject2.travelDocument.travelDocumentReferenceNumber;
+            var responseString2 = response2.Result.Content ?? string.Empty;
+            var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString2);
+            if (dynamicObject2?.travelDocument?.travelDocumentReferenceNumber == null)
+                throw new Exception($"GetApplicationToRevoke: 'travelDocumentReferenceNumber' is null after revoke. AppReference: {AppReference}, Response: {responseString2}");
+
+            PTDNumber = dynamicObject2.travelDocument.travelDocumentReferenceNumber?.ToString();
             return PTDNumber;
         }
 

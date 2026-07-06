@@ -111,8 +111,19 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                 _driver.Navigate().Refresh();
                 Thread.Sleep(pollInterval);
 
-                if (IsStatusDisplayed(petName, status))
-                    return true;
+                try
+                {
+                    if (IsStatusDisplayed(petName, status))
+                        return true;
+                }
+                catch (Exception ex) when (ex is StaleElementReferenceException
+                                           || ex is NoSuchElementException
+                                           || ex is WebDriverException)
+                {
+                    // Table re-rendering, or a slow/degraded BrowserStack session making a single
+                    // WebDriver command block (~90s command timeout) or drop the connection. Treat
+                    // as "not ready yet" and re-check next iteration; the deadline bounds the wait.
+                }
             }
             while (DateTime.UtcNow < deadline);
 
@@ -121,27 +132,15 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
         private bool IsStatusDisplayed(string petName, string status)
         {
-            // The results table can re-render after load (especially on slower mobile/Android
-            // sessions), invalidating element references. Retry on stale element by re-querying
-            // fresh rows each attempt instead of holding onto a previously captured collection.
-            return _driver.RetryOnStaleElement(() =>
-            {
-                var reversedTrCollection = tableRows.Reverse();
-
-                foreach (var element in reversedTrCollection)
-                {
-                    var tableHeader = element.FindElement(By.TagName("th"));
-
-                    if (tableHeader.Text.Replace("\r\n", string.Empty).Trim().ToUpper().Equals(petName.ToUpper()))
-                    {
-                        var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
-                        var tdCollection = _driver.FindElement(By.XPath(statusPath));
-                        return tdCollection.Text.Trim().ToUpper().Contains(status.ToUpper());
-                    }
-                }
-
-                return false;
-            });
+            // Locate the pet's status cell with a single direct XPath instead of iterating every
+            // row and issuing a child FindElement per row. On a degraded session each WebDriver
+            // command can block for the full command timeout (~90s), so a per-row loop could cost
+            // (rows x 90s) per poll. FindElements returns empty (no throw) when the row is absent;
+            // the last match is the most recent row (bottom of the table).
+            var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
+            var cells = _driver.FindElements(By.XPath(statusPath));
+            return cells.Count > 0
+                   && cells[cells.Count - 1].Text.Replace("\r\n", string.Empty).Trim().ToUpper().Contains(status.ToUpper());
         }
 
         public bool VerifyTheApplicationIsNotAvailable(string petName)

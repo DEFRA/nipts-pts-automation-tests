@@ -17,7 +17,11 @@ namespace nipts_pts_automation_tests.HelperMethods
                 if (forceWait)
                     Thread.Sleep(TimeSpan.FromSeconds(10));
                 WebDriverWait driverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(GlobalWaits));
-                return driverWait.Until(ExpectedConditions.ElementIsVisible(elementBy));
+                var element = driverWait.Until(ExpectedConditions.ElementIsVisible(elementBy));
+                // Clear any HMRC session-timeout dialog now, before the caller clicks the element,
+                // so a raw .Click() is not intercepted by the dialog on slower (Android) sessions.
+                driver.DismissTimeoutOverlayIfPresent();
+                return element;
             }
             catch (Exception ex)
             {
@@ -68,15 +72,17 @@ namespace nipts_pts_automation_tests.HelperMethods
             throw lastException ?? new StaleElementReferenceException("Element remained stale after retries");
         }
 
-        private static readonly By TimeoutOverlayBy = By.CssSelector("#hmrc-timeout-overlay, .hmrc-timeout-overlay");
+        private static readonly By TimeoutOverlayBy = By.CssSelector("#hmrc-timeout-overlay, .hmrc-timeout-overlay, #hmrc-timeout-dialog, .hmrc-timeout-dialog");
         private static readonly By TimeoutKeepSignedInBy = By.CssSelector("#hmrc-timeout-keep-signin-btn, .hmrc-timeout-keep-signin-btn");
 
         /// <summary>
         /// The HMRC session timeout warning renders a full page overlay (id="hmrc-timeout-overlay")
-        /// that intercepts clicks. It appears more frequently on slower (e.g. mobile/Android)
-        /// BrowserStack sessions. This keeps the user signed in (when the option is available) and
-        /// waits for the overlay to disappear so subsequent clicks are not intercepted. It is
-        /// best-effort and never throws, so callers can safely invoke it before any click.
+        /// and a modal dialog (id="hmrc-timeout-dialog") - either of which intercepts clicks. It
+        /// appears more frequently on slower (e.g. mobile/Android) BrowserStack sessions. This keeps
+        /// the user signed in (clicking "Stay signed in" when available, falling back to the button
+        /// text) and waits for the dialog/overlay to disappear so subsequent clicks are not
+        /// intercepted. It is best-effort and never throws, so callers can safely invoke it before
+        /// any click.
         /// </summary>
         public static void DismissTimeoutOverlayIfPresent(this IWebDriver driver)
         {
@@ -86,8 +92,13 @@ namespace nipts_pts_automation_tests.HelperMethods
                 if (!overlays.Any(o => o.Displayed))
                     return;
 
-                // Keep the session alive by clicking "Stay signed in" when it is available.
-                var keepSignedIn = driver.FindElements(TimeoutKeepSignedInBy).FirstOrDefault(b => b.Displayed);
+                // Keep the session alive by clicking "Stay signed in". Prefer the known id/class;
+                // fall back to any visible button/link in the dialog whose text keeps the session.
+                var keepSignedIn = driver.FindElements(TimeoutKeepSignedInBy).FirstOrDefault(b => b.Displayed)
+                    ?? driver.FindElements(By.CssSelector("#hmrc-timeout-dialog button, #hmrc-timeout-dialog a"))
+                        .FirstOrDefault(b => b.Displayed
+                            && (b.Text.IndexOf("Stay signed in", StringComparison.OrdinalIgnoreCase) >= 0
+                                || b.Text.IndexOf("Continue", StringComparison.OrdinalIgnoreCase) >= 0));
                 if (keepSignedIn != null)
                     ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", keepSignedIn);
 
@@ -180,7 +191,10 @@ namespace nipts_pts_automation_tests.HelperMethods
             try
             {
                 WebDriverWait driverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(GlobalWaits));
-                return driverWait.Until(ExpectedConditions.ElementToBeClickable(elementBy));
+                var element = driverWait.Until(ExpectedConditions.ElementToBeClickable(elementBy));
+                // Clear any HMRC session-timeout dialog before the caller clicks the element.
+                driver.DismissTimeoutOverlayIfPresent();
+                return element;
             }
             catch (Exception ex)
             {
@@ -195,7 +209,10 @@ namespace nipts_pts_automation_tests.HelperMethods
                 if (forceWait)
                     Thread.Sleep(TimeSpan.FromSeconds(3));
                 WebDriverWait driverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(GlobalWaits));
-                return driverWait.Until(ExpectedConditions.ElementExists(elementBy));
+                var element = driverWait.Until(ExpectedConditions.ElementExists(elementBy));
+                // Clear any HMRC session-timeout dialog before the caller clicks the element.
+                driver.DismissTimeoutOverlayIfPresent();
+                return element;
             }
             catch (Exception ex)
             {

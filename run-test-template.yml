@@ -31,10 +31,10 @@ parameters:
   # pipelines. The serialize lock lets a run proceed once it is within the N
   # oldest tagged in-progress runs (N = 1 restores strict serial execution).
   # Keep maxConcurrentRuns * maxParallelSessions under the account's parallel
-  # session limit (currently 13). Default 5 * 2 = 10 sessions, leaving headroom.
+  # session limit (currently 13). Default 6 * 2 = 12 sessions, leaving headroom.
   - name: maxConcurrentRuns
     type: number
-    default: 5
+    default: 6
 
 jobs: 
 

@@ -181,6 +181,14 @@ namespace nipts_pts_automation_tests.Pages
                     // Table can be re-rendering after the refresh; treat as "not ready yet" and
                     // re-check on the next poll iteration instead of aborting the whole wait.
                 }
+                catch (WebDriverException ex)
+                {
+                    // A slow/degraded BrowserStack session can make a single WebDriver command block
+                    // for the full command timeout (~90s) or drop the connection. Treat it as a
+                    // transient "not ready yet" so one bad command does not fail the whole test; the
+                    // 6 min deadline still bounds the total wait.
+                    Console.WriteLine($"=== STATUS POLL: transient WebDriver error on attempt {attempts} ({ex.GetType().Name}: {ex.Message}); retrying ===");
+                }
             }
             while (DateTime.UtcNow < deadline);
 
@@ -191,20 +199,14 @@ namespace nipts_pts_automation_tests.Pages
 
         private string? GetDisplayedStatus(string petName)
         {
-            var trCollection = tableBody.FindElements(By.TagName("tr"));
-
-            foreach (var element in trCollection)
-            {
-                var tableHeader = element.FindElement(By.TagName("th"));
-
-                if (tableHeader.Text.Equals(petName))
-                {
-                    var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
-                    return _driver.FindElement(By.XPath(statusPath)).Text;
-                }
-            }
-
-            return null;
+            // Locate the status cell for this pet with a single XPath rather than iterating every
+            // row and issuing a child FindElement per row. On a degraded BrowserStack session each
+            // WebDriver command can block for the full command timeout (~90s), so a per-row loop
+            // could cost (rows x 90s) per poll and overshoot the deadline by tens of minutes. Using
+            // FindElements (which returns empty instead of throwing) keeps each poll to one command.
+            var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
+            var cells = _driver.FindElements(By.XPath(statusPath));
+            return cells.Count > 0 ? cells[0].Text : null;
         }
 
         public void ClickOnHelpWelshLink()
