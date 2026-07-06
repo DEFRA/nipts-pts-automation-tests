@@ -9,7 +9,7 @@ parameters:
     default: 'tst'
   - name: ApiEndpoint
     type: string
-    default: 'dev'
+    default: 'tst'
   - name: SeleniumGrid
     type: string
     default: 'https://hub.browserstack.com/wd/hub/'
