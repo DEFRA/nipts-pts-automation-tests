@@ -12,7 +12,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         private IObjectContainer _objectContainer;
 
         #region Page Objects
-        private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[@class='govuk-heading-xl'] | //h1[@class='govuk-heading-l'] | //h1[@class='govuk-fieldset__heading']"), true);
+        private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[contains(@class,'govuk-heading-l')] | //h1[contains(@class,'govuk-fieldset__heading')]"), true);
         private IWebElement UserId => _driver.FindElement(By.Id("user_id"));
         private IWebElement Password => _driver.FindElement(By.Id("password"));
         private IWebElement SignIn => _driver.WaitForElement(By.XPath("//button[contains(text(),'Sign in')]"));
