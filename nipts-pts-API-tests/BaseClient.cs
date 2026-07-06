@@ -16,6 +16,16 @@ namespace nipts_pts_API_tests
 
         protected string RequestFolder { get; set; }
 
+        /// <summary>
+        /// Optional hook the test host registers so a 401 can be recovered from by re-minting the
+        /// relevant bearer token and retrying the request once. The bool argument is true for the
+        /// CP/checker endpoint (needs the CP-audience token) and false for the backend/applicant
+        /// token; the handler returns true if a fresh token was obtained. It is a static delegate
+        /// because <see cref="BaseClient"/> lives in the API project and cannot reference the
+        /// Selenium / token-acquisition code that lives in the automation-tests project.
+        /// </summary>
+        public static Func<bool, bool> TokenRefreshHandler { get; set; }
+
         //private string ApiEndpoint { get; set; }
 
         public BaseClient()
@@ -110,29 +120,95 @@ namespace nipts_pts_API_tests
             if (!string.IsNullOrEmpty(_subscriptionKey))
                 restRequest.AddOrUpdateHeader("Ocp-Apim-Subscription-Key", _subscriptionKey);
 
-            // The pts-pet-checker (CP) API only trusts a CP-audience token; everything else uses
-            // the applicant/backend token. Fall back to the backend token if no CP token is set.
-            var bearerToken = _isCheckerEndpoint && !string.IsNullOrEmpty(DataSetupConfig.Configuration.CheckerBearerToken)
-                ? DataSetupConfig.Configuration.CheckerBearerToken
-                : DataSetupConfig.Configuration.BearerToken;
-            if (!string.IsNullOrEmpty(bearerToken))
-                restRequest.AddOrUpdateHeader("Authorization", $"Bearer {bearerToken}");
+            var bearerToken = ApplyBearerToken(restRequest);
 
             var response = await restClient.ExecuteAsync(restRequest);
 
             if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
-                Console.WriteLine("=== 401 UNAUTHORIZED DIAGNOSTICS ===");
-                Console.WriteLine($"Request URL:          {response.ResponseUri}");
-                Console.WriteLine($"Subscription key set: {!string.IsNullOrEmpty(_subscriptionKey)}");
-                Console.WriteLine($"Bearer token present: {!string.IsNullOrEmpty(bearerToken)} (length: {bearerToken?.Length ?? 0})");
-                var wwwAuth = response.Headers?.FirstOrDefault(h => string.Equals(h.Name, "WWW-Authenticate", StringComparison.OrdinalIgnoreCase));
-                Console.WriteLine($"WWW-Authenticate:     {wwwAuth?.Value}");
-                Console.WriteLine($"Response body:        {response.Content}");
-                Console.WriteLine("====================================");
+                LogUnauthorizedDiagnostics(response, bearerToken);
+
+                // A 401 in a long run almost always means the cached B2C token expired mid-suite.
+                // Ask the registered handler to re-mint the relevant token and retry the request
+                // once with the fresh token before surfacing the failure to the test.
+                response = await RetryAfterTokenRefreshAsync(restClient, restRequest, response);
             }
 
             return response;
+        }
+
+        /// <summary>
+        /// Resolves and attaches the correct bearer token for this request. The pts-pet-checker (CP)
+        /// API only trusts a CP-audience token; everything else uses the applicant/backend token.
+        /// Falls back to the backend token if no CP token is set. Returns the token that was applied.
+        /// </summary>
+        private string ApplyBearerToken(RestRequest restRequest)
+        {
+            var bearerToken = _isCheckerEndpoint && !string.IsNullOrEmpty(DataSetupConfig.Configuration.CheckerBearerToken)
+                ? DataSetupConfig.Configuration.CheckerBearerToken
+                : DataSetupConfig.Configuration.BearerToken;
+            if (!string.IsNullOrEmpty(bearerToken))
+                restRequest.AddOrUpdateHeader("Authorization", $"Bearer {bearerToken}");
+            return bearerToken;
+        }
+
+        /// <summary>
+        /// Invokes the registered <see cref="TokenRefreshHandler"/> to re-mint the token this
+        /// endpoint needs, then replays the request exactly once with the new token. If no handler
+        /// is registered, the refresh fails, or the retry still returns 401, the original/last
+        /// response is returned unchanged so callers see the real failure.
+        /// </summary>
+        private async Task<RestResponse> RetryAfterTokenRefreshAsync(RestClient restClient, RestRequest restRequest, RestResponse response)
+        {
+            var handler = TokenRefreshHandler;
+            if (handler == null)
+                return response;
+
+            Console.WriteLine("Attempting token refresh and single retry after 401...");
+
+            bool refreshed;
+            try
+            {
+                refreshed = handler(_isCheckerEndpoint);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Token refresh handler threw, cannot retry: {ex.Message}");
+                return response;
+            }
+
+            if (!refreshed)
+            {
+                Console.WriteLine("Token refresh did not produce a new token; not retrying.");
+                return response;
+            }
+
+            var bearerToken = ApplyBearerToken(restRequest);
+            var retryResponse = await restClient.ExecuteAsync(restRequest);
+
+            if (retryResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                Console.WriteLine("Retry after token refresh still returned 401.");
+                LogUnauthorizedDiagnostics(retryResponse, bearerToken);
+            }
+            else
+            {
+                Console.WriteLine($"Retry after token refresh succeeded with status {retryResponse.StatusCode}.");
+            }
+
+            return retryResponse;
+        }
+
+        private void LogUnauthorizedDiagnostics(RestResponse response, string bearerToken)
+        {
+            Console.WriteLine("=== 401 UNAUTHORIZED DIAGNOSTICS ===");
+            Console.WriteLine($"Request URL:          {response.ResponseUri}");
+            Console.WriteLine($"Subscription key set: {!string.IsNullOrEmpty(_subscriptionKey)}");
+            Console.WriteLine($"Bearer token present: {!string.IsNullOrEmpty(bearerToken)} (length: {bearerToken?.Length ?? 0})");
+            var wwwAuth = response.Headers?.FirstOrDefault(h => string.Equals(h.Name, "WWW-Authenticate", StringComparison.OrdinalIgnoreCase));
+            Console.WriteLine($"WWW-Authenticate:     {wwwAuth?.Value}");
+            Console.WriteLine($"Response body:        {response.Content}");
+            Console.WriteLine("====================================");
         }
 
         /// <summary>
