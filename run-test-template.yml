@@ -40,7 +40,12 @@ jobs:
 
 - job: ${{ parameters.jobName }}
   displayName: ${{ parameters.jobName }}
-  timeoutInMinutes: 300
+  # Scheduled nightly runs execute alone at midnight and run the FULL suite, so they
+  # need a bigger budget than PR-triggered runs (which run subsets). DEFRA-TRD is a
+  # self-hosted pool, so the 300/360-min Microsoft-hosted cap does not apply and this
+  # value is a self-imposed safety limit we can raise. Give scheduled runs 600 min and
+  # keep PR/manual runs at 300. iif() is a supported runtime expression function.
+  timeoutInMinutes: $[ iif(eq(variables['Build.Reason'], 'Schedule'), 600, 300) ]
 
   pool:
     name: 'DEFRA-TRD'
@@ -54,6 +59,15 @@ jobs:
         TestDevice: ${{parameters.TestDeviceName}}
         OSVersion: ${{parameters.OSVersionName}}
         BrowserVersion: ${{parameters.BrowserVersionName}}
+    # Number of parallel BrowserStack sessions (NUnit test workers) this job opens.
+    # Scheduled nightly runs execute alone at midnight, so they can safely use far more
+    # sessions than PR-triggered runs (which share the account). Use 8 for Build.Reason
+    # == 'Schedule' (leaving headroom under the account's 13-session limit), otherwise
+    # fall back to the conservative PR value (maxParallelSessions). The live
+    # session-slot gate below still queries real account usage before launching, so
+    # this higher count can never overload the shared account.
+    - name: sessionCount
+      value: $[ iif(eq(variables['Build.Reason'], 'Schedule'), 8, ${{ parameters.maxParallelSessions }}) ]
 
   steps:
 
@@ -133,6 +147,12 @@ jobs:
           Start-Sleep -Seconds $wait
         }
       displayName: 'Serialize pipeline runs (wait for earlier runs)'
+      # Skip the cross-pipeline serialize wait for the scheduled nightly run: it fires
+      # at midnight when no other pipelines are running, so there is nothing to queue
+      # behind. Waiting here would only burn the job's timeout budget (up to 180 min)
+      # before any test starts. The live BrowserStack session-slot gate further down
+      # still protects the shared account if anything unexpected is running.
+      condition: ne(variables['Build.Reason'], 'Schedule')
       env:
         SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
@@ -468,11 +488,12 @@ jobs:
 
         $maxWaitMinutes = 40
         $deadline       = (Get-Date).AddMinutes($maxWaitMinutes)
-        # This job opens up to maxParallelSessions BrowserStack sessions, so only
-        # start once that many slots are free rather than just one - otherwise
-        # concurrent runs can collectively exceed the account limit and fail with
-        # "Remote WebDriver not been set properly".
-        $need = [int]"${{ parameters.maxParallelSessions }}"
+        # This job opens up to $(sessionCount) BrowserStack sessions (higher for the
+        # scheduled nightly run, maxParallelSessions for PR runs), so only start once
+        # that many slots are free rather than just one - otherwise concurrent runs can
+        # collectively exceed the account limit and fail with "Remote WebDriver not been
+        # set properly".
+        $need = [int]"$(sessionCount)"
         if ($need -lt 1) { $need = 1 }
 
         while ($true) {
@@ -510,7 +531,7 @@ jobs:
         # NUnit.NumberOfTestWorkers is overridden on the command line to cap how many
         # BrowserStack sessions this job opens concurrently, regardless of the value
         # baked into the artifact's runsettings.
-        dotnet test "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml" -- NUnit.NumberOfTestWorkers=${{ parameters.maxParallelSessions }}
+        dotnet test "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml" -- NUnit.NumberOfTestWorkers=$(sessionCount)
       displayName: 'Execute Tests'
       failOnStderr: true
       ignoreLASTEXITCODE: true
