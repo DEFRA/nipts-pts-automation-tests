@@ -165,7 +165,6 @@ namespace nipts_pts_automation_tests.Configuration
             var b2c = BaseConfiguration.B2CConfig;
             var backend = BaseConfiguration.BackendSetupConfig;
             var browserStack = BaseConfiguration.BrowserStackConfiguration;
-            var serviceBus = BaseConfiguration.ServiceBusConnectionConfig;
 
             var required = new Dictionary<string, string?>
             {
@@ -180,12 +179,6 @@ namespace nipts_pts_automation_tests.Configuration
                 ["B2CConfig.CPClientSecret"] = b2c?.CPClientSecret,
                 ["BackendSetupConfig.CommonSubscriptionKey"] = backend?.CommonSubscriptionKey,
                 ["BackendSetupConfig.CheckerSubscriptionKey"] = backend?.CheckerSubscriptionKey,
-                // Backend approval/suspension posts to the Service Bus queue using this connection
-                // string, which is resolved only from Key Vault at runtime (not appsettings.json).
-                // Validate it up front so a remote agent that cannot reach Key Vault fails here with
-                // a clear message, rather than later as a cryptic TypeInitializationException from
-                // ServiceBusConnection when "Approve an application via backend" runs mid-scenario.
-                ["ServiceBusConnectionConfig.ServiceBusConnString"] = serviceBus?.ServiceBusConnString,
             };
 
             // BrowserStack credentials are only needed when running against the BrowserStack cloud;
