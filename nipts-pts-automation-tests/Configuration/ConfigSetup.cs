@@ -246,6 +246,7 @@ namespace nipts_pts_automation_tests.Configuration
         }
         private static void DataSetupConfigurationBinding()
         {
+            BaseConfiguration.BackendSetupConfig.DBConnectionString = BaseConfiguration.AppConnectionString.DBConnectionstring;
             nipts_pts_API_tests.Configuration.DataSetupConfig.Configuration = BaseConfiguration.BackendSetupConfig;
         }
 
