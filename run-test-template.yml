@@ -171,7 +171,7 @@ jobs:
         # PTS-CP-B2C-CLIENT-ID/SECRET       -> CP pet-checker token (aud = CPClientId)
         # Nipts-Automations-Username/Password -> backend-enrolled test user for the API token login
         # PTS-CP-MAGIC-PASSWORD             -> shared sign-in password (TestConfiguration.EnvPassword)
-        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password,PTS-CP-OCP-APIM-SUBSCRIPTION-KEY,Pts-Apim-SubscriptionKey,Pts-B2C-Tenant-ClientId,Pts-B2C-Tenant-ClientSecret,Pts-B2C-Tenant-ServiceId,PTS-CP-B2C-POLICY,PTS-CP-B2C-CLIENT-ID,PTS-CP-B2C-CLIENT-SECRET,Nipts-Automations-Username,Nipts-Automations-Password,PTS-CP-MAGIC-PASSWORD'
+        SecretsFilter: 'Nipts-BrowserStack-Username,Nipts-BrowserStack-Password,PTS-CP-OCP-APIM-SUBSCRIPTION-KEY,Pts-Apim-SubscriptionKey,Pts-B2C-Tenant-ClientId,Pts-B2C-Tenant-ClientSecret,Pts-B2C-Tenant-ServiceId,PTS-CP-B2C-POLICY,PTS-CP-B2C-CLIENT-ID,PTS-CP-B2C-CLIENT-SECRET,Nipts-Automations-Username,Nipts-Automations-Password,PTS-CP-MAGIC-PASSWORD,Nipts-ServiceBus-ConnectionString'
         RunAsPreJob: false
 
     - task: DownloadBuildArtifacts@0
@@ -312,6 +312,14 @@ jobs:
         $backendConfig = $json.AppSettings.BackendSetupConfig
         $backendConfig | Add-Member -NotePropertyName CheckerSubscriptionKey -NotePropertyValue $env:CHECKER_SUBSCRIPTION_KEY -Force
         $backendConfig | Add-Member -NotePropertyName CommonSubscriptionKey  -NotePropertyValue $env:COMMON_SUBSCRIPTION_KEY -Force
+
+        # ServiceBusConnectionConfig.ServiceBusConnString is the Service Bus connection string the
+        # backend Approve/Suspend/Reject/Revoke steps use to post to the application-update queue.
+        # It is otherwise only populated from Key Vault at runtime via DefaultAzureCredential
+        # (unavailable on self-hosted agents), which left it empty - making approval silently no-op
+        # and, when validated, failing OneTimeSetUp. Inject it here so it is always present.
+        $sbConfig = $json.AppSettings.ServiceBusConnectionConfig
+        $sbConfig | Add-Member -NotePropertyName ServiceBusConnString -NotePropertyValue $env:SERVICE_BUS_CONN_STRING -Force
         if (-not [string]::IsNullOrEmpty("$(BSBrowserVersion)")) {
           $json.AppSettings.TestConfiguration.BSBrowserVersion = "$(BSBrowserVersion)"
         }
@@ -332,6 +340,7 @@ jobs:
         B2C_CP_CLIENT_SECRET: $(PTS-CP-B2C-CLIENT-SECRET)
         CHECKER_SUBSCRIPTION_KEY: $(PTS-CP-OCP-APIM-SUBSCRIPTION-KEY)
         COMMON_SUBSCRIPTION_KEY: $(Pts-Apim-SubscriptionKey)
+        SERVICE_BUS_CONN_STRING: $(Nipts-ServiceBus-ConnectionString)
       displayName: 'Inject CI settings into appsettings.json'
 
     - powershell: |
