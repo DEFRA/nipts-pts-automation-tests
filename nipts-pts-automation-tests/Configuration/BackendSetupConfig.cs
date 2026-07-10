@@ -13,5 +13,6 @@ namespace nipts_pts_automation_tests.Configuration
         public string CommonSubscriptionKey { get; set; }
         public string BearerToken { get; set; }
         public string CheckerBearerToken { get; set; }
+        public string DBConnectionString { get; set; }
     }
 }

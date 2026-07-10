@@ -11,5 +11,6 @@
         string CommonSubscriptionKey { get; set; }
         string BearerToken { get; set; }
         string CheckerBearerToken { get; set; }
+        string DBConnectionString { get; set; }
     }
 }

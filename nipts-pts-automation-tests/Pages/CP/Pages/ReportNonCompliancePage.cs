@@ -159,8 +159,13 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void ClickOnSaveOnUpdateReferral()
         {
+            // A native .Click() after scrollIntoView proved unreliable on mobile (Android): the tap
+            // did not submit the form, so the app never navigated to the Checks/Welcome page and the
+            // next step timed out waiting for it. Use a JavaScript click (the same approach the
+            // sibling "Update referral outcome" button uses) which reliably fires the button handler
+            // on mobile.
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", SaveOnUpdateReferral);
-            SaveOnUpdateReferral.Click();
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", SaveOnUpdateReferral);
         }
 
         public bool VerifyOtherReasonHintTxt(string otherReasonHintTxt)
