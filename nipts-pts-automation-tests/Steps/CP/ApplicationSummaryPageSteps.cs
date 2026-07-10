@@ -185,6 +185,9 @@ namespace nipts_pts_automation_tests.Steps.CP
             string todaysDate = DateTime.Now.ToString("yyyy-MM-dd");
             string dynamicId = Guid.NewGuid().ToString();
 
+            // IMPORTANT: the trailing space in "Application.Id " is REQUIRED. The backend queue
+            // consumer keys off that exact property name and silently ignores the message without
+            // it, leaving the application stuck in 'AWAITING VERIFICATION'. Do not "tidy" it away.
             string messageBody = $"{{ \"Application.Id \": \"{applicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Authorised\", \"Application.DateAuthorised\": \"{todaysDate}\" }}";
 
             Console.WriteLine($"Sending Authorise message for ApplicationId: {applicationId} to queue: {queueName}");

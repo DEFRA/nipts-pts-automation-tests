@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using nipts_pts_API_tests.Configuration;
 using RestSharp;
 
@@ -70,43 +69,23 @@ namespace nipts_pts_API_tests.Application
 
         public void ApproveApplication(string ApplicationId)
         {
-            UpdateApplicationStatus(ApplicationId, "Authorised", "DateAuthorised");
-        }
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
+            DateTime dateTime = DateTime.Now;
+            string TodaysDate = dateTime.ToString("yyyy-MM-dd");
 
-        /// <summary>
-        /// Sets an application's status directly in the pet-travel database.
-        /// Approve/Suspend/Reject/Revoke previously posted a Service Bus message for an asynchronous
-        /// backend to apply, but that queue consumer is unreliable in the test environment (messages
-        /// never landed on the queue / were never applied), leaving applications stuck in
-        /// 'AWAITING VERIFICATION'. The status column lives in the same database the portal reads,
-        /// so set it synchronously here, which also surfaces any failure immediately instead of as a
-        /// later stuck-status poll timeout.
-        /// </summary>
-        private void UpdateApplicationStatus(string applicationId, string status, string dateColumn)
-        {
-            // dateColumn is an internal literal, never user input, but whitelist it anyway so the
-            // interpolated column name can never become an injection vector.
-            var allowedDateColumns = new[] { "DateAuthorised", "DateSuspended", "DateRejected", "DateRevoked" };
-            if (Array.IndexOf(allowedDateColumns, dateColumn) < 0)
-                throw new ArgumentException($"UpdateApplicationStatus: unexpected date column '{dateColumn}'.", nameof(dateColumn));
+            // Create a unique DynamicId for each message
+            string dynamicId = Guid.NewGuid().ToString();
 
-            var connString = DataSetupConfig.Configuration.DBConnectionString;
-            if (string.IsNullOrWhiteSpace(connString))
-                throw new Exception("UpdateApplicationStatus: DB connection string is not configured.");
+            // IMPORTANT: the trailing space in "Application.Id " is REQUIRED. The backend queue
+            // consumer keys off that exact property name and silently ignores the message without
+            // it, leaving the application stuck in 'AWAITING VERIFICATION'. Proven empirically
+            // against the defra.trade.pts.application.update queue (with space -> Authorised within
+            // ~1 min; without space -> never applied). Do not "tidy" this space away.
+            string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Authorised\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
 
-            var sql = $"UPDATE [dbo].[Application] SET Status = @status, {dateColumn} = CAST(GETUTCDATE() AS date), " +
-                      "UpdatedOn = SYSUTCDATETIME() WHERE Id = @id";
-
-            using var conn = new SqlConnection(connString);
-            conn.Open();
-            using var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@status", status);
-            cmd.Parameters.AddWithValue("@id", Guid.Parse(applicationId));
-            var affected = cmd.ExecuteNonQuery();
-
-            Console.WriteLine($"UpdateApplicationStatus: set Status='{status}', {dateColumn}=today for application {applicationId} ({affected} row(s) affected).");
-            if (affected == 0)
-                throw new Exception($"UpdateApplicationStatus: no Application row updated for Id '{applicationId}' (status '{status}').");
+            // Block on the send so a failed publish surfaces as a test error here instead of being
+            // swallowed as an unobserved async exception and later looking like a stuck status.
+            ServiceBusConnection.SendMessageToQueue(messageBody, queueName).GetAwaiter().GetResult();
         }
 
         public void GetAwaitingApplicationToSuspend(string AppReference)
@@ -129,7 +108,17 @@ namespace nipts_pts_API_tests.Application
 
         public void SuspendApplication(string ApplicationId)
         {
-            UpdateApplicationStatus(ApplicationId, "Suspended", "DateSuspended");
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
+            DateTime dateTime = DateTime.Now;
+            string TodaysDate = dateTime.ToString("yyyy-MM-dd");
+
+            // Create a unique DynamicId for each message
+            string dynamicId = Guid.NewGuid().ToString();
+
+            // The trailing space in "Application.Id " is required (see ApproveApplication).
+            string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Suspended\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
+
+            ServiceBusConnection.SendMessageToQueue(messageBody, queueName).GetAwaiter().GetResult();
         }
 
 
@@ -218,7 +207,17 @@ namespace nipts_pts_API_tests.Application
 
         public void RejectApplication(string ApplicationId)
         {
-            UpdateApplicationStatus(ApplicationId, "Rejected", "DateRejected");
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
+            DateTime dateTime = DateTime.Now;
+            string TodaysDate = dateTime.ToString("yyyy-MM-dd");
+
+            // Create a unique DynamicId for each message
+            string dynamicId = Guid.NewGuid().ToString();
+
+            // The trailing space in "Application.Id " is required (see ApproveApplication).
+            string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Rejected\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
+
+            ServiceBusConnection.SendMessageToQueue(messageBody, queueName).GetAwaiter().GetResult();
         }
 
         public string GetApplicationToRevoke(string AppReference)
@@ -259,7 +258,17 @@ namespace nipts_pts_API_tests.Application
 
         public void RevokeApplication(string ApplicationId)
         {
-            UpdateApplicationStatus(ApplicationId, "Revoked", "DateRevoked");
+            string queueName = ServiceBusConnectionData.Configuration.ServiceBusQueueName;
+            DateTime dateTime = DateTime.Now;
+            string TodaysDate = dateTime.ToString("yyyy-MM-dd");
+
+            // Create a unique DynamicId for each message
+            string dynamicId = Guid.NewGuid().ToString();
+
+            // The trailing space in "Application.Id " is required (see ApproveApplication).
+            string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Revoked\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
+
+            ServiceBusConnection.SendMessageToQueue(messageBody, queueName).GetAwaiter().GetResult();
         }
 
         public Task<RestResponse> GetApplication(string AppReference)
