@@ -76,7 +76,7 @@ namespace nipts_pts_API_tests.Application
             // Create a unique DynamicId for each message
             string dynamicId = Guid.NewGuid().ToString();
 
-            string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Authorised\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
+            string messageBody = $"{{ \"Application.Id\": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Authorised\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
 
             ServiceBusConnection.SendMessageToQueue(messageBody, queueName);
         }
@@ -108,7 +108,7 @@ namespace nipts_pts_API_tests.Application
             // Create a unique DynamicId for each message
             string dynamicId = Guid.NewGuid().ToString();
 
-            string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Suspended\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
+            string messageBody = $"{{ \"Application.Id\": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Suspended\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
 
             ServiceBusConnection.SendMessageToQueue(messageBody, queueName);
         }
@@ -206,7 +206,7 @@ namespace nipts_pts_API_tests.Application
             // Create a unique DynamicId for each message
             string dynamicId = Guid.NewGuid().ToString();
 
-            string messageBody = $"{{ \"Application.Id \": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Rejected\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
+            string messageBody = $"{{ \"Application.Id\": \"{ApplicationId}\", \"Application.DynamicId\": \"{dynamicId}\", \"Application.StatusId\": \"Rejected\", \"Application.DateAuthorised\": \"{TodaysDate}\" }}";
             ServiceBusConnection.SendMessageToQueue(messageBody, queueName);
         }
 
