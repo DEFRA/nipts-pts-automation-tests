@@ -76,6 +76,7 @@ namespace nipts_pts_automation_tests.HelperMethods
         private static string GetAuthorizationCodeViaBackendLogin(IWebDriver driver, string authority, B2CConfig config, string scope)
         {
             var originalWindow = driver.CurrentWindowHandle;
+            var originalUrl = driver.Url;
             var existingWindows = driver.WindowHandles.ToHashSet();
 
             // prompt=login forces a fresh credential entry so B2C ignores the CP SSO session and
@@ -91,13 +92,35 @@ namespace nipts_pts_automation_tests.HelperMethods
                 $"&prompt=login" +
                 $"&state=apitest";
 
-            // Open in a background tab so the signed-in CP page is preserved.
+            // Prefer a background tab so the signed-in CP page is preserved. Desktop browsers open a
+            // new WebDriver window handle for window.open, but mobile browsers (e.g. iOS/Android via
+            // BrowserStack) do NOT expose one, so wait only briefly for the new handle and fall back
+            // to driving the login in the current tab when it never appears. Without this fallback
+            // the wait blocks for the full timeout and fails with "Timed out after 60 seconds" on
+            // mobile. The backend B2C login redirects to a localhost URI and never establishes a CP
+            // app session, so the CP session cookie in the current tab is unaffected and we can
+            // safely navigate back to the CP page afterwards.
             ((IJavaScriptExecutor)driver).ExecuteScript("window.open(arguments[0], '_blank');", authorizeUrl);
 
+            string? newWindow = null;
+            try
+            {
+                var newWindowWait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                newWindowWait.Until(d => d.WindowHandles.Count > existingWindows.Count);
+                newWindow = driver.WindowHandles.First(h => !existingWindows.Contains(h));
+            }
+            catch (WebDriverTimeoutException)
+            {
+                // No separate tab was created (mobile): drive the login in the current tab instead.
+            }
+
+            var openedNewTab = newWindow != null;
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
-            wait.Until(d => d.WindowHandles.Count > existingWindows.Count);
-            var newWindow = driver.WindowHandles.First(h => !existingWindows.Contains(h));
-            driver.SwitchTo().Window(newWindow);
+
+            if (openedNewTab)
+                driver.SwitchTo().Window(newWindow);
+            else
+                driver.Navigate().GoToUrl(authorizeUrl);
 
             try
             {
@@ -131,8 +154,18 @@ namespace nipts_pts_automation_tests.HelperMethods
             }
             finally
             {
-                driver.Close();
-                driver.SwitchTo().Window(originalWindow);
+                if (openedNewTab)
+                {
+                    // Close the throwaway login tab and return to the preserved CP page.
+                    driver.Close();
+                    driver.SwitchTo().Window(originalWindow);
+                }
+                else
+                {
+                    // Single-tab (mobile): navigate back to the CP page we left. The CP app session
+                    // cookie is intact, so the route-checker page reloads as the signed-in CP user.
+                    driver.Navigate().GoToUrl(originalUrl);
+                }
             }
         }
 

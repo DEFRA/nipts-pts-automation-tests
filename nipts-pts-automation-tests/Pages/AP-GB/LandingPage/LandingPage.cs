@@ -75,8 +75,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LandingPage
 
         public bool VerifyNextPageIsLoaded(string pageName)
         {
-            string text = PageHeading.Text;
-            return PageHeading.Text.Contains(pageName);
+            // The heading can be re-rendered while the previous page is navigating away (e.g. right
+            // after a JS click that triggers navigation), which throws a StaleElementReferenceException.
+            // Re-query the heading on each attempt so a fresh, non-stale reference is used.
+            return _driver.RetryOnStaleElement(() => PageHeading.Text.Contains(pageName));
         }
 
         #endregion Page Methods
