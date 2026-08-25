@@ -27,7 +27,7 @@ namespace nipts_pts_API_tests.Configuration
 
                     else if (applicationSettings.AllKeys.Any(k => k == property.Name))
                     {
-                        propValue = applicationSettings[property.Name];
+                        propValue = applicationSettings[property.Name] ?? string.Empty;
                         logMessage =
                             $@"Parameter '{property.Name}' obtained from app.config file. Value: '{propValue}'";
                     }

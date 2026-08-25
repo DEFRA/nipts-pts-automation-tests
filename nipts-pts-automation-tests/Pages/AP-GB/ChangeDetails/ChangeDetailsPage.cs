@@ -52,7 +52,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails
             foreach (var element in divPetOwnerDetailsList)
             {
                 var elementTitle = element.FindElement(By.TagName("dt"))?.Text?.Replace("\r\n", string.Empty).Trim()?.ToUpper();
-                var elementValue = element.FindElements(By.TagName("dd"))?[0].Text?.Replace("\r\n", string.Empty).Trim();
+                var elementValue = element.FindElements(By.TagName("dd"))?[0].Text?.Replace("\r\n", string.Empty).Trim() ?? string.Empty;
 
                 switch (elementTitle)
                 {

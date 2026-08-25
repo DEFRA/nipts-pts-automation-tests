@@ -60,7 +60,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage
             for (int i = 0; i < divMicrochipInformationTitleList.Count; i++)
             {
                 var elementTitle = divMicrochipInformationTitleList.ElementAt(i)?.Text?.Replace("\r\n", string.Empty).Trim()?.ToUpper();
-                var elementValue = divMicrochipInformationValueList.ElementAt(i).Text?.Replace("\r\n", string.Empty).Trim();
+                var elementValue = divMicrochipInformationValueList.ElementAt(i).Text?.Replace("\r\n", string.Empty).Trim() ?? string.Empty;
 
                 switch (elementTitle)
                 {
@@ -76,7 +76,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage
             for (int i = 0; i < divPetDetailsTitleList.Count; i++)
             {
                 var elementTitle = divPetDetailsTitleList.ElementAt(i)?.Text?.Replace("\r\n", string.Empty).Trim()?.ToUpper();
-                var elementValue = divPetDetailsValueList.ElementAt(i).Text?.Replace("\r\n", string.Empty).Trim();
+                var elementValue = divPetDetailsValueList.ElementAt(i).Text?.Replace("\r\n", string.Empty).Trim() ?? string.Empty;
 
                 switch (elementTitle)
                 {
@@ -108,7 +108,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage
             for (int i = 0; i < divPetOwnerDetailsTitleList.Count; i++)
             {
                 var elementTitle = divPetOwnerDetailsTitleList.ElementAt(i)?.Text?.Replace("\r\n", string.Empty).Trim()?.ToUpper();
-                var elementValue = divPetOwnerDetailsValueList.ElementAt(i).Text?.Replace("\r\n", string.Empty).Trim();
+                var elementValue = divPetOwnerDetailsValueList.ElementAt(i).Text?.Replace("\r\n", string.Empty).Trim() ?? string.Empty;
 
                 switch (elementTitle)
                 {

@@ -16,10 +16,10 @@ namespace nipts_pts_automation_tests.Steps.CP
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
 
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IUrlBuilder? urlBuilder => _objectContainer.IsRegistered<IUrlBuilder>() ? _objectContainer.Resolve<IUrlBuilder>() : null;
-        private IRouteCheckingPage? _routeCheckingPage => _objectContainer.IsRegistered<IRouteCheckingPage>() ? _objectContainer.Resolve<IRouteCheckingPage>() : null;
-        private IUserObject? UserObject => _objectContainer.IsRegistered<IUserObject>() ? _objectContainer.Resolve<IUserObject>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IUrlBuilder urlBuilder => _objectContainer.Resolve<IUrlBuilder>();
+        private IRouteCheckingPage _routeCheckingPage => _objectContainer.Resolve<IRouteCheckingPage>();
+        private IUserObject UserObject => _objectContainer.Resolve<IUserObject>();
 
         public RouteCheckingPageSteps(ScenarioContext context, IObjectContainer container)
         {
@@ -56,7 +56,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         [Then(@"I have provided Scheduled departure time")]
         public void ThenIHaveProvidedScheduledDepartureTime()
         {
-            string departureTime = _routeCheckingPage?.SelectDropDownDepartureTime();
+            string departureTime = _routeCheckingPage.SelectDropDownDepartureTime();
             _scenarioContext.Add("DepartureTime", departureTime);
         }
 
@@ -148,7 +148,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         [Then(@"I provided time that exceeds 24 hours from the current time")]
         public void ThenIProvidedTimeThatExceeds24HoursFromTheCurrentTime()
         {
-            string departureTime = _routeCheckingPage?.SelectfutureDropDownDepartureTime();
+            string departureTime = _routeCheckingPage.SelectfutureDropDownDepartureTime();
             _scenarioContext.Add("DepartureTime", departureTime);
         }
 
@@ -187,7 +187,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         [Then(@"I provided time that exceeds 24 hours and 1 minute from the current time")]
         public void ThenIHaveProvidedScheduledDepartureTimeLate1Minute()
         {
-            string departureTime = _routeCheckingPage?.SelectDropDownDepartureTimeJustOneMinuteLaterThanCurrent();
+            string departureTime = _routeCheckingPage.SelectDropDownDepartureTimeJustOneMinuteLaterThanCurrent();
             _scenarioContext.Add("DepartureTime", departureTime);
         }
 
@@ -195,7 +195,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         [Then(@"I provided time that exceeds 23 hours and 59 minute from the current time")]
         public void ThenIHaveProvidedScheduledDepartureTimeBefore1Minute()
         {
-            string departureTime = _routeCheckingPage?.SelectDropDownDepartureTimeJustOneMinuteBeforeThanCurrent();
+            string departureTime = _routeCheckingPage.SelectDropDownDepartureTimeJustOneMinuteBeforeThanCurrent();
             _scenarioContext.Add("DepartureTime", departureTime);
         }
 
@@ -203,7 +203,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         [Then(@"I provided time before 48 hours and 1 minute from the current time")]
         public void ThenIHaveProvidedScheduledDepartureTimeBefore48Hr1Minute()
         {
-            string departureTime = _routeCheckingPage?.SelectDropDownDepartureTimeJustOneMinuteLaterThanCurrent();
+            string departureTime = _routeCheckingPage.SelectDropDownDepartureTimeJustOneMinuteLaterThanCurrent();
             _scenarioContext.Add("DepartureTime", departureTime);
         }
 
@@ -211,7 +211,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         [Then(@"I provided time before 47 hours and 59 minute from the current time")]
         public void ThenIHaveProvidedScheduledDepartureTimeBefore47Hr59Minute()
         {
-            string departureTime = _routeCheckingPage?.SelectDropDownDepartureTimeJustOneMinuteBeforeThanCurrent();
+            string departureTime = _routeCheckingPage.SelectDropDownDepartureTimeJustOneMinuteBeforeThanCurrent();
             _scenarioContext.Add("DepartureTime", departureTime);
         }
 

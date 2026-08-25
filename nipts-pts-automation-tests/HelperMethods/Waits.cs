@@ -23,7 +23,7 @@ namespace nipts_pts_automation_tests.HelperMethods
                 driver.DismissTimeoutOverlayIfPresent();
                 return element;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new ElementNotVisibleException("Element is not visible");
             }
@@ -39,7 +39,7 @@ namespace nipts_pts_automation_tests.HelperMethods
                 driverWait.Until(ExpectedConditions.ElementIsVisible(elementBy));
                 return driver.FindElements(elementBy);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new ElementNotVisibleException("Element is not visible");
             }
@@ -165,7 +165,7 @@ namespace nipts_pts_automation_tests.HelperMethods
         public static void WaitForAjax(this IWebDriver driver)
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-            wait.Until(d => (bool)(d as IJavaScriptExecutor).ExecuteScript("return document.readyState").ToString().Equals("complete"));
+            wait.Until(d => ((IJavaScriptExecutor)d).ExecuteScript("return document.readyState")?.ToString() == "complete");
         }
 
         public static bool WaitForSpinnerToAppearAndDisappear(this IWebDriver driver, By elementBy)
@@ -214,7 +214,7 @@ namespace nipts_pts_automation_tests.HelperMethods
                 driver.DismissTimeoutOverlayIfPresent();
                 return element;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new ElementNotVisibleException("Element is not visible");
             }

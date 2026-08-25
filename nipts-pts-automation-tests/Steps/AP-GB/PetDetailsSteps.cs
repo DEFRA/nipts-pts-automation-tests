@@ -19,13 +19,13 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
 
-        private IPetsSpeciesPage? petSpeciesPage => _objectContainer.IsRegistered<IPetsSpeciesPage>() ? _objectContainer.Resolve<IPetsSpeciesPage>() : null;
-        private IPetsBreedPage? breedPage => _objectContainer.IsRegistered<IPetsBreedPage>() ? _objectContainer.Resolve<IPetsBreedPage>() : null;
-        private IPetsNamePage? petNamePage => _objectContainer.IsRegistered<IPetsNamePage>() ? _objectContainer.Resolve<IPetsNamePage>() : null;
-        private IPetsSexPage? petSexPage => _objectContainer.IsRegistered<IPetsSexPage>() ? _objectContainer.Resolve<IPetsSexPage>() : null;
-        private IPetDOBPage? petDOBPage => _objectContainer.IsRegistered<IPetDOBPage>() ? _objectContainer.Resolve<IPetDOBPage>() : null;
-        private IPetsColourPage? petColourPag => _objectContainer.IsRegistered<IPetsColourPage>() ? _objectContainer.Resolve<IPetsColourPage>() : null;
-        private ISignificantFeaturesPage? significantFeaturesPage => _objectContainer.IsRegistered<ISignificantFeaturesPage>() ? _objectContainer.Resolve<ISignificantFeaturesPage>() : null;
+        private IPetsSpeciesPage petSpeciesPage => _objectContainer.Resolve<IPetsSpeciesPage>();
+        private IPetsBreedPage breedPage => _objectContainer.Resolve<IPetsBreedPage>();
+        private IPetsNamePage petNamePage => _objectContainer.Resolve<IPetsNamePage>();
+        private IPetsSexPage petSexPage => _objectContainer.Resolve<IPetsSexPage>();
+        private IPetDOBPage petDOBPage => _objectContainer.Resolve<IPetDOBPage>();
+        private IPetsColourPage petColourPag => _objectContainer.Resolve<IPetsColourPage>();
+        private ISignificantFeaturesPage significantFeaturesPage => _objectContainer.Resolve<ISignificantFeaturesPage>();
 
         public PetDetailsSteps(ScenarioContext context, IObjectContainer container)
         {

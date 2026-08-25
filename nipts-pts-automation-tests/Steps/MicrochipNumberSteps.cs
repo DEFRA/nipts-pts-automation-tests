@@ -11,8 +11,8 @@ namespace nipts_pts_automation_tests.Steps
     {
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IMicrochipNumberPage? microchipNumberPage => _objectContainer.IsRegistered<IMicrochipNumberPage>() ? _objectContainer.Resolve<IMicrochipNumberPage>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IMicrochipNumberPage microchipNumberPage => _objectContainer.Resolve<IMicrochipNumberPage>();
 
         public MicrochipNumberSteps(ScenarioContext context, IObjectContainer container)
         {

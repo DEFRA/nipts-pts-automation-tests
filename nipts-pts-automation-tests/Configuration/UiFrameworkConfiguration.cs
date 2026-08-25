@@ -5,8 +5,8 @@ namespace nipts_pts_automation_tests.Configuration
     public class UiFrameworkConfiguration : IFrameworkConfiguration
     {
 
-        private string _grid;
-        public string Target { get; set; }
+        private string? _grid;
+        public string Target { get; set; } = string.Empty;
         public bool IsDebug { get; set; }
 
 

@@ -12,9 +12,9 @@ namespace nipts_pts_automation_tests.Steps
     {
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IApplicationPage? applicationPage => _objectContainer.IsRegistered<IApplicationPage>() ? _objectContainer.Resolve<IApplicationPage>() : null;
-        private IManualAddressPage? manualAddressPage => _objectContainer.IsRegistered<IManualAddressPage>() ? _objectContainer.Resolve<IManualAddressPage>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IApplicationPage applicationPage => _objectContainer.Resolve<IApplicationPage>();
+        private IManualAddressPage manualAddressPage => _objectContainer.Resolve<IManualAddressPage>();
 
         public ManualAddressSteps(ScenarioContext context, IObjectContainer container)
         {

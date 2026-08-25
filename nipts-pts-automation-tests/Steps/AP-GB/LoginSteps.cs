@@ -16,11 +16,11 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
 
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IUrlBuilder? urlBuilder => _objectContainer.IsRegistered<IUrlBuilder>() ? _objectContainer.Resolve<IUrlBuilder>() : null;
-        private ILandingPage? landingPage => _objectContainer.IsRegistered<ILandingPage>() ? _objectContainer.Resolve<ILandingPage>() : null;
-        private ILogInPage? signin => _objectContainer.IsRegistered<ILogInPage>() ? _objectContainer.Resolve<ILogInPage>() : null;
-        private IUserObject? UserObject => _objectContainer.IsRegistered<IUserObject>() ? _objectContainer.Resolve<IUserObject>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IUrlBuilder urlBuilder => _objectContainer.Resolve<IUrlBuilder>();
+        private ILandingPage landingPage => _objectContainer.Resolve<ILandingPage>();
+        private ILogInPage signin => _objectContainer.Resolve<ILogInPage>();
+        private IUserObject UserObject => _objectContainer.Resolve<IUserObject>();
 
         public LoginSteps(ScenarioContext context, IObjectContainer container)
         {
@@ -91,7 +91,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         public void WhenIHaveProvidedTheCredentialsAndSignin()
         {
 
-            var jsonData = UserObject?.GetUser("AP-GB");
+            var jsonData = UserObject.GetUser("AP-GB");
             var userObject = new User
             {
                 UserId = jsonData.UserId,

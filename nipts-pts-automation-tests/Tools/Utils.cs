@@ -2,7 +2,7 @@
 
 namespace nipts_pts_automation_tests.Tools
 {
-    public class Utils
+    public static class Utils
     {
         public static string GenerateRandomApplicationNumber()
         {

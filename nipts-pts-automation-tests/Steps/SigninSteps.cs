@@ -13,11 +13,11 @@ namespace nipts_pts_automation_tests.Steps
     {
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IApplicationPage? applicationPage => _objectContainer.IsRegistered<IApplicationPage>() ? _objectContainer.Resolve<IApplicationPage>() : null;
-        private ISignInPage? signin => _objectContainer.IsRegistered<ISignInPage>() ? _objectContainer.Resolve<ISignInPage>() : null;
-        private IUrlBuilder? UrlBuilder => _objectContainer.IsRegistered<IUrlBuilder>() ? _objectContainer.Resolve<IUrlBuilder>() : null;
-        private IUserObject? UserObject => _objectContainer.IsRegistered<IUserObject>() ? _objectContainer.Resolve<IUserObject>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IApplicationPage applicationPage => _objectContainer.Resolve<IApplicationPage>();
+        private ISignInPage signin => _objectContainer.Resolve<ISignInPage>();
+        private IUrlBuilder UrlBuilder => _objectContainer.Resolve<IUrlBuilder>();
+        private IUserObject UserObject => _objectContainer.Resolve<IUserObject>();
 
         public SigninSteps(ScenarioContext context, IObjectContainer container)
         {

@@ -13,9 +13,9 @@ namespace nipts_pts_automation_tests.Steps.CP
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
 
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IWelcomePage? _welcomePage => _objectContainer.IsRegistered<IWelcomePage>() ? _objectContainer.Resolve<IWelcomePage>() : null;
-        private IUserObject? UserObject => _objectContainer.IsRegistered<IUserObject>() ? _objectContainer.Resolve<IUserObject>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IWelcomePage _welcomePage => _objectContainer.Resolve<IWelcomePage>();
+        private IUserObject UserObject => _objectContainer.Resolve<IUserObject>();
 
         public WelcomePageSteps(ScenarioContext context, IObjectContainer container)
         {

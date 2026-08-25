@@ -60,7 +60,7 @@ namespace nipts_pts_automation_tests.Tools
             {
                 // 2. Open a browser and land on a real page so the token flow's window.open works.
                 driver = new ChromeDriver();
-                var portalUrl = ConfigSetup.BaseConfiguration!.TestConfiguration.ComPortalUrl;
+                var portalUrl = ConfigSetup.BaseConfiguration.TestConfiguration.ComPortalUrl;
                 if (!string.IsNullOrWhiteSpace(portalUrl))
                     driver.Navigate().GoToUrl(portalUrl);
 

@@ -13,8 +13,8 @@ namespace nipts_pts_automation_tests.Steps
     {
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IMicrochipDatePage? microchipDatePage => _objectContainer.IsRegistered<IMicrochipDatePage>() ? _objectContainer.Resolve<IMicrochipDatePage>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IMicrochipDatePage microchipDatePage => _objectContainer.Resolve<IMicrochipDatePage>();
 
         public MicrochipDateSteps(ScenarioContext context, IObjectContainer container)
         {

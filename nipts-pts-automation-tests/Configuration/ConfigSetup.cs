@@ -11,7 +11,7 @@ namespace nipts_pts_automation_tests.Configuration
     [Binding]
     public class ConfigSetup
     {
-        public static BaseConfiguration? BaseConfiguration { get; private set; }
+        public static BaseConfiguration BaseConfiguration { get; private set; } = null!;
 
         [BeforeTestRun(Order = (int)HookRunOrder.Configuration)]
         public static void SetupProjectConfig()
@@ -36,7 +36,7 @@ namespace nipts_pts_automation_tests.Configuration
             builder.AddEnvironmentVariables();
             var settings = builder.Build();
             DebugAppSettings(settings);
-            return settings.GetSection("AppSettings").Get<BaseConfiguration>();
+            return settings.GetSection("AppSettings").Get<BaseConfiguration>()!;
         }
 
         // Config key fragments whose values must never be written to logs/console.
@@ -69,7 +69,7 @@ namespace nipts_pts_automation_tests.Configuration
         /// </summary>
         private static void ResolveSecretsFromKeyVault()
         {
-            var kv = BaseConfiguration?.KeyVaultConfiguration;
+            var kv = BaseConfiguration.KeyVaultConfiguration;
             if (kv == null || string.IsNullOrWhiteSpace(kv.VaultName))
             {
                 Console.WriteLine("Key Vault resolution skipped - no VaultName configured.");

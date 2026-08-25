@@ -2,7 +2,7 @@
 {
     public class DataSetupConfig
     {
-        private static IDataSetupConfig _configuration;
+        private static IDataSetupConfig? _configuration;
         public static IDataSetupConfig Configuration
         {
             get

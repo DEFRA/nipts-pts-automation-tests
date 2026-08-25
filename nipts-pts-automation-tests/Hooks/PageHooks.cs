@@ -122,6 +122,6 @@ namespace nipts_pts_automation_tests.Hooks
         }
 
         private TU GetBaseWithContainer<T, TU>() where T : TU =>
-        (TU)Activator.CreateInstance(typeof(T), _objectContainer);
+        (TU)Activator.CreateInstance(typeof(T), _objectContainer)!;
     }
 }

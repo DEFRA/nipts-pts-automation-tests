@@ -13,8 +13,8 @@ namespace nipts_pts_automation_tests.Steps.CP
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
 
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IGBCheckReportPage? gBCheckReportPage => _objectContainer.IsRegistered<IGBCheckReportPage>() ? _objectContainer.Resolve<IGBCheckReportPage>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IGBCheckReportPage gBCheckReportPage => _objectContainer.Resolve<IGBCheckReportPage>();
 
         public GBCheckReportSteps(ScenarioContext context, IObjectContainer container)
         {

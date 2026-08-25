@@ -11,7 +11,7 @@ namespace nipts_pts_automation_tests.Pages
     {
         private string Platform => ConfigSetup.BaseConfiguration.TestConfiguration.Platform;
         private IObjectContainer _objectContainer;
-        private IUserObject? UserObject => _objectContainer.IsRegistered<IUserObject>() ? _objectContainer.Resolve<IUserObject>() : null;
+        private IUserObject UserObject => _objectContainer.Resolve<IUserObject>();
 
         #region Page Objects
 

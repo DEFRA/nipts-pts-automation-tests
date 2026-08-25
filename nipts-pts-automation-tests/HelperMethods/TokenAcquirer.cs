@@ -1,6 +1,5 @@
 using Newtonsoft.Json;
 using System.Web;
-using Newtonsoft.Json;
 using nipts_pts_automation_tests.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -282,6 +281,15 @@ namespace nipts_pts_automation_tests.HelperMethods
         /// completed when a TOTP secret is configured (<see cref="B2CConfig.BackendTotpSecret"/>);
         /// otherwise it fails fast with an actionable message instead of a mystery 60s timeout.
         /// </summary>
+        private static void HandleAccessCodePage(IWebDriver driver, B2CConfig config, IWebElement accessCodeField, By continueBy)
+        {
+            if (TryEnterAccessCode(driver, config, accessCodeField, continueBy))
+                return;
+
+            LogLoginPageState(driver);
+            throw new Exception(BuildTwoStepMessage(config));
+        }
+
         private static void HandlePostCredentialPages(IWebDriver driver, B2CConfig config)
         {
             var accessCodeBy = By.CssSelector(
@@ -304,13 +312,9 @@ namespace nipts_pts_automation_tests.HelperMethods
                 var accessCodeField = driver.FindElements(accessCodeBy).FirstOrDefault(e => e.Displayed);
                 if (accessCodeField != null)
                 {
-                    if (TryEnterAccessCode(driver, config, accessCodeField, continueBy))
-                    {
-                        Thread.Sleep(2000);
-                        continue;
-                    }
-                    LogLoginPageState(driver);
-                    throw new Exception(BuildTwoStepMessage(config));
+                    HandleAccessCodePage(driver, config, accessCodeField, continueBy);
+                    Thread.Sleep(2000);
+                    continue;
                 }
 
                 // Rejected credentials - re-rendered creds page with an error summary.
@@ -510,7 +514,7 @@ namespace nipts_pts_automation_tests.HelperMethods
                 throw new Exception($"B2C token exchange failed. Status: {response.StatusCode}, Body: {body}");
 
             var json = JsonConvert.DeserializeObject<dynamic>(body);
-            string token = json?.access_token;
+            string token = (string?)json?.access_token ?? string.Empty;
 
             if (string.IsNullOrWhiteSpace(token))
                 throw new Exception($"B2C token response did not contain an access_token. Body: {body}");

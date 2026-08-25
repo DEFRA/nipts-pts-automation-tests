@@ -17,10 +17,10 @@ namespace nipts_pts_automation_tests.Steps.CP
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
 
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IApplicationSummaryPage? _applicationSummaryPage => _objectContainer.IsRegistered<IApplicationSummaryPage>() ? _objectContainer.Resolve<IApplicationSummaryPage>() : null;
-        private IApplicationData? AppData => _objectContainer.IsRegistered<IApplicationData>() ? _objectContainer.Resolve<IApplicationData>() : null;
-        public ApplicationResponse ApplicationResponse { get; set; }
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IApplicationSummaryPage _applicationSummaryPage => _objectContainer.Resolve<IApplicationSummaryPage>();
+        private IApplicationData AppData => _objectContainer.Resolve<IApplicationData>();
+        public ApplicationResponse ApplicationResponse { get; set; } = null!;
 
         public ApplicationSummaryPageSteps(ScenarioContext context, IObjectContainer container)
         {

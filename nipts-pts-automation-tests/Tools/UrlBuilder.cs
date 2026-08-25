@@ -6,7 +6,6 @@ namespace nipts_pts_automation_tests.Tools
 {
     public interface IUrlBuilder
     {
-        //public UrlBuilder Default();
         public UrlBuilder Default(string portal);
         public string Build();
         public UrlBuilder Add(string segment);
@@ -15,15 +14,15 @@ namespace nipts_pts_automation_tests.Tools
     }
     public class UrlBuilder : IUrlBuilder
     {
-        private IObjectContainer _objectContainer;
+        private readonly IObjectContainer _objectContainer;
         public UrlBuilder(IObjectContainer objectContainer)
         {
             _objectContainer = objectContainer;
             segments = new List<string>();
         }
-        private IList<string> segments;
+        private readonly IList<string> segments;
         private bool hasTrailingSlash;
-        private string BaseUrl = null;
+        private string BaseUrl = string.Empty;
         public UrlBuilder Add(string segment)
         {
             if (segment == null)
@@ -35,14 +34,14 @@ namespace nipts_pts_automation_tests.Tools
                 segments.Add(cleanSegment);
             }
 
-            hasTrailingSlash = segment.EndsWith("/");
+            hasTrailingSlash = segment.EndsWith('/');
 
             return this;
         }
 
         public string Build()
         {
-            string path = null;
+            string path = string.Empty;
             if (segments.Count > 0)
             {
                 path = string.Join("/", segments);
@@ -73,7 +72,7 @@ namespace nipts_pts_automation_tests.Tools
         private static string CleanSegment(string segment)
         {
             var unescaped = Uri.UnescapeDataString(segment);
-            return Uri.EscapeUriString(unescaped).Replace("?", "%3F").Trim().TrimStart('/').TrimEnd('/');
+            return Uri.EscapeDataString(unescaped).Replace("?", "%3F").Trim().TrimStart('/').TrimEnd('/');
         }
     }
 }

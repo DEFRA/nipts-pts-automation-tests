@@ -13,8 +13,8 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
 
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IDataHelperConnections? dataHelperConnections => _objectContainer.IsRegistered<IDataHelperConnections>() ? _objectContainer.Resolve<IDataHelperConnections>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IDataHelperConnections dataHelperConnections => _objectContainer.Resolve<IDataHelperConnections>();
 
         public DatabaseCheckSteps(ScenarioContext context, IObjectContainer container)
         {

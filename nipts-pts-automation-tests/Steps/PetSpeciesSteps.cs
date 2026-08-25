@@ -13,8 +13,8 @@ namespace nipts_pts_automation_tests.Steps
     {
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IPetSpeciesPage? enterSpeciesPage => _objectContainer.IsRegistered<IPetSpeciesPage>() ? _objectContainer.Resolve<IPetSpeciesPage>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IPetSpeciesPage enterSpeciesPage => _objectContainer.Resolve<IPetSpeciesPage>();
 
         public PetSpeciesSteps(ScenarioContext context, IObjectContainer container)
         {

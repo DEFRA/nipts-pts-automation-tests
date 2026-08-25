@@ -4,14 +4,14 @@ namespace nipts_pts_automation_tests.Configuration
 {
     public class BackendSetupConfig : IDataSetupConfig
     {
-        public string ApiEndPoint1 { get; set; }
-        public string ApiEndPoint2 { get; set; }
-        public string ApiEndPoint3 { get; set; }
-        public string ApiEndPoint4 { get; set; }
-        public string ApiEndPoint5 { get; set; }
-        public string CheckerSubscriptionKey { get; set; }
-        public string CommonSubscriptionKey { get; set; }
-        public string BearerToken { get; set; }
-        public string CheckerBearerToken { get; set; }
+        public string ApiEndPoint1 { get; set; } = string.Empty;
+        public string ApiEndPoint2 { get; set; } = string.Empty;
+        public string ApiEndPoint3 { get; set; } = string.Empty;
+        public string ApiEndPoint4 { get; set; } = string.Empty;
+        public string ApiEndPoint5 { get; set; } = string.Empty;
+        public string CheckerSubscriptionKey { get; set; } = string.Empty;
+        public string CommonSubscriptionKey { get; set; } = string.Empty;
+        public string BearerToken { get; set; } = string.Empty;
+        public string CheckerBearerToken { get; set; } = string.Empty;
     }
 }

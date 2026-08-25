@@ -11,10 +11,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
     public class WelcomePage : IWelcomePage
     {
         private readonly IObjectContainer _objectContainer;
-        private readonly ScenarioContext _scenarioContext;
-        static string departTime1;
-        static string departTime2;
-        static string departTime3;
+        static string departTime1 = string.Empty;
+        static string departTime2 = string.Empty;
+        static string departTime3 = string.Empty;
         public WelcomePage(IObjectContainer container)
         {
             _objectContainer = container;
@@ -277,7 +276,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
             string matchingRecord = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departureTime}')]/../../../preceding-sibling::div//dd";
 
-            string UIPassCount = null;
+            string UIPassCount = string.Empty;
             if (_driver.FindElements(By.XPath(matchingRecord)).Count > 0)
             {
                 UIPassCount = _driver.FindElement(By.XPath(matchingRecord)).Text;
@@ -348,7 +347,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string FailCount = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departureTime}')]/../../..//dd[1]";
             string ViewLink = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departureTime}')]/../../..//dd[2]//button";
 
-            string GetFailCount = null;
+            string GetFailCount = string.Empty;
             if (_driver.FindElements(By.XPath(FailCount)).Count > 0)
             {
                 GetFailCount = _driver.FindElement(By.XPath(FailCount)).Text;
@@ -392,7 +391,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string FailCount = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departTime3}')]/../../..//dd[1]";
             string ViewLink = $"//input[contains(@value,'{route}')]/following-sibling::input[contains(@value,'{departureDate}')]/following-sibling::input[contains(@value,'{departTime3}')]/../../..//dd[2]//button";
 
-            string GetFailCount = null;
+            string GetFailCount = string.Empty;
             if (_driver.FindElements(By.XPath(FailCount)).Count > 0)
             {
                 GetFailCount = _driver.FindElement(By.XPath(FailCount)).Text;

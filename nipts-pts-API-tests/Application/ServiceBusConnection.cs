@@ -3,7 +3,7 @@ using nipts_pts_API_tests.Configuration;
 
 namespace nipts_pts_API_tests.Application
 {
-    public class ServiceBusConnection
+    public static class ServiceBusConnection
     {
         static string connectionString = ServiceBusConnectionData.Configuration.ServiceBusConnString;
 
