@@ -50,7 +50,7 @@ Scenario Outline: Verify Footer links and pages on Pets
 
 Examples: 
     | logininfo | Privacy page title               | Privacy Link 1               | Privacy Link 2         | Cookies page Title | Cookies Link 1                                     | Accessibility page title                              | Accessibility Link 1                 | Accessibility Link 2                                                | TCs page title                                                       | TCs Link 1                                   | TCs Link 2                               |
-    | test      | Pet travel scheme privacy notice | data.protection@defra.gov.uk | www.legislation.gov.uk | Cwcis              | r Comisiynydd Gwybodaeth (yn agor mewn tab newydd) | chi, cath neu ffured o Brydain Fawr i Ogledd Iwerddon | AbilityNet (yn agor mewn tab newydd) | Rhagor o wybodaeth am daliadau am alwadau (yn agor mewn tab newydd) | Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon | Fframwaith Windsor (yn agor mewn tab newydd) | Darllenwch ragor am symudiadau masnachol |
+    | test      | Northern Ireland pet travel scheme privacy notice | data.protection@defra.gov.uk | www.legislation.gov.uk | Cwcis              | r Comisiynydd Gwybodaeth (yn agor mewn tab newydd) | chi, cath neu ffured o Brydain Fawr i Ogledd Iwerddon | AbilityNet (yn agor mewn tab newydd) | Rhagor o wybodaeth am daliadau am alwadau (yn agor mewn tab newydd) | Telerau ac amodau Cynllun Teithio Anifeiliaid Anwes Gogledd Iwerddon | Fframwaith Windsor (yn agor mewn tab newydd) | Darllenwch ragor am symudiadau masnachol |
 
 
 
@@ -76,4 +76,4 @@ Scenario Outline: Verify Welsh updated dashboard on home page
 
 Examples:
 	| Petname             | Status | logininfo |
-	| Enw’r anifail anwes | Statws | test      |
+	| Enwï¿½r anifail anwes | Statws | test      |

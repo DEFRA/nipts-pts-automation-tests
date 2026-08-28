@@ -100,7 +100,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         [Then(@"I should navigate to the PrivacyNotice details correct page")]
         public void ThenIShouldNavigateToThePrivacyNoticeDetailsCorrectPage()
         {
-            var pageTitle = "Pet travel scheme privacy notice";
+            var pageTitle = "Northern Ireland pet travel scheme privacy notice";
             Assert.IsTrue(HomePage?.IsNextPageLoaded(pageTitle), $"The page {pageTitle} not loaded!");
         }
 

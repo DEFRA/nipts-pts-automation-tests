@@ -247,6 +247,35 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
             }
         }
 
+        public bool IsSuspendedWarningPresent()
+        {
+            // Fast, non-blocking probe: the account-suspended banner replaces the "Apply for a
+            // document" button, so its presence means the (shared) login was left suspended by an
+            // earlier test. FindElements returns empty rather than throwing when it is absent.
+            return _driver.FindElements(By.XPath("//div[contains(@class,'govuk-warning-text')]/strong")).Count > 0;
+        }
+
+        public IReadOnlyList<(string PetName, string ViewHref)> GetSuspendedApplicationLinks()
+        {
+            // Pet name is in the row header (th), the status strong text is in the first cell and the
+            // View link (which targets the application, so its href carries the applicationId) is in
+            // the second cell. Return one entry per row currently showing 'Suspended'.
+            var results = new List<(string, string)>();
+            foreach (var row in _driver.FindElements(By.XPath("//table/tbody/descendant::tr")))
+            {
+                var status = row.FindElements(By.XPath("./td[1]/strong"));
+                var header = row.FindElements(By.XPath("./th"));
+                var link = row.FindElements(By.XPath("./td[2]//a"));
+                if (status.Count > 0 && header.Count > 0 && link.Count > 0
+                    && status[0].Text.Replace("\r\n", string.Empty).Trim().ToUpper().Contains("SUSPENDED"))
+                {
+                    results.Add((header[0].Text.Replace("\r\n", string.Empty).Trim(),
+                                 link[0].GetAttribute("href") ?? string.Empty));
+                }
+            }
+            return results;
+        }
+
         #endregion
     }
 }

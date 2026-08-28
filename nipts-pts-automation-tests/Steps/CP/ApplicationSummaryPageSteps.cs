@@ -158,6 +158,9 @@ namespace nipts_pts_automation_tests.Steps.CP
                 EnsureBackendTokens();
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
                 AppData.GetAwaitingApplicationToSuspend(AppReference);
+                // Record so the AfterScenario cleanup can re-approve and leave the account usable
+                // even if a later step fails before the scenario's own un-suspend step runs.
+                _scenarioContext[Hooks.AccountStateHooks.SuspendedReferenceKey] = AppReference;
             }
         }
 
@@ -171,6 +174,9 @@ namespace nipts_pts_automation_tests.Steps.CP
                 EnsureBackendTokens();
                 string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
                 AppData.GetAuthorisedApplicationToSuspend(PTDNumber);
+                // Record so the AfterScenario cleanup can re-approve and leave the account usable
+                // even if a later step fails before the scenario's own un-suspend step runs.
+                _scenarioContext[Hooks.AccountStateHooks.SuspendedPtdKey] = PTDNumber;
             }
         }
 

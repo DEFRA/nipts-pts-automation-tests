@@ -216,8 +216,10 @@ namespace nipts_pts_automation_tests.Pages
 
         public bool VerifyWELSHApprovedPTD(string fieldName, string fieldValue)
         {
-            string FieldName = "//dt[contains(text(),'" + fieldName + "')]";
-            string FieldValue = "//dt[contains(text(),'" + fieldName + "')]/..//dd";
+            // Match the label exactly: a 'contains' match on short labels like 'Enw' also hits
+            // longer rows such as 'Enw a chyfeiriad yr awdurdod cymwys' that appear earlier.
+            string FieldName = "//dt[normalize-space(.)='" + fieldName + "']";
+            string FieldValue = "//dt[normalize-space(.)='" + fieldName + "']/..//dd";
 
             return _driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue);
         }
@@ -227,7 +229,12 @@ namespace nipts_pts_automation_tests.Pages
             string PTDNumber = "//dt[contains(text(),'" + ptdNumber + "')]";
             string PTDNumberValue = "//dt[contains(text(),'" + ptdNumber + "')]/..//dd";
 
-            return _driver.FindElement(By.XPath(PTDNumber)).Text.Contains(ptdNumber) && _driver.FindElement(By.XPath(PTDNumberValue)).Text.Contains(ptdNumberValue);
+            // The UI formats the PTD number with spaces (e.g. "GB826 6A6 DF3"); strip whitespace so
+            // the comparison matches the unformatted reference captured during approval.
+            var displayedValue = _driver.FindElement(By.XPath(PTDNumberValue)).Text.Replace(" ", "");
+            var expectedValue = (ptdNumberValue ?? string.Empty).Replace(" ", "");
+
+            return _driver.FindElement(By.XPath(PTDNumber)).Text.Contains(ptdNumber) && displayedValue.Contains(expectedValue);
         }
 
         public bool VerifyMichrochipDateOnApprovedPTD(string michrochipDate, string michrochipDateValue)
@@ -334,8 +341,9 @@ namespace nipts_pts_automation_tests.Pages
 
         public bool? VerifyWELSHFieldsAndValuesForPendingAppl(string fieldName, string fieldValue)
         {
-            string FieldName = "//dt[contains(text(),'" + fieldName + "')]";
-            string FieldValue = "//dt[contains(text(),'" + fieldName + "')]/..//dd";
+            // Exact dt match: 'Rhyw' (Sex) would otherwise collide with 'Rhywogaeth' (Species) under contains().
+            string FieldName = "//dt[normalize-space(.)='" + fieldName + "']";
+            string FieldValue = "//dt[normalize-space(.)='" + fieldName + "']/..//dd";
 
             return _driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue);
         }

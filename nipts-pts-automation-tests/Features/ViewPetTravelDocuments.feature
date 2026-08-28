@@ -104,10 +104,10 @@ Scenario: View Pet travel documents in WELSH
 	Then  verify WELSH heading text 'Manylion yr anifail anwes' on Summary page 
 	Then  verify WELSH summary of Approved PTD field name 'Enw' and field value 'toto'
 	Then  verify WELSH summary of Approved PTD field name 'Rhywogaeth' and field value 'Ci'
-	Then  verify WELSH summary of Approved PTD field name 'Brid' and field value 'Pug'
+	Then  verify WELSH summary of Approved PTD field name 'Brid' and field value 'Ci smwt'
 	Then  verify WELSH summary of Approved PTD field name 'Rhyw' and field value 'Gwryw'
 	Then  verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on approved PTD
-	Then  verify WELSH summary of Approved PTD field name 'Lliw' and field value 'Black'
+	Then  verify WELSH summary of Approved PTD field name 'Lliw' and field value 'Du'
 	Then  verify WELSH summary of Approved PTD field name 'Nodweddion arwyddocaol' and field value 'Nac oes'
 	Then  verify WELSH heading text 'Manylion perchennog yr anifail anwes' on Summary page 
 	Then  verify WELSH format of PTD number on search results page
@@ -173,12 +173,12 @@ Scenario: View Pet travel documents in WELSH
 	Then  verify WELSH summary of Pending Appl for field name 'Rhif y microsglodyn' and field value '676789876543321'
 	Then  verify WELSH summary of Pending Appl for field name 'Lleoliad y mewnblaniad' and field value 'O dan y croen'
 	Then  verify WELSH summary of Pending Appl for field name 'Enw' and field value 'Testtoto'
-	Then  verify WELSH summary of Pending Appl for field name 'Rhywogaeth' and field value 'Dog'
+	Then  verify WELSH summary of Pending Appl for field name 'Rhywogaeth' and field value 'Ci'
 	Then  verify WELSH summary of Pending Appl for field name 'Brid' and field value 'Basenji'
-	Then  verify WELSH summary of Pending Appl for field name 'Rhyw' and field value 'Male'
+	Then  verify WELSH summary of Pending Appl for field name 'Rhyw' and field value 'Gwryw'
 	Then  verify WELSH text for Pet DOB 'Dyddiad geni' and Pet DOB on Pending Appl
-	Then  verify WELSH summary of Pending Appl for field name 'Lliw' and field value 'Black'
-	Then  verify WELSH summary of Pending Appl for field name 'Nodweddion arwyddocaol' and field value 'No'
+	Then  verify WELSH summary of Pending Appl for field name 'Lliw' and field value 'Du'
+	Then  verify WELSH summary of Pending Appl for field name 'Nodweddion arwyddocaol' and field value 'Nac oes'
 	Then  verify WELSH heading text 'Manylion perchennog yr anifail anwes' on Summary page 
 
 	Examples: 
