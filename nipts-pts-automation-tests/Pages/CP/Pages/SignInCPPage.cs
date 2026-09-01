@@ -78,7 +78,27 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             jsExecutor.ExecuteScript("arguments[0].click();", SignOut);
             _driver.WaitForElementCondition(ExpectedConditions.ElementIsVisible(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']")));
             Thread.Sleep(4000);
-            return PageHeading.Text.Contains("You have signed out") || PageHeading.Text.Contains("Your Defra account");
+            // Sign-out redirects on to the Defra account page, which re-renders the heading mid-read,
+            // so read the text once with a stale-tolerant retry rather than dereferencing it twice.
+            var heading = ReadHeadingTextSafely();
+            return heading.Contains("You have signed out") || heading.Contains("Your Defra account");
+        }
+
+        private string ReadHeadingTextSafely()
+        {
+            var by = By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[@class='govuk-label-wrapper'] | //h1[@class='govuk-fieldset__heading']");
+            for (int attempt = 0; attempt < 5; attempt++)
+            {
+                try
+                {
+                    return _driver.WaitForElement(by).Text;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    Thread.Sleep(500);
+                }
+            }
+            return string.Empty;
         }
 
         public void EnterPassword()
