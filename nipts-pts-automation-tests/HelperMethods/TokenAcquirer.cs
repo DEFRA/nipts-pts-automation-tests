@@ -124,26 +124,35 @@ namespace nipts_pts_automation_tests.HelperMethods
             try
             {
                 Console.WriteLine("Acquiring backend API token: signing in as the backend test user via B2C...");
-                DriveGovernmentGatewayLogin(driver, wait, config);
 
-                // B2C redirects back to redirect_uri (localhost - the page won't load, but the URL
-                // with the code remains in the address bar) with either ?code=... or ?error=...
-                try
+                // Capture the redirect URL at the instant login detects it. On some mobile browsers
+                // the unreachable localhost redirect blanks the tab to data:text/html, moments later,
+                // discarding the code - so re-reading driver.Url afterwards can lose it.
+                var redirectUrl = DriveGovernmentGatewayLogin(driver, wait, config);
+
+                // Fallback: login returned without capturing the redirect; wait for the address bar
+                // to show the code/error as before.
+                if (string.IsNullOrEmpty(redirectUrl))
                 {
-                    wait.Until(d =>
+                    try
                     {
-                        var redirect = ResolveRedirectUrl(d.Url, config);
-                        return redirect.StartsWith(config.RedirectUri, StringComparison.OrdinalIgnoreCase)
-                               && (redirect.Contains("code=") || redirect.Contains("error="));
-                    });
-                }
-                catch (WebDriverTimeoutException)
-                {
-                    LogCurrentPage(driver, "Timed out waiting for the B2C redirect with the authorization code");
-                    throw;
+                        wait.Until(d =>
+                        {
+                            var redirect = ResolveRedirectUrl(d.Url, config);
+                            return redirect.StartsWith(config.RedirectUri, StringComparison.OrdinalIgnoreCase)
+                                   && (redirect.Contains("code=") || redirect.Contains("error="));
+                        });
+                    }
+                    catch (WebDriverTimeoutException)
+                    {
+                        LogCurrentPage(driver, "Timed out waiting for the B2C redirect with the authorization code");
+                        throw;
+                    }
+
+                    redirectUrl = ResolveRedirectUrl(driver.Url, config);
                 }
 
-                var queryParams = HttpUtility.ParseQueryString(new Uri(ResolveRedirectUrl(driver.Url, config)).Query);
+                var queryParams = HttpUtility.ParseQueryString(new Uri(redirectUrl).Query);
 
                 var error = queryParams.Get("error");
                 if (!string.IsNullOrEmpty(error))
@@ -185,7 +194,7 @@ namespace nipts_pts_automation_tests.HelperMethods
         /// still-blank tab, skip the chooser, then wait forever for a credential field that is
         /// hidden behind the un-clicked chooser.
         /// </summary>
-        private static void DriveGovernmentGatewayLogin(IWebDriver driver, WebDriverWait wait, B2CConfig config)
+        private static string? DriveGovernmentGatewayLogin(IWebDriver driver, WebDriverWait wait, B2CConfig config)
         {
             var userIdBy = By.Id("user_id");
             var chooserBy = By.XPath("//label[@for='scp']");
@@ -276,7 +285,7 @@ namespace nipts_pts_automation_tests.HelperMethods
             // Step 3: handle whatever Government Gateway shows after the credentials are submitted
             // - a direct redirect back to the app (no 2SV), a benign interstitial that just needs
             // progressing, or a 2-Step Verification access-code page (the URL gains aoc=Y).
-            HandlePostCredentialPages(driver, config);
+            return HandlePostCredentialPages(driver, config);
         }
 
         /// <summary>
@@ -297,7 +306,7 @@ namespace nipts_pts_automation_tests.HelperMethods
             throw new Exception(BuildTwoStepMessage(config));
         }
 
-        private static void HandlePostCredentialPages(IWebDriver driver, B2CConfig config)
+        private static string? HandlePostCredentialPages(IWebDriver driver, B2CConfig config)
         {
             var accessCodeBy = By.CssSelector(
                 "#accessCode, #access-code, #access_code, #code, #otp, " +
@@ -311,9 +320,12 @@ namespace nipts_pts_automation_tests.HelperMethods
             var deadline = DateTime.UtcNow.AddSeconds(30);
             while (DateTime.UtcNow < deadline)
             {
-                // Success: B2C is redirecting back to the app with the code/error.
-                if (HasReachedRedirect(driver, config))
-                    return;
+                // Success: B2C is redirecting back to the app with the code/error. Capture the URL
+                // now (poll fast) before an unreachable-redirect tab-blank can discard the code.
+                var resolved = ResolveRedirectUrl(driver.Url, config);
+                if (resolved.StartsWith(config.RedirectUri, StringComparison.OrdinalIgnoreCase)
+                    && (resolved.Contains("code=") || resolved.Contains("error=")))
+                    return resolved;
 
                 // 2-Step Verification access-code page - needs the one-time code.
                 var accessCodeField = FirstDisplayedOrDefault(driver, accessCodeBy);
@@ -347,7 +359,7 @@ namespace nipts_pts_automation_tests.HelperMethods
                     continue;
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(250);
             }
 
             // Nothing progressed within the window. If it is a 2SV page we could not complete, say
@@ -356,6 +368,8 @@ namespace nipts_pts_automation_tests.HelperMethods
             if (driver.Url.Contains("aoc=Y", StringComparison.OrdinalIgnoreCase)
                 || AnyDisplayed(driver, accessCodeBy))
                 throw new Exception(BuildTwoStepMessage(config));
+
+            return null;
         }
 
         // The B2C login pages re-render mid-poll, so an element found by FindElements can go stale
@@ -379,14 +393,6 @@ namespace nipts_pts_automation_tests.HelperMethods
                 catch (StaleElementReferenceException) { }
             }
             return null;
-        }
-
-        private static bool HasReachedRedirect(IWebDriver driver, B2CConfig config)
-        {
-            var url = ResolveRedirectUrl(driver.Url, config);
-            return url.StartsWith(config.RedirectUri, StringComparison.OrdinalIgnoreCase)
-                   || url.Contains("code=", StringComparison.OrdinalIgnoreCase)
-                   || url.Contains("error=", StringComparison.OrdinalIgnoreCase);
         }
 
         // On mobile (BrowserStack iOS/Android) the redirect to the localhost redirect_uri cannot
