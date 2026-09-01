@@ -167,7 +167,10 @@ namespace nipts_pts_automation_tests.HelperMethods
                 {
                     // Single-tab (mobile): navigate back to the CP page we left. The CP app session
                     // cookie is intact, so the route-checker page reloads as the signed-in CP user.
-                    driver.Navigate().GoToUrl(originalUrl);
+                    // Best-effort: this cleanup navigation must never discard an already-acquired
+                    // token, so swallow a hung/redirected page load instead of failing the step.
+                    try { driver.Navigate().GoToUrl(originalUrl); }
+                    catch (WebDriverException ex) { Console.WriteLine("Post-login navigation back to CP page failed: " + ex.Message); }
                 }
             }
         }
