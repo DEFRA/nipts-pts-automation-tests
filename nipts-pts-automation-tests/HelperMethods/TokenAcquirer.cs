@@ -130,8 +130,12 @@ namespace nipts_pts_automation_tests.HelperMethods
                 // with the code remains in the address bar) with either ?code=... or ?error=...
                 try
                 {
-                    wait.Until(d => d.Url.StartsWith(config.RedirectUri, StringComparison.OrdinalIgnoreCase)
-                                    && (d.Url.Contains("code=") || d.Url.Contains("error=")));
+                    wait.Until(d =>
+                    {
+                        var redirect = ResolveRedirectUrl(d.Url, config);
+                        return redirect.StartsWith(config.RedirectUri, StringComparison.OrdinalIgnoreCase)
+                               && (redirect.Contains("code=") || redirect.Contains("error="));
+                    });
                 }
                 catch (WebDriverTimeoutException)
                 {
@@ -139,7 +143,7 @@ namespace nipts_pts_automation_tests.HelperMethods
                     throw;
                 }
 
-                var queryParams = HttpUtility.ParseQueryString(new Uri(driver.Url).Query);
+                var queryParams = HttpUtility.ParseQueryString(new Uri(ResolveRedirectUrl(driver.Url, config)).Query);
 
                 var error = queryParams.Get("error");
                 if (!string.IsNullOrEmpty(error))
@@ -372,10 +376,33 @@ namespace nipts_pts_automation_tests.HelperMethods
 
         private static bool HasReachedRedirect(IWebDriver driver, B2CConfig config)
         {
-            var url = driver.Url;
+            var url = ResolveRedirectUrl(driver.Url, config);
             return url.StartsWith(config.RedirectUri, StringComparison.OrdinalIgnoreCase)
                    || url.Contains("code=", StringComparison.OrdinalIgnoreCase)
                    || url.Contains("error=", StringComparison.OrdinalIgnoreCase);
+        }
+
+        // On mobile (BrowserStack iOS/Android) the redirect to the localhost redirect_uri cannot
+        // load, so the browser shows a native error page whose ?url= parameter carries the real
+        // redirect (URL-encoded, with & written as &amp;). Unwrap it so the authorization code is
+        // still visible; on desktop the URL is returned unchanged.
+        private static string ResolveRedirectUrl(string currentUrl, B2CConfig config)
+        {
+            if (string.IsNullOrEmpty(currentUrl)
+                || currentUrl.StartsWith(config.RedirectUri, StringComparison.OrdinalIgnoreCase))
+                return currentUrl;
+
+            const string marker = "?url=";
+            var idx = currentUrl.IndexOf(marker, StringComparison.OrdinalIgnoreCase);
+            if (idx >= 0)
+            {
+                var wrapped = HttpUtility.UrlDecode(currentUrl.Substring(idx + marker.Length));
+                wrapped = HttpUtility.HtmlDecode(wrapped); // &amp; -> &
+                if (wrapped.StartsWith(config.RedirectUri, StringComparison.OrdinalIgnoreCase))
+                    return wrapped;
+            }
+
+            return currentUrl;
         }
 
         private static bool TryEnterAccessCode(IWebDriver driver, B2CConfig config, IWebElement accessCodeField, By continueBy)
