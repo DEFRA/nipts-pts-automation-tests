@@ -25,7 +25,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         private IWebElement btnSaveAndContinue => _driver.WaitForElement(By.XPath("//*[@id='saveAndContinue']"));
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
-        private IDataHelperConnections? dataHelperConnections => _objectContainer.IsRegistered<IDataHelperConnections>() ? _objectContainer.Resolve<IDataHelperConnections>() : null;
+        private IDataHelperConnections dataHelperConnections => _objectContainer.Resolve<IDataHelperConnections>();
         private IWebElement PassangerRefToDAERA => _driver.WaitForElement(By.XPath("//li[contains(text(),'Passenger referred to DAERA/SPS at NI port')] | //p[contains(text(),'Passenger referred to DAERA/SPS at NI port')]"));
         private IWebElement PassengerAdvised => _driver.WaitForElement(By.XPath("//li[contains(text(),'Passenger advised not to travel')] | //p[contains(text(),'Passenger advised not to travel')]"));
         private IWebElement PassengerNoTravel => _driver.WaitForElement(By.XPath("//li[contains(text(),'Passenger says they will not travel')] | //p[contains(text(),'Passenger says they will not travel')]"));
@@ -195,7 +195,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery = $"SELECT MCNotFound,GBRefersToDAERAOrSPS,GBAdviseNoTravel,GBPassengerSaysNoTravel FROM [dbo].[CheckOutcome]  Where Id = '{checkOutcomeId}'";
-            DataTable sqlData = null;
+            DataTable sqlData = new DataTable();
             bool status = true;
             int i = 0;
             if (ConfigSetup.BaseConfiguration != null)
@@ -239,7 +239,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery = $"SELECT MCNotFound,PassengerTypeId,SPSOutcome,SPSOutcomeDetails FROM [dbo].[CheckOutcome]  Where Id = '{checkOutcomeId}'";
-            DataTable sqlData = null;
+            DataTable sqlData = new DataTable();
             bool status = true;
             int i = 0;
             if (ConfigSetup.BaseConfiguration != null)
@@ -317,7 +317,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery = $"SELECT GBCheck,LinkedCheckId,RouteId,Date,ScheduledSailingTime,CheckOutcome FROM [dbo].[CheckSummary]  Where ApplicationId = '{applicationId}' and TravelDocumentId = '{travelDocumentId}' and [CheckerId]  = '{gBCheckerId}'";
-            DataTable sqlData = null;
+            DataTable sqlData = new DataTable();
             bool status = true;
             int i = 0;
             if (ConfigSetup.BaseConfiguration != null)
@@ -365,7 +365,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery = $"SELECT GBCheck,LinkedCheckId,FlightNo,RouteId,Date,ScheduledSailingTime,CheckOutcome FROM [dbo].[CheckSummary]  Where ApplicationId = '{applicationId}' and TravelDocumentId = '{travelDocumentId}' and [CheckerId]  = '{SPSCheckerId}'";
-            DataTable sqlData = null;
+            DataTable sqlData = new DataTable();
             bool status = true;
             int i = 0;
             string departureDate = "";
@@ -437,7 +437,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         {
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery = $"SELECT GBCheck,RouteId,Date,ScheduledSailingTime,CheckOutcome FROM [dbo].[CheckSummary]  Where ApplicationId = '{applicationId}' and TravelDocumentId = '{travelDocumentId}' and [CheckerId]  = '{gBCheckerId}'";
-            DataTable sqlData = null;
+            DataTable sqlData = new DataTable();
             bool status = true;
             int i = 0;
 
@@ -584,7 +584,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             Thread.Sleep(7000);
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery = $"SELECT Status,DateSuspended  FROM [dbo].[Application] Where [Id] = '{ApplicationId}'";
-            DataTable sqlData = null;
+            DataTable sqlData = new DataTable();
             bool status = true;
             int i = 0;
             string todaysDate = DateTime.Now.Day.ToString().Trim();
@@ -624,7 +624,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             Thread.Sleep(7000);
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery = $"SELECT Status,DateUnsuspended  FROM [dbo].[Application] Where [Id] = '{ApplicationId}'";
-            DataTable sqlData = null;
+            DataTable sqlData = new DataTable();
             bool status = true;
             int i = 0;
 
@@ -663,7 +663,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery1 = $"SELECT ApplicationId  FROM [dbo].[TravelDocument] Where [DocumentReferenceNumber] = '{PTDNumber}'";
             string ApplicationId = "";
-            DataTable sqlData = null;
+            DataTable sqlData = new DataTable();
             bool status = true;
             int i = 0;
 
@@ -709,7 +709,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
             string sqlQuery1 = $"SELECT ApplicationId  FROM [dbo].[TravelDocument] Where [DocumentReferenceNumber] = '{PTDNumber}'";
             string ApplicationId = "";
-            DataTable sqlData = null;
+            DataTable sqlData = new DataTable();
             bool status = true;
             int i = 0;
 

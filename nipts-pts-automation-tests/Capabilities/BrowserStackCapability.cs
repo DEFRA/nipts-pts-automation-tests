@@ -8,7 +8,7 @@ namespace nipts_pts_automation_tests.Capabilities
 {
     public class BrowserStackCapability : IDriverOptions
     {
-        private static ScenarioContext _scenarioContext;
+        private static ScenarioContext _scenarioContext = null!;
         private BaseConfiguration _configuration => ConfigSetup.BaseConfiguration;
         private readonly Dictionary<string, object> _capDictionary = [];
         private readonly Dictionary<string, object> _browserstackOptions = [];
@@ -29,7 +29,7 @@ namespace nipts_pts_automation_tests.Capabilities
         }
 
 
-        public DriverOptions GetDriverOptions(Dictionary<string, string> capDictionary = null)
+        public DriverOptions GetDriverOptions(Dictionary<string, string>? capDictionary = null)
         {
             GetBrowserStackConfig();
             GetProjectDriverOptions();
@@ -89,7 +89,7 @@ namespace nipts_pts_automation_tests.Capabilities
         protected virtual void GetTestNameDriverOptions()
         {
             if (!_browserstackOptions.ContainsKey("sessionName"))
-                _browserstackOptions.Add("sessionName", TestContext.CurrentContext.Test.ClassName);
+                _browserstackOptions.Add("sessionName", TestContext.CurrentContext.Test.ClassName ?? string.Empty);
         }
 
         private void AddDictionaryValuesInDriverOptions(DriverOptions driverOptions, Dictionary<string, object> capDictionary)

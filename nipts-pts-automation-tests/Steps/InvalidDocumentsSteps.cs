@@ -15,10 +15,10 @@ namespace nipts_pts_automation_tests.Steps
     {
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IApplicationPage? applicationPage => _objectContainer.IsRegistered<IApplicationPage>() ? _objectContainer.Resolve<IApplicationPage>() : null;
-        private IDataHelperConnections? dataHelperConnections => _objectContainer.IsRegistered<IDataHelperConnections>() ? _objectContainer.Resolve<IDataHelperConnections>() : null;
-        private IInvalidDocumentsPage? invalidDocumentsPage => _objectContainer.IsRegistered<IInvalidDocumentsPage>() ? _objectContainer.Resolve<IInvalidDocumentsPage>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IApplicationPage applicationPage => _objectContainer.Resolve<IApplicationPage>();
+        private IDataHelperConnections dataHelperConnections => _objectContainer.Resolve<IDataHelperConnections>();
+        private IInvalidDocumentsPage invalidDocumentsPage => _objectContainer.Resolve<IInvalidDocumentsPage>();
 
         public InvalidDocumentsSteps(ScenarioContext context, IObjectContainer container)
         {

@@ -12,7 +12,7 @@ namespace nipts_pts_automation_tests.Capabilities
 {
     public class ChromeCapability : IDriverOptions
     {
-        private static ScenarioContext _scenarioContext;
+        private static ScenarioContext _scenarioContext = null!;
 
         public ChromeCapability(BaseConfiguration baseConfiguration, ScenarioContext context)
         {
@@ -64,7 +64,7 @@ namespace nipts_pts_automation_tests.Capabilities
             chromeOptions.EnableMobileEmulation(ConfigSetup.BaseConfiguration.TestConfiguration.EmulateDeviceInfo);
         }
 
-        public DriverOptions GetDriverOptions(Dictionary<string, string> overrideCapDict = null)
+        public DriverOptions GetDriverOptions(Dictionary<string, string>? overrideCapDict = null)
         {
             List<string> arguments = GetArgumentsFromOverrides(ref overrideCapDict);
 
@@ -75,11 +75,11 @@ namespace nipts_pts_automation_tests.Capabilities
             return driverOptions;
         }
 
-        private List<string> GetArgumentsFromOverrides(ref Dictionary<string, string> overrideCapDict)
+        private List<string> GetArgumentsFromOverrides(ref Dictionary<string, string>? overrideCapDict)
         {
             if (overrideCapDict == null || !overrideCapDict.ContainsKey(BrowserConfigurationValue.BrowserArguments))
             {
-                return null;
+                return new List<string>();
             }
 
             List<string> args = new List<string>();

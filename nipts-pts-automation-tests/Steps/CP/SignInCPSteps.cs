@@ -14,11 +14,11 @@ namespace nipts_pts_automation_tests.Steps.CP
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
 
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IUrlBuilder? urlBuilder => _objectContainer.IsRegistered<IUrlBuilder>() ? _objectContainer.Resolve<IUrlBuilder>() : null;
-        private ISignInCPPage? _signInCPPage => _objectContainer.IsRegistered<ISignInCPPage>() ? _objectContainer.Resolve<ISignInCPPage>() : null;
-        private IRouteCheckingPage? _routeCheckingPage => _objectContainer.IsRegistered<IRouteCheckingPage>() ? _objectContainer.Resolve<IRouteCheckingPage>() : null;
-        private IUserObject? UserObject => _objectContainer.IsRegistered<IUserObject>() ? _objectContainer.Resolve<IUserObject>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IUrlBuilder urlBuilder => _objectContainer.Resolve<IUrlBuilder>();
+        private ISignInCPPage _signInCPPage => _objectContainer.Resolve<ISignInCPPage>();
+        private IRouteCheckingPage _routeCheckingPage => _objectContainer.Resolve<IRouteCheckingPage>();
+        private IUserObject UserObject => _objectContainer.Resolve<IUserObject>();
 
         public SignInCPSteps(ScenarioContext context, IObjectContainer container)
         {
@@ -57,7 +57,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         [When(@"I have provided the CP credentials and signin")]
         public void WhenIHaveProvidedTheCPCredentialsAndSignin()
         {
-            var jsonData = UserObject?.GetUser("CP");
+            var jsonData = UserObject.GetUser("CP");
             var userObject = new User
             {
                 UserId = jsonData.UserId,
@@ -70,7 +70,7 @@ namespace nipts_pts_automation_tests.Steps.CP
         [When(@"I have provided the CP credentials and signin for user '([^']*)'")]
         public void WhenIHaveProvidedTheCPCredentialsAndSigninForUser(string userType)
         {
-            var jsonData = UserObject?.GetUser("CP", userType);
+            var jsonData = UserObject.GetUser("CP", userType);
             var userObject = new User
             {
                 UserId = jsonData.UserId,

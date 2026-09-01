@@ -11,9 +11,7 @@ namespace nipts_pts_automation_tests.Hooks
     [Binding]
     public class WebDriverHook
     {
-        public IWebDriver Driver { get; set; }
-        private static string Target => ConfigSetup.BaseConfiguration.UiFrameworkConfiguration.Target;
-        private static string SeleniumGrid => ConfigSetup.BaseConfiguration.UiFrameworkConfiguration.SeleniumGrid;
+        public IWebDriver Driver { get; set; } = null!;
 
         private readonly ScenarioContext _scenarioContext;
         private readonly IObjectContainer _objectContainer;
@@ -76,7 +74,7 @@ namespace nipts_pts_automation_tests.Hooks
 
         private void AttachScreenShotToXmlReport()
         {
-            string filePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string filePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
             filePath = Path.Combine(filePath, "TestResults");
 
             if (!Directory.Exists(filePath))
@@ -97,23 +95,6 @@ namespace nipts_pts_automation_tests.Hooks
         private DriverOptions GetDriverOptions()
         {
             return _objectContainer.Resolve<IDriverOptions>().GetDriverOptions();
-        }
-
-        private void DeleteApplicationViaBackend()
-        {
-            if (_scenarioContext.Count > 0 &&
-                _scenarioContext.ContainsKey("AppDispId"))
-            {
-                /*var applicationres = (ApplicationResponse)_scenarioContext["AppDispId"];
-                if (applicationres != null &&
-                    !string.IsNullOrEmpty(applicationres.ApplicationId))
-                {
-                    _objectContainer.Resolve<ApplicationData>().DeleteApplication(applicationres.ApplicationId);
-                }*/
-
-            }
-
-
         }
 
     }

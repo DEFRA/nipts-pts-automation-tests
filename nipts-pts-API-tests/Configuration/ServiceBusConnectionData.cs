@@ -2,7 +2,7 @@
 {
     public class ServiceBusConnectionData
     {
-        private static IServiceBusConnectionData _configuration;
+        private static IServiceBusConnectionData? _configuration;
         public static IServiceBusConnectionData Configuration
         {
             get

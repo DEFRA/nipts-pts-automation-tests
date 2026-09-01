@@ -25,8 +25,8 @@ namespace nipts_pts_automation_tests.Hooks
             _objectContainer.RegisterInstanceAs(GetBase<ApplicationData, IApplicationData>());
         }
 
-        private TU GetBase<T, TU>() where T : TU =>
-            (TU)Activator.CreateInstance(typeof(T));
+        private static TU GetBase<T, TU>() where T : TU =>
+            (TU)Activator.CreateInstance(typeof(T))!;
 
     }
 

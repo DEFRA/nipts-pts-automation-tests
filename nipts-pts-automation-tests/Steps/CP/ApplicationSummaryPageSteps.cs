@@ -17,10 +17,10 @@ namespace nipts_pts_automation_tests.Steps.CP
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
 
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IApplicationSummaryPage? _applicationSummaryPage => _objectContainer.IsRegistered<IApplicationSummaryPage>() ? _objectContainer.Resolve<IApplicationSummaryPage>() : null;
-        private IApplicationData? AppData => _objectContainer.IsRegistered<IApplicationData>() ? _objectContainer.Resolve<IApplicationData>() : null;
-        public ApplicationResponse ApplicationResponse { get; set; }
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IApplicationSummaryPage _applicationSummaryPage => _objectContainer.Resolve<IApplicationSummaryPage>();
+        private IApplicationData AppData => _objectContainer.Resolve<IApplicationData>();
+        public ApplicationResponse ApplicationResponse { get; set; } = null!;
 
         public ApplicationSummaryPageSteps(ScenarioContext context, IObjectContainer container)
         {
@@ -158,6 +158,9 @@ namespace nipts_pts_automation_tests.Steps.CP
                 EnsureBackendTokens();
                 string AppReference = _scenarioContext.Get<string>("ReferenceNumber");
                 AppData.GetAwaitingApplicationToSuspend(AppReference);
+                // Record so the AfterScenario cleanup can re-approve and leave the account usable
+                // even if a later step fails before the scenario's own un-suspend step runs.
+                _scenarioContext[Hooks.AccountStateHooks.SuspendedReferenceKey] = AppReference;
             }
         }
 
@@ -171,6 +174,9 @@ namespace nipts_pts_automation_tests.Steps.CP
                 EnsureBackendTokens();
                 string PTDNumber = _scenarioContext.Get<string>("PTDNumber");
                 AppData.GetAuthorisedApplicationToSuspend(PTDNumber);
+                // Record so the AfterScenario cleanup can re-approve and leave the account usable
+                // even if a later step fails before the scenario's own un-suspend step runs.
+                _scenarioContext[Hooks.AccountStateHooks.SuspendedPtdKey] = PTDNumber;
             }
         }
 

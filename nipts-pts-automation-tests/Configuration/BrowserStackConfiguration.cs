@@ -2,10 +2,10 @@
 {
     public class BrowserStackConfiguration
     {
-        public string CloudDeviceTarget { get; set; }
-        public string CloudCountryCode { get; set; }
-        public string CloudDeviceUserName { get; set; }
-        public string CloudDeviceUserKey { get; set; }
+        public string CloudDeviceTarget { get; set; } = string.Empty;
+        public string CloudCountryCode { get; set; } = string.Empty;
+        public string CloudDeviceUserName { get; set; } = string.Empty;
+        public string CloudDeviceUserKey { get; set; } = string.Empty;
     }
 
 }

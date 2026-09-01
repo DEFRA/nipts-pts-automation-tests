@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿// Dynamic JSON handling below relies on runtime dynamic dispatch, for which C# nullable
+// reference analysis produces only noise; disable it for this file.
+#nullable disable
+using Newtonsoft.Json;
 using nipts_pts_API_tests.Configuration;
 using RestSharp;
 
@@ -8,16 +11,16 @@ namespace nipts_pts_API_tests.Application
     {
 
         private readonly object _lock = new object();
-        public string ApplicationId { get; set; }
-        public string PTDNumber { get; set; }
-        public string UserId { get; set; }
-        public string OwnerId { get; set; }
-        public string AddressId { get; set; }
-        public string PetId { get; set; }
-        public string QueueId { get; set; }
-        public string AppReferenceNumber { get; set; }
-        public string PetSpecies { get; set; }
-        public string MicrochipNo { get; set; }
+        public string ApplicationId { get; set; } = string.Empty;
+        public string PTDNumber { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
+        public string OwnerId { get; set; } = string.Empty;
+        public string AddressId { get; set; } = string.Empty;
+        public string PetId { get; set; } = string.Empty;
+        public string QueueId { get; set; } = string.Empty;
+        public string AppReferenceNumber { get; set; } = string.Empty;
+        public string PetSpecies { get; set; } = string.Empty;
+        public string MicrochipNo { get; set; } = string.Empty;
 
 
 
@@ -198,7 +201,7 @@ namespace nipts_pts_API_tests.Application
             ApplicationId = dynamicObject.application.applicationId;
             RejectApplication(ApplicationId);
             Task<RestResponse> response2 = GetApplication(AppReference);
-            var responseString2 = response.Result.Content.ToString();
+            var responseString2 = response2.Result.Content.ToString();
             var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString2.ToString())!;
             PTDNumber = dynamicObject2.travelDocument.travelDocumentReferenceNumber;
             return PTDNumber;
@@ -322,22 +325,22 @@ namespace nipts_pts_API_tests.Application
             createPet();
             return createApplication(AppId);
         }
-        public string CreateApplicationAPIWithOtherColour(string AppId)
+        public string CreateApplicationAPIWithOtherColour(string appId)
         {
             updateUser();
             createOwner();
             createAddress();
             createPetWithOtherColour();
-            return createApplication(AppId);
+            return createApplication(appId);
         }
 
-        public string CreateApplicationWithMandatoryAddressFieldsAPI(string AppId)
+        public string CreateApplicationWithMandatoryAddressFieldsAPI(string appId)
         {
             updateUser();
             createOwner();
             createAddressWithMandatoryFieldsOnly();
             createPet();
-            return createApplication(AppId);
+            return createApplication(appId);
         }
 
         public void updateUser()
@@ -618,19 +621,19 @@ namespace nipts_pts_API_tests.Application
             return getUniquePTDNumber(randonNumber);
         }
 
-        public string getUniqueRerefenceNumber(string randonNumber)
+        public static string getUniqueRerefenceNumber(string randonNumber)
         {
             string newRerefenceNumber = "GB826AD" + randonNumber;
             return newRerefenceNumber;
         }
 
-        public string getUniquePTDNumber(string randonNumber)
+        public static string getUniquePTDNumber(string randonNumber)
         {
             string newPTDNumber = "GB826AD" + randonNumber;
             return newPTDNumber;
         }
 
-        public string getUniqueEmailId(string randonNumber)
+        public static string getUniqueEmailId(string randonNumber)
         {
             string newEmail = "themask" + "+" + randonNumber + "@smokin.green";
             return newEmail;

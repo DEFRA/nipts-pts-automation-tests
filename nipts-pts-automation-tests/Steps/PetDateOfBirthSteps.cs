@@ -12,10 +12,10 @@ namespace nipts_pts_automation_tests.Steps
     {
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IApplicationPage? applicationPage => _objectContainer.IsRegistered<IApplicationPage>() ? _objectContainer.Resolve<IApplicationPage>() : null;
-        private IDataHelperConnections? dataHelperConnections => _objectContainer.IsRegistered<IDataHelperConnections>() ? _objectContainer.Resolve<IDataHelperConnections>() : null;
-        private IPetDateOfBirthPage? petdobPage => _objectContainer.IsRegistered<IPetDateOfBirthPage>() ? _objectContainer.Resolve<IPetDateOfBirthPage>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IApplicationPage applicationPage => _objectContainer.Resolve<IApplicationPage>();
+        private IDataHelperConnections dataHelperConnections => _objectContainer.Resolve<IDataHelperConnections>();
+        private IPetDateOfBirthPage petdobPage => _objectContainer.Resolve<IPetDateOfBirthPage>();
         public PetDateOfBirthSteps(ScenarioContext context, IObjectContainer container)
         {
             _scenarioContext = context;

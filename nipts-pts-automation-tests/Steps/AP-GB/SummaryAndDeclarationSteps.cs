@@ -15,10 +15,10 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
 
-        private ISummaryPage? summaryPage => _objectContainer.IsRegistered<ISummaryPage>() ? _objectContainer.Resolve<ISummaryPage>() : null;
-        private IApplicationDeclarationPage? declarationPage => _objectContainer.IsRegistered<IApplicationDeclarationPage>() ? _objectContainer.Resolve<IApplicationDeclarationPage>() : null;
-        private IChangeDetailsPage? changeDetailsPage => _objectContainer.IsRegistered<IChangeDetailsPage>() ? _objectContainer.Resolve<IChangeDetailsPage>() : null;
-        private IHomePage? homePage => _objectContainer.IsRegistered<IHomePage>() ? _objectContainer.Resolve<IHomePage>() : null;
+        private ISummaryPage summaryPage => _objectContainer.Resolve<ISummaryPage>();
+        private IApplicationDeclarationPage declarationPage => _objectContainer.Resolve<IApplicationDeclarationPage>();
+        private IChangeDetailsPage changeDetailsPage => _objectContainer.Resolve<IChangeDetailsPage>();
+        private IHomePage homePage => _objectContainer.Resolve<IHomePage>();
         public SummaryAndDeclarationSteps(ScenarioContext context, IObjectContainer container)
         {
             _scenarioContext = context;
@@ -122,7 +122,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         [When(@"I captured Application PTD number")]
         public void WhenICapturedApplicationPTDNumber()
         {
-            var summary = summaryPage?.GetSummaryDetails();
+            var summary = summaryPage.GetSummaryDetails();
             _scenarioContext.Add("PTDNumber", summary.PTDNumber);
         }
 
@@ -186,7 +186,7 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             if (areDetailsCorrect.ToLower().Equals("yes"))
             {
                 fullName = registeredUserDetails?.Name;
-                address = registeredUserDetails?.Address?.Split(new string("\r\n"));
+                address = registeredUserDetails?.Address?.Split(new string("\r\n")) ?? Array.Empty<string>();
                 phoneNumber = registeredUserDetails?.PhoneNumber;
             }
             else

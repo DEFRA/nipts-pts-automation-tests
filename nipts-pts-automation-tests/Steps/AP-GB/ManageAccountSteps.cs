@@ -15,11 +15,11 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
     {
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IManageAccountPage? ManageAccountPage => _objectContainer.IsRegistered<IManageAccountPage>() ? _objectContainer.Resolve<IManageAccountPage>() : null;
-        private IHomePage? homePage => _objectContainer.IsRegistered<IHomePage>() ? _objectContainer.Resolve<IHomePage>() : null;
-        private IPetOwnerDetailsPage? PetOwnerDetailsPage => _objectContainer.IsRegistered<IPetOwnerDetailsPage>() ? _objectContainer.Resolve<IPetOwnerDetailsPage>() : null;
-        private IUrlBuilder? UrlBuilder => _objectContainer.IsRegistered<IUrlBuilder>() ? _objectContainer.Resolve<IUrlBuilder>() : null;
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IManageAccountPage ManageAccountPage => _objectContainer.Resolve<IManageAccountPage>();
+        private IHomePage homePage => _objectContainer.Resolve<IHomePage>();
+        private IPetOwnerDetailsPage PetOwnerDetailsPage => _objectContainer.Resolve<IPetOwnerDetailsPage>();
+        private IUrlBuilder UrlBuilder => _objectContainer.Resolve<IUrlBuilder>();
 
         public ManageAccountSteps(ScenarioContext context, IObjectContainer container)
         {

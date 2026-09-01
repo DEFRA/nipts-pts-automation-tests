@@ -1,5 +1,4 @@
-﻿using Reqnroll.BoDi;
-using System.Reflection;
+﻿using System.Reflection;
 using Newtonsoft.Json;
 using nipts_pts_API_tests.Configuration;
 using RestSharp;
@@ -8,10 +7,9 @@ namespace nipts_pts_API_tests
 {
     public class BaseClient
     {
-        private RestClient client;
-        private RestRequest request;
-        private IObjectContainer _objectContainer;
-        private string _subscriptionKey;
+        private RestClient client = null!;
+        private RestRequest request = null!;
+        private string _subscriptionKey = null!;
         private bool _isCheckerEndpoint;
 
         protected string RequestFolder { get; set; }
@@ -24,13 +22,11 @@ namespace nipts_pts_API_tests
         /// because <see cref="BaseClient"/> lives in the API project and cannot reference the
         /// Selenium / token-acquisition code that lives in the automation-tests project.
         /// </summary>
-        public static Func<bool, bool> TokenRefreshHandler { get; set; }
-
-        //private string ApiEndpoint { get; set; }
+        public static Func<bool, bool>? TokenRefreshHandler { get; set; }
 
         public BaseClient()
         {
-            string jsonPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string jsonPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
             RequestFolder = Path.Combine(jsonPath, "RequestJson");
         }
 
@@ -39,8 +35,8 @@ namespace nipts_pts_API_tests
             var baseUrl = ApiEndpoint?.TrimEnd('/') ?? string.Empty;
             var url = $"{baseUrl}/{endpoint}";
             client = new RestClient(url);
-            _isCheckerEndpoint = IsCheckerEndpoint(ApiEndpoint);
-            _subscriptionKey = ResolveSubscriptionKey(ApiEndpoint);
+            _isCheckerEndpoint = IsCheckerEndpoint(ApiEndpoint ?? string.Empty);
+            _subscriptionKey = ResolveSubscriptionKey(ApiEndpoint ?? string.Empty);
             return (client, url);
         }
 
@@ -226,7 +222,7 @@ namespace nipts_pts_API_tests
             Console.WriteLine($"Request payload:      {requestPayload}");
             Console.WriteLine("-- Request headers --");
             foreach (var p in request.Parameters.Where(p => p.Type == ParameterType.HttpHeader))
-                Console.WriteLine($"   {p.Name}: {Redact(p.Name, p.Value?.ToString())}");
+                Console.WriteLine($"   {p.Name}: {Redact(p.Name ?? string.Empty, p.Value?.ToString() ?? string.Empty)}");
 
             Console.WriteLine("-- Response --");
             Console.WriteLine($"Status code:          {(int)response.StatusCode} ({response.StatusCode})");
@@ -238,7 +234,7 @@ namespace nipts_pts_API_tests
             Console.WriteLine($"Content length:        {response.ContentLength?.ToString() ?? "(null)"}");
             Console.WriteLine($"Content (raw):         {(string.IsNullOrEmpty(response.Content) ? "(empty)" : response.Content)}");
             Console.WriteLine($"Error message:         {response.ErrorMessage ?? "(none)"}");
-            Console.WriteLine($"Error exception:       {FormatException(response.ErrorException)}");
+            Console.WriteLine($"Error exception:       {(response.ErrorException is null ? "(none)" : FormatException(response.ErrorException))}");
 
             Console.WriteLine("-- Response headers --");
             if (response.Headers is { Count: > 0 })

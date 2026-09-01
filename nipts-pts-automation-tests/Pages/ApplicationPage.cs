@@ -216,14 +216,12 @@ namespace nipts_pts_automation_tests.Pages
 
         public bool VerifyWELSHApprovedPTD(string fieldName, string fieldValue)
         {
-            string FieldName = "//dt[contains(text(),'" + fieldName + "')]";
-            string FieldValue = "//dt[contains(text(),'" + fieldName + "')]/..//dd";
+            // Match the label exactly: a 'contains' match on short labels like 'Enw' also hits
+            // longer rows such as 'Enw a chyfeiriad yr awdurdod cymwys' that appear earlier.
+            string FieldName = "//dt[normalize-space(.)='" + fieldName + "']";
+            string FieldValue = "//dt[normalize-space(.)='" + fieldName + "']/..//dd";
 
-            if (_driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue)); 
-            {
-                return true;
-            }    
-
+            return _driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue);
         }
 
         public bool VerifyPTDNumberOnApprovedPTD(string ptdNumber , string ptdNumberValue) 
@@ -231,10 +229,12 @@ namespace nipts_pts_automation_tests.Pages
             string PTDNumber = "//dt[contains(text(),'" + ptdNumber + "')]";
             string PTDNumberValue = "//dt[contains(text(),'" + ptdNumber + "')]/..//dd";
 
-            if (_driver.FindElement(By.XPath(PTDNumber)).Text.Contains(ptdNumber) && _driver.FindElement(By.XPath(PTDNumberValue)).Text.Contains(ptdNumberValue));
-            {
-                return true;
-            }
+            // The UI formats the PTD number with spaces (e.g. "GB826 6A6 DF3"); strip whitespace so
+            // the comparison matches the unformatted reference captured during approval.
+            var displayedValue = _driver.FindElement(By.XPath(PTDNumberValue)).Text.Replace(" ", "");
+            var expectedValue = (ptdNumberValue ?? string.Empty).Replace(" ", "");
+
+            return _driver.FindElement(By.XPath(PTDNumber)).Text.Contains(ptdNumber) && displayedValue.Contains(expectedValue);
         }
 
         public bool VerifyMichrochipDateOnApprovedPTD(string michrochipDate, string michrochipDateValue)
@@ -242,10 +242,7 @@ namespace nipts_pts_automation_tests.Pages
             string MichrochipDate = "//dt[contains(text(),'" + michrochipDate + "')]";
             string MichochipDateValue = "//dt[contains(text(),'" + michrochipDate + "')]/..//dd";
 
-            if (_driver.FindElement(By.XPath(MichrochipDate)).Text.Contains(michrochipDate) && _driver.FindElement(By.XPath(MichochipDateValue)).Text.Contains(michrochipDateValue)) ;
-            {
-                return true;
-            }
+            return _driver.FindElement(By.XPath(MichrochipDate)).Text.Contains(michrochipDate) && _driver.FindElement(By.XPath(MichochipDateValue)).Text.Contains(michrochipDateValue);
         }
 
         public bool VerifyPetDOBOnApprovedPTD(string petDOB, string petDOBValue)
@@ -253,10 +250,7 @@ namespace nipts_pts_automation_tests.Pages
             string PetDOB = "//dt[contains(text(),'" + petDOB + "')]";
             string PetDOBValue = "//dt[contains(text(),'" + petDOB + "')]/..//dd";
 
-            if (_driver.FindElement(By.XPath(PetDOB)).Text.Contains(petDOB) && _driver.FindElement(By.XPath(PetDOBValue)).Text.Contains(petDOBValue)) ;
-            {
-                return true;
-            }
+            return _driver.FindElement(By.XPath(PetDOB)).Text.Contains(petDOB) && _driver.FindElement(By.XPath(PetDOBValue)).Text.Contains(petDOBValue);
         }
 
 
@@ -347,13 +341,11 @@ namespace nipts_pts_automation_tests.Pages
 
         public bool? VerifyWELSHFieldsAndValuesForPendingAppl(string fieldName, string fieldValue)
         {
-            string FieldName = "//dt[contains(text(),'" + fieldName + "')]";
-            string FieldValue = "//dt[contains(text(),'" + fieldName + "')]/..//dd";
+            // Exact dt match: 'Rhyw' (Sex) would otherwise collide with 'Rhywogaeth' (Species) under contains().
+            string FieldName = "//dt[normalize-space(.)='" + fieldName + "']";
+            string FieldValue = "//dt[normalize-space(.)='" + fieldName + "']/..//dd";
 
-            if (_driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue)) ;
-            {
-                return true;
-            }
+            return _driver.WaitForElement(By.XPath(FieldName)).Text.Contains(fieldName) && _driver.WaitForElement(By.XPath(FieldValue)).Text.Contains(fieldValue);
         }
 
         public bool? VerifyReferenceNumberOnPendingAppl(string referenceNumberText, string referenceNumberValue)
@@ -361,10 +353,7 @@ namespace nipts_pts_automation_tests.Pages
             string ReferenceNumberText = "//dt[contains(text(),'" + referenceNumberText + "')]";
             string ReferenceNumberValue = "//dt[contains(text(),'" + referenceNumberText + "')]/..//dd";
 
-            if (_driver.FindElement(By.XPath(ReferenceNumberText)).Text.Contains(referenceNumberText) && _driver.FindElement(By.XPath(ReferenceNumberValue)).Text.Contains(referenceNumberValue)) ;
-            {
-                return true;
-            }
+            return _driver.FindElement(By.XPath(ReferenceNumberText)).Text.Contains(referenceNumberText) && _driver.FindElement(By.XPath(ReferenceNumberValue)).Text.Contains(referenceNumberValue);
         }
 
         public bool? VerifyMichrochipDateOnPendingAppl(string michrochipDateText, string michrochipDateValue)
@@ -372,10 +361,7 @@ namespace nipts_pts_automation_tests.Pages
             string MichrochipDate = "//dt[contains(text(),'" + michrochipDateText + "')]";
             string MichochipDateValue = "//dt[contains(text(),'" + michrochipDateText + "')]/..//dd";
 
-            if (_driver.FindElement(By.XPath(MichrochipDate)).Text.Contains(michrochipDateText) && _driver.FindElement(By.XPath(MichochipDateValue)).Text.Contains(michrochipDateValue)) ;
-            {
-                return true;
-            }
+            return _driver.FindElement(By.XPath(MichrochipDate)).Text.Contains(michrochipDateText) && _driver.FindElement(By.XPath(MichochipDateValue)).Text.Contains(michrochipDateValue);
         }
 
         public bool? VerifyPetDOBOnPendingAppl(string petDOBText, string petDOBValue)
@@ -383,10 +369,7 @@ namespace nipts_pts_automation_tests.Pages
             string PetDOB = "//dt[contains(text(),'" + petDOBText + "')]";
             string PetDOBValue = "//dt[contains(text(),'" + petDOBText + "')]/..//dd";
 
-            if (_driver.FindElement(By.XPath(PetDOB)).Text.Contains(petDOBText) && _driver.FindElement(By.XPath(PetDOBValue)).Text.Contains(petDOBValue)) ;
-            {
-                return true;
-            }
+            return _driver.FindElement(By.XPath(PetDOB)).Text.Contains(petDOBText) && _driver.FindElement(By.XPath(PetDOBValue)).Text.Contains(petDOBValue);
         }
 
         public bool? VerifyHeadingTextOnSummaryPage(string heading)

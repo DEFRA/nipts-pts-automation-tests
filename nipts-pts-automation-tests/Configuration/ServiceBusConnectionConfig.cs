@@ -4,8 +4,8 @@ namespace nipts_pts_automation_tests.Configuration
 {
     public class ServiceBusConnectionConfig : IServiceBusConnectionData
     {
-        public string ServiceBusConnString { get; set; }
-        public string ServiceBusQueueName { get; set; }
-        public string ServiceBusOfflineApplQueueName { get; set; }
+        public string ServiceBusConnString { get; set; } = string.Empty;
+        public string ServiceBusQueueName { get; set; } = string.Empty;
+        public string ServiceBusOfflineApplQueueName { get; set; } = string.Empty;
     }
 }

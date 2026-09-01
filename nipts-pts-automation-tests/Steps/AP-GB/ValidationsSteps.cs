@@ -25,20 +25,20 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
 
-        private IPetMicrochipPage? petMicrochipPage => _objectContainer.IsRegistered<IPetMicrochipPage>() ? _objectContainer.Resolve<IPetMicrochipPage>() : null;
-        private IPetMicrochipDatePage? petMicrochipDatePage => _objectContainer.IsRegistered<IPetMicrochipDatePage>() ? _objectContainer.Resolve<IPetMicrochipDatePage>() : null;
-        private IPetsSpeciesPage? petSpeciesPage => _objectContainer.IsRegistered<IPetsSpeciesPage>() ? _objectContainer.Resolve<IPetsSpeciesPage>() : null;
-        private IPetsBreedPage? breedPage => _objectContainer.IsRegistered<IPetsBreedPage>() ? _objectContainer.Resolve<IPetsBreedPage>() : null;
-        private IPetsNamePage? petNamePage => _objectContainer.IsRegistered<IPetsNamePage>() ? _objectContainer.Resolve<IPetsNamePage>() : null;
-        private IPetsSexPage? petSexPage => _objectContainer.IsRegistered<IPetsSexPage>() ? _objectContainer.Resolve<IPetsSexPage>() : null;
-        private IPetDOBPage? petDOBPage => _objectContainer.IsRegistered<IPetDOBPage>() ? _objectContainer.Resolve<IPetDOBPage>() : null;
-        private IPetsColourPage? petColourPage => _objectContainer.IsRegistered<IPetsColourPage>() ? _objectContainer.Resolve<IPetsColourPage>() : null;
-        private ISignificantFeaturesPage? significantFeaturesPage => _objectContainer.IsRegistered<ISignificantFeaturesPage>() ? _objectContainer.Resolve<ISignificantFeaturesPage>() : null;
-        private IPetOwnerNamePage? petKeeperPage => _objectContainer.IsRegistered<IPetOwnerNamePage>() ? _objectContainer.Resolve<IPetOwnerNamePage>() : null;
-        private IPetOwnerAddressPage? petOwnerAddressPage => _objectContainer.IsRegistered<IPetOwnerAddressPage>() ? _objectContainer.Resolve<IPetOwnerAddressPage>() : null;
-        private IPetOwnerPhoneNumberPage? petOwnerPhoneNumberPage => _objectContainer.IsRegistered<IPetOwnerPhoneNumberPage>() ? _objectContainer.Resolve<IPetOwnerPhoneNumberPage>() : null;
-        private ILandingPage? landingPage => _objectContainer.IsRegistered<ILandingPage>() ? _objectContainer.Resolve<ILandingPage>() : null;
-        private IHomePage? homePage => _objectContainer.IsRegistered<IHomePage>() ? _objectContainer.Resolve<IHomePage>() : null;
+        private IPetMicrochipPage petMicrochipPage => _objectContainer.Resolve<IPetMicrochipPage>();
+        private IPetMicrochipDatePage petMicrochipDatePage => _objectContainer.Resolve<IPetMicrochipDatePage>();
+        private IPetsSpeciesPage petSpeciesPage => _objectContainer.Resolve<IPetsSpeciesPage>();
+        private IPetsBreedPage breedPage => _objectContainer.Resolve<IPetsBreedPage>();
+        private IPetsNamePage petNamePage => _objectContainer.Resolve<IPetsNamePage>();
+        private IPetsSexPage petSexPage => _objectContainer.Resolve<IPetsSexPage>();
+        private IPetDOBPage petDOBPage => _objectContainer.Resolve<IPetDOBPage>();
+        private IPetsColourPage petColourPage => _objectContainer.Resolve<IPetsColourPage>();
+        private ISignificantFeaturesPage significantFeaturesPage => _objectContainer.Resolve<ISignificantFeaturesPage>();
+        private IPetOwnerNamePage petKeeperPage => _objectContainer.Resolve<IPetOwnerNamePage>();
+        private IPetOwnerAddressPage petOwnerAddressPage => _objectContainer.Resolve<IPetOwnerAddressPage>();
+        private IPetOwnerPhoneNumberPage petOwnerPhoneNumberPage => _objectContainer.Resolve<IPetOwnerPhoneNumberPage>();
+        private ILandingPage landingPage => _objectContainer.Resolve<ILandingPage>();
+        private IHomePage homePage => _objectContainer.Resolve<IHomePage>();
 
         public ValidationsSteps(ScenarioContext context, IObjectContainer container)
         {

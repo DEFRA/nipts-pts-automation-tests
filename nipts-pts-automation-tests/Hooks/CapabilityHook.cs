@@ -30,7 +30,7 @@ namespace nipts_pts_automation_tests.Hooks
         }
 
         private TU LoadCapabilityClass<T, TU>() where T : TU =>
-            (TU)Activator.CreateInstance(typeof(T), ConfigSetup.BaseConfiguration, _scenarioContext);
+            (TU)Activator.CreateInstance(typeof(T), ConfigSetup.BaseConfiguration, _scenarioContext)!;
     }
 
 }

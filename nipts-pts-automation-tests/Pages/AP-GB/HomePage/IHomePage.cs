@@ -21,5 +21,7 @@
         public bool VerifyPTDTableHeading(string heading);
         public bool VerifySuspendedWarningMsg(string warningMsg);
         public bool VerifyApplyBtnNotDisplayedSuspendedUser();
+        bool IsSuspendedWarningPresent();
+        IReadOnlyList<(string PetName, string ViewHref)> GetSuspendedApplicationLinks();
     }
 } 

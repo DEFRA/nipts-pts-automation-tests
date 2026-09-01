@@ -2,8 +2,8 @@
 {
     public class ApplicationResponse
     {
-        public string ApplicationNumber { get; set; }
+        public string ApplicationNumber { get; set; } = string.Empty;
 
-        public string ApplicationId { get; set; }
+        public string ApplicationId { get; set; } = string.Empty;
     }
 }

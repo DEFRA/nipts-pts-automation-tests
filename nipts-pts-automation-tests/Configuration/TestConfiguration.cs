@@ -2,19 +2,19 @@
 {
     public class TestConfiguration
     {
-        public string ComPortalUrl { get; set; }
-        public string AppPortalUrl { get; set; }
-        public string EnvPassword { get; set; }
-        public string Platform { get; set; }
+        public string ComPortalUrl { get; set; } = string.Empty;
+        public string AppPortalUrl { get; set; } = string.Empty;
+        public string EnvPassword { get; set; } = string.Empty;
+        public string Platform { get; set; } = string.Empty;
         public bool Headless { get; set; }
         public int GlobalWaitsInSeconds { get; set; }
-        public string DeviceName { get; set; }
-        public string BSOSVersion { get; set; }
-        public string BSBrowserVersion { get; set; }
-        public string Project { get; set; }
-        public string Build { get; set; }
+        public string DeviceName { get; set; } = string.Empty;
+        public string BSOSVersion { get; set; } = string.Empty;
+        public string BSBrowserVersion { get; set; } = string.Empty;
+        public string Project { get; set; } = string.Empty;
+        public string Build { get; set; } = string.Empty;
         public bool IsEmulationEnabled { get; set; }
-        public string EmulateDeviceInfo { get; set; }
+        public string EmulateDeviceInfo { get; set; } = string.Empty;
     }
 
 }

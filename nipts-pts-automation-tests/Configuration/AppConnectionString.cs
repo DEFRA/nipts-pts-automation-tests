@@ -2,7 +2,7 @@
 {
     public class AppConnectionString
     {
-        public string DBConnectionstring { get; set; }
+        public string DBConnectionstring { get; set; } = string.Empty;
 
     }
 }

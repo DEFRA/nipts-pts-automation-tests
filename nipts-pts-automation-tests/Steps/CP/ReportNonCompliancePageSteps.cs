@@ -14,9 +14,9 @@ namespace nipts_pts_automation_tests.Steps.CP
         private readonly IObjectContainer _objectContainer;
         private readonly ScenarioContext _scenarioContext;
 
-        private ISummaryPage? summaryPage => _objectContainer.IsRegistered<ISummaryPage>() ? _objectContainer.Resolve<ISummaryPage>() : null;
-        private IWebDriver? _driver => _objectContainer.IsRegistered<IWebDriver>() ? _objectContainer.Resolve<IWebDriver>() : null;
-        private IReportNonCompliancePage? _reportNonCompliancePage => _objectContainer.IsRegistered<IReportNonCompliancePage>() ? _objectContainer.Resolve<IReportNonCompliancePage>() : null;
+        private ISummaryPage summaryPage => _objectContainer.Resolve<ISummaryPage>();
+        private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private IReportNonCompliancePage _reportNonCompliancePage => _objectContainer.Resolve<IReportNonCompliancePage>();
 
         public ReportNonCompliancePageSteps(ScenarioContext context, IObjectContainer container)
         {
