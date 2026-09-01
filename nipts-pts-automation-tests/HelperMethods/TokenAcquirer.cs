@@ -335,7 +335,11 @@ namespace nipts_pts_automation_tests.HelperMethods
                 var next = FirstDisplayedOrDefault(driver, continueBy);
                 if (next != null && !AnyDisplayed(driver, userIdBy))
                 {
-                    ClickJs(driver, next);
+                    // The element can go stale between locating and clicking when B2C SSOs straight
+                    // through to the redirect (e.g. CP flow reusing an existing session); that means
+                    // the page already advanced, so re-poll instead of failing.
+                    try { ClickJs(driver, next); }
+                    catch (StaleElementReferenceException) { }
                     Thread.Sleep(2000);
                     continue;
                 }
