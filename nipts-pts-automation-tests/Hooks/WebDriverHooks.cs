@@ -66,8 +66,10 @@ namespace nipts_pts_automation_tests.Hooks
                     {
                         AttachScreenShotToXmlReport();
                     }
-                    Driver.Close();
-                    Driver.Quit();
+                    // The browser session may already be gone (e.g. mobile/Edge dropped the
+                    // connection); swallow so cleanup never fails an otherwise-passing scenario.
+                    try { Driver.Quit(); }
+                    catch (Exception ex) { Logger.Debug("Driver cleanup failed: " + ex.Message); }
                 }
             }
         }
