@@ -309,7 +309,7 @@ namespace nipts_pts_automation_tests.HelperMethods
                     return;
 
                 // 2-Step Verification access-code page - needs the one-time code.
-                var accessCodeField = driver.FindElements(accessCodeBy).FirstOrDefault(e => e.Displayed);
+                var accessCodeField = FirstDisplayedOrDefault(driver, accessCodeBy);
                 if (accessCodeField != null)
                 {
                     HandleAccessCodePage(driver, config, accessCodeField, continueBy);
@@ -318,8 +318,7 @@ namespace nipts_pts_automation_tests.HelperMethods
                 }
 
                 // Rejected credentials - re-rendered creds page with an error summary.
-                if (driver.FindElements(userIdBy).Any(e => e.Displayed)
-                    && driver.FindElements(errorBy).Any(e => e.Displayed))
+                if (AnyDisplayed(driver, userIdBy) && AnyDisplayed(driver, errorBy))
                 {
                     LogLoginPageState(driver);
                     throw new Exception(
@@ -329,8 +328,8 @@ namespace nipts_pts_automation_tests.HelperMethods
 
                 // Benign interstitial (e.g. "Stay signed in?", a standalone "Continue") - progress
                 // it, but never re-click while the credentials form is still showing.
-                var next = driver.FindElements(continueBy).FirstOrDefault(e => e.Displayed);
-                if (next != null && driver.FindElements(userIdBy).All(e => !e.Displayed))
+                var next = FirstDisplayedOrDefault(driver, continueBy);
+                if (next != null && !AnyDisplayed(driver, userIdBy))
                 {
                     ClickJs(driver, next);
                     Thread.Sleep(2000);
@@ -344,8 +343,31 @@ namespace nipts_pts_automation_tests.HelperMethods
             // so explicitly; otherwise surface the captured page state for the next run.
             LogLoginPageState(driver);
             if (driver.Url.Contains("aoc=Y", StringComparison.OrdinalIgnoreCase)
-                || driver.FindElements(accessCodeBy).Any(e => e.Displayed))
+                || AnyDisplayed(driver, accessCodeBy))
                 throw new Exception(BuildTwoStepMessage(config));
+        }
+
+        // The B2C login pages re-render mid-poll, so an element found by FindElements can go stale
+        // before its .Displayed is read. These helpers treat a stale element as "not displayed" so
+        // the polling loop simply retries instead of throwing StaleElementReferenceException.
+        private static bool AnyDisplayed(IWebDriver driver, By by)
+        {
+            foreach (var e in driver.FindElements(by))
+            {
+                try { if (e.Displayed) return true; }
+                catch (StaleElementReferenceException) { }
+            }
+            return false;
+        }
+
+        private static IWebElement FirstDisplayedOrDefault(IWebDriver driver, By by)
+        {
+            foreach (var e in driver.FindElements(by))
+            {
+                try { if (e.Displayed) return e; }
+                catch (StaleElementReferenceException) { }
+            }
+            return null;
         }
 
         private static bool HasReachedRedirect(IWebDriver driver, B2CConfig config)
