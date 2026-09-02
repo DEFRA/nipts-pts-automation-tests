@@ -28,7 +28,7 @@
     <PackageReference Include="Reqnroll.ExternalData" Version="2.4.1" />
     <PackageReference Include="Reqnroll.NUnit" Version="2.4.1" />
     <PackageReference Include="Reqnroll.SpecFlowCompatibility" Version="2.4.1" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="149.0.7827.5500" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="152.0.7977.7500" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 

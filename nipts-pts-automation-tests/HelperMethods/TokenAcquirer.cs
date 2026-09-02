@@ -124,32 +124,53 @@ namespace nipts_pts_automation_tests.HelperMethods
         /// </summary>
         private static IWebDriver? TryCreateLocalTokenBrowser()
         {
-            try
+            var options = new ChromeOptions
             {
-                var options = new ChromeOptions
+                PageLoadStrategy = PageLoadStrategy.Eager
+            };
+            options.AddArgument("--headless=new");
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-dev-shm-usage");
+            options.AddArgument("--disable-gpu");
+            options.AddArgument("--window-size=1280,1024");
+
+            // Prefer the chromedriver shipped next to the test assembly (pinned to the installed
+            // Chrome by the Selenium.WebDriver.ChromeDriver package), then fall back to Selenium
+            // Manager. CreateDefaultService() with no path also searches the agent PATH, where a
+            // stale chromedriver (v120) wins and forces the "only supports Chrome 120" mismatch -
+            // which is what pushes token minting onto the fragile in-session flow that then fails
+            // with AADB2C90046. Pinning the search to the assembly directory avoids that.
+            var driverDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+            IWebDriver? Build(Func<ChromeDriver> create)
+            {
+                try
                 {
-                    PageLoadStrategy = PageLoadStrategy.Eager
-                };
-                options.AddArgument("--headless=new");
-                options.AddArgument("--no-sandbox");
-                options.AddArgument("--disable-dev-shm-usage");
-                options.AddArgument("--disable-gpu");
-                options.AddArgument("--window-size=1280,1024");
-
-                var service = ChromeDriverService.CreateDefaultService();
-                service.HideCommandPromptWindow = true;
-
-                var driver = new ChromeDriver(service, options, TimeSpan.FromSeconds(60));
-                driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
-                driver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(30);
-                return driver;
+                    var driver = create();
+                    driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
+                    driver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(30);
+                    return driver;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Local token-minting browser attempt failed (" + ex.Message + ").");
+                    return null;
+                }
             }
-            catch (Exception ex)
+
+            ChromeDriver FromAssemblyDir()
             {
-                Console.WriteLine("Local token-minting browser unavailable (" + ex.Message +
-                                  "); using the in-session B2C login flow instead.");
-                return null;
+                var service = string.IsNullOrEmpty(driverDir)
+                    ? ChromeDriverService.CreateDefaultService()
+                    : ChromeDriverService.CreateDefaultService(driverDir);
+                service.HideCommandPromptWindow = true;
+                return new ChromeDriver(service, options, TimeSpan.FromSeconds(60));
             }
+
+            var driver = Build(FromAssemblyDir) ?? Build(() => new ChromeDriver(options));
+            if (driver == null)
+                Console.WriteLine("No local token-minting browser could be started; using the in-session B2C login flow instead.");
+            return driver;
         }
 
         // prompt=login forces a fresh credential entry so B2C ignores any SSO session and
