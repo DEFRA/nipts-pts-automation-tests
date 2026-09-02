@@ -97,9 +97,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void ClickOnPTDNumberOfTheApplication(string ptdNumber)
         {
-            string clickPTD = $"//button[contains(text(),'{ptdNumber}')]";
-            Thread.Sleep(1000);
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", _driver.FindElement(By.XPath(clickPTD)));
+            // Wait for the PTD button to render: on slow sessions the referred-to-SPS list
+            // often isn't painted yet when this runs, and a raw FindElement throws immediately.
+            var clickPTD = By.XPath($"//button[contains(text(),'{ptdNumber}')]");
+            var button = _driver.WaitForElement(clickPTD);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block: 'center'});", button);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", button);
         }
 
         public void ClickOnPage(string pageNumber)
