@@ -15,7 +15,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails
         }
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
-        private IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[@class='govuk-fieldset__heading']"), true);
+        private static By PageHeadingBy => By.XPath("//h1[contains(@class,'govuk-fieldset__heading')]");
+        private IWebElement PageHeading => _driver.WaitForElement(PageHeadingBy, true);
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IWebElement rdoYes => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='Yes']"));
         private IWebElement rdoNo => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='No']"));
@@ -30,7 +31,17 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails
 
         public bool IsNextPageLoaded(string pageTitle)
         {
-            return PageHeading.Text.Contains(pageTitle);
+            // Poll for the heading text so a slow-rendering page on mobile sessions isn't
+            // reported as "not loaded" just because it painted after the initial wait window.
+            try
+            {
+                return _driver.WaitForElementCondition(d =>
+                    d.FindElements(PageHeadingBy).Any(h => h.Displayed && h.Text.Contains(pageTitle)));
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public void SelectOption(string option)
