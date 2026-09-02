@@ -64,7 +64,11 @@ namespace nipts_pts_automation_tests.Hooks
                 {
                     if (takeScreenShot)
                     {
-                        AttachScreenShotToXmlReport();
+                        // A failed scenario often leaves a degraded/closed BrowserStack session, so
+                        // capturing the screenshot can itself throw; never let that surface as a
+                        // teardown error that masks the real scenario failure.
+                        try { AttachScreenShotToXmlReport(); }
+                        catch (Exception ex) { Logger.Debug("Screenshot capture failed: " + ex.Message); }
                     }
                     // The browser session may already be gone (e.g. mobile/Edge dropped the
                     // connection); swallow so cleanup never fails an otherwise-passing scenario.

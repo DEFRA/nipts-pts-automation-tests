@@ -176,19 +176,40 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         public void ClickSignedOut()
         {
             Thread.Sleep(1000);
-            // Re-query the element on each attempt: after the Back navigation the DOM can
-            // re-render on slower mobile sessions, leaving a stale reference before the click.
-            _driver.RetryOnStaleElement(() =>
+            // On very slow sessions the header (and its sign-out link) can take a while to render,
+            // and the HMRC session-timeout overlay can intercept the click. Poll for the link,
+            // clearing the overlay each pass, then click it via the overlay-aware SafeClick.
+            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits * 2);
+            while (DateTime.UtcNow < deadline)
             {
-                _driver.WaitForElement(SignInConfirmBy).Click();
-                return true;
-            });
+                _driver.DismissTimeoutOverlayIfPresent();
+                var link = _driver.FindElements(SignInConfirmBy).FirstOrDefault(e => e.Displayed);
+                if (link != null)
+                {
+                    _driver.SafeClick(link);
+                    return;
+                }
+                Thread.Sleep(1000);
+            }
+            // Nothing found in time - fall back to the original wait so the caller still gets a
+            // meaningful ElementNotVisibleException rather than a silent no-op.
+            _driver.WaitForElement(SignInConfirmBy).Click();
         }
 
         public bool IsSignedOut()
         {
             ClickSignedOut();
-            return PageHeading.Text.Contains("You have signed out") || PageHeading.Text.Contains("Your Defra account");
+            // Poll for the signed-out confirmation rather than reading the heading once: on a slow
+            // session the sign-out redirect can lag behind the click.
+            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits);
+            while (DateTime.UtcNow < deadline)
+            {
+                var heading = CurrentHeadingText();
+                if (heading.Contains("You have signed out") || heading.Contains("Your Defra account"))
+                    return true;
+                Thread.Sleep(1000);
+            }
+            return false;
         }
     }
 }
