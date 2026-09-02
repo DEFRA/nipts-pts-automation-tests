@@ -97,6 +97,7 @@ stages:
     - template: run-test-template.yml
       parameters:
         jobName: IOSIphoneSafari14Run
+        testStepTimeoutMinutes: 120
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}

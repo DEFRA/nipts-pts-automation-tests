@@ -45,6 +45,7 @@ stages:
     - template: run-test-template.yml
       parameters:
         jobName: EnvironmentCheck
+        testStepTimeoutMinutes: 120
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
@@ -62,6 +63,7 @@ stages:
     - template: run-test-template.yml
       parameters:
         jobName: IOSIphone14ChromeRun
+        testStepTimeoutMinutes: 120
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
@@ -78,6 +80,7 @@ stages:
     - template: run-test-template.yml
       parameters:
         jobName: IOSIpad12ChromeRun
+        testStepTimeoutMinutes: 120
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
@@ -94,6 +97,7 @@ stages:
     - template: run-test-template.yml
       parameters:
         jobName: IOSIphoneSafari14Run
+        testStepTimeoutMinutes: 120
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}
@@ -110,6 +114,7 @@ stages:
     - template: run-test-template.yml
       parameters:
         jobName: IOSIpad12SafariRun
+        testStepTimeoutMinutes: 120
         envConfigParam: ${{ parameters.Environment}}
         apiEndPoint: ${{ parameters.ApiEndpoint}}
         branchName: ${{ parameters.branchName}}

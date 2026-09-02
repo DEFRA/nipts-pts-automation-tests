@@ -35,6 +35,13 @@ parameters:
   - name: maxConcurrentRuns
     type: number
     default: 6
+  # Caps the Execute Tests step (below the job timeout) so a test host that writes its results
+  # but then fails to exit is killed and the job still runs the publish/report steps instead of
+  # wedging until the job timeout. Default is effectively no-op for short PR jobs; the iOS
+  # pipelines (which exhibit the hang) pass a tighter value.
+  - name: testStepTimeoutMinutes
+    type: number
+    default: 570
 
 jobs: 
 
@@ -68,12 +75,6 @@ jobs:
     # this higher count can never overload the shared account.
     - name: sessionCount
       value: $[ iif(eq(variables['Build.Reason'], 'Schedule'), 8, ${{ parameters.maxParallelSessions }}) ]
-
-    # Cap the Execute Tests step just under the job timeout (600/300) so a test host that
-    # writes its results but then fails to exit is killed and the job still runs the publish
-    # and report steps, rather than wedging until the hard job timeout.
-    - name: testStepTimeoutMinutes
-      value: $[ iif(eq(variables['Build.Reason'], 'Schedule'), 540, 270) ]
 
   steps:
 
@@ -549,10 +550,9 @@ jobs:
         dotnet test "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml" -- NUnit.NumberOfTestWorkers=$(sessionCount)
       displayName: 'Execute Tests'
       # dotnet test occasionally writes its results/trx but the test host then fails to exit,
-      # wedging this step until the job timeout and losing the publish/report steps. The cap
-      # (testStepTimeoutMinutes) sits just under the job timeout so a hung host is killed and the
-      # job still runs PublishTestResults and the LivingDoc report. Raise if a suite runs longer.
-      timeoutInMinutes: $(testStepTimeoutMinutes)
+      # wedging this step until the job timeout and losing the publish/report steps. This cap
+      # (set per pipeline) kills a hung host so the job still runs PublishTestResults and LivingDoc.
+      timeoutInMinutes: ${{ parameters.testStepTimeoutMinutes }}
       failOnStderr: true
       ignoreLASTEXITCODE: true
       continueOnError: true
