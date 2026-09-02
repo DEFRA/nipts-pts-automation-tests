@@ -1,5 +1,6 @@
 ﻿using Reqnroll.BoDi;
 using Defra.UI.Tests.Contracts;
+using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
 
@@ -34,7 +35,28 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage
         #region Methods
         public bool IsNextPageLoaded(string pageTitle)
         {
-            return PageHeading.Text.Contains(pageTitle);
+            // Slow iPad/BrowserStack sessions can render the heading late or re-render it mid-check
+            // (the preceding navigation alone can take over a minute), so a single visible-element
+            // read can catch the transitioning page's heading. Poll the DOM for a heading whose
+            // text contains the title, tolerating staleness, until it appears or the wait expires.
+            var deadline = DateTime.UtcNow.AddSeconds(
+                ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 2);
+            var headingBy = By.XPath("//h1[contains(@class,'govuk-heading-xl') or contains(@class,'govuk-heading-l')]");
+            while (DateTime.UtcNow < deadline)
+            {
+                try
+                {
+                    if (_driver.FindElements(headingBy).Any(h =>
+                    {
+                        try { return h.Text.Contains(pageTitle); }
+                        catch (StaleElementReferenceException) { return false; }
+                    }))
+                        return true;
+                }
+                catch (StaleElementReferenceException) { }
+                Thread.Sleep(1000);
+            }
+            return false;
         }
 
         public bool IsCustomPageLoaded(string pageTitle)
