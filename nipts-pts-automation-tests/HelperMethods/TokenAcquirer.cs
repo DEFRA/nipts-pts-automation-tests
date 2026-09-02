@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System.Web;
 using nipts_pts_automation_tests.Configuration;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 
 namespace nipts_pts_automation_tests.HelperMethods
@@ -35,7 +36,7 @@ namespace nipts_pts_automation_tests.HelperMethods
             var authority = $"https://{config.TenantName}.b2clogin.com/{config.TenantName}.onmicrosoft.com/{config.Policy}";
             var scope = $"openid offline_access {config.ClientId}";
 
-            var code = GetAuthorizationCodeViaBackendLogin(driver, authority, config, scope);
+            var code = AcquireAuthorizationCode(driver, authority, config, scope);
             return ExchangeCodeForToken(authority, config, scope, code);
         }
 
@@ -68,8 +69,149 @@ namespace nipts_pts_automation_tests.HelperMethods
             var authority = $"https://{cpConfig.TenantName}.b2clogin.com/{cpConfig.TenantName}.onmicrosoft.com/{cpConfig.Policy}";
             var scope = !string.IsNullOrWhiteSpace(config.CPScope) ? config.CPScope : $"openid offline_access {cpConfig.ClientId}";
 
-            var code = GetAuthorizationCodeViaBackendLogin(driver, authority, cpConfig, scope);
+            var code = AcquireAuthorizationCode(driver, authority, cpConfig, scope);
             return ExchangeCodeForToken(authority, cpConfig, scope, code);
+        }
+
+        /// <summary>
+        /// Acquires the B2C authorization code, preferring a throwaway LOCAL headless browser on the
+        /// test agent so a hung/degraded B2C or Government Gateway login can never wedge the shared
+        /// BrowserStack scenario session (the running UI test's driver). This directly addresses the
+        /// intermittent WebDriver session hang seen when the interactive token login was driven inside
+        /// the mobile scenario session.
+        ///
+        /// If a local browser cannot be created on this agent (no Chrome present, blocked outbound
+        /// access, etc.) OR the isolated login fails for any reason, we fall back to the original
+        /// in-session flow so behaviour is never worse than before.
+        /// </summary>
+        private static string AcquireAuthorizationCode(IWebDriver scenarioDriver, string authority, B2CConfig config, string scope)
+        {
+            var isolated = TryCreateLocalTokenBrowser();
+            if (isolated == null)
+            {
+                // No local browser on this agent: keep the original in-session behaviour unchanged.
+                return GetAuthorizationCodeViaBackendLogin(scenarioDriver, authority, config, scope);
+            }
+
+            try
+            {
+                Console.WriteLine("Acquiring backend API token in an isolated local browser (scenario session is untouched)...");
+                isolated.Navigate().GoToUrl(BuildAuthorizeUrl(authority, config, scope));
+                var wait = new WebDriverWait(isolated, TimeSpan.FromSeconds(60));
+                return CaptureAuthorizationCode(isolated, wait, config);
+            }
+            catch (Exception ex)
+            {
+                // The isolated attempt failed (e.g. this agent cannot reach B2C from a local browser).
+                // Fall back to the in-session flow so tests that work today keep working.
+                Console.WriteLine("Isolated local token login failed (" + ex.Message +
+                                  "); falling back to the in-session B2C login flow.");
+                return GetAuthorizationCodeViaBackendLogin(scenarioDriver, authority, config, scope);
+            }
+            finally
+            {
+                try { isolated.Quit(); } catch { /* best effort disposal */ }
+            }
+        }
+
+        /// <summary>
+        /// Creates a disposable, headless, local Chrome session used only to mint a B2C token in
+        /// isolation from the scenario's (remote BrowserStack) driver. Returns null if no local
+        /// browser can be started on this agent, in which case the caller falls back to the
+        /// in-session login flow. The B2C redirect_uri is an unreachable localhost address by design,
+        /// so an Eager page-load strategy plus a bounded page-load timeout prevent Chrome blocking on
+        /// that final navigation.
+        /// </summary>
+        private static IWebDriver? TryCreateLocalTokenBrowser()
+        {
+            try
+            {
+                var options = new ChromeOptions
+                {
+                    PageLoadStrategy = PageLoadStrategy.Eager
+                };
+                options.AddArgument("--headless=new");
+                options.AddArgument("--no-sandbox");
+                options.AddArgument("--disable-dev-shm-usage");
+                options.AddArgument("--disable-gpu");
+                options.AddArgument("--window-size=1280,1024");
+
+                var service = ChromeDriverService.CreateDefaultService();
+                service.HideCommandPromptWindow = true;
+
+                var driver = new ChromeDriver(service, options, TimeSpan.FromSeconds(60));
+                driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
+                driver.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(30);
+                return driver;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Local token-minting browser unavailable (" + ex.Message +
+                                  "); using the in-session B2C login flow instead.");
+                return null;
+            }
+        }
+
+        // prompt=login forces a fresh credential entry so B2C ignores any SSO session and
+        // authenticates as the backend user. serviceId is a dedicated DEFRA custom-policy param.
+        private static string BuildAuthorizeUrl(string authority, B2CConfig config, string scope) =>
+            $"{authority}/oauth2/v2.0/authorize" +
+            $"?client_id={config.ClientId}" +
+            $"&response_type=code" +
+            $"&redirect_uri={Uri.EscapeDataString(config.RedirectUri)}" +
+            $"&response_mode=query" +
+            $"&scope={Uri.EscapeDataString(scope)}" +
+            $"&serviceId={config.ServiceId}" +
+            $"&prompt=login" +
+            $"&state=apitest";
+
+        /// <summary>
+        /// Drives the Government Gateway login on the supplied driver and returns the authorization
+        /// code from the resulting B2C redirect. Shared by both the isolated local-browser flow and
+        /// the in-session fallback flow.
+        /// </summary>
+        private static string CaptureAuthorizationCode(IWebDriver driver, WebDriverWait wait, B2CConfig config)
+        {
+            Console.WriteLine("Acquiring backend API token: signing in as the backend test user via B2C...");
+
+            // Capture the redirect URL at the instant login detects it. On some mobile browsers
+            // the unreachable localhost redirect blanks the tab to data:text/html, moments later,
+            // discarding the code - so re-reading driver.Url afterwards can lose it.
+            var redirectUrl = DriveGovernmentGatewayLogin(driver, wait, config);
+
+            // Fallback: login returned without capturing the redirect; wait for the address bar
+            // to show the code/error as before.
+            if (string.IsNullOrEmpty(redirectUrl))
+            {
+                try
+                {
+                    wait.Until(d =>
+                    {
+                        var redirect = ResolveRedirectUrl(d.Url, config);
+                        return redirect.StartsWith(config.RedirectUri, StringComparison.OrdinalIgnoreCase)
+                               && (redirect.Contains("code=") || redirect.Contains("error="));
+                    });
+                }
+                catch (WebDriverTimeoutException)
+                {
+                    LogCurrentPage(driver, "Timed out waiting for the B2C redirect with the authorization code");
+                    throw;
+                }
+
+                redirectUrl = ResolveRedirectUrl(driver.Url, config);
+            }
+
+            var queryParams = HttpUtility.ParseQueryString(new Uri(redirectUrl).Query);
+
+            var error = queryParams.Get("error");
+            if (!string.IsNullOrEmpty(error))
+                throw new Exception($"Backend authorize request failed: {error} - {queryParams.Get("error_description")}");
+
+            var code = queryParams.Get("code");
+            if (string.IsNullOrWhiteSpace(code))
+                throw new Exception($"Authorization code not found in redirect URL: {driver.Url}");
+
+            return code;
         }
 
         private static string GetAuthorizationCodeViaBackendLogin(IWebDriver driver, string authority, B2CConfig config, string scope)
@@ -78,18 +220,7 @@ namespace nipts_pts_automation_tests.HelperMethods
             var originalUrl = driver.Url;
             var existingWindows = driver.WindowHandles.ToHashSet();
 
-            // prompt=login forces a fresh credential entry so B2C ignores the CP SSO session and
-            // authenticates as the backend user. serviceId is a dedicated DEFRA custom-policy param.
-            var authorizeUrl =
-                $"{authority}/oauth2/v2.0/authorize" +
-                $"?client_id={config.ClientId}" +
-                $"&response_type=code" +
-                $"&redirect_uri={Uri.EscapeDataString(config.RedirectUri)}" +
-                $"&response_mode=query" +
-                $"&scope={Uri.EscapeDataString(scope)}" +
-                $"&serviceId={config.ServiceId}" +
-                $"&prompt=login" +
-                $"&state=apitest";
+            var authorizeUrl = BuildAuthorizeUrl(authority, config, scope);
 
             // Prefer a background tab so the signed-in CP page is preserved. Desktop browsers open a
             // new WebDriver window handle for window.open, but mobile browsers (e.g. iOS/Android via
@@ -123,46 +254,7 @@ namespace nipts_pts_automation_tests.HelperMethods
 
             try
             {
-                Console.WriteLine("Acquiring backend API token: signing in as the backend test user via B2C...");
-
-                // Capture the redirect URL at the instant login detects it. On some mobile browsers
-                // the unreachable localhost redirect blanks the tab to data:text/html, moments later,
-                // discarding the code - so re-reading driver.Url afterwards can lose it.
-                var redirectUrl = DriveGovernmentGatewayLogin(driver, wait, config);
-
-                // Fallback: login returned without capturing the redirect; wait for the address bar
-                // to show the code/error as before.
-                if (string.IsNullOrEmpty(redirectUrl))
-                {
-                    try
-                    {
-                        wait.Until(d =>
-                        {
-                            var redirect = ResolveRedirectUrl(d.Url, config);
-                            return redirect.StartsWith(config.RedirectUri, StringComparison.OrdinalIgnoreCase)
-                                   && (redirect.Contains("code=") || redirect.Contains("error="));
-                        });
-                    }
-                    catch (WebDriverTimeoutException)
-                    {
-                        LogCurrentPage(driver, "Timed out waiting for the B2C redirect with the authorization code");
-                        throw;
-                    }
-
-                    redirectUrl = ResolveRedirectUrl(driver.Url, config);
-                }
-
-                var queryParams = HttpUtility.ParseQueryString(new Uri(redirectUrl).Query);
-
-                var error = queryParams.Get("error");
-                if (!string.IsNullOrEmpty(error))
-                    throw new Exception($"Backend authorize request failed: {error} - {queryParams.Get("error_description")}");
-
-                var code = queryParams.Get("code");
-                if (string.IsNullOrWhiteSpace(code))
-                    throw new Exception($"Authorization code not found in redirect URL: {driver.Url}");
-
-                return code;
+                return CaptureAuthorizationCode(driver, wait, config);
             }
             finally
             {
