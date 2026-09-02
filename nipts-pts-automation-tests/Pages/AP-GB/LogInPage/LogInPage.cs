@@ -119,9 +119,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             var reselectCount = 0;
             while (DateTime.UtcNow < deadline)
             {
-                // The user_id field is the real readiness signal for the next (credentials) step,
-                // regardless of how the heading renders on this browser/device.
-                if (_driver.FindElements(By.Id("user_id")).Any(e => e.Displayed))
+                // The user_id field is the real readiness signal for the next (credentials) step.
+                // Key off DOM existence, not .Displayed: on mobile/Appium a present, interactable
+                // field often reports Displayed=false, yet SendKeys still works.
+                if (_driver.FindElements(By.Id("user_id")).Count > 0)
                     return true;
 
                 var heading = CurrentHeadingText();
@@ -139,7 +140,20 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
 
                 Thread.Sleep(1000);
             }
+
+            // Stuck on an unexpected page - record what we're actually looking at so the next CI
+            // run diagnoses it directly instead of us guessing from the step name alone.
+            Console.WriteLine($"IsPageLoaded: gave up after {GlobalWaits * 2}s. " +
+                              $"URL='{SafeUrl()}', heading='{CurrentHeadingText()}', " +
+                              $"user_id count={_driver.FindElements(By.Id("user_id")).Count}, " +
+                              $"chooser count={_driver.FindElements(chooserBy).Count}");
             return false;
+        }
+
+        private string SafeUrl()
+        {
+            try { return _driver.Url; }
+            catch (Exception) { return "(unavailable)"; }
         }
 
         private string CurrentHeadingText()
