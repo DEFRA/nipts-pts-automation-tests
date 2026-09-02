@@ -110,21 +110,30 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         public bool IsPageLoaded()
         {
             // Poll (rather than a one-shot check) so a slow B2C transition does not fail the
-            // assertion. If the "How do you want to sign in?" chooser is still showing, the earlier
-            // Continue click was lost on a slow session - re-select Government Gateway once so the
-            // journey self-heals instead of asserting on the wrong heading.
+            // assertion. The chooser heading/markup renders differently across devices (mobile
+            // Appium vs desktop), so key off the actual Government Gateway credentials form and the
+            // chooser radios rather than exact heading text, and re-select GG if the earlier
+            // Continue was lost on a slow session so the journey self-heals.
+            var chooserBy = By.XPath("//label[@for='scp'] | //label[@for='one']");
             var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits * 2);
-            var reselected = false;
+            var reselectCount = 0;
             while (DateTime.UtcNow < deadline)
             {
+                // The user_id field is the real readiness signal for the next (credentials) step,
+                // regardless of how the heading renders on this browser/device.
+                if (_driver.FindElements(By.Id("user_id")).Any(e => e.Displayed))
+                    return true;
+
                 var heading = CurrentHeadingText();
                 if (heading.Contains("Sign in using Government Gateway"))
                     return true;
 
-                if (!reselected && heading.Contains("How do you want to sign in?"))
+                var onChooser = heading.Contains("How do you want to sign in?")
+                                || _driver.FindElements(chooserBy).Any(e => e.Displayed);
+                if (onChooser && reselectCount < 2)
                 {
                     SelectSignInMethod("GovernmentGateway");
-                    reselected = true;
+                    reselectCount++;
                     continue;
                 }
 
