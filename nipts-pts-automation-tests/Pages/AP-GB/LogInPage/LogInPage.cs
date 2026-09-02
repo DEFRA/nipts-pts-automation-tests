@@ -9,6 +9,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
     public class LogInPage : ILogInPage
     {
         private string Platform => ConfigSetup.BaseConfiguration.TestConfiguration.Platform;
+        private int GlobalWaits => ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds;
         private IObjectContainer _objectContainer;
 
         #region Page Objects
@@ -88,7 +89,41 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
 
         public bool IsPageLoaded()
         {
-            return PageHeading.Text.Contains("Sign in using Government Gateway");
+            // Poll (rather than a one-shot check) so a slow B2C transition does not fail the
+            // assertion. If the "How do you want to sign in?" chooser is still showing, the earlier
+            // Continue click was lost on a slow session - re-select Government Gateway once so the
+            // journey self-heals instead of asserting on the wrong heading.
+            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits);
+            var reselected = false;
+            while (DateTime.UtcNow < deadline)
+            {
+                var heading = CurrentHeadingText();
+                if (heading.Contains("Sign in using Government Gateway"))
+                    return true;
+
+                if (!reselected && heading.Contains("How do you want to sign in?"))
+                {
+                    SelectSignInMethod("GovernmentGateway");
+                    reselected = true;
+                }
+
+                Thread.Sleep(1000);
+            }
+            return false;
+        }
+
+        private string CurrentHeadingText()
+        {
+            try
+            {
+                return _driver
+                    .FindElements(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[contains(@class,'govuk-heading-l')] | //h1[contains(@class,'govuk-fieldset__heading')]"))
+                    .FirstOrDefault(h => h.Displayed)?.Text ?? string.Empty;
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
         }
 
         public bool IsSignedIn(string userName, string password)
