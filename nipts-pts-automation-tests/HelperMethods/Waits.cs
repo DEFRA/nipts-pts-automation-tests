@@ -154,6 +154,9 @@ namespace nipts_pts_automation_tests.HelperMethods
             try
             {
                 WebDriverWait driverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(GlobalWaits));
+                // A re-render mid-poll (common on mobile/Android) can stale elements the predicate
+                // touches; keep polling instead of failing the step.
+                driverWait.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
                 return driverWait.Until(condition);
             }
             catch (Exception ex)

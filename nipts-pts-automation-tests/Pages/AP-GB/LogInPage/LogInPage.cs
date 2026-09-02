@@ -44,8 +44,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             try
             {
                 _driver.WaitForElementCondition(d =>
-                    d.FindElements(choiceBy).Any(e => e.Displayed)
-                    || d.FindElements(By.Id("user_id")).Any(e => e.Displayed));
+                    AnyDisplayed(choiceBy) || _driver.FindElements(By.Id("user_id")).Count > 0);
             }
             catch (Exception)
             {
@@ -54,10 +53,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             }
 
             // Already on the Government Gateway credential page - no chooser to action.
-            if (_driver.FindElements(By.Id("user_id")).Any(e => e.Displayed))
+            if (_driver.FindElements(By.Id("user_id")).Count > 0)
                 return;
 
-            if (!_driver.FindElements(choiceBy).Any(e => e.Displayed))
+            if (!AnyDisplayed(choiceBy))
                 return;
 
             var radioId = signInMethod.Equals("OneLogIn") ? "one" : "scp";
@@ -73,8 +72,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 for (var i = 0; i < 8; i++)
                 {
                     Thread.Sleep(1000);
-                    if (_driver.FindElements(By.Id("user_id")).Any(e => e.Displayed)
-                        || !_driver.FindElements(choiceBy).Any(e => e.Displayed))
+                    if (_driver.FindElements(By.Id("user_id")).Count > 0 || !AnyDisplayed(choiceBy))
                         return;
                 }
             }
@@ -82,14 +80,54 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
 
         private void SelectSignInRadioAndContinue(string radioId)
         {
-            var radio = _driver.WaitForElementExists(By.Id(radioId));
-            ((IJavaScriptExecutor)_driver).ExecuteScript(
-                "arguments[0].checked = true; arguments[0].click();" +
-                "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", radio);
-            Thread.Sleep(500);
-            var continueBtn = _driver.WaitForElement(By.XPath("//button[@id='continueReplacement']"));
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", continueBtn);
+            // Re-query and interact inside the stale-retry so a re-render between locating the
+            // radio/Continue and JS-clicking them doesn't fail the step (common on mobile).
+            _driver.RetryOnStaleElement(() =>
+            {
+                var radio = _driver.WaitForElementExists(By.Id(radioId));
+                ((IJavaScriptExecutor)_driver).ExecuteScript(
+                    "arguments[0].checked = true; arguments[0].click();" +
+                    "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", radio);
+                Thread.Sleep(500);
+                var continueBtn = _driver.WaitForElement(By.XPath("//button[@id='continueReplacement']"));
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", continueBtn);
+                return true;
+            });
             Thread.Sleep(1000);
+        }
+
+        // Stale-safe visibility check: FindElements returns fresh refs each call, but a re-render
+        // between locating and reading .Displayed can stale them; treat stale as "not displayed".
+        private bool AnyDisplayed(By by)
+        {
+            try
+            {
+                return _driver.FindElements(by).Any(e =>
+                {
+                    try { return e.Displayed; }
+                    catch (StaleElementReferenceException) { return false; }
+                });
+            }
+            catch (StaleElementReferenceException)
+            {
+                return false;
+            }
+        }
+
+        private IWebElement? FirstDisplayed(By by)
+        {
+            try
+            {
+                return _driver.FindElements(by).FirstOrDefault(e =>
+                {
+                    try { return e.Displayed; }
+                    catch (StaleElementReferenceException) { return false; }
+                });
+            }
+            catch (StaleElementReferenceException)
+            {
+                return null;
+            }
         }
 
         public void ClickOnSignInOnOneLoginPage()
@@ -130,7 +168,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                     return true;
 
                 var onChooser = heading.Contains("How do you want to sign in?")
-                                || _driver.FindElements(chooserBy).Any(e => e.Displayed);
+                                || AnyDisplayed(chooserBy);
                 if (onChooser && reselectCount < 2)
                 {
                     SelectSignInMethod("GovernmentGateway");
@@ -206,7 +244,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             while (DateTime.UtcNow < deadline)
             {
                 _driver.DismissTimeoutOverlayIfPresent();
-                var link = _driver.FindElements(SignInConfirmBy).FirstOrDefault(e => e.Displayed);
+                var link = FirstDisplayed(SignInConfirmBy);
                 if (link != null)
                 {
                     _driver.SafeClick(link);
