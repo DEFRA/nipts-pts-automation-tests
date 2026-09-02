@@ -104,7 +104,13 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         public void ClickSignedOut()
         {
             Thread.Sleep(1000);
-            _driver.WaitForElement(SignInConfirmBy).Click();
+            // Re-query the element on each attempt: after the Back navigation the DOM can
+            // re-render on slower mobile sessions, leaving a stale reference before the click.
+            _driver.RetryOnStaleElement(() =>
+            {
+                _driver.WaitForElement(SignInConfirmBy).Click();
+                return true;
+            });
         }
 
         public bool IsSignedOut()
