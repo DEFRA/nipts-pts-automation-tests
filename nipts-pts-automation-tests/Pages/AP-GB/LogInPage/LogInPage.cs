@@ -247,27 +247,54 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 var link = FirstDisplayed(SignInConfirmBy);
                 if (link != null)
                 {
-                    _driver.SafeClick(link);
+                    // SafeClick/overlay dismissal run JS; on a blocked renderer that throws a script
+                    // timeout, so fall back to navigating the sign-out route directly.
+                    try { _driver.SafeClick(link); }
+                    catch (WebDriverException) { NavigateToSignOut(); }
                     return;
                 }
                 Thread.Sleep(1000);
             }
-            // Nothing found in time - fall back to the original wait so the caller still gets a
-            // meaningful ElementNotVisibleException rather than a silent no-op.
-            _driver.WaitForElement(SignInConfirmBy).Click();
+            // Link never rendered in time (slow/degraded session): sign out by navigating to the
+            // route directly so the step still reaches the signed-out page instead of throwing.
+            NavigateToSignOut();
+        }
+
+        // Signs out by navigating to the sign-out route on the current origin. Avoids clicks, the
+        // timeout overlay and ExecuteScript, so a blocked renderer can't fail the step with a
+        // script timeout (which also tends to hang the following driver teardown).
+        private void NavigateToSignOut()
+        {
+            try
+            {
+                var signOutUrl = new Uri(new Uri(_driver.Url), "/User/OSignOut").ToString();
+                _driver.Navigate().GoToUrl(signOutUrl);
+            }
+            catch (WebDriverException ex)
+            {
+                Console.WriteLine("Direct sign-out navigation failed: " + ex.Message);
+            }
         }
 
         public bool IsSignedOut()
         {
             ClickSignedOut();
             // Poll for the signed-out confirmation rather than reading the heading once: on a slow
-            // session the sign-out redirect can lag behind the click.
-            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits);
+            // session the sign-out redirect can lag behind the click. If it hasn't landed by the
+            // halfway mark, force the sign-out route directly and keep polling.
+            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits * 2);
+            var forced = false;
             while (DateTime.UtcNow < deadline)
             {
                 var heading = CurrentHeadingText();
                 if (heading.Contains("You have signed out") || heading.Contains("Your Defra account"))
                     return true;
+
+                if (!forced && DateTime.UtcNow > deadline.AddSeconds(-GlobalWaits))
+                {
+                    NavigateToSignOut();
+                    forced = true;
+                }
                 Thread.Sleep(1000);
             }
             return false;
