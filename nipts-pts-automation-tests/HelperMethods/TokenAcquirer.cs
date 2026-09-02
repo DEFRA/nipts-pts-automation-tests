@@ -249,8 +249,13 @@ namespace nipts_pts_automation_tests.HelperMethods
 
             if (openedNewTab)
                 driver.SwitchTo().Window(newWindow);
-            else
-                driver.Navigate().GoToUrl(authorizeUrl);
+
+            // The scenario tab is already signed into B2C as the applicant. Reusing those cookies
+            // for the backend login makes B2C reject it with AADB2C90046 ("start your session over"),
+            // so clear the B2C-domain cookies (the CP app session cookie lives on a different domain
+            // and is untouched) before loading a fresh authorize request.
+            ClearB2CSession(driver, authority);
+            driver.Navigate().GoToUrl(authorizeUrl);
 
             try
             {
@@ -276,10 +281,26 @@ namespace nipts_pts_automation_tests.HelperMethods
             }
         }
 
+        // Deletes cookies for the B2C login domain so a backend login starts a clean session. Only
+        // the b2clogin.com domain is touched (Selenium's cookie jar is per-domain), so the
+        // applicant's CP app session cookie on the app domain is left intact.
+        private static void ClearB2CSession(IWebDriver driver, string authority)
+        {
+            try
+            {
+                var origin = new Uri(authority).GetLeftPart(UriPartial.Authority);
+                driver.Navigate().GoToUrl(origin + "/favicon.ico");
+                driver.Manage().Cookies.DeleteAllCookies();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Could not clear B2C session cookies before backend login: " + ex.Message);
+            }
+        }
+
         /// <summary>
         /// Drives the DEFRA Government Gateway sign-in UI: optional cookie banner, optional
         /// "How do you want to sign in?" chooser, then the user id / password credential page.
-        ///
         /// The pages load asynchronously after window.open, and the chooser page is only
         /// sometimes shown, so rather than checking once in a fixed order we poll for whichever
         /// page is currently rendered and react to it. This avoids the race where we inspect a
