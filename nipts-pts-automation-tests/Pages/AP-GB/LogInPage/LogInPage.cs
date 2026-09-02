@@ -247,10 +247,12 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 var link = FirstDisplayed(SignInConfirmBy);
                 if (link != null)
                 {
-                    // SafeClick/overlay dismissal run JS; on a blocked renderer that throws a script
-                    // timeout, so fall back to navigating the sign-out route directly.
+                    // SafeClick/overlay dismissal run JS; on a blocked or wedged remote session the
+                    // click can throw a script timeout, a WebDriverException, or a Selenium-internal
+                    // NullReferenceException. Any of those must fall back to the direct sign-out
+                    // route rather than failing the step with an opaque error.
                     try { _driver.SafeClick(link); }
-                    catch (WebDriverException) { NavigateToSignOut(); }
+                    catch (Exception) { NavigateToSignOut(); }
                     return;
                 }
                 Thread.Sleep(1000);
@@ -270,8 +272,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 var signOutUrl = new Uri(new Uri(_driver.Url), "/User/OSignOut").ToString();
                 _driver.Navigate().GoToUrl(signOutUrl);
             }
-            catch (WebDriverException ex)
+            catch (Exception ex)
             {
+                // A wedged remote session can throw a command timeout or a Selenium-internal NRE
+                // here; never let sign-out navigation fail the step with an unhandled exception.
                 Console.WriteLine("Direct sign-out navigation failed: " + ex.Message);
             }
         }

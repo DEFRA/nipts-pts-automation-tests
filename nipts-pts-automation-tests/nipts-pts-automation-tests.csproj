@@ -38,6 +38,17 @@
     </Compile>
   </ItemGroup>
 
+  <!-- The Selenium.WebDriver.ChromeDriver package copies chromedriver.exe to the build output but
+       NOT to the publish output. The CI artifact is produced by 'dotnet publish', so without this
+       the isolated token-minting browser can never start on the agent and every backend token is
+       minted via the fragile in-session B2C flow. Copy the driver into the publish output too. -->
+  <Target Name="CopyChromeDriverToPublish" AfterTargets="Publish">
+    <Copy SourceFiles="$(OutDir)chromedriver.exe"
+          DestinationFolder="$(PublishDir)"
+          Condition="Exists('$(OutDir)chromedriver.exe')"
+          SkipUnchangedFiles="true" />
+  </Target>
+
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
