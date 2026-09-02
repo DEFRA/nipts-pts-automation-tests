@@ -2,6 +2,7 @@
 using Defra.UI.Tests.Contracts;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails
 {
@@ -15,8 +16,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails
         }
 
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
-        private static By PageHeadingBy => By.XPath("//h1[contains(@class,'govuk-fieldset__heading')]");
-        private IWebElement PageHeading => _driver.WaitForElement(PageHeadingBy, true);
+        // Class-agnostic: the heading may be an h1 or a fieldset legend depending on layout/viewport.
+        private static By HeadingBy => By.XPath("//h1 | //legend");
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
         private IWebElement rdoYes => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='Yes']"));
         private IWebElement rdoNo => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='No']"));
@@ -31,12 +32,25 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ChangeDetails
 
         public bool IsNextPageLoaded(string pageTitle)
         {
-            // Poll for the heading text so a slow-rendering page on mobile sessions isn't
-            // reported as "not loaded" just because it painted after the initial wait window.
+            // Degraded mobile BrowserStack sessions render ~2x slower, so poll well beyond the
+            // default GlobalWaits window for the heading text (matched class-agnostically) after
+            // the document has finished loading, rather than reporting a slow page as "not loaded".
             try
             {
-                return _driver.WaitForElementCondition(d =>
-                    d.FindElements(PageHeadingBy).Any(h => h.Displayed && h.Text.Contains(pageTitle)));
+                try { _driver.WaitForAjax(); } catch { /* best-effort readiness check */ }
+
+                var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(60));
+                return wait.Until(d =>
+                {
+                    try
+                    {
+                        return d.FindElements(HeadingBy).Any(h => h.Displayed && h.Text.Contains(pageTitle));
+                    }
+                    catch (StaleElementReferenceException)
+                    {
+                        return false;
+                    }
+                });
             }
             catch (Exception)
             {
