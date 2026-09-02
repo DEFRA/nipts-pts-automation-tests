@@ -39,20 +39,36 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         public void SelectSignInMethod(string signInMethod)
         {
             Thread.Sleep(2000);
-            if (PageHeading.Text.Contains("How do you want to sign in?"))
+            var choiceBy = By.XPath("//label[@for='scp'] | //label[@for='one']");
+            // The "How do you want to sign in?" page is optional. Wait (bounded) for either it or
+            // the destination Government Gateway sign-in page, so a slow session doesn't throw
+            // "Element is not visible" and a journey that skips the choice page still proceeds.
+            try
             {
-                if (signInMethod.Equals("OneLogIn"))
-                {
-                    ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovUKOneLogin);
-                }
-                else
-                {
-                    ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
-                }
-                Thread.Sleep(1000);
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
-                Thread.Sleep(1000);
+                _driver.WaitForElementCondition(d =>
+                    d.FindElements(choiceBy).Any(e => e.Displayed)
+                    || d.FindElements(By.Id("user_id")).Any(e => e.Displayed));
             }
+            catch (Exception)
+            {
+                // Neither page appeared in time; let the caller's page assertion report it.
+                return;
+            }
+
+            if (!_driver.FindElements(choiceBy).Any(e => e.Displayed))
+                return;
+
+            if (signInMethod.Equals("OneLogIn"))
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovUKOneLogin);
+            }
+            else
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
+            }
+            Thread.Sleep(1000);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
+            Thread.Sleep(1000);
         }
 
         public void ClickOnSignInOnOneLoginPage()
