@@ -21,9 +21,6 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         private IWebElement CreateSignInDetails => _driver.WaitForElement(By.XPath("//a[contains(text(),'Create sign in')]"));
         private By Accept_Cookies => By.XPath("//button[text()='Accept analytics cookies'] | //button[contains(text(),'Accept additional cookies')]");
         private IWebElement Hide_Cookies => _driver.WaitForElement(By.XPath("//a[text()='Hide cookie message'] | //button[contains(text(),'Hide cookie message')]"));
-        private IWebElement signInGovUKOneLogin => _driver.WaitForElement(By.XPath("//label[@for='one']"));
-        private IWebElement signInGovernmentGateway => _driver.WaitForElement(By.XPath("//label[@for='scp']"));
-        private IWebElement signInContinue => _driver.WaitForElement(By.XPath("//button[normalize-space()='Continue'][@id='continueReplacement']"));
         private IWebElement oneLoginSignIn => _driver.WaitForElement(By.XPath("//button[@id='sign-in-button']"));
         private IWebElement OneLoginEmailAddress => _driver.WaitForElement(By.XPath("//input[@id='email']"));
         private IWebElement OneLoginPassword => _driver.WaitForElement(By.XPath("//input[@id='password']"));
@@ -56,19 +53,42 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 return;
             }
 
+            // Already on the Government Gateway credential page - no chooser to action.
+            if (_driver.FindElements(By.Id("user_id")).Any(e => e.Displayed))
+                return;
+
             if (!_driver.FindElements(choiceBy).Any(e => e.Displayed))
                 return;
 
-            if (signInMethod.Equals("OneLogIn"))
+            var radioId = signInMethod.Equals("OneLogIn") ? "one" : "scp";
+
+            // A JS click on the label alone can fail to check the radio on slow mobile sessions,
+            // so Continue keeps failing validation and the chooser page stays put. Select the radio
+            // input directly (and fire change), click Continue, then confirm we actually left the
+            // chooser before giving up - retrying the whole action if we are still on it.
+            for (var attempt = 0; attempt < 3; attempt++)
             {
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovUKOneLogin);
+                SelectSignInRadioAndContinue(radioId);
+
+                for (var i = 0; i < 8; i++)
+                {
+                    Thread.Sleep(1000);
+                    if (_driver.FindElements(By.Id("user_id")).Any(e => e.Displayed)
+                        || !_driver.FindElements(choiceBy).Any(e => e.Displayed))
+                        return;
+                }
             }
-            else
-            {
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
-            }
-            Thread.Sleep(1000);
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
+        }
+
+        private void SelectSignInRadioAndContinue(string radioId)
+        {
+            var radio = _driver.WaitForElementExists(By.Id(radioId));
+            ((IJavaScriptExecutor)_driver).ExecuteScript(
+                "arguments[0].checked = true; arguments[0].click();" +
+                "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", radio);
+            Thread.Sleep(500);
+            var continueBtn = _driver.WaitForElement(By.XPath("//button[@id='continueReplacement']"));
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", continueBtn);
             Thread.Sleep(1000);
         }
 
@@ -93,7 +113,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             // assertion. If the "How do you want to sign in?" chooser is still showing, the earlier
             // Continue click was lost on a slow session - re-select Government Gateway once so the
             // journey self-heals instead of asserting on the wrong heading.
-            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits);
+            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits * 2);
             var reselected = false;
             while (DateTime.UtcNow < deadline)
             {
@@ -105,6 +125,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 {
                     SelectSignInMethod("GovernmentGateway");
                     reselected = true;
+                    continue;
                 }
 
                 Thread.Sleep(1000);
