@@ -69,6 +69,12 @@ jobs:
     - name: sessionCount
       value: $[ iif(eq(variables['Build.Reason'], 'Schedule'), 8, ${{ parameters.maxParallelSessions }}) ]
 
+    # Cap the Execute Tests step just under the job timeout (600/300) so a test host that
+    # writes its results but then fails to exit is killed and the job still runs the publish
+    # and report steps, rather than wedging until the hard job timeout.
+    - name: testStepTimeoutMinutes
+      value: $[ iif(eq(variables['Build.Reason'], 'Schedule'), 540, 270) ]
+
   steps:
 
     - powershell: |
@@ -543,10 +549,10 @@ jobs:
         dotnet test "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml" -- NUnit.NumberOfTestWorkers=$(sessionCount)
       displayName: 'Execute Tests'
       # dotnet test occasionally writes its results/trx but the test host then fails to exit,
-      # wedging this step until the job timeout and losing the publish/report steps. Cap the step
-      # just under the job timeout (600/300) so a hung host is killed and the job still runs
-      # PublishTestResults and the LivingDoc report. Raise if a legitimate suite runs longer.
-      timeoutInMinutes: $[ iif(eq(variables['Build.Reason'], 'Schedule'), 540, 270) ]
+      # wedging this step until the job timeout and losing the publish/report steps. The cap
+      # (testStepTimeoutMinutes) sits just under the job timeout so a hung host is killed and the
+      # job still runs PublishTestResults and the LivingDoc report. Raise if a suite runs longer.
+      timeoutInMinutes: $(testStepTimeoutMinutes)
       failOnStderr: true
       ignoreLASTEXITCODE: true
       continueOnError: true
