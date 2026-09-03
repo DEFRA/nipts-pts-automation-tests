@@ -226,14 +226,18 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                     try
                     {
                         // The View link always leads to "Your application summary". On a degraded/slow
-                        // session the first navigation can abort (page-load bound) before the summary
-                        // renders; re-navigate until the heading appears rather than handing an
-                        // unloaded page to the verification step. Fast path exits on the first attempt.
-                        for (var attempt = 0; attempt < 3; attempt++)
+                        // session the summary is a heavy backend-rendered page that can take far longer
+                        // than one page-load window to arrive. Re-navigating throws away the in-progress
+                        // load and restarts it from zero, so a page that needs >GlobalWaits to render
+                        // never gets an uninterrupted window and never completes. So: navigate ONCE and
+                        // give it a generous uninterrupted poll; only re-navigate if the summary is still
+                        // completely absent afterwards (covers a genuinely aborted navigation), never on a
+                        // fixed short interval. Healthy runs exit the first poll immediately.
+                        for (var attempt = 0; attempt < 2; attempt++)
                         {
                             try { _driver.Navigate().GoToUrl(abs.ToString()); }
                             catch (Exception) { }
-                            if (SummaryHeadingPresent(globalWaits))
+                            if (SummaryHeadingPresent(globalWaits * 3))
                                 break;
                         }
                     }
