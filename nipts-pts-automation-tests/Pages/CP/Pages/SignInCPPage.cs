@@ -59,34 +59,57 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void IsSignedIn(string userName, string password)
         {
-            // Poll for the actual Government Gateway credential field rather than an exact heading match:
-            // on slow mobile sessions the page hadn't finished rendering, so the old == check silently
-            // no-opped and left the flow stranded on the sign-in page.
+            // The CP sign-in walks through several interstitials (test-environment gate, "How do you
+            // want to sign in?", then Government Gateway) whose order and timing shift on slow mobile
+            // sessions, so a fixed step sequence strands the flow when one page hasn't rendered yet.
+            // Drive whatever page is currently shown, in a loop, until the credentials are submitted.
+            var js = (IJavaScriptExecutor)_driver;
             var deadline = DateTime.UtcNow.AddSeconds(
-                ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 2);
-            IWebElement? userIdField = null;
+                ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 3);
+
             while (DateTime.UtcNow < deadline)
             {
                 try
                 {
-                    userIdField = _driver.FindElements(By.CssSelector("#user_id")).FirstOrDefault();
+                    // Government Gateway credentials page: enter and submit, then we're done.
+                    var userIdField = _driver.FindElements(By.CssSelector("#user_id")).FirstOrDefault();
                     if (userIdField != null)
-                        break;
+                    {
+                        var pwdField = _driver.FindElements(By.CssSelector("#password")).FirstOrDefault();
+                        var submit = _driver.FindElements(By.XPath("//button[contains(@id,'continue')]")).FirstOrDefault();
+                        js.ExecuteScript("arguments[0].scrollIntoView()", userIdField);
+                        TypeInto(userIdField, userName);
+                        if (pwdField != null) TypeInto(pwdField, password);
+                        Thread.Sleep(1000);
+                        if (submit != null) js.ExecuteScript("arguments[0].click();", submit);
+                        Thread.Sleep(2000);
+                        return;
+                    }
+
+                    // "How do you want to sign in?" page: choose Government Gateway and continue.
+                    var ggChoice = _driver.FindElements(By.XPath("//label[@for='scp']")).FirstOrDefault();
+                    if (ggChoice != null)
+                    {
+                        js.ExecuteScript("arguments[0].click();", ggChoice);
+                        Thread.Sleep(1000);
+                        var cont = _driver.FindElements(By.XPath("//button[@id='continueReplacement'] | //button[normalize-space()='Continue']")).FirstOrDefault();
+                        if (cont != null) js.ExecuteScript("arguments[0].click();", cont);
+                        Thread.Sleep(2000);
+                        continue;
+                    }
+
+                    // "This is a test environment" password gate.
+                    if (HandleEnvironmentGateIfPresent())
+                        continue;
+
+                    // Already through sign-in (route checker showing): nothing more to do.
+                    if (HeadingContains("What route are you checking?"))
+                        return;
                 }
-                catch (StaleElementReferenceException) { }
+                catch (StaleElementReferenceException) { /* page re-rendered mid-read, retry */ }
+
                 Thread.Sleep(1000);
             }
-
-            if (userIdField == null)
-                return; // Already past Government Gateway sign-in; nothing to enter.
-
-            var js = (IJavaScriptExecutor)_driver;
-            js.ExecuteScript("arguments[0].scrollIntoView()", userIdField);
-            userIdField.SendKeys(userName);
-            Password.SendKeys(password);
-            Thread.Sleep(2000);
-            js.ExecuteScript("arguments[0].click();", SignIn);
-            Thread.Sleep(2000);
         }
 
         public bool IsSignedOut()
@@ -122,19 +145,69 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         public void EnterPassword()
         {
             Thread.Sleep(3000);
-            if(PageHeading.Text.Contains("This is a test environment"))
+            HandleEnvironmentGateIfPresent();
+        }
+
+        // Handles the "This is a test environment" gate (a splash Continue, then a password page) if it
+        // is the current page. Returns true when the gate was present and processed. Shared so the
+        // credential loop can advance through it regardless of which step happens to encounter it.
+        private bool HandleEnvironmentGateIfPresent()
+        {
+            if (!HeadingContains("This is a test environment"))
+                return false;
+
+            var jsExecutor = (IJavaScriptExecutor)_driver;
+            var cont = _driver.FindElements(By.XPath("//button[normalize-space()='Continue']")).FirstOrDefault();
+            if (cont != null)
             {
-                string envPassword = ConfigSetup.BaseConfiguration.TestConfiguration.EnvPassword;
-                IJavaScriptExecutor jse = (IJavaScriptExecutor)_driver;
-                IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
-                Thread.Sleep(3000);
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", btnContinue);
-                jsExecutor.ExecuteScript("arguments[0].click();", btnContinue);
+                jsExecutor.ExecuteScript("arguments[0].scrollIntoView()", cont);
+                jsExecutor.ExecuteScript("arguments[0].click();", cont);
                 Thread.Sleep(5000);
-                txtLoging.SendKeys(envPassword);
+            }
+
+            var envField = _driver.FindElements(By.XPath("//input[@id='password']")).FirstOrDefault();
+            if (envField != null)
+            {
+                TypeInto(envField, ConfigSetup.BaseConfiguration.TestConfiguration.EnvPassword);
                 Thread.Sleep(3000);
-                jsExecutor.ExecuteScript("arguments[0].click();", btnContinue);
+                cont = _driver.FindElements(By.XPath("//button[normalize-space()='Continue']")).FirstOrDefault();
+                if (cont != null) jsExecutor.ExecuteScript("arguments[0].click();", cont);
                 Thread.Sleep(5000);
+            }
+            return true;
+        }
+
+        // True if any visible page heading/legend contains the text (textContent fallback for mobile
+        // govuk headings that report Displayed=false).
+        private bool HeadingContains(string text)
+        {
+            try
+            {
+                return _driver.FindElements(By.XPath("//h1 | //legend")).Any(h =>
+                {
+                    var t = h.Text;
+                    if (string.IsNullOrEmpty(t)) t = h.GetAttribute("textContent") ?? string.Empty;
+                    return t.Contains(text);
+                });
+            }
+            catch (StaleElementReferenceException)
+            {
+                return false;
+            }
+        }
+
+        // SendKeys, falling back to a JS value-set for fields that aren't natively interactable on mobile.
+        private void TypeInto(IWebElement field, string value)
+        {
+            try
+            {
+                field.SendKeys(value);
+            }
+            catch (Exception)
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript(
+                    "arguments[0].value=arguments[1];arguments[0].dispatchEvent(new Event('input',{bubbles:true}));",
+                    field, value);
             }
         }
 
