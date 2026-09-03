@@ -223,8 +223,20 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                     var originalPageLoad = TimeSpan.FromSeconds(globalWaits);
                     try { originalPageLoad = _driver.Manage().Timeouts().PageLoad; } catch (Exception) { }
                     try { _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(globalWaits); } catch (Exception) { }
-                    try { _driver.Navigate().GoToUrl(abs.ToString()); }
-                    catch (Exception) { }
+                    try
+                    {
+                        // The View link always leads to "Your application summary". On a degraded/slow
+                        // session the first navigation can abort (page-load bound) before the summary
+                        // renders; re-navigate until the heading appears rather than handing an
+                        // unloaded page to the verification step. Fast path exits on the first attempt.
+                        for (var attempt = 0; attempt < 3; attempt++)
+                        {
+                            try { _driver.Navigate().GoToUrl(abs.ToString()); }
+                            catch (Exception) { }
+                            if (SummaryHeadingPresent(globalWaits))
+                                break;
+                        }
+                    }
                     finally { try { _driver.Manage().Timeouts().PageLoad = originalPageLoad; } catch (Exception) { } }
                 }
                 else
@@ -235,6 +247,30 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                 }
             }
             Thread.Sleep(2000);
+        }
+
+        // Short, bounded check for the summary heading so ClickViewLink can retry a slow/aborted
+        // navigation without paying the full IsHeadingLoaded budget per attempt.
+        private bool SummaryHeadingPresent(int seconds)
+        {
+            var by = By.XPath("//h1 | //legend");
+            var deadline = DateTime.UtcNow.AddSeconds(seconds);
+            while (DateTime.UtcNow < deadline)
+            {
+                try
+                {
+                    if (_driver.FindElements(by).Any(h =>
+                    {
+                        var t = h.Text;
+                        if (string.IsNullOrEmpty(t)) t = h.GetAttribute("textContent") ?? string.Empty;
+                        return t.Contains("Your application summary");
+                    }))
+                        return true;
+                }
+                catch (StaleElementReferenceException) { }
+                Thread.Sleep(1000);
+            }
+            return false;
         }
 
         public void ClickOnManageAccountLink()
