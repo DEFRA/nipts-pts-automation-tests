@@ -37,7 +37,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         #region Methods
         public bool IsPageLoaded()
         {
-            return pageHeading.Text.Contains("Checks");
+            return _driver.IsHeadingLoaded("Checks");
         }
 
         public void FooterSearchButton()

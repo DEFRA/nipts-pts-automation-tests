@@ -53,7 +53,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public bool VerifyHeadingOnPage(string Heading)
         {
-            return pageHeading.Text.Contains(Heading);
+            return _driver.IsHeadingLoaded(Heading);
         }
 
         public bool VerifyHeaderTextOnPage(string HeaderText)

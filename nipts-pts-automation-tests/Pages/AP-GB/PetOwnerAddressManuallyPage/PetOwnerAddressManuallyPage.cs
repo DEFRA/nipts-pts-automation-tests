@@ -26,7 +26,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerAddressManuallyPage
         #region Methods
         public bool IsNextPageLoaded(string pageTitle)
         {
-            return PetOwnerAddressManuallyPageHeading.Text.Contains(pageTitle);
+            return _driver.IsHeadingLoaded(pageTitle);
         }
 
         public void EnterAddressManually(string firstLine, string secondLine, string city, string county, string postCode)

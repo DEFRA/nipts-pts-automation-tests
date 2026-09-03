@@ -44,7 +44,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         #region Methods
         public bool IsPageLoaded()
         {
-            return pageHeading.Text.Contains("What route are you checking?");
+            return _driver.IsHeadingLoaded("What route are you checking?");
         }
 
         public void SelectTransportationOption(string radioButtonValue)

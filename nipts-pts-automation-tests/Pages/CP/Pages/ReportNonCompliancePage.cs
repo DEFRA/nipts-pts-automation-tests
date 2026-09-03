@@ -57,7 +57,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         #region Methods
         public bool IsPageLoaded()
         {
-            return pageHeading.Text.Contains("Report non-compliance");
+            return _driver.IsHeadingLoaded("Report non-compliance");
         }
 
         public void SelectReportNonComplianceButton()

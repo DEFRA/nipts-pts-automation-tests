@@ -46,6 +46,44 @@ namespace nipts_pts_automation_tests.HelperMethods
         }
 
         /// <summary>
+        /// Robust page-loaded check for mobile/BrowserStack: polls for a heading (h1 or fieldset
+        /// legend) whose text contains <paramref name="pageTitle"/>. Reads textContent as a fallback
+        /// because govuk headings frequently report Displayed=false on mobile, which makes strict
+        /// visibility waits (WaitForElement forceWait) throw "Element is not visible" even though the
+        /// page has loaded. Waits GlobalWaits*3 to tolerate ~2x slower mobile renders, ignores stale
+        /// re-renders mid-poll, and never throws - it returns false if the heading never appears.
+        /// </summary>
+        public static bool IsHeadingLoaded(this IWebDriver driver, string pageTitle)
+        {
+            try { driver.WaitForAjax(); } catch (Exception) { /* best-effort readiness check */ }
+            var headingBy = By.XPath("//h1 | //legend");
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(GlobalWaits * 3));
+            try
+            {
+                return wait.Until(d =>
+                {
+                    try
+                    {
+                        return d.FindElements(headingBy).Any(h =>
+                        {
+                            var text = h.Text;
+                            if (string.IsNullOrEmpty(text)) text = h.GetAttribute("textContent") ?? string.Empty;
+                            return text.Contains(pageTitle);
+                        });
+                    }
+                    catch (StaleElementReferenceException)
+                    {
+                        return false;
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Executes the supplied function and retries it if a
         /// <see cref="StaleElementReferenceException"/> is thrown. This protects against
         /// elements being re-rendered between being located and being used, which happens

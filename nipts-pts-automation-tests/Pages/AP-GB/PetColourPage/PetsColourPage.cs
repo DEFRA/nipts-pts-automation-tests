@@ -25,7 +25,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetColourPage
         #region Methods
         public bool IsNextPageLoaded(string pageTitle)
         {
-            return PetColourPageHeading.Text.Contains(pageTitle);
+            return _driver.IsHeadingLoaded(pageTitle);
         }
 
         public void SelectOtherColorOption(string otherColor)

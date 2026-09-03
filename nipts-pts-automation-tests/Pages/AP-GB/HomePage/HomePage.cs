@@ -2,6 +2,7 @@
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 
 namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
@@ -41,7 +42,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
         public bool IsPageLoaded()
         {
-            return PageHeading.Text.Contains("Lifelong pet travel documents");
+            return _driver.IsHeadingLoaded("Lifelong pet travel documents");
         }
 
         public void ClickFeedbackLink()

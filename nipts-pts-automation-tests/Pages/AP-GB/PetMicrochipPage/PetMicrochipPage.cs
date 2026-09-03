@@ -57,7 +57,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetMicrochipPage
 
         public bool IsNextPageLoaded(string pageTitle)
         {
-            return PageHeading.Text.Contains(pageTitle);
+            return _driver.IsHeadingLoaded(pageTitle);
         }
 
         public void SelectMicrochippedOption(string option)

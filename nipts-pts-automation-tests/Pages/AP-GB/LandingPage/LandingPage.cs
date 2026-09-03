@@ -37,7 +37,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LandingPage
                 _driver.FindElement(AcceptAdditionalCookies).Click();
                 HideCookieMessage.Click();
             }
-            return PageHeading.Text.Contains(pageName);
+            return _driver.IsHeadingLoaded(pageName);
         }
 
         public void EnterPassword()

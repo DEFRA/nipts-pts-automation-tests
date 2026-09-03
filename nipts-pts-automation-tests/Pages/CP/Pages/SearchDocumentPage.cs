@@ -38,7 +38,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         #region Methods
         public bool IsPageLoaded()
         {
-            return pageHeading.Text.Contains("Find a document");
+            return _driver.IsHeadingLoaded("Find a document");
         }
         public void SelectSearchRadioOption(string radioButtonValue)
         {

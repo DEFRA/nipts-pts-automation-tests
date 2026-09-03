@@ -45,8 +45,7 @@ namespace nipts_pts_automation_tests.Pages
 
         public bool VerifyNextPageIsLoaded(string pageName)
         {
-            string text = PageHeading.Text;
-            return PageHeading.Text.Contains(pageName);
+            return _driver.IsHeadingLoaded(pageName);
         }
 
         public void ClickOnWelshLang()

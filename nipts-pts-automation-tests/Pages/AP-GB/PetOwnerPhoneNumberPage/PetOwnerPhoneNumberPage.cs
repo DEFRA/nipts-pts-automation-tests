@@ -27,7 +27,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetOwnerPNumberPage
 
         public bool IsNextPageLoaded(string pageTitle)
         {
-            return PageHeading.Text.Contains(pageTitle);
+            return _driver.IsHeadingLoaded(pageTitle);
         }
 
         public void EnterPetOwnerPNumber(string phoneNumber)

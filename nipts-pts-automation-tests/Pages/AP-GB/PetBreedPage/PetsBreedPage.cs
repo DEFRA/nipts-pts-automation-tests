@@ -25,8 +25,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetBreedPage
         #region Methods
         public bool IsNextPageLoaded(string pageTitle)
         {
-            string temp = PageHeading.Text;
-            return PageHeading.Text.Contains(pageTitle);
+            return _driver.IsHeadingLoaded(pageTitle);
         }
 
         public string SelectPetsBreed(int breedIndex)
