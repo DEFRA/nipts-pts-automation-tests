@@ -39,7 +39,11 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         #region Methods
         public void ClickSignInButton()
         {
-            btnSignIn.Click();
+            // The sign-in link navigates into the B2C chain; with the global page-load bound a slow
+            // redirect now aborts as a TimeoutException instead of wedging the session, so swallow it
+            // and let the credential steps drive whatever page we land on.
+            try { btnSignIn.Click(); }
+            catch (WebDriverTimeoutException) { }
             Thread.Sleep(2000);
             if (_driver.FindElements(By.XPath("//button[contains(text(),'Accept analytics cookies')]")).Count() > 0)
             {
@@ -48,7 +52,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
 
             Thread.Sleep(3000);
-            if (PageHeading.Text.Contains("How do you want to sign in?"))
+            if (_driver.FindElements(By.XPath("//label[@for='scp']")).Count() > 0)
             {
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
                 Thread.Sleep(3000);

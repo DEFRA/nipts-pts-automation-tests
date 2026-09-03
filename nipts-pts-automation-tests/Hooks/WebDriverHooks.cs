@@ -36,6 +36,17 @@ namespace nipts_pts_automation_tests.Hooks
             site.With(GetDriverOptions());
             Driver = site.WebDriver.Driver;
 
+            // Bound the page-load timeout below the ~90s remote HTTP command timeout. Navigating
+            // clicks/redirects (esp. the B2C sign-in/sign-out chain on mobile) can hang forever with
+            // no bound; because WebDriver serialises commands during navigation, the NEXT command
+            // then rides the full 90s client timeout and the whole session is declared dead. A 60s
+            // bound turns that wedge into a recoverable TimeoutException the polling loops tolerate.
+            try
+            {
+                Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(
+                    ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 2);
+            }
+            catch (Exception ex) { Logger.Debug("Could not set page-load timeout: " + ex.Message); }
 
             _objectContainer.RegisterInstanceAs(Driver);
         }

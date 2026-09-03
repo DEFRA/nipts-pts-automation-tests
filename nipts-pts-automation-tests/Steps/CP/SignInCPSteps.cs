@@ -31,7 +31,10 @@ namespace nipts_pts_automation_tests.Steps.CP
         public void GivenThatINavigateToThePortCheckerApplication()
         {
             var url = urlBuilder.Default("Com").Build();
-            _driver?.Navigate().GoToUrl(url);
+            // A slow B2C redirect can exceed the page-load bound; the landing page is still usable,
+            // so let the sign-in step drive on rather than failing here on the timeout.
+            try { _driver?.Navigate().GoToUrl(url); }
+            catch (WebDriverTimeoutException) { }
         }
 
         [When(@"I click signin button on port checker application")]
