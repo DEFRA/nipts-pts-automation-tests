@@ -207,9 +207,32 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
             if (lnkview != null)
             {
-                try { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", lnkview); }
+                _driver.DismissTimeoutOverlayIfPresent();
+                string href = string.Empty;
+                try { href = lnkview.GetAttribute("href") ?? string.Empty; }
                 catch (Exception) { }
-                _driver.SafeClick(lnkview);
+
+                if (Uri.TryCreate(href, UriKind.Absolute, out var abs)
+                    && (abs.Scheme == Uri.UriSchemeHttp || abs.Scheme == Uri.UriSchemeHttps))
+                {
+                    // Navigate straight to the document instead of clicking: JS-clicking a link that
+                    // navigates tears down the JS context before ExecuteScript returns, surfacing
+                    // "A script did not complete before its timeout expired" on slow mobile sessions.
+                    // Bound the page-load so a slow summary render can't ride the full command timeout.
+                    var globalWaits = ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds;
+                    var originalPageLoad = TimeSpan.FromSeconds(globalWaits);
+                    try { originalPageLoad = _driver.Manage().Timeouts().PageLoad; } catch (Exception) { }
+                    try { _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(globalWaits); } catch (Exception) { }
+                    try { _driver.Navigate().GoToUrl(abs.ToString()); }
+                    catch (Exception) { }
+                    finally { try { _driver.Manage().Timeouts().PageLoad = originalPageLoad; } catch (Exception) { } }
+                }
+                else
+                {
+                    try { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", lnkview); }
+                    catch (Exception) { }
+                    _driver.SafeClick(lnkview);
+                }
             }
             Thread.Sleep(2000);
         }
