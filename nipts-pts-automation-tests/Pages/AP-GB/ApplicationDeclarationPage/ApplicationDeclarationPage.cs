@@ -36,32 +36,9 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage
         #region Methods
         public bool IsNextPageLoaded(string pageTitle)
         {
-            // Mirror ChangeDetailsPage: wait for the document to finish loading first (so a heavy,
-            // slow navigation isn't misread as "not loaded"), then poll for the heading text matched
-            // class-agnostically. Degraded mobile BrowserStack sessions can take well over a minute.
-            try
-            {
-                try { _driver.WaitForAjax(); } catch { /* best-effort readiness check */ }
-
-                var headingBy = By.XPath("//h1 | //legend");
-                var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(
-                    ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 3));
-                return wait.Until(d =>
-                {
-                    try
-                    {
-                        return d.FindElements(headingBy).Any(h => h.Displayed && h.Text.Contains(pageTitle));
-                    }
-                    catch (StaleElementReferenceException)
-                    {
-                        return false;
-                    }
-                });
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            // Reuse the shared heading poll: mobile govuk headings often report Displayed=false, so the
+            // previous h.Displayed guard stalled out (~169s) on the summary page even when it was present.
+            return _driver.IsHeadingLoaded(pageTitle);
         }
 
         public bool IsCustomPageLoaded(string pageTitle)

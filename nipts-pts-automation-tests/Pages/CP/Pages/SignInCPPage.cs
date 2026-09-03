@@ -59,16 +59,34 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void IsSignedIn(string userName, string password)
         {
-            if (PageHeading.Text == "Sign in using Government Gateway")
+            // Poll for the actual Government Gateway credential field rather than an exact heading match:
+            // on slow mobile sessions the page hadn't finished rendering, so the old == check silently
+            // no-opped and left the flow stranded on the sign-in page.
+            var deadline = DateTime.UtcNow.AddSeconds(
+                ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 2);
+            IWebElement? userIdField = null;
+            while (DateTime.UtcNow < deadline)
             {
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", SignIn);
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", UserId);
-                UserId.SendKeys(userName);
-                Password.SendKeys(password);
-                Thread.Sleep(2000);
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", SignIn);
-                Thread.Sleep(2000);
+                try
+                {
+                    userIdField = _driver.FindElements(By.CssSelector("#user_id")).FirstOrDefault();
+                    if (userIdField != null)
+                        break;
+                }
+                catch (StaleElementReferenceException) { }
+                Thread.Sleep(1000);
             }
+
+            if (userIdField == null)
+                return; // Already past Government Gateway sign-in; nothing to enter.
+
+            var js = (IJavaScriptExecutor)_driver;
+            js.ExecuteScript("arguments[0].scrollIntoView()", userIdField);
+            userIdField.SendKeys(userName);
+            Password.SendKeys(password);
+            Thread.Sleep(2000);
+            js.ExecuteScript("arguments[0].click();", SignIn);
+            Thread.Sleep(2000);
         }
 
         public bool IsSignedOut()
