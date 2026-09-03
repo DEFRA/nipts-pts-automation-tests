@@ -64,6 +64,11 @@ namespace nipts_pts_automation_tests.HelperMethods
                 {
                     try
                     {
+                        // On slow runs the HMRC session-timeout dialog can appear on the page during
+                        // this poll, covering the heading and (if left) redirecting to a signed-out
+                        // page - dismiss it each iteration so the session stays alive and the heading
+                        // stays visible.
+                        d.DismissTimeoutOverlayIfPresent();
                         return d.FindElements(headingBy).Any(h =>
                         {
                             var text = h.Text;
