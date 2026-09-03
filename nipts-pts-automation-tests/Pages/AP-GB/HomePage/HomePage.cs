@@ -92,9 +92,32 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
         public void ClickApplyForPetTravelDocument()
         {
-            ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,300)", "");
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", btnApplyForDocument);
-            //btnApplyForDocument.Click();
+            // Poll for the button by presence rather than the forceWait visibility check, which
+            // throws "Element is not visible" (~40s) on very slow sessions where the dashboard is
+            // slow to render. Dismiss the timeout overlay and scroll into view before the JS click.
+            var btnBy = By.XPath("//button[contains(text(),'Apply for a document')]");
+            var deadline = DateTime.UtcNow.AddSeconds(ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 2);
+            IWebElement? btn = null;
+            while (DateTime.UtcNow < deadline)
+            {
+                try
+                {
+                    btn = _driver.FindElements(btnBy).FirstOrDefault(e => e.Displayed);
+                    if (btn != null)
+                        break;
+                }
+                catch (StaleElementReferenceException) { }
+                Thread.Sleep(1000);
+            }
+            btn ??= _driver.FindElements(btnBy).FirstOrDefault();
+
+            if (btn != null)
+            {
+                _driver.DismissTimeoutOverlayIfPresent();
+                try { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", btn); }
+                catch (Exception) { }
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", btn);
+            }
         }
 
         public bool VerifyTheExpectedStatus(string petName, string status)
