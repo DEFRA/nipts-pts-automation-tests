@@ -267,16 +267,27 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         // script timeout (which also tends to hang the following driver teardown).
         private void NavigateToSignOut()
         {
+            var originalPageLoad = TimeSpan.FromSeconds(GlobalWaits);
             try
             {
+                try { originalPageLoad = _driver.Manage().Timeouts().PageLoad; } catch (Exception) { }
+                // The B2C federated sign-out redirect chain can hang on mobile; without a page-load
+                // bound GoToUrl waits for a load that never finishes and rides the full 90s remote
+                // command timeout, wedging the session. Bound it so the load aborts quickly and
+                // IsSignedOut can poll for the signed-out page instead.
+                try { _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(GlobalWaits); } catch (Exception) { }
                 var signOutUrl = new Uri(new Uri(_driver.Url), "/User/OSignOut").ToString();
                 _driver.Navigate().GoToUrl(signOutUrl);
             }
             catch (Exception ex)
             {
-                // A wedged remote session can throw a command timeout or a Selenium-internal NRE
-                // here; never let sign-out navigation fail the step with an unhandled exception.
+                // A wedged remote session can throw a command/page-load timeout or a Selenium-internal
+                // NRE here; never let sign-out navigation fail the step with an unhandled exception.
                 Console.WriteLine("Direct sign-out navigation failed: " + ex.Message);
+            }
+            finally
+            {
+                try { _driver.Manage().Timeouts().PageLoad = originalPageLoad; } catch (Exception) { }
             }
         }
 
