@@ -473,6 +473,17 @@ namespace nipts_pts_API_tests.Application
             dynamicObject.ownerId = OwnerId;
             dynamicObject.ownerAddressId = AddressId;
 
+            // Fail loudly with the specific missing id: a swallowed DB/API error upstream sends an empty
+            // GUID which the application-creator rejects with an opaque BadRequest "Error creating application".
+            var missingIds = new List<string>();
+            if (string.IsNullOrWhiteSpace(AppId)) missingIds.Add("id");
+            if (string.IsNullOrWhiteSpace(PetId?.ToString())) missingIds.Add("petId");
+            if (string.IsNullOrWhiteSpace(UserId?.ToString())) missingIds.Add("userId");
+            if (string.IsNullOrWhiteSpace(OwnerId?.ToString())) missingIds.Add("ownerId");
+            if (string.IsNullOrWhiteSpace(AddressId?.ToString())) missingIds.Add("ownerAddressId");
+            if (missingIds.Count > 0)
+                throw new Exception($"createApplication: cannot create application - the following required id(s) are empty: {string.Join(", ", missingIds)}. This usually means an upstream API create call or DB query failed silently. URL: {requestUrl}");
+
             // Generate unique reference number and update timestamps
             var uniqueRef = "A" + DateTime.Now.ToString("ddHHmmss");
             dynamicObject.referenceNumber = uniqueRef;

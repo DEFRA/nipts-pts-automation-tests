@@ -108,14 +108,11 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public string getNewID()
         {
-            string connectionString = ConfigSetup.BaseConfiguration.AppConnectionString.DBConnectionstring;
-            string getNewId = "SELECT NEWID()";
-            string NewIdString = "";
-            if (ConfigSetup.BaseConfiguration != null)
-            {
-                NewIdString = dataHelperConnections.ExecuteQuery(connectionString, getNewId);
-            }
-            return NewIdString;
+            // NEWID() is just a random GUID generator with no DB state, but ExecuteQuery swallows any
+            // SQL failure and returns "" - which then went out as the application "id", causing the
+            // application-creator API to reject the payload with BadRequest. Generate it client-side
+            // so the id can never be empty and no DB round-trip is needed.
+            return Guid.NewGuid().ToString().ToUpperInvariant();
         }
 
         private string GetApplId(string appReference)
