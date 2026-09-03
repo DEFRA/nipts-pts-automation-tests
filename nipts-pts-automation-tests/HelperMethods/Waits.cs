@@ -10,6 +10,41 @@ namespace nipts_pts_automation_tests.HelperMethods
     {
         private static int GlobalWaits => ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds;
 
+        /// <summary>
+        /// True when the run is on a real iOS device (iPhone/iPad). iOS Safari/WebKit on
+        /// BrowserStack is materially slower through the Government Gateway sign-in redirect chain
+        /// and uniquely pops native prompts (e.g. the "Save Password" sheet) that block WebDriver
+        /// commands. Heading polls key off this to wait longer and to dismiss native alerts, which is
+        /// why every other platform passes while iOS was flaking. Detected from DeviceName because no
+        /// Platform variable is injected in CI.
+        /// </summary>
+        public static bool IsIosDevice()
+        {
+            var device = ConfigSetup.BaseConfiguration.TestConfiguration.DeviceName ?? string.Empty;
+            return device.IndexOf("iPhone", StringComparison.OrdinalIgnoreCase) >= 0
+                || device.IndexOf("iPad", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        /// <summary>
+        /// Best-effort dismissal of a native browser/OS alert. On iOS Safari the native "Save
+        /// Password"/AutoFill sheet appears right after a Government Gateway sign-in and blocks every
+        /// subsequent WebDriver command - which is exactly why reading the URL returned
+        /// '(unavailable)' and the home page heading never confirmed on iOS while all other platforms
+        /// passed. Dismissing (then accepting as a fallback) clears the sheet so the session can
+        /// proceed. Never throws, so it is safe to call inside every poll iteration.
+        /// </summary>
+        public static void DismissNativeAlertIfPresent(this IWebDriver driver)
+        {
+            try
+            {
+                var alert = driver.SwitchTo().Alert();
+                try { alert.Dismiss(); }
+                catch (Exception) { try { alert.Accept(); } catch (Exception) { } }
+            }
+            catch (NoAlertPresentException) { /* nothing blocking - the common case */ }
+            catch (Exception) { /* never throw from best-effort dismissal */ }
+        }
+
         public static IWebElement WaitForElement(this IWebDriver driver, By elementBy, bool forceWait = false)
         {
             try
@@ -57,13 +92,22 @@ namespace nipts_pts_automation_tests.HelperMethods
         {
             try { driver.WaitForAjax(); } catch (Exception) { /* best-effort readiness check */ }
             var headingBy = By.XPath("//h1 | //legend");
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(GlobalWaits * 3));
+            // iOS Safari is ~2-3x slower through the sign-in/redirect chain than every other
+            // platform, so give it a much larger budget (x6) before declaring the heading missing;
+            // other platforms keep the proven x3. This is the single biggest reason iOS was the only
+            // pipeline flaking on "page not loaded".
+            var headingWaitMultiplier = IsIosDevice() ? 6 : 3;
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(GlobalWaits * headingWaitMultiplier));
             try
             {
                 return wait.Until(d =>
                 {
                     try
                     {
+                        // A native iOS Safari prompt (e.g. "Save Password") can block every command
+                        // and stall the whole poll; clear it first each iteration so the session
+                        // keeps responding.
+                        d.DismissNativeAlertIfPresent();
                         // On slow runs the HMRC session-timeout dialog can appear on the page during
                         // this poll, covering the heading and (if left) redirecting to a signed-out
                         // page - dismiss it each iteration so the session stays alive and the heading

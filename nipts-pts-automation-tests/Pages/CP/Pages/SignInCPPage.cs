@@ -69,12 +69,16 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             // Drive whatever page is currently shown, in a loop, until the credentials are submitted.
             var js = (IJavaScriptExecutor)_driver;
             var deadline = DateTime.UtcNow.AddSeconds(
-                ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 3);
+                ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * (Waits.IsIosDevice() ? 6 : 3));
 
             while (DateTime.UtcNow < deadline)
             {
                 try
                 {
+                    // A native iOS Safari prompt (e.g. "Save Password") can block every command and
+                    // stall the whole sign-in; clear it first each iteration so the session responds.
+                    _driver.DismissNativeAlertIfPresent();
+
                     // Government Gateway credentials page: enter and submit, then keep driving - a
                     // post-sign-in "test environment" gate can still stand between us and the route
                     // checker, and its redirect can lag, so we must poll for it rather than hand off.
@@ -88,6 +92,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                         if (pwdField != null) TypeInto(pwdField, password);
                         Thread.Sleep(1000);
                         if (submit != null) js.ExecuteScript("arguments[0].click();", submit);
+                        // iOS Safari raises the native "Save Password" sheet on submit, which blocks
+                        // the redirect and wedges the session; dismiss it straight away.
+                        _driver.DismissNativeAlertIfPresent();
                         // Wait to actually leave the credential page before re-evaluating.
                         for (var i = 0; i < 8 && _driver.FindElements(By.CssSelector("#user_id")).Count > 0; i++)
                             Thread.Sleep(1000);

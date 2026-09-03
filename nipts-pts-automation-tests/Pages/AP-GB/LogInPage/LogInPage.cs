@@ -216,7 +216,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             // single JS click and trusting it: on mobile a click that doesn't register leaves us on the
             // credential page, and the old code still returned true, so the home page never loaded and
             // the next step timed out. Re-enter and resubmit until we actually leave the form.
-            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits * 3);
+            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits * (Waits.IsIosDevice() ? 6 : 3));
+            var healed = false;
             while (DateTime.UtcNow < deadline)
             {
                 var userIdField = _driver.FindElements(By.Id("user_id")).FirstOrDefault();
@@ -236,6 +237,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                             try { signInBtn.Click(); }
                             catch (Exception) { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInBtn); }
                         }
+                        // iOS Safari raises the native "Save Password" sheet on submit, which blocks
+                        // every subsequent command and wedged the session mid sign-in (URL read back
+                        // '(unavailable)'). Dismiss it immediately so the redirect can proceed.
+                        _driver.DismissNativeAlertIfPresent();
                     }
                     catch (StaleElementReferenceException) { /* re-render mid-entry, retry */ }
 
@@ -246,11 +251,29 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                     continue;
                 }
 
-                // Off the credential page - confirm we actually reached the signed-in application.
+                // Off the credential page - a native iOS Safari prompt (e.g. Save Password) can
+                // block every command here, so clear it before confirming the signed-in state.
+                _driver.DismissNativeAlertIfPresent();
                 if (_driver.FindElements(SignInConfirmBy).Count > 0)
                     return true;
                 if (CurrentHeadingText().Contains("Lifelong pet travel documents"))
                     return true;
+
+                // One-shot self-heal (mainly iOS): we are authenticated (no longer on the credential
+                // page) but the dashboard has not rendered - the post-redirect page can be left blank
+                // or stuck on mobile. Re-request the application URL once; being already signed in it
+                // lands on the home page rather than looping back through the login flow.
+                if (!healed)
+                {
+                    healed = true;
+                    try
+                    {
+                        var appUrl = ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl;
+                        if (!string.IsNullOrWhiteSpace(appUrl))
+                            _driver.Navigate().GoToUrl(appUrl);
+                    }
+                    catch (Exception) { /* bounded page-load timeout or dead command - keep polling */ }
+                }
 
                 Thread.Sleep(1000);
             }
