@@ -71,7 +71,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             {
                 try
                 {
-                    // Government Gateway credentials page: enter and submit, then we're done.
+                    // Government Gateway credentials page: enter and submit, then keep driving - a
+                    // post-sign-in "test environment" gate can still stand between us and the route
+                    // checker, and its redirect can lag, so we must poll for it rather than hand off.
                     var userIdField = _driver.FindElements(By.CssSelector("#user_id")).FirstOrDefault();
                     if (userIdField != null)
                     {
@@ -82,8 +84,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                         if (pwdField != null) TypeInto(pwdField, password);
                         Thread.Sleep(1000);
                         if (submit != null) js.ExecuteScript("arguments[0].click();", submit);
-                        Thread.Sleep(2000);
-                        return;
+                        // Wait to actually leave the credential page before re-evaluating.
+                        for (var i = 0; i < 8 && _driver.FindElements(By.CssSelector("#user_id")).Count > 0; i++)
+                            Thread.Sleep(1000);
+                        continue;
                     }
 
                     // "How do you want to sign in?" page: choose Government Gateway and continue.
@@ -98,11 +102,11 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                         continue;
                     }
 
-                    // "This is a test environment" password gate.
+                    // "This is a test environment" password gate (before or after credentials).
                     if (HandleEnvironmentGateIfPresent())
                         continue;
 
-                    // Already through sign-in (route checker showing): nothing more to do.
+                    // Reached the port route checker: sign-in and all interstitials are done.
                     if (HeadingContains("What route are you checking?"))
                         return;
                 }
