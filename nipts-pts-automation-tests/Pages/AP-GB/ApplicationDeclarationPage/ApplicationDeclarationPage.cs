@@ -3,6 +3,7 @@ using Defra.UI.Tests.Contracts;
 using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage
 {
@@ -35,28 +36,32 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ApplicationDeclarationPage
         #region Methods
         public bool IsNextPageLoaded(string pageTitle)
         {
-            // Slow iPad/BrowserStack sessions can render the heading late or re-render it mid-check
-            // (the preceding navigation alone can take over a minute), so a single visible-element
-            // read can catch the transitioning page's heading. Poll the DOM for a heading whose
-            // text contains the title, tolerating staleness, until it appears or the wait expires.
-            var deadline = DateTime.UtcNow.AddSeconds(
-                ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 2);
-            var headingBy = By.XPath("//h1[contains(@class,'govuk-heading-xl') or contains(@class,'govuk-heading-l')]");
-            while (DateTime.UtcNow < deadline)
+            // Mirror ChangeDetailsPage: wait for the document to finish loading first (so a heavy,
+            // slow navigation isn't misread as "not loaded"), then poll for the heading text matched
+            // class-agnostically. Degraded mobile BrowserStack sessions can take well over a minute.
+            try
             {
-                try
+                try { _driver.WaitForAjax(); } catch { /* best-effort readiness check */ }
+
+                var headingBy = By.XPath("//h1 | //legend");
+                var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(
+                    ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 3));
+                return wait.Until(d =>
                 {
-                    if (_driver.FindElements(headingBy).Any(h =>
+                    try
                     {
-                        try { return h.Text.Contains(pageTitle); }
-                        catch (StaleElementReferenceException) { return false; }
-                    }))
-                        return true;
-                }
-                catch (StaleElementReferenceException) { }
-                Thread.Sleep(1000);
+                        return d.FindElements(headingBy).Any(h => h.Displayed && h.Text.Contains(pageTitle));
+                    }
+                    catch (StaleElementReferenceException)
+                    {
+                        return false;
+                    }
+                });
             }
-            return false;
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool IsCustomPageLoaded(string pageTitle)
