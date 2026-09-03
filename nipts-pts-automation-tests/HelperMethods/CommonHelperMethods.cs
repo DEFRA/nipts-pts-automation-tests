@@ -12,9 +12,14 @@ namespace nipts_pts_automation_tests.HelperMethods
         }
         public static void ClickRadioButton(this IWebDriver driver, string code)
         {
-            IWebElement commLabel = driver.WaitForElement(By.XPath($"//label[contains(.,'{code}')]"));
-            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
-            jsExecutor.ExecuteScript("arguments[0].click();", commLabel);
+            // Re-find the label on each attempt: the outcome pages can re-render between locating
+            // the label and the JS click, staling the reference ("element does not exist in cache").
+            driver.RetryOnStaleElement(() =>
+            {
+                IWebElement commLabel = driver.WaitForElement(By.XPath($"//label[contains(.,'{code}')]"));
+                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", commLabel);
+                return true;
+            });
         }
 
         public static void ClickFristRadioButton(this IWebDriver driver, string code)
