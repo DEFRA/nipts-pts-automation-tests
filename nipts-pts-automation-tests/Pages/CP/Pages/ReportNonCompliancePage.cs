@@ -153,8 +153,14 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         //}
         public void ClickOnSaveOutcome()
         {
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", btnSaveOutcome);
-            btnSaveOutcome.Click();
+            _driver.RetryOnStaleElement(() =>
+            {
+                var button = _driver.WaitForElement(By.XPath("//button[contains(text(),'Save outcome')]"));
+                var js = (IJavaScriptExecutor)_driver;
+                js.ExecuteScript("arguments[0].scrollIntoView();", button);
+                js.ExecuteScript("arguments[0].click();", button);
+                return true;
+            });
         }
 
         public void ClickOnSaveOnUpdateReferral()
@@ -163,9 +169,16 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             // did not submit the form, so the app never navigated to the Checks/Welcome page and the
             // next step timed out waiting for it. Use a JavaScript click (the same approach the
             // sibling "Update referral outcome" button uses) which reliably fires the button handler
-            // on mobile.
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", SaveOnUpdateReferral);
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", SaveOnUpdateReferral);
+            // on mobile. Resolve once and retry on stale: the page re-renders after entering the
+            // outcome details, staling a button reference captured a moment earlier.
+            _driver.RetryOnStaleElement(() =>
+            {
+                var button = _driver.WaitForElement(By.XPath("//button[contains(text(),'Save')]"));
+                var js = (IJavaScriptExecutor)_driver;
+                js.ExecuteScript("arguments[0].scrollIntoView();", button);
+                js.ExecuteScript("arguments[0].click();", button);
+                return true;
+            });
         }
 
         public bool VerifyOtherReasonHintTxt(string otherReasonHintTxt)
