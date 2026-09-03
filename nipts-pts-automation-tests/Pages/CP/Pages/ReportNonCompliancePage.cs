@@ -273,11 +273,32 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void EnterDetailsOfOutCome(string detailsOfOutCome)
         {
-            if (!detailsOfOutCome.Contains("None"))
+            if (detailsOfOutCome.Contains("None"))
+                return;
+
+            // The SPS/GB outcome radio uses a govuk conditional reveal that re-renders the textarea,
+            // so the element found a moment earlier goes stale before we type (leaving the box empty).
+            // Re-find and type with a stale-retry, falling back to a JS value-set on other errors.
+            var by = By.XPath("//textarea[contains(@id,'detailsOfOutcome')] | //textarea[contains(@id,'spsOutcomeDetails')]");
+            var js = (IJavaScriptExecutor)_driver;
+            _driver.RetryOnStaleElement(() =>
             {
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", DetailsOfOutCome);
-                DetailsOfOutCome.SendKeys(detailsOfOutCome);
-            }
+                var field = _driver.WaitForElementExists(by);
+                js.ExecuteScript("arguments[0].scrollIntoView()", field);
+                try
+                {
+                    field.Clear();
+                    field.SendKeys(detailsOfOutCome);
+                }
+                catch (StaleElementReferenceException) { throw; }
+                catch (Exception)
+                {
+                    js.ExecuteScript(
+                        "arguments[0].value=arguments[1];arguments[0].dispatchEvent(new Event('input',{bubbles:true}));",
+                        field, detailsOfOutCome);
+                }
+                return true;
+            });
         }
 
         public bool VerifyTheReasonsHeadingStructure()
