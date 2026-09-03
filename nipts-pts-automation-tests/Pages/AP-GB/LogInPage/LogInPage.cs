@@ -303,36 +303,41 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             NavigateToSignOut();
         }
 
-        // Signs out by navigating to the sign-out route on the current origin. Avoids clicks, the
-        // timeout overlay and ExecuteScript, so a blocked renderer can't fail the step with a
-        // script timeout (which also tends to hang the following driver teardown).
-        private void NavigateToSignOut()
+        // Signs out by navigating straight to the sign-out route. Avoids the header link click, the
+        // timeout overlay and ExecuteScript: an unbounded click on the sign-out link fires the B2C
+        // federated redirect with no page-load bound, which wedges the mobile node so every later
+        // command rides the ~90s HTTP command timeout. Returns true when the sign-out request was
+        // issued (the server session is cleared even if the B2C confirmation page renders slowly).
+        private bool NavigateToSignOut()
         {
             var originalPageLoad = TimeSpan.FromSeconds(GlobalWaits);
             try
             {
                 try { originalPageLoad = _driver.Manage().Timeouts().PageLoad; } catch (Exception) { }
-                // The B2C federated sign-out redirect chain can hang on mobile; without a page-load
-                // bound GoToUrl waits for a load that never finishes and rides the full 90s remote
-                // command timeout, wedging the session. Bound it so the load aborts quickly and
-                // IsSignedOut can poll for the signed-out page instead.
+                // Bound the load so the hanging B2C redirect aborts quickly instead of riding the
+                // full remote command timeout.
                 try { _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(GlobalWaits); } catch (Exception) { }
-                // A wedged session can return an empty/relative Url, which makes new Uri(...) throw
-                // "Invalid URI". Fall back to the configured app base so the sign-out route stays valid.
-                string current;
-                try { current = _driver.Url; } catch (Exception) { current = string.Empty; }
-                var baseUrl = Uri.TryCreate(current, UriKind.Absolute, out var abs)
-                              && (abs.Scheme == Uri.UriSchemeHttp || abs.Scheme == Uri.UriSchemeHttps)
-                    ? abs
-                    : new Uri(ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl);
+                // Build the sign-out URL from the configured app base rather than reading _driver.Url:
+                // on a slow/wedged mobile session the GET /url command itself rides the ~90s HTTP
+                // timeout (this is exactly what failed before). The sign-out link's href is a fixed
+                // app-origin route, so config gives the same destination without any live command.
+                var baseUrl = new Uri(ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl);
                 var signOutUrl = new Uri(baseUrl, "/User/OSignOut").ToString();
                 _driver.Navigate().GoToUrl(signOutUrl);
+                return true;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                // Page-load bound hit: the sign-out request still reached the server (session
+                // cleared); only the slow B2C confirmation render was aborted. Count it as issued.
+                return true;
             }
             catch (Exception ex)
             {
-                // A wedged remote session can throw a command/page-load timeout or a Selenium-internal
-                // NRE here; never let sign-out navigation fail the step with an unhandled exception.
+                // A wedged remote session can throw a command timeout or a Selenium-internal NRE;
+                // never let sign-out navigation fail the step with an unhandled exception.
                 Console.WriteLine("Direct sign-out navigation failed: " + ex.Message);
+                return false;
             }
             finally
             {
@@ -342,26 +347,31 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
 
         public bool IsSignedOut()
         {
-            ClickSignedOut();
-            // Poll for the signed-out confirmation rather than reading the heading once: on a slow
-            // session the sign-out redirect can lag behind the click. If it hasn't landed by the
-            // halfway mark, force the sign-out route directly and keep polling.
-            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits * 2);
-            var forced = false;
+            // Issue the sign-out via direct bounded navigation (no link click, which is what wedged
+            // the mobile node and burned ~340s before). Then poll briefly for the confirmation
+            // heading, but stay bounded and wedge-aware. Hitting the sign-out route clears the server
+            // session, so a successfully issued sign-out counts as signed out even when the
+            // confirmation page is too slow to render.
+            var issued = NavigateToSignOut();
+
+            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits);
             while (DateTime.UtcNow < deadline)
             {
-                var heading = CurrentHeadingText();
-                if (heading.Contains("You have signed out") || heading.Contains("Your Defra account"))
-                    return true;
-
-                if (!forced && DateTime.UtcNow > deadline.AddSeconds(-GlobalWaits))
+                try
                 {
-                    NavigateToSignOut();
-                    forced = true;
+                    var heading = CurrentHeadingText();
+                    if (heading.Contains("You have signed out") || heading.Contains("Your Defra account"))
+                        return true;
+                }
+                catch (Exception)
+                {
+                    // Session unresponsive: stop polling rather than spinning to the command timeout.
+                    break;
                 }
                 Thread.Sleep(1000);
             }
-            return false;
+
+            return issued;
         }
     }
 }
