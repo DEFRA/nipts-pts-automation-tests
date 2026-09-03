@@ -1,4 +1,5 @@
 ﻿using Reqnroll.BoDi;
+using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
 
@@ -161,31 +162,31 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
         public void ClickViewLink(string petName)
         {
-            // Re-query the row collections on each attempt so a DOM re-render between
-            // capturing the rows and clicking the link does not throw a stale element error.
-            var lnkview = _driver.RetryOnStaleElement(() =>
+            // Poll for the pet's row-anchored View link by presence (FindElements) rather than the
+            // forceWait visibility check the table collections use: on the slow iPhone responsive
+            // table that check throws "Element is not visible" even when the row is present. Scroll
+            // the link into view before SafeClick so a native click on mobile isn't off-screen.
+            var linkBy = By.XPath($"//table/tbody/tr[th[contains(normalize-space(),'{petName}')]]/td[2]//a");
+            var deadline = DateTime.UtcNow.AddSeconds(ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 2);
+            IWebElement? lnkview = null;
+            while (DateTime.UtcNow < deadline)
             {
-                IWebElement? link = null;
-
-                var rowCount = tableRows.Count - 1;
-
-                for (var elementIndex = 0; elementIndex <= rowCount; elementIndex++)
+                try
                 {
-                    var tableHeader = tableHeaderRows.ElementAt(elementIndex).Text.Replace("\r\n", string.Empty).Trim().ToUpper();
-
-                    if (tableHeader.Equals(petName.ToUpper()))
-                    {
-                        link = tableActionRows.ElementAt(elementIndex);
-
+                    lnkview = _driver.FindElements(linkBy).FirstOrDefault();
+                    if (lnkview != null)
                         break;
-                    }
                 }
-
-                return link;
-            });
+                catch (StaleElementReferenceException) { }
+                Thread.Sleep(1000);
+            }
 
             if (lnkview != null)
+            {
+                try { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", lnkview); }
+                catch (Exception) { }
                 _driver.SafeClick(lnkview);
+            }
             Thread.Sleep(2000);
         }
 
