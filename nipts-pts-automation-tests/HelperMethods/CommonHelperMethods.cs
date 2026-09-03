@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium.Support.UI;
+﻿using System.Linq;
+using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
 
 namespace nipts_pts_automation_tests.HelperMethods
@@ -12,12 +13,31 @@ namespace nipts_pts_automation_tests.HelperMethods
         }
         public static void ClickRadioButton(this IWebDriver driver, string code)
         {
-            // Re-find the label on each attempt: the outcome pages can re-render between locating
-            // the label and the JS click, staling the reference ("element does not exist in cache").
+            var js = (IJavaScriptExecutor)driver;
+            // Click the radio input directly and confirm it is selected. A JS click on the govuk
+            // label alone does not reliably toggle the (visually hidden) input on mobile, which left
+            // the form invalid and blocked navigation to the next page. Re-find each attempt so a
+            // mid-poll re-render can't stale the reference.
             driver.RetryOnStaleElement(() =>
             {
                 IWebElement commLabel = driver.WaitForElement(By.XPath($"//label[contains(.,'{code}')]"));
-                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", commLabel);
+                js.ExecuteScript("arguments[0].scrollIntoView({block:'center'});", commLabel);
+
+                var inputId = commLabel.GetAttribute("for");
+                IWebElement? input = string.IsNullOrEmpty(inputId)
+                    ? null
+                    : driver.FindElements(By.Id(inputId)).FirstOrDefault();
+
+                if (input != null)
+                {
+                    js.ExecuteScript("arguments[0].click();", input);
+                    if (!input.Selected)
+                        js.ExecuteScript("arguments[0].click();", commLabel);
+                }
+                else
+                {
+                    js.ExecuteScript("arguments[0].click();", commLabel);
+                }
                 return true;
             });
         }
