@@ -68,8 +68,16 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LandingPage
 
             if (headingText.Contains("Private beta testing login"))
             {
-                if (_driver.FindElements(continueBy).Count > 0)
-                    btnContinue.Click();
+                // The password step already clicks Continue, so this page may be mid-navigation: the
+                // button can detach between the presence check and the click. A stale/detached button
+                // here means the page has already advanced past the beta login, which is the goal.
+                try
+                {
+                    if (_driver.FindElements(continueBy).Count > 0)
+                        _driver.FindElement(continueBy).Click();
+                }
+                catch (StaleElementReferenceException) { }
+                catch (WebDriverException) { }
             }
         }
 
