@@ -276,7 +276,15 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 // command timeout, wedging the session. Bound it so the load aborts quickly and
                 // IsSignedOut can poll for the signed-out page instead.
                 try { _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(GlobalWaits); } catch (Exception) { }
-                var signOutUrl = new Uri(new Uri(_driver.Url), "/User/OSignOut").ToString();
+                // A wedged session can return an empty/relative Url, which makes new Uri(...) throw
+                // "Invalid URI". Fall back to the configured app base so the sign-out route stays valid.
+                string current;
+                try { current = _driver.Url; } catch (Exception) { current = string.Empty; }
+                var baseUrl = Uri.TryCreate(current, UriKind.Absolute, out var abs)
+                              && (abs.Scheme == Uri.UriSchemeHttp || abs.Scheme == Uri.UriSchemeHttps)
+                    ? abs
+                    : new Uri(ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl);
+                var signOutUrl = new Uri(baseUrl, "/User/OSignOut").ToString();
                 _driver.Navigate().GoToUrl(signOutUrl);
             }
             catch (Exception ex)
