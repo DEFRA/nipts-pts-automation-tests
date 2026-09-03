@@ -210,26 +210,67 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
 
         public bool IsSignedIn(string userName, string password)
         {
-            if (_driver.FindElements(Accept_Cookies).Count > 0)
+            AcceptCookiesIfPresent();
+
+            // Drive the Government Gateway sign-in to a CONFIRMED signed-in state rather than firing a
+            // single JS click and trusting it: on mobile a click that doesn't register leaves us on the
+            // credential page, and the old code still returned true, so the home page never loaded and
+            // the next step timed out. Re-enter and resubmit until we actually leave the form.
+            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits * 3);
+            while (DateTime.UtcNow < deadline)
             {
-                _driver.FindElement(Accept_Cookies).Click();
-                Hide_Cookies.Click();
-            }
-            UserId.SendKeys(userName);
-            Password.SendKeys(password);
-            Thread.Sleep(2000);
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", SignIn);
-            Thread.Sleep(1000);
-            if (_driver.FindElements(Accept_Cookies).Count > 0)
-            {
+                var userIdField = _driver.FindElements(By.Id("user_id")).FirstOrDefault();
+                if (userIdField != null)
+                {
+                    try
+                    {
+                        var pwdField = _driver.FindElements(By.Id("password")).FirstOrDefault();
+                        userIdField.Clear();
+                        userIdField.SendKeys(userName);
+                        pwdField?.Clear();
+                        pwdField?.SendKeys(password);
+                        Thread.Sleep(1000);
+                        var signInBtn = _driver.FindElements(By.XPath("//button[contains(text(),'Sign in')]")).FirstOrDefault();
+                        if (signInBtn != null)
+                        {
+                            try { signInBtn.Click(); }
+                            catch (Exception) { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInBtn); }
+                        }
+                    }
+                    catch (StaleElementReferenceException) { /* re-render mid-entry, retry */ }
+
+                    // Wait for the submit to navigate off the credential page before re-evaluating.
+                    for (var i = 0; i < 5 && _driver.FindElements(By.Id("user_id")).Count > 0; i++)
+                        Thread.Sleep(1000);
+                    AcceptCookiesIfPresent();
+                    continue;
+                }
+
+                // Off the credential page - confirm we actually reached the signed-in application.
+                if (_driver.FindElements(SignInConfirmBy).Count > 0)
+                    return true;
+                if (CurrentHeadingText().Contains("Lifelong pet travel documents"))
+                    return true;
+
                 Thread.Sleep(1000);
-                _driver.FindElement(Accept_Cookies).Click();
-                Hide_Cookies.Click();
             }
-            if (_driver.FindElements(SignInConfirmBy).Count > 0)
-                return _driver.WaitForElement(SignInConfirmBy).Enabled;
-            else 
-                return true;
+
+            Console.WriteLine($"IsSignedIn: gave up after {GlobalWaits * 3}s. URL='{SafeUrl()}', " +
+                              $"heading='{CurrentHeadingText()}', user_id count={_driver.FindElements(By.Id("user_id")).Count}");
+            return false;
+        }
+
+        private void AcceptCookiesIfPresent()
+        {
+            try
+            {
+                if (_driver.FindElements(Accept_Cookies).Count > 0)
+                {
+                    _driver.FindElement(Accept_Cookies).Click();
+                    try { Hide_Cookies.Click(); } catch (Exception) { }
+                }
+            }
+            catch (Exception) { /* cookie banner is best-effort; never fail sign-in on it */ }
         }
 
         public void ClickCreateSignInDetailsLink() => CreateSignInDetails.Click();
