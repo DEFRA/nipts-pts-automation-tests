@@ -232,11 +232,12 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                         pwdField?.SendKeys(password);
                         Thread.Sleep(1000);
                         var signInBtn = _driver.FindElements(By.XPath("//button[contains(text(),'Sign in')]")).FirstOrDefault();
+                        // Fire the submit asynchronously so ExecuteScript returns before the B2C
+                        // redirect it triggers rides the ~90s HTTP command timeout and desyncs the iOS
+                        // Safari command channel (which left URL reading '(unavailable)' and
+                        // user_id count=0 until the whole sign-in budget was burned).
                         if (signInBtn != null)
-                        {
-                            try { signInBtn.Click(); }
-                            catch (Exception) { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInBtn); }
-                        }
+                            JsClickDeferred(signInBtn);
                         // iOS Safari raises the native "Save Password" sheet on submit, which blocks
                         // every subsequent command and wedged the session mid sign-in (URL read back
                         // '(unavailable)'). Dismiss it immediately so the redirect can proceed.
@@ -277,6 +278,16 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             Console.WriteLine($"IsSignedIn: gave up after {signInBudget}s. URL='{SafeUrl()}', " +
                               $"heading='{CurrentHeadingText()}', user_id count={_driver.FindElements(By.Id("user_id")).Count}");
             return false;
+        }
+
+        // Fires the click asynchronously (setTimeout) so ExecuteScript returns immediately instead of
+        // blocking on the B2C federated redirect the click triggers - a synchronous click on the
+        // Government Gateway Sign in button rode the ~90s remote HTTP command timeout and desynced the
+        // iOS Safari command channel, wedging the whole sign-in.
+        private void JsClickDeferred(IWebElement element)
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript(
+                "var el=arguments[0]; setTimeout(function(){ el.click(); }, 50);", element);
         }
 
         private void AcceptCookiesIfPresent()
