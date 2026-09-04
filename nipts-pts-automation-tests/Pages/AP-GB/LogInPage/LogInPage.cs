@@ -94,6 +94,18 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 return true;
             });
             Thread.Sleep(1000);
+
+            // On a slow iOS hydration the visible '#continueReplacement' button's click handler may
+            // not be wired yet, so its JS click is a no-op and the chooser never submits (seen as
+            // chooser count=2 / user_id count=0 for the full budget). If we're still on the chooser,
+            // click the real (hidden) '#continue' submit directly - the same button the proven
+            // backend flow posts - so the selection is actually submitted.
+            if (_driver.FindElements(By.Id("user_id")).Count == 0)
+            {
+                var realContinue = _driver.FindElements(By.XPath("//button[@id='continue']")).FirstOrDefault();
+                if (realContinue != null)
+                    ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", realContinue);
+            }
         }
 
         // Stale-safe visibility check: FindElements returns fresh refs each call, but a re-render
