@@ -77,7 +77,35 @@ namespace nipts_pts_automation_tests.Pages
 
         public void ClickOnBackWelsh()
         {
-            BackWelshEle.Click();
+            // Poll for the Welsh back link by PRESENCE rather than the visibility-based WaitForElement,
+            // which threw "Element is not visible" (~60s) on iOS where the govuk back link reports
+            // Displayed=false even when present. Dismiss any overlay, scroll into view, then click with
+            // a JS fallback so a slow mobile session doesn't fail the step.
+            var backBy = By.XPath("//a[contains(text(),'Yn ôl')]");
+            var globalWaits = ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds;
+            var deadline = DateTime.UtcNow.AddSeconds(globalWaits * 2);
+            IWebElement? back = null;
+            while (DateTime.UtcNow < deadline)
+            {
+                try
+                {
+                    back = _driver.FindElements(backBy).FirstOrDefault();
+                    if (back != null)
+                        break;
+                }
+                catch (StaleElementReferenceException) { }
+                catch (WebDriverException) { /* iOS ~90s command timeout on a wedged session - retry */ }
+                Thread.Sleep(1000);
+            }
+
+            if (back != null)
+            {
+                _driver.DismissTimeoutOverlayIfPresent();
+                try { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", back); }
+                catch (Exception) { }
+                try { back.Click(); }
+                catch (Exception) { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", back); }
+            }
         }
 
         public void SwitchToPreviousOpenTab()

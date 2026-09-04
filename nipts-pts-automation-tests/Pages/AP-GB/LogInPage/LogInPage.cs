@@ -216,8 +216,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             // single JS click and trusting it: on mobile a click that doesn't register leaves us on the
             // credential page, and the old code still returned true, so the home page never loaded and
             // the next step timed out. Re-enter and resubmit until we actually leave the form.
-            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits * (Waits.IsIosDevice() ? 6 : 3));
-            var healed = false;
+            var signInBudget = GlobalWaits * (Waits.IsIosDevice() ? 6 : 3);
+            var deadline = DateTime.UtcNow.AddSeconds(signInBudget);
             while (DateTime.UtcNow < deadline)
             {
                 var userIdField = _driver.FindElements(By.Id("user_id")).FirstOrDefault();
@@ -259,26 +259,22 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 if (CurrentHeadingText().Contains("Lifelong pet travel documents"))
                     return true;
 
-                // One-shot self-heal (mainly iOS): we are authenticated (no longer on the credential
-                // page) but the dashboard has not rendered - the post-redirect page can be left blank
-                // or stuck on mobile. Re-request the application URL once; being already signed in it
-                // lands on the home page rather than looping back through the login flow.
-                if (!healed)
+                // The B2C flow can bounce back to the "How do you want to sign in?" chooser after the
+                // credential submit (seen on iOS: URL on .../oauth2/authresp, heading back on the
+                // chooser). The old loop only drove the credential page, so it idled here until
+                // timeout. Re-select Government Gateway to return to the credential page and re-enter,
+                // instead of stalling on the chooser.
+                var chooserBy = By.XPath("//label[@for='scp'] | //label[@for='one']");
+                if (CurrentHeadingText().Contains("How do you want to sign in?") || AnyDisplayed(chooserBy))
                 {
-                    healed = true;
-                    try
-                    {
-                        var appUrl = ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl;
-                        if (!string.IsNullOrWhiteSpace(appUrl))
-                            _driver.Navigate().GoToUrl(appUrl);
-                    }
-                    catch (Exception) { /* bounded page-load timeout or dead command - keep polling */ }
+                    SelectSignInMethod("GovernmentGateway");
+                    continue;
                 }
 
                 Thread.Sleep(1000);
             }
 
-            Console.WriteLine($"IsSignedIn: gave up after {GlobalWaits * 3}s. URL='{SafeUrl()}', " +
+            Console.WriteLine($"IsSignedIn: gave up after {signInBudget}s. URL='{SafeUrl()}', " +
                               $"heading='{CurrentHeadingText()}', user_id count={_driver.FindElements(By.Id("user_id")).Count}");
             return false;
         }

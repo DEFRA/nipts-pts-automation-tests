@@ -225,6 +225,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                         break;
                 }
                 catch (StaleElementReferenceException) { }
+                catch (WebDriverException) { /* iOS ~90s command timeout on a wedged session - retry */ }
                 Thread.Sleep(1000);
             }
 
@@ -277,7 +278,11 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
         }
 
         // Short, bounded check for the summary heading so ClickViewLink can retry a slow/aborted
-        // navigation without paying the full IsHeadingLoaded budget per attempt.
+        // navigation without paying the full IsHeadingLoaded budget per attempt. Matches BOTH the
+        // English ("Your application summary") and Welsh ("Crynodeb") headings: Welsh journeys were
+        // never matching the English-only text, so every View-link click wasted the full 2x90s poll
+        // (and that 3-minute FindElements storm is exactly when iOS wedged a command into the fatal
+        // 90s HTTP timeout). Also tolerates a WebDriver command timeout mid-poll instead of failing.
         private bool SummaryHeadingPresent(int seconds)
         {
             var by = By.XPath("//h1 | //legend");
@@ -290,11 +295,12 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                     {
                         var t = h.Text;
                         if (string.IsNullOrEmpty(t)) t = h.GetAttribute("textContent") ?? string.Empty;
-                        return t.Contains("Your application summary");
+                        return t.Contains("Your application summary") || t.Contains("Crynodeb");
                     }))
                         return true;
                 }
                 catch (StaleElementReferenceException) { }
+                catch (WebDriverException) { /* iOS ~90s command timeout on a wedged session - retry */ }
                 Thread.Sleep(1000);
             }
             return false;
