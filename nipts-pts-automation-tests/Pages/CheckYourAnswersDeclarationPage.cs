@@ -69,7 +69,17 @@ namespace nipts_pts_automation_tests.Pages
 
         public void ClickViewAllPetTravelDocument()
         {
-            lnkViewAllPetTravelDocuments.Click();
+            // This link navigates to the home/dashboard page. A synchronous .Click() blocked on that
+            // navigation and rode the ~90s remote command timeout (seen on desktop Edge: /click timed
+            // out after 90s), which desyncs the session. Fire it asynchronously so the click command
+            // returns immediately and the next step's explicit wait drives the page load.
+            JsClickDeferred(lnkViewAllPetTravelDocuments);
+        }
+
+        private void JsClickDeferred(IWebElement element)
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript(
+                "var el=arguments[0]; setTimeout(function(){ el.click(); }, 50);", element);
         }
 
         public bool VerifyWELSHSummaryOnAppSummary(string fieldName, string fieldValue)

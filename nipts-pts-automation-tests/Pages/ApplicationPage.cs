@@ -103,8 +103,13 @@ namespace nipts_pts_automation_tests.Pages
                 _driver.DismissTimeoutOverlayIfPresent();
                 try { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", back); }
                 catch (Exception) { }
-                try { back.Click(); }
-                catch (Exception) { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", back); }
+                // The back link navigates to the dashboard. A synchronous click (native or JS) blocked
+                // on that navigation and rode the ~90s command timeout (seen on desktop Edge:
+                // execute/sync timed out after 90s -> 180s), desyncing the session. Fire the click
+                // asynchronously so the command returns immediately and the next step's wait drives
+                // the page load.
+                ((IJavaScriptExecutor)_driver).ExecuteScript(
+                    "var el=arguments[0]; setTimeout(function(){ el.click(); }, 50);", back);
             }
         }
 
