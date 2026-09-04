@@ -36,6 +36,10 @@ namespace nipts_pts_automation_tests.Hooks
             site.With(GetDriverOptions());
             Driver = site.WebDriver.Driver;
 
+            // Latch the real platform from the live BrowserStack session so the iOS heals key off
+            // ground truth, not the artifact's (sometimes stale) appsettings DeviceName.
+            HelperMethods.Waits.CaptureDeviceFromDriver(Driver);
+
             // Bound the page-load timeout below the ~90s remote HTTP command timeout. Navigating
             // clicks/redirects (esp. the B2C sign-in/sign-out chain on mobile) can hang forever with
             // no bound; because WebDriver serialises commands during navigation, the NEXT command

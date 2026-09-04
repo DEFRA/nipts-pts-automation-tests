@@ -10,16 +10,62 @@ namespace nipts_pts_automation_tests.HelperMethods
     {
         private static int GlobalWaits => ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds;
 
+        // Ground truth captured from the live BrowserStack session (see CaptureDeviceFromDriver).
+        // Set once per scenario when the driver is created; true only when caps positively say iOS.
+        private static bool _isIosFromDriver;
+
+        /// <summary>
+        /// Reads the real platform from the live BrowserStack session capabilities and latches it for
+        /// <see cref="IsIosDevice"/>. This is the reliable signal: in CI the artifact's appsettings
+        /// DeviceName can be stale/unpatched (it read back non-iOS on a real iPhone 14, so the iOS
+        /// heals were silently disabled and sign-in only got the 90s budget). Called once per
+        /// scenario right after the driver is created. Only ever latches TRUE so it can never
+        /// downgrade a correct config value; logs the probed caps so CI is self-diagnosing.
+        /// </summary>
+        public static void CaptureDeviceFromDriver(IWebDriver driver)
+        {
+            try
+            {
+                if (driver is not IHasCapabilities hasCaps)
+                    return;
+
+                var caps = hasCaps.Capabilities;
+                var probe = string.Join(" | ", new[]
+                    {
+                        "platformName", "platform", "os", "osVersion", "deviceName",
+                        "device", "browserName", "realMobile"
+                    }
+                    .Select(k => $"{k}={caps.GetCapability(k)}"));
+
+                var isIos = probe.IndexOf("ios", StringComparison.OrdinalIgnoreCase) >= 0
+                            || probe.IndexOf("iphone", StringComparison.OrdinalIgnoreCase) >= 0
+                            || probe.IndexOf("ipad", StringComparison.OrdinalIgnoreCase) >= 0;
+
+                if (isIos)
+                    _isIosFromDriver = true;
+
+                Console.WriteLine($"CaptureDeviceFromDriver: isIos={isIos}, caps=[{probe}]");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("CaptureDeviceFromDriver failed (keeping config detection): " + ex.Message);
+            }
+        }
+
         /// <summary>
         /// True when the run is on a real iOS device (iPhone/iPad). iOS Safari/WebKit on
         /// BrowserStack is materially slower through the Government Gateway sign-in redirect chain
         /// and uniquely pops native prompts (e.g. the "Save Password" sheet) that block WebDriver
         /// commands. Heading polls key off this to wait longer and to dismiss native alerts, which is
-        /// why every other platform passes while iOS was flaking. Detected from DeviceName because no
-        /// Platform variable is injected in CI.
+        /// why every other platform passes while iOS was flaking. Prefers the live-session capability
+        /// latch (CaptureDeviceFromDriver) and falls back to the configured DeviceName, so a stale
+        /// appsettings value in CI can no longer silently disable the iOS heals.
         /// </summary>
         public static bool IsIosDevice()
         {
+            if (_isIosFromDriver)
+                return true;
+
             var device = ConfigSetup.BaseConfiguration.TestConfiguration.DeviceName ?? string.Empty;
             return device.IndexOf("iPhone", StringComparison.OrdinalIgnoreCase) >= 0
                 || device.IndexOf("iPad", StringComparison.OrdinalIgnoreCase) >= 0;

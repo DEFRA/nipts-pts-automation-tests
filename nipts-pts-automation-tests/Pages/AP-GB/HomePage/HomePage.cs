@@ -57,7 +57,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                 if (!string.IsNullOrWhiteSpace(appUrl))
                 {
                     _driver.Navigate().GoToUrl(appUrl);
-                    return _driver.IsHeadingLoaded("Lifelong pet travel documents");
+                    if (_driver.IsHeadingLoaded("Lifelong pet travel documents"))
+                        return true;
                 }
             }
             catch (Exception)
@@ -65,8 +66,42 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                 // Best-effort recovery - fall through to the honest "not loaded" result below.
             }
 
+            // Record what the session is actually showing so the next CI run diagnoses this directly
+            // (mirrors the IsSignedIn diagnostic that pinned down the sign-in issue) instead of us
+            // guessing which page iOS is wedged on.
+            LogPageState("IsPageLoaded gave up");
             return false;
         }
+
+        private void LogPageState(string context)
+        {
+            try
+            {
+                var url = "(unavailable)";
+                try { url = _driver.Url; } catch (Exception) { }
+
+                var headings = "(none)";
+                try
+                {
+                    var texts = _driver.FindElements(By.XPath("//h1 | //legend"))
+                        .Select(h =>
+                        {
+                            var t = h.Text;
+                            if (string.IsNullOrEmpty(t)) t = h.GetAttribute("textContent") ?? string.Empty;
+                            return t.Trim();
+                        })
+                        .Where(t => !string.IsNullOrEmpty(t))
+                        .ToList();
+                    if (texts.Count > 0)
+                        headings = string.Join(" | ", texts);
+                }
+                catch (Exception) { }
+
+                Console.WriteLine($"{context}: URL='{url}', headings=[{headings}]");
+            }
+            catch (Exception) { /* diagnostics must never throw */ }
+        }
+
 
         public void ClickFeedbackLink()
         {
