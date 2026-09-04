@@ -55,14 +55,16 @@ namespace nipts_pts_automation_tests.Capabilities
                 _browserstackOptions.Add("browserName", _target);
                 _browserstackOptions.Add("deviceOrientation", "portrait");
 
-                // iOS Safari raises OS-level dialogs (e.g. the "Save Password" sheet) on credential
-                // submit that Selenium's web-context Alert API cannot dismiss - they wedge the session
-                // so every command (even .Url) throws until the sign-in budget expires. Tell the
-                // underlying Appium/XCUITest driver to auto-dismiss native alerts so the Government
-                // Gateway redirect can proceed unattended.
+                // iOS Safari raises OS-level dialogs (e.g. the "Save Password"/AutoFill sheet) around
+                // the Government Gateway sign-in that Selenium's web-context Alert API cannot dismiss -
+                // they wedge the session so every command (even .Url) fails until the sign-in budget
+                // expires. Ask both the Appium/XCUITest layer (autoDismissAlerts, top-level and under
+                // bstack:options since Automate web sessions may forward only one) to auto-dismiss
+                // native alerts.
                 if (IsIosDevice(_deviceName))
                 {
                     _capDictionary.Add("appium:autoDismissAlerts", true);
+                    _browserstackOptions.Add("autoDismissAlerts", true);
                 }
             }
 
@@ -71,6 +73,14 @@ namespace nipts_pts_automation_tests.Capabilities
             var driverOptions = new ChromeOptions();
             AddDictionaryValuesInDriverOptions(driverOptions, _capDictionary);
             driverOptions.AddAdditionalOption("bstack:options", _browserstackOptions);
+
+            // For any WebDriver-visible prompt (the iOS run showed .Url returning the prompt's raw
+            // value), tell the driver to auto-dismiss it at the protocol level rather than letting it
+            // block commands and time the sign-in out.
+            if (IsIosDevice(_deviceName))
+            {
+                driverOptions.UnhandledPromptBehavior = UnhandledPromptBehavior.Dismiss;
+            }
 
             return driverOptions;
         }
