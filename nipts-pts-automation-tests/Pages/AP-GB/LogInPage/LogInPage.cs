@@ -80,31 +80,42 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
 
         private void SelectSignInRadioAndContinue(string radioId)
         {
-            // Re-query and interact inside the stale-retry so a re-render between locating the
-            // radio/Continue and JS-clicking them doesn't fail the step (common on mobile).
-            _driver.RetryOnStaleElement(() =>
+            // A stale/detached element anywhere in here just means the chooser re-rendered or
+            // navigated mid-interaction (routine on iOS B2C) - i.e. the selection is progressing,
+            // not a failure. Swallow it so it never bubbles out of the step; the caller's poll then
+            // confirms whether we actually left the chooser.
+            try
             {
-                var radio = _driver.WaitForElementExists(By.Id(radioId));
-                ((IJavaScriptExecutor)_driver).ExecuteScript(
-                    "arguments[0].checked = true; arguments[0].click();" +
-                    "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", radio);
-                Thread.Sleep(500);
-                var continueBtn = _driver.WaitForElement(By.XPath("//button[@id='continueReplacement']"));
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", continueBtn);
-                return true;
-            });
-            Thread.Sleep(1000);
+                // Re-query and interact inside the stale-retry so a re-render between locating the
+                // radio/Continue and JS-clicking them doesn't fail the step (common on mobile).
+                _driver.RetryOnStaleElement(() =>
+                {
+                    var radio = _driver.WaitForElementExists(By.Id(radioId));
+                    ((IJavaScriptExecutor)_driver).ExecuteScript(
+                        "arguments[0].checked = true; arguments[0].click();" +
+                        "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", radio);
+                    Thread.Sleep(500);
+                    var continueBtn = _driver.WaitForElement(By.XPath("//button[@id='continueReplacement']"));
+                    ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", continueBtn);
+                    return true;
+                });
+                Thread.Sleep(1000);
 
-            // On a slow iOS hydration the visible '#continueReplacement' button's click handler may
-            // not be wired yet, so its JS click is a no-op and the chooser never submits (seen as
-            // chooser count=2 / user_id count=0 for the full budget). If we're still on the chooser,
-            // click the real (hidden) '#continue' submit directly - the same button the proven
-            // backend flow posts - so the selection is actually submitted.
-            if (_driver.FindElements(By.Id("user_id")).Count == 0)
+                // On a slow iOS hydration the visible '#continueReplacement' button's click handler
+                // may not be wired yet, so its JS click is a no-op and the chooser never submits
+                // (seen as chooser count=2 / user_id count=0 for the full budget). If we're still on
+                // the chooser, click the real (hidden) '#continue' submit directly - the same button
+                // the proven backend flow posts - so the selection is actually submitted.
+                if (_driver.FindElements(By.Id("user_id")).Count == 0)
+                {
+                    var realContinue = _driver.FindElements(By.XPath("//button[@id='continue']")).FirstOrDefault();
+                    if (realContinue != null)
+                        ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", realContinue);
+                }
+            }
+            catch (StaleElementReferenceException)
             {
-                var realContinue = _driver.FindElements(By.XPath("//button[@id='continue']")).FirstOrDefault();
-                if (realContinue != null)
-                    ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", realContinue);
+                // Chooser navigated away mid-interaction; treat as progress, not a failure.
             }
         }
 
