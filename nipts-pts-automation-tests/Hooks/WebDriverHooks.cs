@@ -1,6 +1,7 @@
 ﻿using Reqnroll.BoDi;
 using Defra.UI.Framework.Object;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
 using nipts_pts_automation_tests.Capabilities;
 using nipts_pts_automation_tests.Configuration;
 using System.Reflection;
@@ -32,9 +33,35 @@ namespace nipts_pts_automation_tests.Hooks
 
             Logger.Debug("Starting set Capability");
 
-            var site = new Site();
-            site.With(GetDriverOptions());
-            Driver = site.WebDriver.Driver;
+            var driverOptions = GetDriverOptions();
+            var seleniumGrid = ConfigSetup.BaseConfiguration.UiFrameworkConfiguration.SeleniumGrid;
+
+            if (!string.IsNullOrWhiteSpace(seleniumGrid) &&
+                seleniumGrid.Contains("browserstack", StringComparison.OrdinalIgnoreCase))
+            {
+                // ROOT-CAUSE FIX for the recurring mobile/Edge session wedges. BrowserStack real
+                // devices/browsers can take well over 90s to settle a heavy navigation (the B2C
+                // sign-in redirect, the "View all"/home-page redirect, a JS execute after a backend
+                // approve). The framework's Site wrapper builds the RemoteWebDriver with the default
+                // ~90s HTTP command timeout, so the navigating command is KILLED at 90s; once that
+                // happens OpenQA.Selenium's command channel desyncs permanently (the late response is
+                // read as the reply to the next command), which is exactly why .Url then reads back
+                // '(unavailable)', FindElements returns 0, the raw command Dictionary leaks, and every
+                // retry just stacks more 90s timeouts. Building the remote driver ourselves with a
+                // generous command timeout lets the slow navigation finish instead of being killed,
+                // keeping the session alive. Deferring clicks only moved the 90s wall to the next
+                // step; this removes the wall. Capabilities are the same options the framework would
+                // have used, so provisioning is unchanged - only the timeout differs.
+                var commandTimeout = TimeSpan.FromSeconds(
+                    ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 10);
+                Driver = new RemoteWebDriver(new Uri(seleniumGrid), driverOptions.ToCapabilities(), commandTimeout);
+            }
+            else
+            {
+                var site = new Site();
+                site.With(driverOptions);
+                Driver = site.WebDriver.Driver;
+            }
 
             // Latch the real platform from the live BrowserStack session so the iOS heals key off
             // ground truth, not the artifact's (sometimes stale) appsettings DeviceName.

@@ -97,11 +97,29 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void ClickOnPTDNumberOfTheApplication(string ptdNumber)
         {
-            // Wait for the PTD button to render: on slow sessions the referred-to-SPS list
-            // often isn't painted yet when this runs, and a raw FindElement throws immediately.
+            // There is no page-load gate before this step, so the referred-to-SPS list often hasn't
+            // painted the just-referred row yet - the old visibility-based WaitForElement then threw
+            // "Element is not visible" after 30s. Poll by PRESENCE with a larger budget, dismissing
+            // any overlay, then scroll into view and JS-click.
             var clickPTD = By.XPath($"//button[contains(text(),'{ptdNumber}')]");
-            var button = _driver.WaitForElement(clickPTD);
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block: 'center'});", button);
+            var globalWaits = ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds;
+            var deadline = DateTime.UtcNow.AddSeconds(globalWaits * 3);
+            IWebElement? button = null;
+            while (DateTime.UtcNow < deadline)
+            {
+                _driver.DismissTimeoutOverlayIfPresent();
+                button = _driver.FindElements(clickPTD).FirstOrDefault();
+                if (button != null)
+                    break;
+                Thread.Sleep(1000);
+            }
+
+            if (button == null)
+                throw new ElementNotVisibleException(
+                    $"The PTD number '{ptdNumber}' did not appear in the Referred to SPS list within {globalWaits * 3}s (backend/page-load latency).");
+
+            try { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block: 'center'});", button); }
+            catch (Exception) { }
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", button);
         }
 
