@@ -37,11 +37,20 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ApplicationSubmittedPage
         }
         public void ClickApplyForAnotherPetTravelDocument()
         {
-            lnkApplyForAnother.Click();
+            JsClickDeferred(lnkApplyForAnother);
         }
         public void ClickViewAllSubmittedPetTravelDocument()
         {
-            lnkViewAllSubmittedApplications.Click();
+            JsClickDeferred(lnkViewAllSubmittedApplications);
+        }
+
+        // Fire the click asynchronously (setTimeout) so ExecuteScript returns before the full-page
+        // navigation it triggers can wedge the iOS Safari WebDriver command channel - a synchronous
+        // click here left .Url reading '(unavailable)' and burned the whole 422s page-load budget.
+        private void JsClickDeferred(IWebElement element)
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript(
+                "var el=arguments[0]; setTimeout(function(){ el.click(); }, 50);", element);
         }
 
         #endregion
