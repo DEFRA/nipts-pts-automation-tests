@@ -58,13 +58,12 @@ namespace nipts_pts_automation_tests.Capabilities
                 // iOS Safari raises OS-level dialogs (e.g. the "Save Password"/AutoFill sheet) around
                 // the Government Gateway sign-in that Selenium's web-context Alert API cannot dismiss -
                 // they wedge the session so every command (even .Url) fails until the sign-in budget
-                // expires. Ask both the Appium/XCUITest layer (autoDismissAlerts, top-level and under
-                // bstack:options since Automate web sessions may forward only one) to auto-dismiss
-                // native alerts.
+                // expires. Ask the Appium/XCUITest layer to auto-dismiss native alerts. NOTE: keep this
+                // as a top-level appium: cap only - putting it inside bstack:options is rejected by
+                // BrowserStack's strict schema and fails session creation ("Remote WebDriver not set").
                 if (IsIosDevice(_deviceName))
                 {
                     _capDictionary.Add("appium:autoDismissAlerts", true);
-                    _browserstackOptions.Add("autoDismissAlerts", true);
                 }
             }
 
