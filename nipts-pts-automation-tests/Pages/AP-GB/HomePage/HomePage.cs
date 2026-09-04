@@ -264,51 +264,67 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                 Thread.Sleep(1000);
             }
 
-            if (lnkview != null)
-            {
-                _driver.DismissTimeoutOverlayIfPresent();
-                string href = string.Empty;
-                try { href = lnkview.GetAttribute("href") ?? string.Empty; }
-                catch (Exception) { }
+            // The View link must always land on "Your application summary". Fail fast with a clear
+            // message if it never did (link missing, or summary never rendered) instead of returning
+            // silently and letting the NEXT step throw a misleading "Element is not visible (0.0s)".
+            if (lnkview == null)
+                throw new ElementNotVisibleException(
+                    $"View link for pet '{petName}' was not found on the home page, so the application summary could not be opened.");
 
-                if (Uri.TryCreate(href, UriKind.Absolute, out var abs)
-                    && (abs.Scheme == Uri.UriSchemeHttp || abs.Scheme == Uri.UriSchemeHttps))
+            _driver.DismissTimeoutOverlayIfPresent();
+            string href = string.Empty;
+            try { href = lnkview.GetAttribute("href") ?? string.Empty; }
+            catch (Exception) { }
+
+            bool summaryLoaded;
+            if (Uri.TryCreate(href, UriKind.Absolute, out var abs)
+                && (abs.Scheme == Uri.UriSchemeHttp || abs.Scheme == Uri.UriSchemeHttps))
+            {
+                // Navigate straight to the document instead of clicking: JS-clicking a link that
+                // navigates tears down the JS context before ExecuteScript returns, surfacing
+                // "A script did not complete before its timeout expired" on slow mobile sessions.
+                // Bound the page-load so a slow summary render can't ride the full command timeout.
+                var globalWaits = ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds;
+                var originalPageLoad = TimeSpan.FromSeconds(globalWaits);
+                try { originalPageLoad = _driver.Manage().Timeouts().PageLoad; } catch (Exception) { }
+                try { _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(globalWaits); } catch (Exception) { }
+                summaryLoaded = false;
+                try
                 {
-                    // Navigate straight to the document instead of clicking: JS-clicking a link that
-                    // navigates tears down the JS context before ExecuteScript returns, surfacing
-                    // "A script did not complete before its timeout expired" on slow mobile sessions.
-                    // Bound the page-load so a slow summary render can't ride the full command timeout.
-                    var globalWaits = ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds;
-                    var originalPageLoad = TimeSpan.FromSeconds(globalWaits);
-                    try { originalPageLoad = _driver.Manage().Timeouts().PageLoad; } catch (Exception) { }
-                    try { _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(globalWaits); } catch (Exception) { }
-                    try
+                    // The View link always leads to "Your application summary". On a degraded/slow
+                    // session the summary is a heavy backend-rendered page that can take far longer
+                    // than one page-load window to arrive. Re-navigating throws away the in-progress
+                    // load and restarts it from zero, so a page that needs >GlobalWaits to render
+                    // never gets an uninterrupted window and never completes. So: navigate ONCE and
+                    // give it a generous uninterrupted poll; only re-navigate if the summary is still
+                    // completely absent afterwards (covers a genuinely aborted navigation), never on a
+                    // fixed short interval. Healthy runs exit the first poll immediately.
+                    for (var attempt = 0; attempt < 2; attempt++)
                     {
-                        // The View link always leads to "Your application summary". On a degraded/slow
-                        // session the summary is a heavy backend-rendered page that can take far longer
-                        // than one page-load window to arrive. Re-navigating throws away the in-progress
-                        // load and restarts it from zero, so a page that needs >GlobalWaits to render
-                        // never gets an uninterrupted window and never completes. So: navigate ONCE and
-                        // give it a generous uninterrupted poll; only re-navigate if the summary is still
-                        // completely absent afterwards (covers a genuinely aborted navigation), never on a
-                        // fixed short interval. Healthy runs exit the first poll immediately.
-                        for (var attempt = 0; attempt < 2; attempt++)
+                        try { _driver.Navigate().GoToUrl(abs.ToString()); }
+                        catch (Exception) { }
+                        if (SummaryHeadingPresent(globalWaits * 3))
                         {
-                            try { _driver.Navigate().GoToUrl(abs.ToString()); }
-                            catch (Exception) { }
-                            if (SummaryHeadingPresent(globalWaits * 3))
-                                break;
+                            summaryLoaded = true;
+                            break;
                         }
                     }
-                    finally { try { _driver.Manage().Timeouts().PageLoad = originalPageLoad; } catch (Exception) { } }
                 }
-                else
-                {
-                    try { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", lnkview); }
-                    catch (Exception) { }
-                    _driver.SafeClick(lnkview);
-                }
+                finally { try { _driver.Manage().Timeouts().PageLoad = originalPageLoad; } catch (Exception) { } }
             }
+            else
+            {
+                try { ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", lnkview); }
+                catch (Exception) { }
+                _driver.SafeClick(lnkview);
+                summaryLoaded = SummaryHeadingPresent(ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 3);
+            }
+
+            if (!summaryLoaded)
+                throw new ElementNotVisibleException(
+                    $"The application summary page did not load after clicking the View link for pet '{petName}' " +
+                    "(backend/page-load latency). The subsequent summary assertions were not attempted.");
+
             Thread.Sleep(2000);
         }
 
