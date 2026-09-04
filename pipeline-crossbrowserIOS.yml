@@ -57,23 +57,10 @@ stages:
         targetBrowserName: ${{parameters.Target}}
 
 
-  - stage: IOSIphone14ChromeRun
-    displayName: IOSIphone14ChromeRun
-    jobs:
-    - template: run-test-template.yml
-      parameters:
-        jobName: IOSIphone14ChromeRun
-        testStepTimeoutMinutes: 120
-        envConfigParam: ${{ parameters.Environment}}
-        apiEndPoint: ${{ parameters.ApiEndpoint}}
-        branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        TestDeviceName: 'iPhone 14'
-        OSVersionName: '18'
-        BrowserVersionName: ''
-        dependsOn: ''
-        targetBrowserName: 'Chrome'
-
+  # iPad Pro 12.9 stages run BEFORE the iPhone 14 stages: the iPad is the slower, more
+  # failure-prone device through the Government Gateway/B2C redirect chain, so exercising it
+  # first surfaces device-specific issues earliest. ADO runs stages sequentially in declared
+  # order (no stage-level dependsOn is set), so this ordering is what controls execution order.
   - stage: IOSIpad12ChromeRun
     displayName: IOSIpad12ChromeRun
     jobs:
@@ -91,23 +78,6 @@ stages:
         dependsOn: ''
         targetBrowserName: 'Chrome'
 
-  - stage: IOSIphoneSafari14Run
-    displayName: IOSIphoneSafari14Run
-    jobs:
-    - template: run-test-template.yml
-      parameters:
-        jobName: IOSIphoneSafari14Run
-        testStepTimeoutMinutes: 120
-        envConfigParam: ${{ parameters.Environment}}
-        apiEndPoint: ${{ parameters.ApiEndpoint}}
-        branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        TestDeviceName: 'iPhone 14'
-        OSVersionName: '18'
-        BrowserVersionName: ''
-        dependsOn: ''
-        targetBrowserName: 'safari'
-
   - stage: IOSIpad12SafariRun
     displayName: IOSIpad12SafariRun
     jobs:
@@ -121,6 +91,40 @@ stages:
         SeleniumGrid: ${{parameters.SeleniumGrid}}  
         TestDeviceName: 'iPad Pro 12.9 2022'
         OSVersionName: '16'
+        BrowserVersionName: ''
+        dependsOn: ''
+        targetBrowserName: 'safari'
+
+  - stage: IOSIphone14ChromeRun
+    displayName: IOSIphone14ChromeRun
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: IOSIphone14ChromeRun
+        testStepTimeoutMinutes: 120
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: 'iPhone 14'
+        OSVersionName: '18'
+        BrowserVersionName: ''
+        dependsOn: ''
+        targetBrowserName: 'Chrome'
+
+  - stage: IOSIphoneSafari14Run
+    displayName: IOSIphoneSafari14Run
+    jobs:
+    - template: run-test-template.yml
+      parameters:
+        jobName: IOSIphoneSafari14Run
+        testStepTimeoutMinutes: 120
+        envConfigParam: ${{ parameters.Environment}}
+        apiEndPoint: ${{ parameters.ApiEndpoint}}
+        branchName: ${{ parameters.branchName}}
+        SeleniumGrid: ${{parameters.SeleniumGrid}}  
+        TestDeviceName: 'iPhone 14'
+        OSVersionName: '18'
         BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'safari'

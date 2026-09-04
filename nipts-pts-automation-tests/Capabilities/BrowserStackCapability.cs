@@ -54,6 +54,16 @@ namespace nipts_pts_automation_tests.Capabilities
                 _browserstackOptions.Add("deviceName", _deviceName);
                 _browserstackOptions.Add("browserName", _target);
                 _browserstackOptions.Add("deviceOrientation", "portrait");
+
+                // iOS Safari raises OS-level dialogs (e.g. the "Save Password" sheet) on credential
+                // submit that Selenium's web-context Alert API cannot dismiss - they wedge the session
+                // so every command (even .Url) throws until the sign-in budget expires. Tell the
+                // underlying Appium/XCUITest driver to auto-dismiss native alerts so the Government
+                // Gateway redirect can proceed unattended.
+                if (IsIosDevice(_deviceName))
+                {
+                    _capDictionary.Add("appium:autoDismissAlerts", true);
+                }
             }
 
             _browserstackOptions.Add("local", "false");
@@ -91,6 +101,11 @@ namespace nipts_pts_automation_tests.Capabilities
             if (!_browserstackOptions.ContainsKey("sessionName"))
                 _browserstackOptions.Add("sessionName", TestContext.CurrentContext.Test.ClassName ?? string.Empty);
         }
+
+        private static bool IsIosDevice(string deviceName) =>
+            !string.IsNullOrEmpty(deviceName) &&
+            (deviceName.Contains("iPhone", StringComparison.OrdinalIgnoreCase)
+             || deviceName.Contains("iPad", StringComparison.OrdinalIgnoreCase));
 
         private void AddDictionaryValuesInDriverOptions(DriverOptions driverOptions, Dictionary<string, object> capDictionary)
         {
