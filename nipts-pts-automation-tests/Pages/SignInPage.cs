@@ -69,11 +69,22 @@ namespace nipts_pts_automation_tests.Pages
 
         public void EnterPassword()
         {
-            if (PageHeading.Text.Contains("Private beta testing login"))
+            // The env gate is optional; read the heading without throwing when it isn't present.
+            var heading = _driver.FindElements(By.XPath("//h1[@class='govuk-heading-xl'] | //h1[@class='govuk-heading-l'] | //h1[@class='govuk-fieldset__heading']"));
+            var headingText = heading.Count > 0 ? (heading[0].GetAttribute("textContent") ?? heading[0].Text) : string.Empty;
+            if (headingText.Contains("Private beta testing login"))
             {
                 EnvPassword.SendKeys(ConfigSetup.BaseConfiguration.TestConfiguration.EnvPassword);
-                Continue.Click();
+                // Continue triggers a redirect; a synchronous click rides the ~90s HTTP command
+                // timeout, so fire it via a deferred JS click that returns immediately.
+                JsClickDeferred(Continue);
             }
+        }
+
+        private void JsClickDeferred(IWebElement element)
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript(
+                "var el=arguments[0]; setTimeout(function(){ el.click(); }, 50);", element);
         }
 
         public bool VerifySignOutTextInSelectedLanguage(string signOutText)

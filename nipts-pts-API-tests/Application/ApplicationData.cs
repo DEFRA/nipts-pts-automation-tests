@@ -25,10 +25,32 @@ namespace nipts_pts_API_tests.Application
 
 
 
+        // The backend occasionally returns an HTML error/redirect page (5xx, gateway, auth) instead
+        // of JSON, which surfaces as the opaque "Unexpected character < ..." deserialize failure.
+        // Retry a few times so a transient HTML response doesn't fail the run.
+        private RestResponse GetApplicationWithRetry(string appReference, int maxAttempts = 3)
+        {
+            RestResponse last = GetApplication(appReference).Result;
+            for (int attempt = 1; attempt <= maxAttempts; attempt++)
+            {
+                var body = (last.Content ?? string.Empty).TrimStart();
+                var looksLikeJson = body.StartsWith("{") || body.StartsWith("[");
+                if (last.IsSuccessful && looksLikeJson)
+                    return last;
+
+                Console.WriteLine($"GetApplicationWithRetry: attempt {attempt}/{maxAttempts} for '{appReference}' returned Status {last.StatusCode} with a non-JSON/HTML body; retrying...");
+                if (attempt < maxAttempts)
+                {
+                    Thread.Sleep(2000);
+                    last = GetApplication(appReference).Result;
+                }
+            }
+            return last;
+        }
+
         public string GetApplicationToApprove(string AppReference)
         {
-            Task<RestResponse> response = GetApplication(AppReference);
-            var restResponse = response.Result;
+            var restResponse = GetApplicationWithRetry(AppReference);
             var responseString = restResponse.Content ?? string.Empty;
 
             Console.WriteLine("=== GET APPLICATION TO APPROVE ===");
@@ -51,8 +73,7 @@ namespace nipts_pts_API_tests.Application
                 ?? throw new Exception($"GetApplicationToApprove: 'applicationId' is null. AppReference: {AppReference}, Response: {responseString}");
 
             ApproveApplication(ApplicationId);
-            Task<RestResponse> response2 = GetApplication(AppReference);
-            var responseString2 = response2.Result.Content ?? string.Empty;
+            var responseString2 = GetApplicationWithRetry(AppReference).Content ?? string.Empty;
             var dynamicObject2 = JsonConvert.DeserializeObject<dynamic>(responseString2);
             if (dynamicObject2?.travelDocument?.travelDocumentReferenceNumber == null)
                 throw new Exception($"GetApplicationToApprove: 'travelDocumentReferenceNumber' is null after approval. AppReference: {AppReference}, Response: {responseString2}");

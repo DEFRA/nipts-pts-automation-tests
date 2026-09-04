@@ -79,10 +79,22 @@ namespace nipts_pts_automation_tests.Pages
             IList<IWebElement> LinkTextEle = _driver.FindElements(By.XPath("//a"));
             foreach (IWebElement ele in LinkTextEle)
             {
-                if (ele.Text.Contains(LinkText))
+                try
                 {
-                    status = true;
-                    break;
+                    // On mobile, visible .Text is empty for below-the-fold links, so also match
+                    // the rendered textContent and the href target.
+                    var visible = ele.Text ?? string.Empty;
+                    var textContent = ele.GetAttribute("textContent") ?? string.Empty;
+                    var href = ele.GetAttribute("href") ?? string.Empty;
+                    if (visible.Contains(LinkText) || textContent.Contains(LinkText) || href.Contains(LinkText))
+                    {
+                        status = true;
+                        break;
+                    }
+                }
+                catch (StaleElementReferenceException)
+                {
+                    // Link list can re-render mid-loop; skip stale nodes and keep checking.
                 }
             }
             return status;

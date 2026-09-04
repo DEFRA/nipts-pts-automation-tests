@@ -39,11 +39,40 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
         #region Methods
         public void ClickSignInButton()
         {
-            // The sign-in link navigates into the B2C chain; with the global page-load bound a slow
-            // redirect now aborts as a TimeoutException instead of wedging the session, so swallow it
-            // and let the credential steps drive whatever page we land on.
-            try { btnSignIn.Click(); }
-            catch (WebDriverTimeoutException) { }
+            var signInBy = By.XPath("//a[contains(text(),'Sign in')] | //button[contains(text(),'Sign in')]");
+            var chooserBy = By.XPath("//label[@for='scp']");
+            var deadline = DateTime.UtcNow.AddSeconds(
+                ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * (Waits.IsIosDevice() ? 6 : 3));
+
+            // Poll for the Sign in link by PRESENCE rather than WaitForElement, which throws
+            // "Element is not visible" and fails the step when a slow landing-page render or an early
+            // test-environment gate means the link isn't there yet. Clear the gate each pass, then
+            // click via a deferred JS click so the B2C redirect it fires can't wedge the session.
+            while (DateTime.UtcNow < deadline)
+            {
+                try
+                {
+                    _driver.DismissNativeAlertIfPresent();
+
+                    // Already past the landing page (chooser or credentials showing) - nothing to click here.
+                    if (_driver.FindElements(By.CssSelector("#user_id")).Count > 0
+                        || _driver.FindElements(chooserBy).Count > 0)
+                        break;
+
+                    HandleEnvironmentGateIfPresent();
+
+                    var signIn = _driver.FindElements(signInBy).FirstOrDefault();
+                    if (signIn != null)
+                    {
+                        JsClickAsync(signIn);
+                        break;
+                    }
+                }
+                catch (StaleElementReferenceException) { /* re-render mid-read, retry */ }
+                catch (WebDriverException) { /* transient command failure on a slow node, retry */ }
+                Thread.Sleep(1000);
+            }
+
             Thread.Sleep(2000);
             if (_driver.FindElements(By.XPath("//button[contains(text(),'Accept analytics cookies')]")).Count() > 0)
             {
@@ -52,11 +81,13 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             }
 
             Thread.Sleep(3000);
-            if (_driver.FindElements(By.XPath("//label[@for='scp']")).Count() > 0)
+            var ggLabel = _driver.FindElements(chooserBy).FirstOrDefault();
+            if (ggLabel != null)
             {
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInGovernmentGateway);
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", ggLabel);
                 Thread.Sleep(3000);
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", signInContinue);
+                var cont = _driver.FindElements(By.XPath("//button[@id='continueReplacement'] | //button[normalize-space()='Continue']")).FirstOrDefault();
+                if (cont != null) JsClickAsync(cont);
                 Thread.Sleep(2000);
             }
         }
@@ -91,7 +122,9 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                         TypeInto(userIdField, userName);
                         if (pwdField != null) TypeInto(pwdField, password);
                         Thread.Sleep(1000);
-                        if (submit != null) js.ExecuteScript("arguments[0].click();", submit);
+                        // Fire the submit asynchronously so ExecuteScript returns immediately instead of
+                        // riding the B2C sign-in redirect into the ~90s remote HTTP command timeout.
+                        if (submit != null) JsClickAsync(submit);
                         // iOS Safari raises the native "Save Password" sheet on submit, which blocks
                         // the redirect and wedges the session; dismiss it straight away.
                         _driver.DismissNativeAlertIfPresent();
@@ -108,7 +141,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                         js.ExecuteScript("arguments[0].click();", ggChoice);
                         Thread.Sleep(1000);
                         var cont = _driver.FindElements(By.XPath("//button[@id='continueReplacement'] | //button[normalize-space()='Continue']")).FirstOrDefault();
-                        if (cont != null) js.ExecuteScript("arguments[0].click();", cont);
+                        if (cont != null) JsClickAsync(cont);
                         Thread.Sleep(2000);
                         continue;
                     }
@@ -224,6 +257,15 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                     "arguments[0].value=arguments[1];arguments[0].dispatchEvent(new Event('input',{bubbles:true}));",
                     field, value);
             }
+        }
+
+        // Fires the click asynchronously (setTimeout) so ExecuteScript returns immediately instead of
+        // blocking on the B2C federated redirect the click triggers - a synchronous JS click on these
+        // navigation controls rode the ~90s remote HTTP command timeout and killed the session.
+        private void JsClickAsync(IWebElement element)
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript(
+                "var el=arguments[0]; setTimeout(function(){ el.click(); }, 50);", element);
         }
 
         public void ClickAccessibilityStatementLink()

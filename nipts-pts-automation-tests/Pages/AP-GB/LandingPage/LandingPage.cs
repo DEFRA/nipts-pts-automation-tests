@@ -43,7 +43,17 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LandingPage
         public void EnterPassword()
         {
             txtLoging.SendKeys(ConfigSetup.BaseConfiguration.TestConfiguration.EnvPassword);
-            btnContinue?.Click();
+            // Continue triggers a B2C redirect; a synchronous click rides the ~90s HTTP command
+            // timeout and desyncs the iOS Safari session, so fire it via a deferred JS click that
+            // returns immediately.
+            JsClickDeferred(btnContinue);
+        }
+
+        private void JsClickDeferred(IWebElement element)
+        {
+            if (element == null) return;
+            ((IJavaScriptExecutor)_driver).ExecuteScript(
+                "var el=arguments[0]; setTimeout(function(){ el.click(); }, 50);", element);
         }
 
         public void ClickContinueButton()
@@ -74,7 +84,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LandingPage
                 try
                 {
                     if (_driver.FindElements(continueBy).Count > 0)
-                        _driver.FindElement(continueBy).Click();
+                        JsClickDeferred(_driver.FindElement(continueBy));
                 }
                 catch (StaleElementReferenceException) { }
                 catch (WebDriverException) { }
