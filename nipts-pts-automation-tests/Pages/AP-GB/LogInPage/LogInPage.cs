@@ -96,7 +96,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                         "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", radio);
                     Thread.Sleep(500);
                     var continueBtn = _driver.WaitForElement(By.XPath("//button[@id='continueReplacement']"));
-                    ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", continueBtn);
+                    // Continue submits the chooser and triggers the B2C redirect to Government
+                    // Gateway; a synchronous JS click rides that navigation and wedged the iOS
+                    // execute/sync command for 90s. Defer it so ExecuteScript returns immediately.
+                    JsClickDeferred(continueBtn);
                     return true;
                 });
                 Thread.Sleep(1000);
@@ -110,7 +113,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 {
                     var realContinue = _driver.FindElements(By.XPath("//button[@id='continue']")).FirstOrDefault();
                     if (realContinue != null)
-                        ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", realContinue);
+                        JsClickDeferred(realContinue);
                 }
             }
             catch (StaleElementReferenceException)
