@@ -79,11 +79,22 @@ namespace nipts_pts_automation_tests.Hooks
                 {
                     if (takeScreenShot)
                     {
-                        // A failed scenario often leaves a degraded/closed BrowserStack session, so
-                        // capturing the screenshot can itself throw; never let that surface as a
-                        // teardown error that masks the real scenario failure.
-                        try { AttachScreenShotToXmlReport(); }
-                        catch (Exception ex) { Logger.Debug("Screenshot capture failed: " + ex.Message); }
+                        // On iOS the failure is almost always a wedged command channel, so a WebDriver
+                        // screenshot just rides the dead channel for ~60s and fails. BrowserStack records
+                        // video + per-command visual logs server-side (independent of the channel), so
+                        // log those artifact URLs instead - they show the real on-screen state.
+                        if (HelperMethods.Waits.IsIosDevice())
+                        {
+                            LogBrowserStackSessionArtifacts();
+                        }
+                        else
+                        {
+                            // A failed scenario often leaves a degraded/closed BrowserStack session, so
+                            // capturing the screenshot can itself throw; never let that surface as a
+                            // teardown error that masks the real scenario failure.
+                            try { AttachScreenShotToXmlReport(); }
+                            catch (Exception ex) { Logger.Debug("Screenshot capture failed: " + ex.Message); }
+                        }
                     }
                     // The browser session may already be gone (e.g. mobile/Edge dropped the
                     // connection); swallow so cleanup never fails an otherwise-passing scenario.
@@ -111,6 +122,53 @@ namespace nipts_pts_automation_tests.Hooks
 
             _specFlowOutputHelper.AddAttachment(fileName);
             Logger.Debug($"SCREENSHOT {fileName} ");
+        }
+
+        // Fetches BrowserStack's server-side recording for the failed session over plain HTTP - this
+        // works even when the iOS WebDriver command channel is wedged (which is exactly when a normal
+        // screenshot cannot be taken), so we can watch what the device was actually showing at failure.
+        private void LogBrowserStackSessionArtifacts()
+        {
+            try
+            {
+                // SessionId is a local property (no remote command), so it is safe to read on a wedged session.
+                var sessionId = (Driver as OpenQA.Selenium.Remote.RemoteWebDriver)?.SessionId?.ToString();
+                if (string.IsNullOrWhiteSpace(sessionId))
+                {
+                    Logger.LogMessage("iOS failure: could not resolve the BrowserStack session id - open the "
+                        + "BrowserStack Automate dashboard and find this build's session video manually.");
+                    return;
+                }
+
+                var user = ConfigSetup.BaseConfiguration.BrowserStackConfiguration.CloudDeviceUserName;
+                var key = ConfigSetup.BaseConfiguration.BrowserStackConfiguration.CloudDeviceUserKey;
+                if (string.IsNullOrWhiteSpace(user) || string.IsNullOrWhiteSpace(key))
+                {
+                    Logger.LogMessage($"iOS failure: BrowserStack session {sessionId} - no credentials to query "
+                        + "the REST API; open this session in the BrowserStack Automate dashboard to view the video.");
+                    return;
+                }
+
+                using var http = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(20) };
+                var auth = Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes($"{user}:{key}"));
+                http.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", auth);
+                var json = http.GetStringAsync(
+                    $"https://api.browserstack.com/automate/sessions/{sessionId}.json").GetAwaiter().GetResult();
+
+                string Extract(string field)
+                {
+                    var m = System.Text.RegularExpressions.Regex.Match(json, "\"" + field + "\"\\s*:\\s*\"([^\"]+)\"");
+                    return m.Success ? m.Groups[1].Value.Replace("\\/", "/") : "(not found)";
+                }
+
+                Logger.LogMessage($"iOS failure diagnostics - BrowserStack session {sessionId}: "
+                    + $"dashboard={Extract("browser_url")} | video={Extract("video_url")}");
+            }
+            catch (Exception ex)
+            {
+                Logger.Debug("Could not fetch BrowserStack session artifacts: " + ex.Message);
+            }
         }
 
         private DriverOptions GetDriverOptions()
