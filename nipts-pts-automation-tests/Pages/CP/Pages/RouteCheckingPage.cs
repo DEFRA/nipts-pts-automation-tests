@@ -1,4 +1,5 @@
-﻿using Reqnroll.BoDi;
+﻿using Reqnroll;
+using Reqnroll.BoDi;
 using OpenQA.Selenium;
 using nipts_pts_automation_tests.HelperMethods;
 using nipts_pts_automation_tests.Pages.CP.Interfaces;
@@ -16,6 +17,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        private ScenarioContext _scenarioContext => _objectContainer.Resolve<ScenarioContext>();
         private IWebElement HeaderTextEle => _driver.WaitForElement(By.XPath("//header[@class='govuk-width-container pts-header-title']//div[@class='govuk-grid-column-two-thirds']//div[contains(@class,'govuk-heading-l')]"));
         private IWebElement pageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-heading-xl')]"));
         private IWebElement rdoFerry => _driver.WaitForElement(By.XPath("//div[@class='govuk-radios__item']/label[@for='routeOption']"));
@@ -87,6 +89,11 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var hour = DateTime.Now.ToString("HH");
             var minutes = DateTime.Now.ToString("mm");
             string departureTime = $"'{hour}':'{minutes}'";
+            // Persist the exact sailing time so the SPS user can open the same sailing the pet was
+            // referred under - re-deriving it from DateTime.Now later can cross a minute boundary and
+            // select a different sailing, so the referral never appears in the SPS user's list.
+            _scenarioContext["SailingHour"] = hour;
+            _scenarioContext["SailingMinutes"] = minutes;
             Thread.Sleep(1000);
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
 
@@ -100,8 +107,12 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public void SelectDropDownDepartureTimeWithSPS()
         {
-            var hour = DateTime.Now.ToString("HH");
-            var minutes = DateTime.Now.ToString("mm");
+            // Reuse the GB user's sailing time so the SPS user opens the exact sailing the pet was
+            // referred under; fall back to now only if the GB step didn't record it.
+            var hour = _scenarioContext.TryGetValue("SailingHour", out var h) && h is string hs && hs.Length > 0
+                ? hs : DateTime.Now.ToString("HH");
+            var minutes = _scenarioContext.TryGetValue("SailingMinutes", out var m) && m is string ms && ms.Length > 0
+                ? ms : DateTime.Now.ToString("mm");
 
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", hourInput, hour);

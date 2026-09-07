@@ -155,6 +155,10 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
                         return;
                 }
                 catch (StaleElementReferenceException) { /* page re-rendered mid-read, retry */ }
+                // A FindElements command issued while the B2C redirect is mid-navigation can ride the
+                // ~90s remote HTTP command timeout on a slow node; swallow it and retry rather than
+                // letting the transient timeout fail the whole sign-in step.
+                catch (WebDriverException) { }
 
                 Thread.Sleep(1000);
             }
