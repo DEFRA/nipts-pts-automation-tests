@@ -246,6 +246,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 var userIdField = _driver.FindElements(By.Id("user_id")).FirstOrDefault();
                 if (userIdField != null)
                 {
+                    // Neutralise iOS Safari's "Save Password" heuristic BEFORE we touch the form so
+                    // the native keychain sheet (which no web-context command can dismiss) never
+                    // appears and wedges the session on submit.
+                    SuppressIosSavePasswordSheet();
                     try
                     {
                         var pwdField = _driver.FindElements(By.Id("password")).FirstOrDefault();
@@ -254,6 +258,9 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                         pwdField?.Clear();
                         pwdField?.SendKeys(password);
                         Thread.Sleep(1000);
+                        // Re-apply immediately before submit: the field may have re-rendered while
+                        // typing, and it is the submit itself that triggers the sheet on iOS.
+                        SuppressIosSavePasswordSheet();
                         var signInBtn = _driver.FindElements(By.XPath("//button[contains(text(),'Sign in')]")).FirstOrDefault();
                         // Fire the submit asynchronously so ExecuteScript returns before the B2C
                         // redirect it triggers rides the ~90s HTTP command timeout and desyncs the iOS
@@ -311,6 +318,30 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript(
                 "var el=arguments[0]; setTimeout(function(){ el.click(); }, 50);", element);
+        }
+
+        // iOS Safari raises a native "Save Password"/keychain sheet when a genuine login form (one
+        // with a type=password field) is submitted. That sheet is a UIKit overlay the W3C alert API
+        // cannot touch, so on the iPad job it blocked every WebDriver command after submit - the
+        // channel desynced (URL read '(unavailable)'), the whole sign-in budget burned and the home
+        // page never loaded (iPhone escaped it, hence the "consistent iPad, fine iPhone" split).
+        // Switching the password field to type=text and disabling autocomplete stops Safari treating
+        // it as a saveable login so the sheet never appears; the field value is preserved, so B2C
+        // still posts the credential. iOS-only, so desktop/Android sign-in is unchanged.
+        private void SuppressIosSavePasswordSheet()
+        {
+            if (!Waits.IsIosDevice())
+                return;
+            try
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript(
+                    "var p=document.getElementById('password');" +
+                    "if(p){p.setAttribute('autocomplete','off');p.type='text';" +
+                    "if(p.form){p.form.setAttribute('autocomplete','off');}}" +
+                    "var u=document.getElementById('user_id');" +
+                    "if(u){u.setAttribute('autocomplete','off');}");
+            }
+            catch (Exception) { /* best-effort suppression; never fail sign-in on it */ }
         }
 
         private void AcceptCookiesIfPresent()
