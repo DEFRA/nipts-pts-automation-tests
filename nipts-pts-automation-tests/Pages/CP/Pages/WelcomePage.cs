@@ -11,9 +11,6 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
     public class WelcomePage : IWelcomePage
     {
         private readonly IObjectContainer _objectContainer;
-        static string departTime1 = string.Empty;
-        static string departTime2 = string.Empty;
-        static string departTime3 = string.Empty;
         public WelcomePage(IObjectContainer container)
         {
             _objectContainer = container;
@@ -21,6 +18,15 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
+        // The GB user's sailing time must survive between the GB and SPS "click on view" step
+        // invocations (page objects are re-created per step). These were static fields, which leaked
+        // across concurrently-running scenarios (parallel NUnit workers) and made the SPS view open a
+        // different sailing than the one the PTD was referred under. ScenarioContext isolates them.
+        private ScenarioContext _scenarioContext => _objectContainer.Resolve<ScenarioContext>();
+        private string departTime1 { get => GetScenarioTime(nameof(departTime1)); set => _scenarioContext[nameof(departTime1)] = value; }
+        private string departTime2 { get => GetScenarioTime(nameof(departTime2)); set => _scenarioContext[nameof(departTime2)] = value; }
+        private string departTime3 { get => GetScenarioTime(nameof(departTime3)); set => _scenarioContext[nameof(departTime3)] = value; }
+        private string GetScenarioTime(string key) => _scenarioContext.TryGetValue(key, out var v) && v is string s ? s : string.Empty;
         private IWebElement pageHeading => _driver.WaitForElementExists(By.XPath("//h1[contains(text(),'Checks')]"));
         private IWebElement submittedMessage => _driver.WaitForElement(By.XPath("//div[@class='ons-panel__body']"));
         private IWebElement iconSearch => _driver.WaitForElement(By.XPath("//a[@href='/checker/document-search']//*[name()='svg']"));

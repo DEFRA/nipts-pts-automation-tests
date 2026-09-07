@@ -337,6 +337,17 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
         private bool SummaryHeadingPresent(int seconds)
         {
             var by = By.XPath("//h1 | //legend");
+            // A PENDING application's View link opens "Your application summary" ("Crynodeb" in Welsh).
+            // But once the PTD is APPROVED/SUSPENDED/CANCELLED the View link opens the issued
+            // travel-document view, whose H1 is the document heading, NOT "Your application summary"
+            // (that is why the Approved download/print scenarios omit the "displayed in summary view"
+            // heading check). Both pages render the same document summary cards, so treat those cards
+            // (or the Status row) as a language- and status-neutral "page loaded" signal - otherwise
+            // viewing a suspended/approved PTD burns the full poll and throws a false page-load error.
+            var cardsBy = By.XPath(
+                "//div[@id='document-issued-card'] | //div[@id='document-pet-card'] | " +
+                "//div[@id='document-microchip-card'] | //div[@id='document-owner-card'] | " +
+                "//dt[contains(text(),'Status')]");
             var deadline = DateTime.UtcNow.AddSeconds(seconds);
             while (DateTime.UtcNow < deadline)
             {
@@ -346,8 +357,14 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                     {
                         var t = h.Text;
                         if (string.IsNullOrEmpty(t)) t = h.GetAttribute("textContent") ?? string.Empty;
-                        return t.Contains("Your application summary") || t.Contains("Crynodeb");
+                        // Pending -> "Your application summary"/"Crynodeb"; a revoked/Cancelled doc's
+                        // View opens the "Lifelong pet travel document and declaration" view. Use the
+                        // full phrase (not the plural dashboard heading "Lifelong pet travel documents").
+                        return t.Contains("Your application summary") || t.Contains("Crynodeb")
+                            || t.Contains("Lifelong pet travel document and declaration");
                     }))
+                        return true;
+                    if (_driver.FindElements(cardsBy).Count > 0)
                         return true;
                 }
                 catch (StaleElementReferenceException) { }

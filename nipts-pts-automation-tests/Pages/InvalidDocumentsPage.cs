@@ -32,9 +32,43 @@ namespace nipts_pts_automation_tests.Pages
        
         public void ClickOnViewInvalidDocumentLinkWELSH()
         {
-            
-            IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)_driver;
-            jsExecutor.ExecuteScript("arguments[0].click();", lnkInvalidDocs);
+            // The "View invalid documents" link only appears once the asynchronous backend revoke
+            // (Service Bus message -> Dynamics) has moved the document into the invalid/cancelled
+            // bucket. A single 30s visibility wait with no refresh gives up before the link lands,
+            // so poll by presence and refresh the dashboard until it appears, then JS-click it.
+            var linkBy = By.XPath("//a[contains(text(),'Gweld dogfennau annilys')] | //a[contains(text(),'View invalid documents')]");
+            var globalWaits = ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds;
+            var deadline = DateTime.UtcNow.AddSeconds(globalWaits * 4);
+            IWebElement? link = null;
+
+            while (DateTime.UtcNow < deadline)
+            {
+                try
+                {
+                    _driver.DismissTimeoutOverlayIfPresent();
+                    link = _driver.FindElements(linkBy).FirstOrDefault();
+                    if (link != null)
+                        break;
+                }
+                catch (Exception ex) when (ex is StaleElementReferenceException
+                                           || ex is NoSuchElementException
+                                           || ex is WebDriverException)
+                {
+                    // Dashboard re-rendering or a slow/degraded session; re-check next iteration.
+                }
+
+                _driver.Navigate().Refresh();
+                Thread.Sleep(3000);
+            }
+
+            if (link == null)
+                throw new ElementNotVisibleException(
+                    $"The 'View invalid documents' link did not appear within {globalWaits * 4}s (backend revoke latency).");
+
+            var jsExecutor = (IJavaScriptExecutor)_driver;
+            try { jsExecutor.ExecuteScript("arguments[0].scrollIntoView({block:'center'});", link); }
+            catch (Exception) { }
+            jsExecutor.ExecuteScript("arguments[0].click();", link);
         }
 
         public void ClickViewLnkInvalidDocPage(string petName)
