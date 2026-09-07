@@ -193,11 +193,17 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
             // Status transitions (e.g. Pending -> Approved) are driven by an asynchronous backend
             // process (a Service Bus message consumed and written back to Dynamics), so the new
             // status is not visible immediately. Poll until the expected status appears or the
-            // timeout elapses, rather than checking only once. NAVIGATE to the dashboard each
-            // iteration (not Refresh): the preceding "View all" link fires a DEFERRED click, so a
-            // plain Refresh here can reload the application-submitted page mid-navigation and pin the
-            // session there - the status table only exists on the dashboard, so poll the dashboard.
+            // timeout elapses, rather than checking only once.
+            //
+            // WHERE the status is shown depends on the status: Pending/Approved/Suspended live on
+            // the DASHBOARD, but the Cancelled (revoked) and Unsuccessful (rejected) statuses are
+            // shown on the "Invalid documents" page the caller has just navigated to. So navigate
+            // to the dashboard each poll for the former (this also heals the deferred "View all"
+            // click race where a plain Refresh could reload the application-submitted page), but
+            // only Refresh the current page for the latter - navigating to the dashboard there
+            // would poll the wrong page and always time out.
             var appUrl = ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl;
+            var stayOnCurrentPage = IsInvalidDocumentStatus(status);
             var timeout = TimeSpan.FromMinutes(6);
             var pollInterval = TimeSpan.FromSeconds(5);
             var deadline = DateTime.UtcNow + timeout;
@@ -206,10 +212,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
             {
                 try
                 {
-                    if (!string.IsNullOrWhiteSpace(appUrl))
-                        _driver.Navigate().GoToUrl(appUrl);
-                    else
+                    if (stayOnCurrentPage || string.IsNullOrWhiteSpace(appUrl))
                         _driver.Navigate().Refresh();
+                    else
+                        _driver.Navigate().GoToUrl(appUrl);
                 }
                 catch (WebDriverException) { /* slow/wedged nav - re-check next iteration */ }
                 Thread.Sleep(pollInterval);
@@ -244,6 +250,18 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
             var cells = _driver.FindElements(By.XPath(statusPath));
             return cells.Count > 0
                    && cells[cells.Count - 1].Text.Replace("\r\n", string.Empty).Trim().ToUpper().Contains(status.ToUpper());
+        }
+
+        // The Cancelled (revoked) and Unsuccessful (rejected) statuses - in English and Welsh -
+        // are shown on the "Invalid documents" page, not the dashboard, so VerifyTheExpectedStatus
+        // must refresh the current page for them instead of navigating to the dashboard.
+        private static bool IsInvalidDocumentStatus(string status)
+        {
+            if (string.IsNullOrWhiteSpace(status)) return false;
+            var s = status.ToUpperInvariant();
+            return s.Contains("CANCEL") || s.Contains("CANSLO")
+                || s.Contains("UNSUCCESS") || s.Contains("AFLWYDDIANNUS")
+                || s.Contains("REVOK") || s.Contains("REJECT");
         }
 
         public bool VerifyTheApplicationIsNotAvailable(string petName)

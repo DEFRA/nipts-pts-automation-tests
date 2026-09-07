@@ -243,12 +243,13 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             // credential page, and the old code still returned true, so the home page never loaded and
             // the next step timed out. Re-enter and resubmit until we actually leave the form.
             var signInBudget = GlobalWaits * (Waits.IsIosDevice() ? 6 : 3);
-            var deadline = DateTime.UtcNow.AddSeconds(signInBudget);
+            var start = DateTime.UtcNow;
+            var deadline = start.AddSeconds(signInBudget);
             var consecutiveWedged = 0;
             while (DateTime.UtcNow < deadline)
             {
                 // Fail fast on a dead iOS session: once the native "Save Password" sheet wedges the
-                // Safari command channel it NEVER recovers, and every further command rides the ~90s
+                // Safari command channel it NEVER recovers, and every further command rides the ~60s
                 // HTTP timeout (that is why a wedged run burnt ~270s here and then another ~490s on
                 // the next step - ~13 min total before failing). A desynced channel leaks a
                 // garbage/non-http URL, so a couple of consecutive bad reads confirm the session is
@@ -260,11 +261,18 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                             "iOS Safari session wedged during Government Gateway sign-in (native Save " +
                             "Password sheet desynced the WebDriver command channel). Failing fast - the " +
                             "session is dead and cannot be recovered by waiting.");
+
+                    // Re-confirm at the top of the loop immediately instead of running the body below:
+                    // each command there rides the full ~60s HTTP timeout on a dead session, so
+                    // executing it BETWEEN the two wedge checks let a single wedged iteration burn the
+                    // whole budget (~300s) before the second check could fire the throw. Skipping
+                    // straight back keeps the two reads adjacent so we fail fast (~2x60s), and because
+                    // this throws the sign-in step fails here rather than silently returning false and
+                    // paying another ~60s in the following IsPageLoaded check.
+                    continue;
                 }
-                else
-                {
-                    consecutiveWedged = 0;
-                }
+
+                consecutiveWedged = 0;
 
                 var userIdField = _driver.FindElements(By.Id("user_id")).FirstOrDefault();
                 if (userIdField != null)
@@ -328,7 +336,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 Thread.Sleep(1000);
             }
 
-            Console.WriteLine($"IsSignedIn: gave up after {signInBudget}s. URL='{SafeUrl()}', " +
+            Console.WriteLine($"IsSignedIn: gave up after {(DateTime.UtcNow - start).TotalSeconds:F0}s " +
+                              $"(budget {signInBudget}s). URL='{SafeUrl()}', " +
                               $"heading='{CurrentHeadingText()}', user_id count={_driver.FindElements(By.Id("user_id")).Count}");
             return false;
         }
