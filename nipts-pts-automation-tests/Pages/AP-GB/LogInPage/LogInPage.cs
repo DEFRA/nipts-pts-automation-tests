@@ -179,6 +179,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             UserId.SendKeys(userName);
             Password.SendKeys(password);
             Thread.Sleep(2000);
+            SuppressIosSavePasswordSheet();
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", SignIn);
             Thread.Sleep(1000);
             if (_driver.FindElements(Accept_Cookies).Count > 0)
@@ -194,6 +195,30 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         }
 
         public void ClickCreateSignInDetailsLink() => CreateSignInDetails.Click();
+
+        // iOS Safari pops a native "Save Password" keychain sheet after a login form submits. It is
+        // NOT a WebDriver alert, so it can't be dismissed and it blocks every following command until
+        // the ~90s HTTP timeout desyncs the session for good (URL reads '(unavailable)'). The sheet
+        // only triggers when a type=password field is submitted, so on iOS neutralise the field
+        // (value/name preserved -> identical POST) right before clicking Sign in to stop it appearing.
+        private void SuppressIosSavePasswordSheet()
+        {
+            if (!Waits.IsIosDevice()) return;
+            try
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript(
+                    "var pw=document.getElementById('password');" +
+                    "if(pw){var f=pw.form; if(f){f.setAttribute('autocomplete','off');}" +
+                    "pw.setAttribute('autocomplete','off'); pw.type='text';}" +
+                    "var uid=document.getElementById('user_id');" +
+                    "if(uid){uid.setAttribute('autocomplete','off');}" +
+                    "if(document.activeElement){document.activeElement.blur();}");
+            }
+            catch (Exception)
+            {
+                // Best-effort suppression - never fail sign-in because the tweak errored.
+            }
+        }
 
         public void ClickSignedOut()
         {
