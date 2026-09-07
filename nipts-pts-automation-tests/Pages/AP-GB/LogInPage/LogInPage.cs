@@ -44,7 +44,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             try
             {
                 _driver.WaitForElementCondition(d =>
-                    AnyDisplayed(choiceBy) || _driver.FindElements(By.Id("user_id")).Count > 0);
+                    d.FindElements(choiceBy).Any(e => e.Displayed)
+                    || d.FindElements(By.Id("user_id")).Any(e => e.Displayed));
             }
             catch (Exception)
             {
@@ -53,10 +54,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             }
 
             // Already on the Government Gateway credential page - no chooser to action.
-            if (_driver.FindElements(By.Id("user_id")).Count > 0)
+            if (_driver.FindElements(By.Id("user_id")).Any(e => e.Displayed))
                 return;
 
-            if (!AnyDisplayed(choiceBy))
+            if (!_driver.FindElements(choiceBy).Any(e => e.Displayed))
                 return;
 
             var radioId = signInMethod.Equals("OneLogIn") ? "one" : "scp";
@@ -72,7 +73,8 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 for (var i = 0; i < 8; i++)
                 {
                     Thread.Sleep(1000);
-                    if (_driver.FindElements(By.Id("user_id")).Count > 0 || !AnyDisplayed(choiceBy))
+                    if (_driver.FindElements(By.Id("user_id")).Any(e => e.Displayed)
+                        || !_driver.FindElements(choiceBy).Any(e => e.Displayed))
                         return;
                 }
             }
@@ -80,80 +82,14 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
 
         private void SelectSignInRadioAndContinue(string radioId)
         {
-            // A stale/detached element anywhere in here just means the chooser re-rendered or
-            // navigated mid-interaction (routine on iOS B2C) - i.e. the selection is progressing,
-            // not a failure. Swallow it so it never bubbles out of the step; the caller's poll then
-            // confirms whether we actually left the chooser.
-            try
-            {
-                // Re-query and interact inside the stale-retry so a re-render between locating the
-                // radio/Continue and JS-clicking them doesn't fail the step (common on mobile).
-                _driver.RetryOnStaleElement(() =>
-                {
-                    var radio = _driver.WaitForElementExists(By.Id(radioId));
-                    ((IJavaScriptExecutor)_driver).ExecuteScript(
-                        "arguments[0].checked = true; arguments[0].click();" +
-                        "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", radio);
-                    Thread.Sleep(500);
-                    var continueBtn = _driver.WaitForElement(By.XPath("//button[@id='continueReplacement']"));
-                    // Continue submits the chooser and triggers the B2C redirect to Government
-                    // Gateway; a synchronous JS click rides that navigation and wedged the iOS
-                    // execute/sync command for 90s. Defer it so ExecuteScript returns immediately.
-                    JsClickDeferred(continueBtn);
-                    return true;
-                });
-                Thread.Sleep(1000);
-
-                // On a slow iOS hydration the visible '#continueReplacement' button's click handler
-                // may not be wired yet, so its JS click is a no-op and the chooser never submits
-                // (seen as chooser count=2 / user_id count=0 for the full budget). If we're still on
-                // the chooser, click the real (hidden) '#continue' submit directly - the same button
-                // the proven backend flow posts - so the selection is actually submitted.
-                if (_driver.FindElements(By.Id("user_id")).Count == 0)
-                {
-                    var realContinue = _driver.FindElements(By.XPath("//button[@id='continue']")).FirstOrDefault();
-                    if (realContinue != null)
-                        JsClickDeferred(realContinue);
-                }
-            }
-            catch (StaleElementReferenceException)
-            {
-                // Chooser navigated away mid-interaction; treat as progress, not a failure.
-            }
-        }
-
-        // Stale-safe visibility check: FindElements returns fresh refs each call, but a re-render
-        // between locating and reading .Displayed can stale them; treat stale as "not displayed".
-        private bool AnyDisplayed(By by)
-        {
-            try
-            {
-                return _driver.FindElements(by).Any(e =>
-                {
-                    try { return e.Displayed; }
-                    catch (StaleElementReferenceException) { return false; }
-                });
-            }
-            catch (StaleElementReferenceException)
-            {
-                return false;
-            }
-        }
-
-        private IWebElement? FirstDisplayed(By by)
-        {
-            try
-            {
-                return _driver.FindElements(by).FirstOrDefault(e =>
-                {
-                    try { return e.Displayed; }
-                    catch (StaleElementReferenceException) { return false; }
-                });
-            }
-            catch (StaleElementReferenceException)
-            {
-                return null;
-            }
+            var radio = _driver.WaitForElementExists(By.Id(radioId));
+            ((IJavaScriptExecutor)_driver).ExecuteScript(
+                "arguments[0].checked = true; arguments[0].click();" +
+                "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", radio);
+            Thread.Sleep(500);
+            var continueBtn = _driver.WaitForElement(By.XPath("//button[@id='continueReplacement']"));
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", continueBtn);
+            Thread.Sleep(1000);
         }
 
         public void ClickOnSignInOnOneLoginPage()
@@ -174,50 +110,27 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         public bool IsPageLoaded()
         {
             // Poll (rather than a one-shot check) so a slow B2C transition does not fail the
-            // assertion. The chooser heading/markup renders differently across devices (mobile
-            // Appium vs desktop), so key off the actual Government Gateway credentials form and the
-            // chooser radios rather than exact heading text, and re-select GG if the earlier
-            // Continue was lost on a slow session so the journey self-heals.
-            var chooserBy = By.XPath("//label[@for='scp'] | //label[@for='one']");
+            // assertion. If the "How do you want to sign in?" chooser is still showing, the earlier
+            // Continue click was lost on a slow session - re-select Government Gateway once so the
+            // journey self-heals instead of asserting on the wrong heading.
             var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits * 2);
-            var reselectCount = 0;
+            var reselected = false;
             while (DateTime.UtcNow < deadline)
             {
-                // The user_id field is the real readiness signal for the next (credentials) step.
-                // Key off DOM existence, not .Displayed: on mobile/Appium a present, interactable
-                // field often reports Displayed=false, yet SendKeys still works.
-                if (_driver.FindElements(By.Id("user_id")).Count > 0)
-                    return true;
-
                 var heading = CurrentHeadingText();
                 if (heading.Contains("Sign in using Government Gateway"))
                     return true;
 
-                var onChooser = heading.Contains("How do you want to sign in?")
-                                || AnyDisplayed(chooserBy);
-                if (onChooser && reselectCount < 2)
+                if (!reselected && heading.Contains("How do you want to sign in?"))
                 {
                     SelectSignInMethod("GovernmentGateway");
-                    reselectCount++;
+                    reselected = true;
                     continue;
                 }
 
                 Thread.Sleep(1000);
             }
-
-            // Stuck on an unexpected page - record what we're actually looking at so the next CI
-            // run diagnoses it directly instead of us guessing from the step name alone.
-            Console.WriteLine($"IsPageLoaded: gave up after {GlobalWaits * 2}s. " +
-                              $"URL='{SafeUrl()}', heading='{CurrentHeadingText()}', " +
-                              $"user_id count={_driver.FindElements(By.Id("user_id")).Count}, " +
-                              $"chooser count={_driver.FindElements(chooserBy).Count}");
             return false;
-        }
-
-        private string SafeUrl()
-        {
-            try { return _driver.Url; }
-            catch (Exception) { return "(unavailable)"; }
         }
 
         private string CurrentHeadingText()
@@ -236,157 +149,26 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
 
         public bool IsSignedIn(string userName, string password)
         {
-            AcceptCookiesIfPresent();
-
-            // Drive the Government Gateway sign-in to a CONFIRMED signed-in state rather than firing a
-            // single JS click and trusting it: on mobile a click that doesn't register leaves us on the
-            // credential page, and the old code still returned true, so the home page never loaded and
-            // the next step timed out. Re-enter and resubmit until we actually leave the form.
-            var signInBudget = GlobalWaits * (Waits.IsIosDevice() ? 6 : 3);
-            var start = DateTime.UtcNow;
-            var deadline = start.AddSeconds(signInBudget);
-            var consecutiveWedged = 0;
-            while (DateTime.UtcNow < deadline)
+            if (_driver.FindElements(Accept_Cookies).Count > 0)
             {
-                // Fail fast on a dead iOS session: once the native "Save Password" sheet wedges the
-                // Safari command channel it NEVER recovers, and every further command rides the ~60s
-                // HTTP timeout (that is why a wedged run burnt ~270s here and then another ~490s on
-                // the next step - ~13 min total before failing). A desynced channel leaks a
-                // garbage/non-http URL, so a couple of consecutive bad reads confirm the session is
-                // dead - abandon sign-in immediately instead of polling out the whole budget.
-                if (Waits.IsIosDevice() && _driver.IsCommandChannelWedged())
-                {
-                    if (++consecutiveWedged >= 2)
-                        throw new WebDriverException(
-                            "iOS Safari session wedged during Government Gateway sign-in (native Save " +
-                            "Password sheet desynced the WebDriver command channel). Failing fast - the " +
-                            "session is dead and cannot be recovered by waiting.");
-
-                    // Re-confirm at the top of the loop immediately instead of running the body below:
-                    // each command there rides the full ~60s HTTP timeout on a dead session, so
-                    // executing it BETWEEN the two wedge checks let a single wedged iteration burn the
-                    // whole budget (~300s) before the second check could fire the throw. Skipping
-                    // straight back keeps the two reads adjacent so we fail fast (~2x60s), and because
-                    // this throws the sign-in step fails here rather than silently returning false and
-                    // paying another ~60s in the following IsPageLoaded check.
-                    continue;
-                }
-
-                consecutiveWedged = 0;
-
-                var userIdField = _driver.FindElements(By.Id("user_id")).FirstOrDefault();
-                if (userIdField != null)
-                {
-                    // Neutralise iOS Safari's "Save Password" heuristic BEFORE we touch the form so
-                    // the native keychain sheet (which no web-context command can dismiss) never
-                    // appears and wedges the session on submit.
-                    SuppressIosSavePasswordSheet();
-                    try
-                    {
-                        var pwdField = _driver.FindElements(By.Id("password")).FirstOrDefault();
-                        userIdField.Clear();
-                        userIdField.SendKeys(userName);
-                        pwdField?.Clear();
-                        pwdField?.SendKeys(password);
-                        Thread.Sleep(1000);
-                        // Re-apply immediately before submit: the field may have re-rendered while
-                        // typing, and it is the submit itself that triggers the sheet on iOS.
-                        SuppressIosSavePasswordSheet();
-                        var signInBtn = _driver.FindElements(By.XPath("//button[contains(text(),'Sign in')]")).FirstOrDefault();
-                        // Fire the submit asynchronously so ExecuteScript returns before the B2C
-                        // redirect it triggers rides the ~90s HTTP command timeout and desyncs the iOS
-                        // Safari command channel (which left URL reading '(unavailable)' and
-                        // user_id count=0 until the whole sign-in budget was burned).
-                        if (signInBtn != null)
-                            JsClickDeferred(signInBtn);
-                        // iOS Safari raises the native "Save Password" sheet on submit, which blocks
-                        // every subsequent command and wedged the session mid sign-in (URL read back
-                        // '(unavailable)'). Dismiss it immediately so the redirect can proceed.
-                        _driver.DismissNativeAlertIfPresent();
-                    }
-                    catch (StaleElementReferenceException) { /* re-render mid-entry, retry */ }
-
-                    // Wait for the submit to navigate off the credential page before re-evaluating.
-                    for (var i = 0; i < 5 && _driver.FindElements(By.Id("user_id")).Count > 0; i++)
-                        Thread.Sleep(1000);
-                    AcceptCookiesIfPresent();
-                    continue;
-                }
-
-                // Off the credential page - a native iOS Safari prompt (e.g. Save Password) can
-                // block every command here, so clear it before confirming the signed-in state.
-                _driver.DismissNativeAlertIfPresent();
-                if (_driver.FindElements(SignInConfirmBy).Count > 0)
-                    return true;
-                if (CurrentHeadingText().Contains("Lifelong pet travel documents"))
-                    return true;
-
-                // The B2C flow can bounce back to the "How do you want to sign in?" chooser after the
-                // credential submit (seen on iOS: URL on .../oauth2/authresp, heading back on the
-                // chooser). The old loop only drove the credential page, so it idled here until
-                // timeout. Re-select Government Gateway to return to the credential page and re-enter,
-                // instead of stalling on the chooser.
-                var chooserBy = By.XPath("//label[@for='scp'] | //label[@for='one']");
-                if (CurrentHeadingText().Contains("How do you want to sign in?") || AnyDisplayed(chooserBy))
-                {
-                    SelectSignInMethod("GovernmentGateway");
-                    continue;
-                }
-
+                _driver.FindElement(Accept_Cookies).Click();
+                Hide_Cookies.Click();
+            }
+            UserId.SendKeys(userName);
+            Password.SendKeys(password);
+            Thread.Sleep(2000);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", SignIn);
+            Thread.Sleep(1000);
+            if (_driver.FindElements(Accept_Cookies).Count > 0)
+            {
                 Thread.Sleep(1000);
+                _driver.FindElement(Accept_Cookies).Click();
+                Hide_Cookies.Click();
             }
-
-            Console.WriteLine($"IsSignedIn: gave up after {(DateTime.UtcNow - start).TotalSeconds:F0}s " +
-                              $"(budget {signInBudget}s). URL='{SafeUrl()}', " +
-                              $"heading='{CurrentHeadingText()}', user_id count={_driver.FindElements(By.Id("user_id")).Count}");
-            return false;
-        }
-
-        // Fires the click asynchronously (setTimeout) so ExecuteScript returns immediately instead of
-        // blocking on the B2C federated redirect the click triggers - a synchronous click on the
-        // Government Gateway Sign in button rode the ~90s remote HTTP command timeout and desynced the
-        // iOS Safari command channel, wedging the whole sign-in.
-        private void JsClickDeferred(IWebElement element)
-        {
-            ((IJavaScriptExecutor)_driver).ExecuteScript(
-                "var el=arguments[0]; setTimeout(function(){ el.click(); }, 50);", element);
-        }
-
-        // iOS Safari raises a native "Save Password"/keychain sheet when a genuine login form (one
-        // with a type=password field) is submitted. That sheet is a UIKit overlay the W3C alert API
-        // cannot touch, so on the iPad job it blocked every WebDriver command after submit - the
-        // channel desynced (URL read '(unavailable)'), the whole sign-in budget burned and the home
-        // page never loaded (iPhone escaped it, hence the "consistent iPad, fine iPhone" split).
-        // Switching the password field to type=text and disabling autocomplete stops Safari treating
-        // it as a saveable login so the sheet never appears; the field value is preserved, so B2C
-        // still posts the credential. iOS-only, so desktop/Android sign-in is unchanged.
-        private void SuppressIosSavePasswordSheet()
-        {
-            if (!Waits.IsIosDevice())
-                return;
-            try
-            {
-                ((IJavaScriptExecutor)_driver).ExecuteScript(
-                    "var p=document.getElementById('password');" +
-                    "if(p){p.setAttribute('autocomplete','off');p.type='text';" +
-                    "if(p.form){p.form.setAttribute('autocomplete','off');}}" +
-                    "var u=document.getElementById('user_id');" +
-                    "if(u){u.setAttribute('autocomplete','off');}");
-            }
-            catch (Exception) { /* best-effort suppression; never fail sign-in on it */ }
-        }
-
-        private void AcceptCookiesIfPresent()
-        {
-            try
-            {
-                if (_driver.FindElements(Accept_Cookies).Count > 0)
-                {
-                    _driver.FindElement(Accept_Cookies).Click();
-                    try { Hide_Cookies.Click(); } catch (Exception) { }
-                }
-            }
-            catch (Exception) { /* cookie banner is best-effort; never fail sign-in on it */ }
+            if (_driver.FindElements(SignInConfirmBy).Count > 0)
+                return _driver.WaitForElement(SignInConfirmBy).Enabled;
+            else 
+                return true;
         }
 
         public void ClickCreateSignInDetailsLink() => CreateSignInDetails.Click();
@@ -401,93 +183,33 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             while (DateTime.UtcNow < deadline)
             {
                 _driver.DismissTimeoutOverlayIfPresent();
-                var link = FirstDisplayed(SignInConfirmBy);
+                var link = _driver.FindElements(SignInConfirmBy).FirstOrDefault(e => e.Displayed);
                 if (link != null)
                 {
-                    // SafeClick/overlay dismissal run JS; on a blocked or wedged remote session the
-                    // click can throw a script timeout, a WebDriverException, or a Selenium-internal
-                    // NullReferenceException. Any of those must fall back to the direct sign-out
-                    // route rather than failing the step with an opaque error.
-                    try { _driver.SafeClick(link); }
-                    catch (Exception) { NavigateToSignOut(); }
+                    _driver.SafeClick(link);
                     return;
                 }
                 Thread.Sleep(1000);
             }
-            // Link never rendered in time (slow/degraded session): sign out by navigating to the
-            // route directly so the step still reaches the signed-out page instead of throwing.
-            NavigateToSignOut();
-        }
-
-        // Signs out by navigating straight to the sign-out route. Avoids the header link click, the
-        // timeout overlay and ExecuteScript: an unbounded click on the sign-out link fires the B2C
-        // federated redirect with no page-load bound, which wedges the mobile node so every later
-        // command rides the ~90s HTTP command timeout. Returns true when the sign-out request was
-        // issued (the server session is cleared even if the B2C confirmation page renders slowly).
-        private bool NavigateToSignOut()
-        {
-            var originalPageLoad = TimeSpan.FromSeconds(GlobalWaits);
-            try
-            {
-                try { originalPageLoad = _driver.Manage().Timeouts().PageLoad; } catch (Exception) { }
-                // Bound the load so the hanging B2C redirect aborts quickly instead of riding the
-                // full remote command timeout.
-                try { _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(GlobalWaits); } catch (Exception) { }
-                // Build the sign-out URL from the configured app base rather than reading _driver.Url:
-                // on a slow/wedged mobile session the GET /url command itself rides the ~90s HTTP
-                // timeout (this is exactly what failed before). The sign-out link's href is a fixed
-                // app-origin route, so config gives the same destination without any live command.
-                var baseUrl = new Uri(ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl);
-                var signOutUrl = new Uri(baseUrl, "/User/OSignOut").ToString();
-                _driver.Navigate().GoToUrl(signOutUrl);
-                return true;
-            }
-            catch (WebDriverTimeoutException)
-            {
-                // Page-load bound hit: the sign-out request still reached the server (session
-                // cleared); only the slow B2C confirmation render was aborted. Count it as issued.
-                return true;
-            }
-            catch (Exception ex)
-            {
-                // A wedged remote session can throw a command timeout or a Selenium-internal NRE;
-                // never let sign-out navigation fail the step with an unhandled exception.
-                Console.WriteLine("Direct sign-out navigation failed: " + ex.Message);
-                return false;
-            }
-            finally
-            {
-                try { _driver.Manage().Timeouts().PageLoad = originalPageLoad; } catch (Exception) { }
-            }
+            // Nothing found in time - fall back to the original wait so the caller still gets a
+            // meaningful ElementNotVisibleException rather than a silent no-op.
+            _driver.WaitForElement(SignInConfirmBy).Click();
         }
 
         public bool IsSignedOut()
         {
-            // Issue the sign-out via direct bounded navigation (no link click, which is what wedged
-            // the mobile node and burned ~340s before). Then poll briefly for the confirmation
-            // heading, but stay bounded and wedge-aware. Hitting the sign-out route clears the server
-            // session, so a successfully issued sign-out counts as signed out even when the
-            // confirmation page is too slow to render.
-            var issued = NavigateToSignOut();
-
+            ClickSignedOut();
+            // Poll for the signed-out confirmation rather than reading the heading once: on a slow
+            // session the sign-out redirect can lag behind the click.
             var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits);
             while (DateTime.UtcNow < deadline)
             {
-                try
-                {
-                    var heading = CurrentHeadingText();
-                    if (heading.Contains("You have signed out") || heading.Contains("Your Defra account"))
-                        return true;
-                }
-                catch (Exception)
-                {
-                    // Session unresponsive: stop polling rather than spinning to the command timeout.
-                    break;
-                }
+                var heading = CurrentHeadingText();
+                if (heading.Contains("You have signed out") || heading.Contains("Your Defra account"))
+                    return true;
                 Thread.Sleep(1000);
             }
-
-            return issued;
+            return false;
         }
     }
 }
