@@ -116,19 +116,22 @@ stages:
         dependsOn: ''
         targetBrowserName: 'Chrome'
 
-  - stage: IOSIpad12ChromeRun
-    displayName: IOSIpad12ChromeRun
-    jobs:
-    - template: run-test-template.yml
-      parameters:
-        jobName: IOSIpad12ChromeRun
-        testStepTimeoutMinutes: 120
-        envConfigParam: ${{ parameters.Environment}}
-        apiEndPoint: ${{ parameters.ApiEndpoint}}
-        branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        TestDeviceName: 'iPad Pro 12.9 2022'
-        OSVersionName: '16'
-        BrowserVersionName: ''
-        dependsOn: ''
-        targetBrowserName: 'Chrome'
+  # iPad Pro 12.9 2022 (iPadOS 16) stage temporarily disabled: chronically wedges the Safari
+  # WebDriver command channel through the Government Gateway/B2C redirect chain. Keeping only the
+  # iPhone 14 stage until a more stable iPad device/OS is agreed.
+  # - stage: IOSIpad12ChromeRun
+  #   displayName: IOSIpad12ChromeRun
+  #   jobs:
+  #   - template: run-test-template.yml
+  #     parameters:
+  #       jobName: IOSIpad12ChromeRun
+  #       testStepTimeoutMinutes: 120
+  #       envConfigParam: ${{ parameters.Environment}}
+  #       apiEndPoint: ${{ parameters.ApiEndpoint}}
+  #       branchName: ${{ parameters.branchName}}
+  #       SeleniumGrid: ${{parameters.SeleniumGrid}}  
+  #       TestDeviceName: 'iPad Pro 12.9 2022'
+  #       OSVersionName: '16'
+  #       BrowserVersionName: ''
+  #       dependsOn: ''
+  #       targetBrowserName: 'Chrome'

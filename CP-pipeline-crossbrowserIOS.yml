@@ -75,22 +75,22 @@ stages:
         dependsOn: ''
         targetBrowserName: 'Chrome'
 
-  - stage: IOSIpad12ChromeRunCP
-    displayName: IOSIpad12ChromeRunCP
-    jobs:
-    - template: run-test-template.yml
-      parameters:
-        jobName: IOSIpad12ChromeRunCP
-        testStepTimeoutMinutes: 120
-        envConfigParam: ${{ parameters.Environment}}
-        apiEndPoint: ${{ parameters.ApiEndpoint}}
-        branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        TestDeviceName: 'iPad Pro 12.9 2022'
-        OSVersionName: '16'
-        BrowserVersionName: ''
-        dependsOn: ''
-        targetBrowserName: 'Chrome'
+  # - stage: IOSIpad12ChromeRunCP
+  #   displayName: IOSIpad12ChromeRunCP
+  #   jobs:
+  #   - template: run-test-template.yml
+  #     parameters:
+  #       jobName: IOSIpad12ChromeRunCP
+  #       testStepTimeoutMinutes: 120
+  #       envConfigParam: ${{ parameters.Environment}}
+  #       apiEndPoint: ${{ parameters.ApiEndpoint}}
+  #       branchName: ${{ parameters.branchName}}
+  #       SeleniumGrid: ${{parameters.SeleniumGrid}}  
+  #       TestDeviceName: 'iPad Pro 12.9 2022'
+  #       OSVersionName: '16'
+  #       BrowserVersionName: ''
+  #       dependsOn: ''
+  #       targetBrowserName: 'Chrome'
 
   - stage: IOSIphoneSafari14RunCP
     displayName: IOSIphoneSafari14RunCP
@@ -109,19 +109,22 @@ stages:
         dependsOn: ''
         targetBrowserName: 'safari'
 
-  - stage: IOSIpad12SafariRunCP
-    displayName: IOSIpad12SafariRunCP
-    jobs:
-    - template: run-test-template.yml
-      parameters:
-        jobName: IOSIpad12SafariRunCP
-        testStepTimeoutMinutes: 120
-        envConfigParam: ${{ parameters.Environment}}
-        apiEndPoint: ${{ parameters.ApiEndpoint}}
-        branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        TestDeviceName: 'iPad Pro 12.9 2022'
-        OSVersionName: '16'
-        BrowserVersionName: ''
-        dependsOn: ''
-        targetBrowserName: 'safari'
+  # iPad Pro 12.9 2022 (iPadOS 16) stages temporarily disabled: chronically wedges the Safari
+  # WebDriver command channel through the Government Gateway/B2C redirect chain. Keeping only the
+  # iPhone 14 stages until a more stable iPad device/OS is agreed.
+  # - stage: IOSIpad12SafariRunCP
+  #   displayName: IOSIpad12SafariRunCP
+  #   jobs:
+  #   - template: run-test-template.yml
+  #     parameters:
+  #       jobName: IOSIpad12SafariRunCP
+  #       testStepTimeoutMinutes: 120
+  #       envConfigParam: ${{ parameters.Environment}}
+  #       apiEndPoint: ${{ parameters.ApiEndpoint}}
+  #       branchName: ${{ parameters.branchName}}
+  #       SeleniumGrid: ${{parameters.SeleniumGrid}}  
+  #       TestDeviceName: 'iPad Pro 12.9 2022'
+  #       OSVersionName: '16'
+  #       BrowserVersionName: ''
+  #       dependsOn: ''
+  #       targetBrowserName: 'safari'
