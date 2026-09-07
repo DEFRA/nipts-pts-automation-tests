@@ -81,8 +81,15 @@ namespace nipts_pts_automation_tests.Pages
             // which threw "Element is not visible" (~60s) on iOS where the govuk back link reports
             // Displayed=false even when present. Dismiss any overlay, scroll into view, then click with
             // a JS fallback so a slow mobile session doesn't fail the step.
-            var backBy = By.XPath("//a[contains(text(),'Yn ôl')]");
+            const string backXpath = "//a[contains(text(),'Yn ôl')]";
+            var backBy = By.XPath(backXpath);
             var globalWaits = ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds;
+
+            // Two "click on back" steps run back-to-back in the Invalid-documents flow. The first fires a
+            // DEFERRED click and returns immediately, so this call can start while that navigation is
+            // still in flight - let it settle first so we don't grab a transitioning/stale element.
+            try { _driver.WaitForAjax(); } catch (Exception) { }
+
             var deadline = DateTime.UtcNow.AddSeconds(globalWaits * 2);
             IWebElement? back = null;
             while (DateTime.UtcNow < deadline)
@@ -107,9 +114,20 @@ namespace nipts_pts_automation_tests.Pages
                 // on that navigation and rode the ~90s command timeout (seen on desktop Edge:
                 // execute/sync timed out after 90s -> 180s), desyncing the session. Fire the click
                 // asynchronously so the command returns immediately and the next step's wait drives
-                // the page load.
-                ((IJavaScriptExecutor)_driver).ExecuteScript(
-                    "var el=arguments[0]; setTimeout(function(){ el.click(); }, 50);", back);
+                // the page load. RE-LOCATE the link by XPath INSIDE the deferred JS (instead of passing
+                // a C# element reference) so a page transition from a preceding back click can't turn
+                // the reference stale and surface a StaleElementReferenceException here.
+                try
+                {
+                    ((IJavaScriptExecutor)_driver).ExecuteScript(
+                        "var xp=arguments[0];" +
+                        "setTimeout(function(){" +
+                        "  var r=document.evaluate(xp, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);" +
+                        "  if (r && r.singleNodeValue) { r.singleNodeValue.click(); }" +
+                        "}, 50);", backXpath);
+                }
+                catch (StaleElementReferenceException) { /* page already advanced = back succeeded */ }
+                catch (WebDriverException) { /* wedged/navigating session - next step's wait drives load */ }
             }
         }
 

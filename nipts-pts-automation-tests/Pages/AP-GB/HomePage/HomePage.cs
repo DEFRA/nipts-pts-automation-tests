@@ -183,15 +183,26 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
         {
             // Status transitions (e.g. Pending -> Approved) are driven by an asynchronous backend
             // process (a Service Bus message consumed and written back to Dynamics), so the new
-            // status is not visible immediately. Poll by refreshing and re-checking until the
-            // expected status appears or the timeout elapses, rather than checking only once.
+            // status is not visible immediately. Poll until the expected status appears or the
+            // timeout elapses, rather than checking only once. NAVIGATE to the dashboard each
+            // iteration (not Refresh): the preceding "View all" link fires a DEFERRED click, so a
+            // plain Refresh here can reload the application-submitted page mid-navigation and pin the
+            // session there - the status table only exists on the dashboard, so poll the dashboard.
+            var appUrl = ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl;
             var timeout = TimeSpan.FromMinutes(6);
             var pollInterval = TimeSpan.FromSeconds(5);
             var deadline = DateTime.UtcNow + timeout;
 
             do
             {
-                _driver.Navigate().Refresh();
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(appUrl))
+                        _driver.Navigate().GoToUrl(appUrl);
+                    else
+                        _driver.Navigate().Refresh();
+                }
+                catch (WebDriverException) { /* slow/wedged nav - re-check next iteration */ }
                 Thread.Sleep(pollInterval);
 
                 try

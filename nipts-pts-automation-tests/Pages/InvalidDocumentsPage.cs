@@ -32,11 +32,14 @@ namespace nipts_pts_automation_tests.Pages
        
         public void ClickOnViewInvalidDocumentLinkWELSH()
         {
-            // The "View invalid documents" link only appears once the asynchronous backend revoke
-            // (Service Bus message -> Dynamics) has moved the document into the invalid/cancelled
-            // bucket. A single 30s visibility wait with no refresh gives up before the link lands,
-            // so poll by presence and refresh the dashboard until it appears, then JS-click it.
+            // The "View invalid documents" link only appears on the DASHBOARD once the asynchronous
+            // backend revoke (Service Bus message -> Dynamics) has moved the document into the
+            // invalid/cancelled bucket. The preceding "click on back" can leave the session on the
+            // application-details page (not the dashboard), so a plain Refresh would poll the wrong
+            // page forever. Navigate to the dashboard each iteration and poll by presence until the
+            // link lands, then JS-click it.
             var linkBy = By.XPath("//a[contains(text(),'Gweld dogfennau annilys')] | //a[contains(text(),'View invalid documents')]");
+            var appUrl = ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl;
             var globalWaits = ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds;
             var deadline = DateTime.UtcNow.AddSeconds(globalWaits * 4);
             IWebElement? link = null;
@@ -57,7 +60,14 @@ namespace nipts_pts_automation_tests.Pages
                     // Dashboard re-rendering or a slow/degraded session; re-check next iteration.
                 }
 
-                _driver.Navigate().Refresh();
+                try
+                {
+                    if (!string.IsNullOrWhiteSpace(appUrl))
+                        _driver.Navigate().GoToUrl(appUrl);
+                    else
+                        _driver.Navigate().Refresh();
+                }
+                catch (WebDriverException) { /* slow/wedged nav - retry next iteration */ }
                 Thread.Sleep(3000);
             }
 
