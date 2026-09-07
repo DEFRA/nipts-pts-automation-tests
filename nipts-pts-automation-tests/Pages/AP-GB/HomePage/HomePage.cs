@@ -42,6 +42,15 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
         public bool IsPageLoaded()
         {
+            // If the iOS command channel already wedged during sign-in, every command here rides the
+            // ~90s HTTP timeout and the dashboard heading can never render - bail immediately rather
+            // than burning ~8 min on two full heading polls plus a GoToUrl heal that also times out.
+            if (Waits.IsIosDevice() && _driver.IsCommandChannelWedged())
+            {
+                LogPageState("IsPageLoaded: iOS command channel wedged - failing fast");
+                return false;
+            }
+
             if (_driver.IsHeadingLoaded("Lifelong pet travel documents"))
                 return true;
 

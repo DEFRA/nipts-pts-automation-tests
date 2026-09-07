@@ -244,8 +244,28 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             // the next step timed out. Re-enter and resubmit until we actually leave the form.
             var signInBudget = GlobalWaits * (Waits.IsIosDevice() ? 6 : 3);
             var deadline = DateTime.UtcNow.AddSeconds(signInBudget);
+            var consecutiveWedged = 0;
             while (DateTime.UtcNow < deadline)
             {
+                // Fail fast on a dead iOS session: once the native "Save Password" sheet wedges the
+                // Safari command channel it NEVER recovers, and every further command rides the ~90s
+                // HTTP timeout (that is why a wedged run burnt ~270s here and then another ~490s on
+                // the next step - ~13 min total before failing). A desynced channel leaks a
+                // garbage/non-http URL, so a couple of consecutive bad reads confirm the session is
+                // dead - abandon sign-in immediately instead of polling out the whole budget.
+                if (Waits.IsIosDevice() && _driver.IsCommandChannelWedged())
+                {
+                    if (++consecutiveWedged >= 2)
+                        throw new WebDriverException(
+                            "iOS Safari session wedged during Government Gateway sign-in (native Save " +
+                            "Password sheet desynced the WebDriver command channel). Failing fast - the " +
+                            "session is dead and cannot be recovered by waiting.");
+                }
+                else
+                {
+                    consecutiveWedged = 0;
+                }
+
                 var userIdField = _driver.FindElements(By.Id("user_id")).FirstOrDefault();
                 if (userIdField != null)
                 {

@@ -84,6 +84,34 @@ namespace nipts_pts_automation_tests.HelperMethods
             catch (Exception) { /* never throw from best-effort dismissal */ }
         }
 
+        /// <summary>
+        /// True when the WebDriver command channel has desynced/died - the signature of the iOS
+        /// Safari native "Save Password" sheet wedge. Once a command rides the ~90s HTTP timeout the
+        /// channel desyncs permanently: later commands read the previous command's late reply, so
+        /// <c>.Url</c> returns a leaked raw response (e.g. a serialized
+        /// "System.Collections.Generic.Dictionary`2[...]" - exactly what CI logged) or an
+        /// empty/non-http value instead of the page URL. A live Safari/WebKit session ALWAYS reports
+        /// an absolute http(s) URL, so anything else means the channel is dead and NEVER recovers -
+        /// callers should abandon their poll immediately rather than issue more commands that each
+        /// cost ~90s. Never throws.
+        /// </summary>
+        public static bool IsCommandChannelWedged(this IWebDriver driver)
+        {
+            string url;
+            try
+            {
+                url = driver.Url;
+            }
+            catch (Exception)
+            {
+                // .Url throwing (rather than returning) is itself a definitive wedge signal.
+                return true;
+            }
+
+            return string.IsNullOrWhiteSpace(url)
+                   || !url.StartsWith("http", StringComparison.OrdinalIgnoreCase);
+        }
+
         public static IWebElement WaitForElement(this IWebDriver driver, By elementBy, bool forceWait = false)
         {
             try
