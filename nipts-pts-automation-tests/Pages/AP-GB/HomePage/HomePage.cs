@@ -296,18 +296,17 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                     // than one page-load window to arrive. Re-navigating throws away the in-progress
                     // load and restarts it from zero, so a page that needs >GlobalWaits to render
                     // never gets an uninterrupted window and never completes. So: navigate ONCE and
-                    // give it a generous uninterrupted poll; only re-navigate if the summary is still
-                    // completely absent afterwards (covers a genuinely aborted navigation), never on a
-                    // fixed short interval. Healthy runs exit the first poll immediately.
-                    for (var attempt = 0; attempt < 2; attempt++)
+                    // give it a LONG uninterrupted poll (iOS is materially slower, so x6 there), and
+                    // only re-navigate ONCE more as a last resort if it is still completely absent
+                    // (covers a genuinely aborted navigation). Healthy runs exit the first poll fast.
+                    try { _driver.Navigate().GoToUrl(abs.ToString()); }
+                    catch (Exception) { }
+                    summaryLoaded = SummaryHeadingPresent(globalWaits * (Waits.IsIosDevice() ? 6 : 3));
+                    if (!summaryLoaded)
                     {
                         try { _driver.Navigate().GoToUrl(abs.ToString()); }
                         catch (Exception) { }
-                        if (SummaryHeadingPresent(globalWaits * 3))
-                        {
-                            summaryLoaded = true;
-                            break;
-                        }
+                        summaryLoaded = SummaryHeadingPresent(globalWaits * 3);
                     }
                 }
                 finally { try { _driver.Manage().Timeouts().PageLoad = originalPageLoad; } catch (Exception) { } }
@@ -353,6 +352,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
             {
                 try
                 {
+                    // On long/slow runs the HMRC session-timeout dialog can overlay the summary
+                    // heading (and, if left, sign the session out) - clear it each pass so the
+                    // heading stays visible and matchable, mirroring IsHeadingLoaded.
+                    _driver.DismissTimeoutOverlayIfPresent();
                     if (_driver.FindElements(by).Any(h =>
                     {
                         var t = h.Text;
