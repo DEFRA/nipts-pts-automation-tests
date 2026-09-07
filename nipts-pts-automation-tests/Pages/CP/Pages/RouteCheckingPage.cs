@@ -192,8 +192,13 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
         public string SelectDropDownDepartureTimeJustOneMinuteLaterThanCurrent()
         {
-            var hour = DateTime.Now.AddHours(1).ToString("HH");
-            var minutes = DateTime.Now.AddMinutes(4).ToString("mm");
+            // Derive hour and minute from ONE timestamp so the offset is a steady +30 min. The old code
+            // took the hour from Now+1h but the minute from Now+4min, so when the current minute was >=56
+            // the inside-48h margin collapsed to ~4 min and the "just within 48 hours" scenarios flaked
+            // whenever the agent/server clocks differed by more than that (e.g. the 09:58 run).
+            var departure = DateTime.Now.AddMinutes(30);
+            var hour = departure.ToString("HH");
+            var minutes = departure.ToString("mm");
             string departureTime = $"'{hour}':'{minutes}'";
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
 

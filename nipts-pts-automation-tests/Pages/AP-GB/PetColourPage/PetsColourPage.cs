@@ -37,9 +37,11 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetColourPage
         public void ClickContinueButton()
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.scrollBy(0,500)", "");
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", btnContinue);
-            //btnContinue.Click();
-            //_driver.ContinueButton();
+            // Fire the click asynchronously (setTimeout) so ExecuteScript returns before the full-page
+            // navigation it triggers can wedge the BrowserStack command channel - a synchronous JS click
+            // here rode the form submit and burned the next page's 90s heading-load budget.
+            ((IJavaScriptExecutor)_driver).ExecuteScript(
+                "var el=arguments[0]; setTimeout(function(){ el.click(); }, 50);", btnContinue);
         }
 
         public bool IsError(string errorMessage)

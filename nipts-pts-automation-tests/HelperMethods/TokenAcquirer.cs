@@ -36,8 +36,11 @@ namespace nipts_pts_automation_tests.HelperMethods
             var authority = $"https://{config.TenantName}.b2clogin.com/{config.TenantName}.onmicrosoft.com/{config.Policy}";
             var scope = $"openid offline_access {config.ClientId}";
 
-            var code = AcquireAuthorizationCode(driver, authority, config, scope);
-            return ExchangeCodeForToken(authority, config, scope, code);
+            return MintTokenWithRetry("backend", () =>
+            {
+                var code = AcquireAuthorizationCode(driver, authority, config, scope);
+                return ExchangeCodeForToken(authority, config, scope, code);
+            });
         }
 
         /// <summary>
@@ -69,8 +72,11 @@ namespace nipts_pts_automation_tests.HelperMethods
             var authority = $"https://{cpConfig.TenantName}.b2clogin.com/{cpConfig.TenantName}.onmicrosoft.com/{cpConfig.Policy}";
             var scope = !string.IsNullOrWhiteSpace(config.CPScope) ? config.CPScope : $"openid offline_access {cpConfig.ClientId}";
 
-            var code = AcquireAuthorizationCode(driver, authority, cpConfig, scope);
-            return ExchangeCodeForToken(authority, cpConfig, scope, code);
+            return MintTokenWithRetry("CP checker", () =>
+            {
+                var code = AcquireAuthorizationCode(driver, authority, cpConfig, scope);
+                return ExchangeCodeForToken(authority, cpConfig, scope, code);
+            });
         }
 
         /// <summary>
@@ -705,16 +711,68 @@ namespace nipts_pts_automation_tests.HelperMethods
             var body = response.Content.ReadAsStringAsync().Result;
 
             if (!response.IsSuccessStatusCode)
-                throw new Exception($"B2C token exchange failed. Status: {response.StatusCode}, Body: {body}");
+                throw new Exception($"B2C token exchange failed. Status: {response.StatusCode}, Body: {Truncate(body, 500)}");
 
-            var json = JsonConvert.DeserializeObject<dynamic>(body);
+            // B2C occasionally answers a token POST with an HTML interstitial/error page carrying a 200
+            // status; parsing that as JSON throws the opaque "Unexpected character <" Newtonsoft error.
+            // Detect the non-JSON body and raise a clear, retryable signal instead.
+            var trimmed = body.TrimStart();
+            if (trimmed.Length == 0 || (trimmed[0] != '{' && trimmed[0] != '['))
+            {
+                var contentType = response.Content.Headers.ContentType?.ToString() ?? "unknown";
+                throw new TransientTokenResponseException(
+                    $"B2C token endpoint returned a non-JSON body (Content-Type: {contentType}), likely an HTML " +
+                    $"interstitial/error page rather than a token. Snippet: {Truncate(trimmed, 500)}");
+            }
+
+            dynamic? json;
+            try
+            {
+                json = JsonConvert.DeserializeObject<dynamic>(body);
+            }
+            catch (JsonException ex)
+            {
+                throw new TransientTokenResponseException(
+                    $"B2C token response was not valid JSON: {ex.Message}. Body: {Truncate(body, 500)}");
+            }
+
             string token = (string?)json?.access_token ?? string.Empty;
 
             if (string.IsNullOrWhiteSpace(token))
-                throw new Exception($"B2C token response did not contain an access_token. Body: {body}");
+                throw new Exception($"B2C token response did not contain an access_token. Body: {Truncate(body, 500)}");
 
             LogTokenClaims(token);
             return token;
+        }
+
+        private static string Truncate(string value, int maxLength) =>
+            string.IsNullOrEmpty(value) ? string.Empty
+            : value.Length > maxLength ? value.Substring(0, maxLength) + "..." : value;
+
+        // B2C intermittently answers the token POST (or the preceding authorize redirect) with an HTML
+        // interstitial/error page instead of token JSON. That is transient, so MintTokenWithRetry replays
+        // the whole mint (fresh single-use auth code + exchange) rather than surfacing the opaque parse error.
+        private sealed class TransientTokenResponseException : Exception
+        {
+            public TransientTokenResponseException(string message) : base(message) { }
+        }
+
+        private static string MintTokenWithRetry(string tokenKind, Func<string> mint)
+        {
+            const int maxAttempts = 3;
+            for (var attempt = 1; ; attempt++)
+            {
+                try
+                {
+                    return mint();
+                }
+                catch (TransientTokenResponseException ex) when (attempt < maxAttempts)
+                {
+                    Console.WriteLine($"{tokenKind} token mint attempt {attempt}/{maxAttempts} hit a non-JSON/transient " +
+                                      $"B2C response; retrying. {ex.Message}");
+                    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(3));
+                }
+            }
         }
 
         /// <summary>
