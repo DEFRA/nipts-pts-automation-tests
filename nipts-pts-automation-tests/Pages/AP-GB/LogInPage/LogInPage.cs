@@ -54,10 +54,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             }
 
             // Already on the Government Gateway credential page - no chooser to action.
-            if (_driver.FindElements(By.Id("user_id")).Any(e => e.Displayed))
+            if (AnyDisplayed(By.Id("user_id")))
                 return;
 
-            if (!_driver.FindElements(choiceBy).Any(e => e.Displayed))
+            if (!AnyDisplayed(choiceBy))
                 return;
 
             var radioId = signInMethod.Equals("OneLogIn") ? "one" : "scp";
@@ -73,23 +73,45 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 for (var i = 0; i < 8; i++)
                 {
                     Thread.Sleep(1000);
-                    if (_driver.FindElements(By.Id("user_id")).Any(e => e.Displayed)
-                        || !_driver.FindElements(choiceBy).Any(e => e.Displayed))
+                    if (AnyDisplayed(By.Id("user_id")) || !AnyDisplayed(choiceBy))
                         return;
                 }
             }
         }
 
+        // iOS Safari re-renders the DOM during the B2C redirect chain, so an element found by
+        // FindElements can go stale before .Displayed is read. Swallow that (treat as not present)
+        // instead of letting "Element does not exist in cache" bubble up and fail the step.
+        private bool AnyDisplayed(By by)
+        {
+            try
+            {
+                return _driver.FindElements(by).Any(e => e.Displayed);
+            }
+            catch (StaleElementReferenceException)
+            {
+                return false;
+            }
+        }
+
         private void SelectSignInRadioAndContinue(string radioId)
         {
-            var radio = _driver.WaitForElementExists(By.Id(radioId));
-            ((IJavaScriptExecutor)_driver).ExecuteScript(
-                "arguments[0].checked = true; arguments[0].click();" +
-                "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", radio);
-            Thread.Sleep(500);
-            var continueBtn = _driver.WaitForElement(By.XPath("//button[@id='continueReplacement']"));
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", continueBtn);
-            Thread.Sleep(1000);
+            try
+            {
+                var radio = _driver.WaitForElementExists(By.Id(radioId));
+                ((IJavaScriptExecutor)_driver).ExecuteScript(
+                    "arguments[0].checked = true; arguments[0].click();" +
+                    "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));", radio);
+                Thread.Sleep(500);
+                var continueBtn = _driver.WaitForElement(By.XPath("//button[@id='continueReplacement']"));
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", continueBtn);
+                Thread.Sleep(1000);
+            }
+            catch (StaleElementReferenceException)
+            {
+                // The chooser re-rendered mid-action; the caller's loop re-checks the page and
+                // retries with fresh elements, so end this attempt quietly.
+            }
         }
 
         public void ClickOnSignInOnOneLoginPage()
