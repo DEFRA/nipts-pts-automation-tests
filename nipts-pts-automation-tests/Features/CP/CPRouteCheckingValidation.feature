@@ -119,9 +119,8 @@ Examples:
 
 Scenario Outline: Verify validation text for date field when user enter the date field that is exact 48 hours before
 	Then I have selected '<Transportation>' radio option
-	Then I provided exact date less than 48 hours from the current date
+	Then I provided a scheduled departure within the past 48 hours
 	Then I provide the '<Flight number>' in the box
-	And  I provided time that exceeds 24 hours and 1 minute from the current time
 	And I should see hint text "Enter the scheduled departure time using the 24-hour clock format, for example 15:30 or 01:05" in route checking page
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
@@ -165,8 +164,7 @@ Examples:
 
 Scenario Outline: Verify validation text for date field when user enter the time field that exceeds 24 hours after
 	Then I have selected '<Transportation>' radio option
-	Then I provided date that exceeds 24 hours from the current date
-	Then I provided time that exceeds 24 hours from the current time
+	Then I provided a scheduled departure beyond the next 24 hours
 	Then I provide the '<Flight number>' in the box
 	When I click save and continue button from route checke page
 	Then I should see an error message "The flight or ferry must have departed in the past 48 hours or departs within the next 24 hours" in route checking page
@@ -176,8 +174,7 @@ Examples:
 
 Scenario Outline: Verify validation text for date field when user enter the time field that exceeds 24 hours by 1 minute
 	Then I have selected '<Transportation>' radio option
-	Then I provided date that exceeds 24 hours from the current date
-	Then I provided time that exceeds 24 hours and 1 minute from the current time
+	Then I provided a scheduled departure beyond the next 24 hours
 	Then I provide the '<Flight number>' in the box
 	When I click save and continue button from route checke page
 	Then I should see an error message "The flight or ferry must have departed in the past 48 hours or departs within the next 24 hours" in route checking page
@@ -198,9 +195,8 @@ Examples:
 
 Scenario Outline: Verify positive flow for date field when user enter the date before 48 hours and 1 minute
 	Then I have selected '<Transportation>' radio option
-	Then I provided exact date less than 48 hours from the current date
+	Then I provided a scheduled departure within the past 48 hours
 	Then I provide the '<Flight number>' in the box
-	And  I provided time that exceeds 24 hours and 1 minute from the current time
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 Examples:
@@ -249,9 +245,8 @@ Examples:
 
 Scenario: Verify message on Home page for ferry selected as flight
 Then I have selected '<Transportation>' radio option
-	Then I provided exact date less than 48 hours from the current date
+	Then I provided a scheduled departure within the past 48 hours
 	Then I provide the '<Flight number>' in the box
-	And  I provided time that exceeds 24 hours and 1 minute from the current time
 	When I click save and continue button from route checke page
 	Then I should navigate to Welcome page
 	Then verify header message for flights route message 'You can scan or search for'

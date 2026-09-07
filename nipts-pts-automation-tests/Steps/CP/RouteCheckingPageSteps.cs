@@ -182,6 +182,30 @@ namespace nipts_pts_automation_tests.Steps.CP
             _routeCheckingPage?.EnterDateMonthYear(DateTime.Now.AddDays(-2));
         }
 
+        // Coherent positive-flow departure: date + time from one timestamp, safely inside 48h. Use this
+        // for "navigate to Welcome page" scenarios instead of the date-only + time-only pair, which sat
+        // only ~30 min inside 48h and failed under small agent/app clock differences.
+        [Given(@"I provided a scheduled departure within the past 48 hours")]
+        [When(@"I provided a scheduled departure within the past 48 hours")]
+        [Then(@"I provided a scheduled departure within the past 48 hours")]
+        public void ThenIProvidedAScheduledDepartureWithinThePast48Hours()
+        {
+            string departureTime = _routeCheckingPage.EnterScheduledDepartureWithinPast48Hours();
+            _scenarioContext.Add("DepartureTime", departureTime);
+        }
+
+        // Coherent negative departure: date + time from one timestamp, safely BEYOND the +24h window.
+        // Use this for the "exceeds 24 hours" error scenarios instead of the date-only + time-only pair,
+        // which sat only ~30 min beyond the boundary and passed inspection under small clock differences.
+        [Given(@"I provided a scheduled departure beyond the next 24 hours")]
+        [When(@"I provided a scheduled departure beyond the next 24 hours")]
+        [Then(@"I provided a scheduled departure beyond the next 24 hours")]
+        public void ThenIProvidedAScheduledDepartureBeyondTheNext24Hours()
+        {
+            string departureTime = _routeCheckingPage.EnterScheduledDepartureBeyondNext24Hours();
+            _scenarioContext.Add("DepartureTime", departureTime);
+        }
+
 
         [When(@"I provided time that exceeds 24 hours and 1 minute from the current time")]
         [Then(@"I provided time that exceeds 24 hours and 1 minute from the current time")]

@@ -2,6 +2,8 @@
 using nipts_pts_automation_tests.Pages.AP_GB.LandingPage;
 using nipts_pts_automation_tests.Data;
 using nipts_pts_automation_tests.Tools;
+using nipts_pts_automation_tests.HelperMethods;
+using nipts_pts_automation_tests.Hooks;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using Reqnroll;
@@ -98,7 +100,48 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
                 password = jsonData.password
             };
 
-            signin?.IsSignedIn(userObject.UserId, userObject.password);
+            if (TrySignIn(userObject))
+                return;
+
+            // iOS only: the BrowserStack Safari session intermittently wedges on the sign-in redirect
+            // and never recovers in-session (confirmed repeatedly). Because on iOS the container hands
+            // the driver out via a swappable holder, replace the dead session with a fresh one and
+            // re-drive the whole sign-in once - a fresh session usually lands healthy where the wedged
+            // one could not. Fully guarded and additive: on a path that otherwise always fails today.
+            if (Waits.IsIosDevice() && _objectContainer.IsRegistered<WebDriverHolder>())
+            {
+                Console.WriteLine("iOS sign-in did not confirm - recreating the BrowserStack session and retrying sign-in once.");
+                try
+                {
+                    _objectContainer.Resolve<WebDriverHolder>().Recreate();
+
+                    var url = urlBuilder.Default("App").Build();
+                    _driver.Navigate().GoToUrl(url);
+                    landingPage?.EnterPassword();
+                    landingPage?.ClickContinueButton();
+                    signin?.SelectSignInMethod("GovernmentGateway");
+                    TrySignIn(userObject);
+                }
+                catch (Exception ex)
+                {
+                    // Best-effort recovery; the next step's IsPageLoaded makes the final pass/fail call.
+                    Console.WriteLine("iOS fresh-session sign-in retry failed: " + ex.Message);
+                }
+            }
+        }
+
+        private bool TrySignIn(User user)
+        {
+            try
+            {
+                return signin?.IsSignedIn(user.UserId, user.password) ?? false;
+            }
+            catch (WebDriverException) when (Waits.IsIosDevice())
+            {
+                // The iOS wedge fast-fail throws here; treat it as "not signed in" so the
+                // fresh-session retry can run instead of failing the step outright.
+                return false;
+            }
         }
 
         [When(@"click on signout button and verify the signout message on pets")]

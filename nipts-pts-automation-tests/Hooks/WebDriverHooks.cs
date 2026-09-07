@@ -13,6 +13,10 @@ namespace nipts_pts_automation_tests.Hooks
     {
         public IWebDriver Driver { get; set; } = null!;
 
+        // iOS-only: set when the driver is registered behind a swappable holder so a wedged sign-in
+        // session can be replaced with a fresh one mid-scenario. Null on every other platform.
+        private WebDriverHolder? _holder;
+
         private readonly ScenarioContext _scenarioContext;
         private readonly IObjectContainer _objectContainer;
         private readonly IReqnrollOutputHelper _specFlowOutputHelper;
@@ -52,12 +56,50 @@ namespace nipts_pts_automation_tests.Hooks
             }
             catch (Exception ex) { Logger.Debug("Could not set page-load timeout: " + ex.Message); }
 
-            _objectContainer.RegisterInstanceAs(Driver);
+            if (HelperMethods.Waits.IsIosDevice())
+            {
+                // iOS only: hand the driver out via a swappable holder (behind a per-dependency
+                // container factory) so the intermittently-wedged Safari sign-in session can be
+                // replaced with a fresh one mid-scenario. Every non-iOS platform keeps the direct
+                // instance registration below, so their behaviour is completely unchanged.
+                _holder = new WebDriverHolder(Driver, CreateBrowserStackDriver);
+                _objectContainer.RegisterInstanceAs(_holder);
+                _objectContainer.RegisterFactoryAs<IWebDriver>(() => _holder.Current).InstancePerDependency();
+            }
+            else
+            {
+                _objectContainer.RegisterInstanceAs(Driver);
+            }
+        }
+
+        // Builds a brand-new BrowserStack session used to replace a wedged iOS one. Uses a fresh
+        // capability instance (BrowserStackCapability.GetDriverOptions mutates its own dictionaries
+        // and cannot be called twice on the same instance) and reapplies the device latch and
+        // page-load bound so the new session behaves exactly like a first-of-scenario one.
+        private IWebDriver CreateBrowserStackDriver()
+        {
+            var site = new Site();
+            site.With(new BrowserStackCapability(ConfigSetup.BaseConfiguration, _scenarioContext).GetDriverOptions());
+            var driver = site.WebDriver.Driver;
+
+            HelperMethods.Waits.CaptureDeviceFromDriver(driver);
+            try
+            {
+                driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(
+                    ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 2);
+            }
+            catch (Exception ex) { Logger.Debug("Could not set page-load timeout on recreated driver: " + ex.Message); }
+
+            return driver;
         }
 
         [AfterScenario]
         public void AfterScenario()
         {
+            // After an iOS mid-scenario session swap the field points at the quit session; retarget
+            // teardown (artifacts + Quit) at the live one so we clean up and report the right session.
+            if (_holder != null) Driver = _holder.Current;
+
             bool takeScreenShot = false;
             try
             {

@@ -13,9 +13,11 @@
         void SelectDropDownDepartureTimeMinuteOnly();
         void SelectDropDownDepartureTimeWithSPS();
         string SelectfutureDropDownDepartureTime();
+        string EnterScheduledDepartureBeyondNext24Hours();
         void EnterDateMonthYear(DateTime dateTime);
         string SelectDropDownDepartureTimeJustOneMinuteLaterThanCurrent();
         string SelectDropDownDepartureTimeJustOneMinuteBeforeThanCurrent();
+        string EnterScheduledDepartureWithinPast48Hours();
         public bool VerifyFilterFlightMsg(string FlightMsgPTD, string FlightMsgAppno, string FlightMsgMichrochipNo);
         public bool VerifyFilterFlightHeaderMsg(string FlightHeaderMsg);
         bool VerifyTheHeaderText(string headerText);

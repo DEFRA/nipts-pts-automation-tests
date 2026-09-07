@@ -220,6 +220,50 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
 
             return departureTime;
         }
+
+        // Enters a scheduled departure ~44h in the past - deriving BOTH the date and the time from ONE
+        // timestamp so they can never disagree. The positive "within 48 hours" scenarios used to enter
+        // date = now-2 days and time = now+30min separately, leaving the departure only ~30 min inside
+        // the 48h window (and able to wrap across midnight); a small agent/app clock difference
+        // (e.g. UTC vs BST) then tipped it past 48h so the app rejected it and the flow never reached
+        // the Welcome page. 44h ago is always >24h and <48h, with hours of margin either side.
+        public string EnterScheduledDepartureWithinPast48Hours()
+        {
+            var departure = DateTime.Now.AddHours(-44);
+            EnterDateMonthYear(departure);
+
+            var hour = departure.ToString("HH");
+            var minutes = departure.ToString("mm");
+            string departureTime = $"'{hour}':'{minutes}'";
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
+
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", hourInput, hour);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", minuteInput, minutes);
+
+            return departureTime;
+        }
+
+        // Enters a scheduled departure ~28h in the future - date and time from ONE timestamp so they
+        // can never disagree. The negative "exceeds 24 hours" scenarios used to enter date = now+1 day
+        // and time = now+30min separately, leaving the departure only ~30 min BEYOND the +24h window
+        // (and able to wrap across midnight); a small agent/app clock difference then tipped it back
+        // inside the window so the app accepted it, the error never showed and the assertion timed out
+        // on "Element is not visible". 28h ahead is always >24h, with hours of margin.
+        public string EnterScheduledDepartureBeyondNext24Hours()
+        {
+            var departure = DateTime.Now.AddHours(28);
+            EnterDateMonthYear(departure);
+
+            var hour = departure.ToString("HH");
+            var minutes = departure.ToString("mm");
+            string departureTime = $"'{hour}':'{minutes}'";
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
+
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", hourInput, hour);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", minuteInput, minutes);
+
+            return departureTime;
+        }
         public bool VerifyFilterFlightMsg(string FlightMsgPTD, string FlightMsgAppno, string FlightMsgMichrochipNo)
         {
             return txtFlightFilterMsg1.Text.Contains(FlightMsgPTD) && txtFlightFilterMsg2.Text.Contains(FlightMsgAppno) && txtFlightFilterMsg3.Text.Contains(FlightMsgMichrochipNo);
