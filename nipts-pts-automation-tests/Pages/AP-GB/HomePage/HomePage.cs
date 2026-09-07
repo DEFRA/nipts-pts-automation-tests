@@ -248,8 +248,18 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
             // the last match is the most recent row (bottom of the table).
             var statusPath = $"//tr//th[contains(text(),'{petName}')]/../td[1]/strong";
             var cells = _driver.FindElements(By.XPath(statusPath));
-            return cells.Count > 0
-                   && cells[cells.Count - 1].Text.Replace("\r\n", string.Empty).Trim().ToUpper().Contains(status.ToUpper());
+            if (cells.Count == 0)
+                return false;
+
+            // iOS Safari/WebKit often returns an empty .Text for a rendered element, so fall back to
+            // the DOM textContent (same workaround LogPageState uses). Without this the status cell
+            // reads blank on iPhone and the poll times out at 6 min despite the row being displayed.
+            var cell = cells[cells.Count - 1];
+            var text = cell.Text;
+            if (string.IsNullOrWhiteSpace(text))
+                text = cell.GetAttribute("textContent") ?? string.Empty;
+
+            return text.Replace("\r\n", string.Empty).Trim().ToUpper().Contains(status.ToUpper());
         }
 
         // The Cancelled (revoked) and Unsuccessful (rejected) statuses - in English and Welsh -
