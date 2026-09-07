@@ -182,12 +182,21 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits * 2);
             while (DateTime.UtcNow < deadline)
             {
-                _driver.DismissTimeoutOverlayIfPresent();
-                var link = _driver.FindElements(SignInConfirmBy).FirstOrDefault(e => e.Displayed);
-                if (link != null)
+                try
                 {
-                    _driver.SafeClick(link);
-                    return;
+                    _driver.DismissTimeoutOverlayIfPresent();
+                    var link = _driver.FindElements(SignInConfirmBy).FirstOrDefault(e => e.Displayed);
+                    if (link != null)
+                    {
+                        _driver.SafeClick(link);
+                        return;
+                    }
+                }
+                catch (StaleElementReferenceException)
+                {
+                    // The Back navigation re-renders the header while we grab/click the link, so the
+                    // element can go stale mid-pass (iOS Safari reports this as "not in cache").
+                    // Swallow and re-find on the next poll instead of failing the step.
                 }
                 Thread.Sleep(1000);
             }
