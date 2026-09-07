@@ -159,9 +159,17 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         {
             try
             {
-                return _driver
+                var heading = _driver
                     .FindElements(By.XPath("//h1[contains(@class,'govuk-heading-xl')] | //h1[contains(@class,'govuk-heading-l')] | //h1[contains(@class,'govuk-fieldset__heading')]"))
-                    .FirstOrDefault(h => h.Displayed)?.Text ?? string.Empty;
+                    .FirstOrDefault(h => h.Displayed);
+                if (heading == null)
+                    return string.Empty;
+                // iOS Safari often returns an empty .Text for a rendered element, so fall back to the
+                // DOM textContent - otherwise the signed-out heading reads blank and never matches.
+                var text = heading.Text;
+                if (string.IsNullOrWhiteSpace(text))
+                    text = heading.GetAttribute("textContent") ?? string.Empty;
+                return text;
             }
             catch (Exception)
             {
@@ -225,17 +233,28 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
             Thread.Sleep(1000);
             // On very slow sessions the header (and its sign-out link) can take a while to render,
             // and the HMRC session-timeout overlay can intercept the click. Poll for the link,
-            // clearing the overlay each pass, then click it via the overlay-aware SafeClick.
+            // clearing the overlay each pass. On mobile (iPhone) the link lives in a collapsed menu
+            // so it never reports Displayed - in that case navigate straight to its href (the sign-out
+            // endpoint) to bypass the menu entirely.
             var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits * 2);
             while (DateTime.UtcNow < deadline)
             {
                 try
                 {
                     _driver.DismissTimeoutOverlayIfPresent();
-                    var link = _driver.FindElements(SignInConfirmBy).FirstOrDefault(e => e.Displayed);
-                    if (link != null)
+                    var links = _driver.FindElements(SignInConfirmBy);
+                    var visible = links.FirstOrDefault(e => e.Displayed);
+                    if (visible != null)
                     {
-                        _driver.SafeClick(link);
+                        // A JS click is more reliable than a native click on iOS Safari, where a
+                        // native .Click() can silently no-op and leave the session still signed in.
+                        ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", visible);
+                        return;
+                    }
+                    var href = links.FirstOrDefault()?.GetAttribute("href");
+                    if (!string.IsNullOrWhiteSpace(href))
+                    {
+                        _driver.Navigate().GoToUrl(href);
                         return;
                     }
                 }
