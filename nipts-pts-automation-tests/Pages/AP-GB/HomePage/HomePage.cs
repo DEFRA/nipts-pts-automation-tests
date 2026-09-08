@@ -70,7 +70,12 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
             // confirmed, next step 'gave up' with .Url='(unavailable)' after the full budget). While
             // the channel is still fresh from sign-in, drive straight to the dashboard ourselves -
             // we are already authenticated, so this lands on the home page on a clean navigation.
-            if (Waits.IsIosDevice())
+            //
+            // BUT skip that navigation if the dashboard heading is already showing: callers such as
+            // the 'View all' step navigate here themselves first, and issuing a SECOND back-to-back
+            // full-page GoToUrl on the already-strained post-submission channel is what wedges it
+            // (CI: View-all nav succeeded, then this redundant nav 'gave up' after the full budget).
+            if (Waits.IsIosDevice() && !_driver.IsHeadingPresent("Lifelong pet travel documents"))
             {
                 try
                 {

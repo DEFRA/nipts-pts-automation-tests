@@ -204,6 +204,29 @@ namespace nipts_pts_automation_tests.HelperMethods
         }
 
         /// <summary>
+        /// Single-pass, non-polling check for a heading (h1 or legend) whose text contains
+        /// <paramref name="pageTitle"/>. Unlike <see cref="IsHeadingLoaded"/> this does NOT wait, so
+        /// it can cheaply answer "are we already on this page?" (e.g. a prior step just navigated
+        /// here) without spending the full - on iOS x6 - heading-wait budget. Never throws.
+        /// </summary>
+        public static bool IsHeadingPresent(this IWebDriver driver, string pageTitle)
+        {
+            try
+            {
+                return driver.FindElements(By.XPath("//h1 | //legend")).Any(h =>
+                {
+                    var text = h.Text;
+                    if (string.IsNullOrEmpty(text)) text = h.GetAttribute("textContent") ?? string.Empty;
+                    return text.Contains(pageTitle);
+                });
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Executes the supplied function and retries it if a
         /// <see cref="StaleElementReferenceException"/> is thrown. This protects against
         /// elements being re-rendered between being located and being used, which happens
