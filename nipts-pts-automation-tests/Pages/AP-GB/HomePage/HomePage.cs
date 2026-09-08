@@ -445,6 +445,14 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
         public void ClickOnLifelongPetTravelDocumentsFromHeader()
         {
+            // Same iOS WebKit hazard as the submitted-page link: the header link's full-page nav to
+            // the dashboard wedges the command channel. Already authenticated, so on iOS go direct.
+            if (Waits.IsIosDevice())
+            {
+                var appUrl = ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl;
+                _driver.Navigate().GoToUrl($"{appUrl.TrimEnd('/')}/TravelDocument");
+                return;
+            }
             lifelongPetTraveDocuments.Click();
         }
 

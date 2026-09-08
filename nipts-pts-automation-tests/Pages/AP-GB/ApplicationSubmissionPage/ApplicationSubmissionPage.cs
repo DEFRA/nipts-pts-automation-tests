@@ -1,4 +1,5 @@
 ﻿using Reqnroll.BoDi;
+using nipts_pts_automation_tests.Configuration;
 using nipts_pts_automation_tests.HelperMethods;
 using OpenQA.Selenium;
 
@@ -41,6 +42,16 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.ApplicationSubmittedPage
         }
         public void ClickViewAllSubmittedPetTravelDocument()
         {
+            // The in-app link fires a client-side full-page navigation to the dashboard that wedges
+            // the iOS WebKit command channel AFTER the (deferred) click returns, leaving .Url stuck at
+            // '(unavailable)' and burning the whole page-load budget. We are already authenticated, so
+            // on iOS drive the same destination with a direct GoToUrl on the still-healthy channel.
+            if (Waits.IsIosDevice())
+            {
+                var appUrl = ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl;
+                _driver.Navigate().GoToUrl($"{appUrl.TrimEnd('/')}/TravelDocument");
+                return;
+            }
             JsClickDeferred(lnkViewAllSubmittedApplications);
         }
 
