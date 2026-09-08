@@ -100,6 +100,20 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
                 password = jsonData.password
             };
 
+            // iOS-only durable path: submitting the Government Gateway credential form on iOS Safari
+            // raises the native Save Password sheet that permanently wedges the WebDriver channel.
+            // Do the credential entry in an isolated local browser (no such sheet) and replay the
+            // resulting app session cookies into the Safari session, so the iOS session is signed in
+            // WITHOUT ever submitting the form. Best-effort: on failure fall through to the UI flow
+            // (which keeps its own fresh-session retry below), so nothing is worse than before.
+            if (Waits.IsIosDevice())
+            {
+                var appUrl = urlBuilder.Default("App").Build();
+                if (IosSessionInjector.TrySignInViaCookieReplay(_driver, appUrl, userObject.UserId, userObject.password))
+                    return;
+                Console.WriteLine("iOS cookie-replay unavailable/failed - falling back to UI sign-in.");
+            }
+
             if (TrySignIn(userObject))
                 return;
 

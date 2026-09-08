@@ -72,7 +72,7 @@ stages:
   #       branchName: ${{ parameters.branchName}}
   #       SeleniumGrid: ${{parameters.SeleniumGrid}}  
   #       TestDeviceName: 'iPad Pro 12.9 2022'
-  #       OSVersionName: '16'
+  #       OSVersionName: '18'
   #       BrowserVersionName: ''
   #       dependsOn: ''
   #       targetBrowserName: 'Chrome'
@@ -89,7 +89,7 @@ stages:
   #       branchName: ${{ parameters.branchName}}
   #       SeleniumGrid: ${{parameters.SeleniumGrid}}  
   #       TestDeviceName: 'iPad Pro 12.9 2022'
-  #       OSVersionName: '16'
+  #       OSVersionName: '18'
   #       BrowserVersionName: ''
   #       dependsOn: ''
   #       targetBrowserName: 'safari'
