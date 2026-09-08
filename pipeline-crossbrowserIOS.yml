@@ -59,8 +59,9 @@ stages:
 
   # Safari stages (iPad and iPhone 14) disabled: the native iOS Safari Save-Password/AutoFill
   # sheet swallows the Government Gateway credential submit, bouncing back to the B2C chooser
-  # ("We can't sign you in"). Chrome on the same devices signs in fine, so Chrome is our iOS
-  # coverage until a client-side dismiss for the Safari sheet is found.
+  # ("We can't sign you in"). We instead request browserName 'chromium' - BrowserStack's real
+  # iOS Chrome app - which is the value DEFRA/nipts-pts-ops-automation-tests uses on these same
+  # devices (iPad Pro 12.9 2022 / iPhone 14). "Chrome" is silently aliased to Safari on iOS.
   - stage: IOSIpad12ChromeRun
     displayName: IOSIpad12ChromeRun
     jobs:
@@ -76,7 +77,7 @@ stages:
         OSVersionName: '16'
         BrowserVersionName: ''
         dependsOn: ''
-        targetBrowserName: 'Chrome'
+        targetBrowserName: 'chromium'
 
   # - stage: IOSIpad12SafariRun
   #   displayName: IOSIpad12SafariRun
@@ -110,7 +111,7 @@ stages:
         OSVersionName: '18'
         BrowserVersionName: ''
         dependsOn: ''
-        targetBrowserName: 'Chrome'
+        targetBrowserName: 'chromium'
 
   # Disabled: iPhone 14 Safari fails GG sign-in via the native Save-Password sheet (see note
   # above). iPhone 14 Chrome above is green and provides the iOS signal.

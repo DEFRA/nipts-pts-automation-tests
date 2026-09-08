@@ -50,9 +50,18 @@ namespace nipts_pts_automation_tests.Capabilities
             }
             else
             {
+                // BrowserStack real iOS devices alias browserName "Chrome" to Safari - which raises the
+                // native Save-Password keychain sheet that wedges the Government Gateway/B2C sign-in.
+                // Their actual iOS Chrome app is exposed under the browser name "chromium" (this is the
+                // value DEFRA/nipts-pts-ops-automation-tests uses on the same iPad), so request that on
+                // iOS to run Chrome instead of Safari. Android/other targets are unchanged.
+                var deviceBrowser = _target;
+                if (IsIosDevice(_deviceName) && IsChromeTarget(_target))
+                    deviceBrowser = "chromium";
+
                 _capDictionary.Add("deviceName", _deviceName);
                 _browserstackOptions.Add("deviceName", _deviceName);
-                _browserstackOptions.Add("browserName", _target);
+                _browserstackOptions.Add("browserName", deviceBrowser);
                 _browserstackOptions.Add("deviceOrientation", "portrait");
 
                 // iOS Safari raises OS-level dialogs (e.g. the "Save Password"/AutoFill sheet) around
@@ -115,6 +124,13 @@ namespace nipts_pts_automation_tests.Capabilities
             !string.IsNullOrEmpty(deviceName) &&
             (deviceName.Contains("iPhone", StringComparison.OrdinalIgnoreCase)
              || deviceName.Contains("iPad", StringComparison.OrdinalIgnoreCase));
+
+        // Pipelines may pass either "Chrome" or "chromium" (the ops repo uses "chromium") - treat both
+        // as the Chrome-on-iOS request that must be mapped to BrowserStack's "chromium" browser name.
+        private static bool IsChromeTarget(string target) =>
+            !string.IsNullOrEmpty(target) &&
+            (target.Equals("Chrome", StringComparison.OrdinalIgnoreCase)
+             || target.Equals("chromium", StringComparison.OrdinalIgnoreCase));
 
         private void AddDictionaryValuesInDriverOptions(DriverOptions driverOptions, Dictionary<string, object> capDictionary)
         {
