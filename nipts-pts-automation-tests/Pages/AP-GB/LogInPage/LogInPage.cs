@@ -196,10 +196,45 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 _driver.FindElement(Accept_Cookies).Click();
                 Hide_Cookies.Click();
             }
+            // iOS: the "Save Password" sheet can wedge the session AFTER this step, so the old
+            // "no sign-out link yet => assume success" shortcut declared success too early and the
+            // wedge then killed a later step with no retry. Instead, actively confirm the
+            // authenticated state here; returning false on a wedge/timeout lets the caller recreate
+            // the session and retry sign-in (which is where recovery is wired).
+            if (Waits.IsIosDevice())
+                return ConfirmSignedInIos();
+
             if (_driver.FindElements(SignInConfirmBy).Count > 0)
                 return _driver.WaitForElement(SignInConfirmBy).Enabled;
             else 
                 return true;
+        }
+
+        private bool ConfirmSignedInIos()
+        {
+            // Healthy sessions confirm as soon as the dashboard renders (the sign-out link appears or
+            // the dashboard heading shows). A wedged session trips IsCommandChannelWedged and bails
+            // fast, so a generous budget never penalises a slow-but-healthy load.
+            var deadline = DateTime.UtcNow.AddSeconds(GlobalWaits * 6);
+            while (DateTime.UtcNow < deadline)
+            {
+                if (_driver.IsCommandChannelWedged())
+                    return false;
+                try
+                {
+                    _driver.DismissNativeAlertIfPresent();
+                    if (_driver.FindElements(SignInConfirmBy).Count > 0)
+                        return true;
+                    if (CurrentHeadingText().Contains("Lifelong pet travel documents"))
+                        return true;
+                }
+                catch (WebDriverException)
+                {
+                    // Command likely riding the wedge timeout; the next IsCommandChannelWedged confirms.
+                }
+                Thread.Sleep(1000);
+            }
+            return false;
         }
 
         public void ClickCreateSignInDetailsLink() => CreateSignInDetails.Click();
