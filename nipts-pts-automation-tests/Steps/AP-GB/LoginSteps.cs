@@ -103,29 +103,35 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             if (TrySignIn(userObject))
                 return;
 
-            // iOS only: the BrowserStack Safari session intermittently wedges on the sign-in redirect
-            // and never recovers in-session (confirmed repeatedly). Because on iOS the container hands
-            // the driver out via a swappable holder, replace the dead session with a fresh one and
-            // re-drive the whole sign-in once - a fresh session usually lands healthy where the wedged
-            // one could not. Fully guarded and additive: on a path that otherwise always fails today.
-            if (Waits.IsIosDevice() && _objectContainer.IsRegistered<WebDriverHolder>())
+            // iOS BrowserStack sessions can wedge the command channel around the GG/B2C sign-in (the
+            // native Save-Password sheet, a stalled redirect, or a bounce back to the chooser). When
+            // that happens, replace the session and re-drive the WHOLE login from a fresh navigation,
+            // which gives B2C a new authorize request with fresh state. Scoped to iOS on purpose - the
+            // desktop login path is left untouched.
+            if (!Waits.IsIosDevice())
+                return;
+
+            const int maxLoginRetries = 2;
+            for (var attempt = 1; attempt <= maxLoginRetries; attempt++)
             {
-                Console.WriteLine("iOS sign-in did not confirm - recreating the BrowserStack session and retrying sign-in once.");
+                Console.WriteLine($"Sign-in did not confirm - restarting the full login flow (attempt {attempt} of {maxLoginRetries}).");
                 try
                 {
-                    _objectContainer.Resolve<WebDriverHolder>().Recreate();
+                    if (_objectContainer.IsRegistered<WebDriverHolder>())
+                        _objectContainer.Resolve<WebDriverHolder>().Recreate();
 
                     var url = urlBuilder.Default("App").Build();
                     _driver.Navigate().GoToUrl(url);
                     landingPage?.EnterPassword();
                     landingPage?.ClickContinueButton();
                     signin?.SelectSignInMethod("GovernmentGateway");
-                    TrySignIn(userObject);
+                    if (TrySignIn(userObject))
+                        return;
                 }
                 catch (Exception ex)
                 {
-                    // Best-effort recovery; the next step's IsPageLoaded makes the final pass/fail call.
-                    Console.WriteLine("iOS fresh-session sign-in retry failed: " + ex.Message);
+                    // Best-effort recovery; the next step's page assertion makes the final call.
+                    Console.WriteLine($"Login retry {attempt} failed: {ex.Message}");
                 }
             }
         }
@@ -138,8 +144,9 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
             }
             catch (WebDriverException) when (Waits.IsIosDevice())
             {
-                // The iOS wedge fast-fail throws here; treat it as "not signed in" so the
-                // fresh-session retry can run instead of failing the step outright.
+                // On iOS, a wedged command channel around sign-in surfaces as a WebDriver error.
+                // Treat it as "not signed in" so the iOS full-login retry above can restart the flow.
+                // Desktop keeps its original behaviour (the exception propagates).
                 return false;
             }
         }
