@@ -184,11 +184,17 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 _driver.FindElement(Accept_Cookies).Click();
                 Hide_Cookies.Click();
             }
+            // Neutralise the password field BEFORE typing: changing its type after entry is too late,
+            // Safari has already flagged the login and still pops the keychain sheet that wedges iOS.
+            SuppressIosSavePasswordSheet();
             UserId.SendKeys(userName);
             Password.SendKeys(password);
             Thread.Sleep(2000);
             SuppressIosSavePasswordSheet();
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", SignIn);
+            // Defer the submit: a synchronous JS click rides the Government Gateway/B2C redirect and
+            // desyncs the iOS Safari command channel (~90s per later command). setTimeout returns
+            // immediately so the navigation can't wedge the channel.
+            JsClickDeferred(SignIn);
             Thread.Sleep(1000);
             if (_driver.FindElements(Accept_Cookies).Count > 0)
             {
@@ -238,6 +244,14 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         }
 
         public void ClickCreateSignInDetailsLink() => CreateSignInDetails.Click();
+
+        // Fire a click via setTimeout so ExecuteScript returns before the navigation starts - a
+        // synchronous click on a control that triggers a full-page B2C redirect wedges iOS Safari.
+        private void JsClickDeferred(IWebElement element)
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript(
+                "var el=arguments[0]; setTimeout(function(){ el.click(); }, 50);", element);
+        }
 
         // iOS Safari pops a native "Save Password" keychain sheet after a login form submits. It is
         // NOT a WebDriver alert, so it can't be dismissed and it blocks every following command until
