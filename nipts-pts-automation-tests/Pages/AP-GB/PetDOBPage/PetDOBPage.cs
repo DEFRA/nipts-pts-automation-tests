@@ -16,9 +16,6 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetDOBPage
         #region Page objects
         private IWebDriver _driver => _objectContainer.Resolve<IWebDriver>();
         public IWebElement PageHeading => _driver.WaitForElement(By.XPath("//h1[contains(@class,'govuk-fieldset__heading')]"), true);
-        private IWebElement txtDay => _driver.WaitForElement(By.Id("Day"), true);
-        private IWebElement txtMonth => _driver.WaitForElement(By.Id("Month"), true);
-        private IWebElement txtYear => _driver.WaitForElement(By.Id("Year"), true);
         private IWebElement btnContinue => _driver.WaitForElement(By.XPath("//button[contains(text(),'Continue')]"));
 
         private IReadOnlyCollection<IWebElement> lblErrorMessages => _driver.WaitForElements(By.XPath("//div[@class='govuk-error-summary__body']//a"));
@@ -33,15 +30,32 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.PetDOBPage
             var month = dateTime.ToString("MM");
             var year = dateTime.ToString("yyyy");
 
-            txtDay.Clear();
-            txtMonth.Clear();
-            txtYear.Clear();
-
-            txtDay.SendKeys(day);
-            txtMonth.SendKeys(month);
-            txtYear.SendKeys(year);
+            SetDateField(By.Id("Day"), day);
+            SetDateField(By.Id("Month"), month);
+            SetDateField(By.Id("Year"), year);
 
             return $"{day}/{month}/{year}";
+        }
+
+        // Resolve each field once by PRESENCE. The old forceWait visibility properties slept 10s on
+        // every access (6 accesses = ~60s per run) and tipped into "Element is not visible" whenever
+        // a govuk input reported Displayed=false on BrowserStack. JS-set the value if the native
+        // SendKeys is rejected as not-interactable.
+        private void SetDateField(By by, string value)
+        {
+            var field = _driver.WaitForElementExists(by);
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", field);
+            try
+            {
+                field.Clear();
+                field.SendKeys(value);
+            }
+            catch (WebDriverException)
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript(
+                    "arguments[0].value=arguments[1]; arguments[0].dispatchEvent(new Event('input',{bubbles:true}));",
+                    field, value);
+            }
         }
 
         public bool IsNextPageLoaded(string pageTitle)

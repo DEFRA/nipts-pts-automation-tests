@@ -138,7 +138,11 @@ namespace nipts_pts_automation_tests.HelperMethods
                 if (forceWait)
                     Thread.Sleep(TimeSpan.FromSeconds(3));
                 WebDriverWait driverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(GlobalWaits));
-                driverWait.Until(ExpectedConditions.ElementIsVisible(elementBy));
+                // Wait for PRESENCE, not visibility: this is a read/count collection getter and govuk
+                // summary rows (//dl/div) frequently report Displayed=false on BrowserStack even when
+                // rendered, which made a visibility wait burn the full GlobalWaits per list and throw
+                // "Element is not visible" (stacked across cards this was the 65-99s verify failures).
+                driverWait.Until(ExpectedConditions.ElementExists(elementBy));
                 return driver.FindElements(elementBy);
             }
             catch (Exception)
