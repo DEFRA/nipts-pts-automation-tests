@@ -50,11 +50,10 @@ namespace nipts_pts_automation_tests.Capabilities
             }
             else
             {
-                // BrowserStack real iOS devices alias browserName "Chrome" to Safari - which raises the
-                // native Save-Password keychain sheet that wedges the Government Gateway/B2C sign-in.
-                // Their actual iOS Chrome app is exposed under the browser name "chromium" (this is the
-                // value DEFRA/nipts-pts-ops-automation-tests uses on the same iPad), so request that on
-                // iOS to run Chrome instead of Safari. Android/other targets are unchanged.
+                // BrowserStack real iOS devices alias browserName "Chrome" to Safari (which raises the
+                // native Save-Password sheet that wedges Government Gateway sign-in). Their real Chrome
+                // app is exposed as "chromium" - the value DEFRA/nipts-pts-ops-automation-tests uses on
+                // this same iPad - so request that on iOS. Android/other targets are unchanged.
                 var deviceBrowser = _target;
                 if (IsIosDevice(_deviceName) && IsChromeTarget(_target))
                     deviceBrowser = "chromium";
@@ -63,17 +62,6 @@ namespace nipts_pts_automation_tests.Capabilities
                 _browserstackOptions.Add("deviceName", _deviceName);
                 _browserstackOptions.Add("browserName", deviceBrowser);
                 _browserstackOptions.Add("deviceOrientation", "portrait");
-
-                // iOS Safari raises OS-level dialogs (e.g. the "Save Password"/AutoFill sheet) around
-                // the Government Gateway sign-in that Selenium's web-context Alert API cannot dismiss -
-                // they wedge the session so every command (even .Url) fails until the sign-in budget
-                // expires. Ask the Appium/XCUITest layer to auto-dismiss native alerts. NOTE: keep this
-                // as a top-level appium: cap only - putting it inside bstack:options is rejected by
-                // BrowserStack's strict schema and fails session creation ("Remote WebDriver not set").
-                if (IsIosDevice(_deviceName))
-                {
-                    _capDictionary.Add("appium:autoDismissAlerts", true);
-                }
             }
 
             _browserstackOptions.Add("local", "false");
@@ -81,14 +69,6 @@ namespace nipts_pts_automation_tests.Capabilities
             var driverOptions = new ChromeOptions();
             AddDictionaryValuesInDriverOptions(driverOptions, _capDictionary);
             driverOptions.AddAdditionalOption("bstack:options", _browserstackOptions);
-
-            // For any WebDriver-visible prompt (the iOS run showed .Url returning the prompt's raw
-            // value), tell the driver to auto-dismiss it at the protocol level rather than letting it
-            // block commands and time the sign-in out.
-            if (IsIosDevice(_deviceName))
-            {
-                driverOptions.UnhandledPromptBehavior = UnhandledPromptBehavior.Dismiss;
-            }
 
             return driverOptions;
         }
