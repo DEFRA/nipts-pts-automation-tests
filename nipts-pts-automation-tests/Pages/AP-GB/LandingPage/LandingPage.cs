@@ -42,11 +42,28 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LandingPage
 
         public void EnterPassword()
         {
-            txtLoging.SendKeys(ConfigSetup.BaseConfiguration.TestConfiguration.EnvPassword);
+            // Real-device iOS frequently reports Displayed=false for the beta-gate password input
+            // even though it is present and usable, so a visibility wait throws "Element is not
+            // visible" (~40s) and fails the whole run. Resolve by PRESENCE, scroll into view, and
+            // fall back to a JS value-set if the native SendKeys is rejected as not-interactable.
+            var input = _driver.WaitForElementExists(By.XPath("//input[@id='password'] | //input[@id='EnteredPassword']"));
+            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", input);
+            try
+            {
+                input.SendKeys(ConfigSetup.BaseConfiguration.TestConfiguration.EnvPassword);
+            }
+            catch (WebDriverException)
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript(
+                    "arguments[0].value=arguments[1]; arguments[0].dispatchEvent(new Event('input',{bubbles:true}));",
+                    input, ConfigSetup.BaseConfiguration.TestConfiguration.EnvPassword);
+            }
             // Continue triggers a B2C redirect; a synchronous click rides the ~90s HTTP command
             // timeout and desyncs the iOS Safari session, so fire it via a deferred JS click that
-            // returns immediately.
-            JsClickDeferred(btnContinue);
+            // returns immediately. Resolve by presence too so a Displayed=false button doesn't
+            // re-introduce the same visibility-wait failure.
+            var continueBtn = _driver.WaitForElementExists(By.XPath("//button[contains(text(),'Continue')]"));
+            JsClickDeferred(continueBtn);
         }
 
         private void JsClickDeferred(IWebElement element)

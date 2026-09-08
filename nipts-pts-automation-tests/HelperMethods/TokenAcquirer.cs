@@ -128,13 +128,6 @@ namespace nipts_pts_automation_tests.HelperMethods
         /// so an Eager page-load strategy plus a bounded page-load timeout prevent Chrome blocking on
         /// that final navigation.
         /// </summary>
-        /// <summary>
-        /// Exposes the isolated headless local browser so other helpers (e.g. the iOS cookie-replay
-        /// sign-in) can drive a login off the wedge-prone BrowserStack Safari session. Returns null
-        /// when no local browser can be started on this agent.
-        /// </summary>
-        internal static IWebDriver? CreateIsolatedBrowser() => TryCreateLocalTokenBrowser();
-
         private static IWebDriver? TryCreateLocalTokenBrowser()
         {
             // Only attempt the isolated browser when the matching chromedriver is actually shipped
