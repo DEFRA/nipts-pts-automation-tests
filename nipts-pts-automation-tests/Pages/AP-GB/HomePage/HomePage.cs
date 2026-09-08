@@ -43,12 +43,25 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
         public bool IsPageLoaded()
         {
             // If the iOS command channel already wedged during sign-in, every command here rides the
-            // ~90s HTTP timeout and the dashboard heading can never render - bail immediately rather
-            // than burning ~8 min on two full heading polls plus a GoToUrl heal that also times out.
+            // ~90s HTTP timeout and the dashboard heading can never render - bail rather than burning
+            // ~8 min on two full heading polls plus a GoToUrl heal that also times out.
+            //
+            // BUT a single wedge check is NOT proof of a permanent wedge: immediately after Government
+            // Gateway sign-in the app is still mid-redirect to /TravelDocument, and a .Url read taken
+            // during that in-flight navigation blocks then throws - which looks identical to a real
+            // wedge on one probe. CI proved this: the fast-fail fired yet the very next .Url read
+            // showed a healthy session already parked on the correct /TravelDocument page. A real
+            // wedge NEVER recovers, so re-confirm after a short settle: a transient redirect clears on
+            // the second probe (fall through to the normal heading poll), a true wedge fails both.
             if (Waits.IsIosDevice() && _driver.IsCommandChannelWedged())
             {
-                LogPageState("IsPageLoaded: iOS command channel wedged - failing fast");
-                return false;
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(3));
+                if (_driver.IsCommandChannelWedged())
+                {
+                    LogPageState("IsPageLoaded: iOS command channel wedged - failing fast");
+                    return false;
+                }
+                LogPageState("IsPageLoaded: transient wedge cleared after settle - continuing");
             }
 
             if (_driver.IsHeadingLoaded("Lifelong pet travel documents"))
