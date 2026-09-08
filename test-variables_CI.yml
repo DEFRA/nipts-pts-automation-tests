@@ -36,6 +36,8 @@ variables:
     value: 'TestCategory=EnvCheck'
   ${{ if eq(parameters.jobNameParam, 'Regression') }}:
     value: 'TestCategory=Regression'
+  ${{ if eq(parameters.jobNameParam, 'WelshRegression') }}:
+    value: 'TestCategory=WelshRegression'
   ${{ if eq(parameters.jobNameParam, 'Pre') }}:
     value: 'TestCategory=Pre'
   ${{ if eq(parameters.jobNameParam, 'RunOnlyScenarios') }}:
