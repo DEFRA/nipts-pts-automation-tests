@@ -64,6 +64,27 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                 LogPageState("IsPageLoaded: transient wedge cleared after settle - continuing");
             }
 
+            // iOS: don't wait on the app's own post-Government-Gateway redirect to render the
+            // dashboard. That redirect frequently wedges the WebKit command channel BEFORE the heading
+            // appears, and the GoToUrl heal below then can't recover a dead channel (CI: sign-in
+            // confirmed, next step 'gave up' with .Url='(unavailable)' after the full budget). While
+            // the channel is still fresh from sign-in, drive straight to the dashboard ourselves -
+            // we are already authenticated, so this lands on the home page on a clean navigation.
+            if (Waits.IsIosDevice())
+            {
+                try
+                {
+                    _driver.DismissNativeAlertIfPresent();
+                    var dashUrl = ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl;
+                    if (!string.IsNullOrWhiteSpace(dashUrl))
+                        _driver.Navigate().GoToUrl($"{dashUrl.TrimEnd('/')}/TravelDocument");
+                }
+                catch (Exception)
+                {
+                    // Best-effort - the heading poll and heal below still get their chance.
+                }
+            }
+
             if (_driver.IsHeadingLoaded("Lifelong pet travel documents"))
                 return true;
 
