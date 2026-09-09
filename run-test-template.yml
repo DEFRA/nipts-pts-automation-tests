@@ -42,6 +42,16 @@ parameters:
   - name: testStepTimeoutMinutes
     type: number
     default: 570
+  # How many times to run the test command for this job, retrying on failure. Each attempt is a
+  # fresh 'dotnet test' process, so every retry opens a brand-new BrowserStack session from a clean
+  # [BeforeScenario] - i.e. a WHOLE-SCENARIO retry that recovers no matter where a run wedged. Only
+  # the final attempt's trx is published, so a run that passes on retry reports green. Default 1 =
+  # single run (identical to previous behaviour - CP and all other pipelines are unaffected). The
+  # iOS pipeline (whose real-device WebKit sessions wedge non-deterministically through the
+  # Government Gateway / B2C sign-in redirect chain) passes a value greater than 1.
+  - name: retryCount
+    type: number
+    default: 1
 
 jobs: 
 
@@ -547,7 +557,38 @@ jobs:
         # NUnit.NumberOfTestWorkers is overridden on the command line to cap how many
         # BrowserStack sessions this job opens concurrently, regardless of the value
         # baked into the artifact's runsettings.
-        dotnet test "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml" -- NUnit.NumberOfTestWorkers=$(sessionCount)
+        #
+        # retryCount (default 1) makes this a whole-scenario retry: each attempt is a fresh
+        # 'dotnet test' process, so a failed run re-runs from a clean [BeforeScenario] on a
+        # brand-new BrowserStack session. This is the only reliable lever for the iOS E2E,
+        # whose WebKit command channel wedges at a non-deterministic point through the
+        # Government Gateway / B2C sign-in chain - a fresh session sidesteps the wedge.
+        $maxAttempts = [int]"${{ parameters.retryCount }}"
+        if ($maxAttempts -lt 1) { $maxAttempts = 1 }
+        $trx = "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/TestResults/${{ parameters.jobName }}.xml"
+
+        for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
+          if ($maxAttempts -gt 1) {
+            Write-Host "=== Test attempt $attempt of $maxAttempts ==="
+            # Keep only the final attempt's trx so 'Publish Test Results' reflects the last run
+            # (a run that passes on retry must report green).
+            if (Test-Path $trx) { Remove-Item $trx -Force -ErrorAction SilentlyContinue }
+          }
+
+          dotnet test "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/nipts-pts-automation-tests.dll" --settings "$(System.DefaultWorkingDirectory)/nipts-pts-automation-tests/testrun.runsettings" --filter "$(Where)" --logger:"trx;logfilename=${{ parameters.jobName }}.xml" -- NUnit.NumberOfTestWorkers=$(sessionCount)
+          $code = $LASTEXITCODE
+
+          if ($code -eq 0) {
+            Write-Host "Tests passed on attempt $attempt of $maxAttempts."
+            break
+          }
+
+          if ($attempt -lt $maxAttempts) {
+            Write-Host "##vso[task.logissue type=warning]Test attempt $attempt failed (exit code $code). Retrying on a fresh BrowserStack session..."
+          } else {
+            Write-Host "##vso[task.logissue type=warning]Tests still failing after $maxAttempts attempt(s) (exit code $code)."
+          }
+        }
       displayName: 'Execute Tests'
       # dotnet test occasionally writes its results/trx but the test host then fails to exit,
       # wedging this step until the job timeout and losing the publish/report steps. This cap

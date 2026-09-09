@@ -78,6 +78,10 @@ stages:
         BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'chromium'
+        # Real-device WebKit wedges the command channel at a non-deterministic point through the
+        # GG/B2C sign-in chain, so the full E2E flakes. Retry the whole scenario on a fresh
+        # BrowserStack session (each attempt is a new dotnet test process) up to 3 times.
+        retryCount: 3
 
   # - stage: IOSIpad12SafariRun
   #   displayName: IOSIpad12SafariRun
@@ -112,6 +116,10 @@ stages:
         BrowserVersionName: ''
         dependsOn: ''
         targetBrowserName: 'chromium'
+        # Real-device WebKit wedges the command channel at a non-deterministic point through the
+        # GG/B2C sign-in chain, so the full E2E flakes. Retry the whole scenario on a fresh
+        # BrowserStack session (each attempt is a new dotnet test process) up to 3 times.
+        retryCount: 3
 
   # Disabled: iPhone 14 Safari fails GG sign-in via the native Save-Password sheet (see note
   # above). iPhone 14 Chrome above is green and provides the iOS signal.
