@@ -10,60 +10,6 @@ namespace nipts_pts_automation_tests.HelperMethods
     {
         private static int GlobalWaits => ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds;
 
-        // Ground truth captured from the live BrowserStack session (see CaptureDeviceFromDriver).
-        // Reset per scenario from that session's caps; true only when caps positively say iOS.
-        private static bool _isIosFromDriver;
-
-        /// <summary>
-        /// Reads the real platform from the live BrowserStack session capabilities and records it for
-        /// <see cref="IsIosDevice"/>. This is the only reliable iOS signal: the pipeline/appsettings
-        /// DeviceName is not trustworthy (the iOS pipeline's EnvironmentCheck stage keeps
-        /// DeviceName='Windows', and a real iPhone 14 session once read back non-iOS from config).
-        /// Called once per scenario right after the driver is created, and set from THIS session's
-        /// caps each time so a prior scenario cannot leak its platform onto the next; logs the probed
-        /// caps so CI is self-diagnosing.
-        /// </summary>
-        public static void CaptureDeviceFromDriver(IWebDriver driver)
-        {
-            try
-            {
-                if (driver is not IHasCapabilities hasCaps)
-                    return;
-
-                var caps = hasCaps.Capabilities;
-                var probe = string.Join(" | ", new[]
-                    {
-                        "platformName", "platform", "os", "osVersion", "deviceName",
-                        "device", "browserName", "realMobile"
-                    }
-                    .Select(k => $"{k}={caps.GetCapability(k)}"));
-
-                var isIos = probe.IndexOf("ios", StringComparison.OrdinalIgnoreCase) >= 0
-                            || probe.IndexOf("iphone", StringComparison.OrdinalIgnoreCase) >= 0
-                            || probe.IndexOf("ipad", StringComparison.OrdinalIgnoreCase) >= 0;
-
-                _isIosFromDriver = isIos;
-
-                Console.WriteLine($"CaptureDeviceFromDriver: isIos={isIos}, caps=[{probe}]");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("CaptureDeviceFromDriver failed (keeping last known platform): " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// True when the run is on a real iOS device (iPhone/iPad). iOS Safari/WebKit on
-        /// BrowserStack is materially slower through the Government Gateway sign-in redirect chain
-        /// and uniquely pops native prompts (e.g. the "Save Password" sheet) that block WebDriver
-        /// commands. Heading polls key off this to wait longer and to dismiss native alerts, which is
-        /// why every other platform passes while iOS was flaking. Keyed solely off the live session
-        /// capabilities (CaptureDeviceFromDriver): the pipeline/appsettings DeviceName is unreliable
-        /// (the iOS pipeline's EnvironmentCheck stage runs on Windows with DeviceName='Windows'), so
-        /// trusting it would both miss a real iPhone and mis-flag the Windows stage as iOS.
-        /// </summary>
-        public static bool IsIosDevice() => _isIosFromDriver;
-
         /// <summary>
         /// Best-effort dismissal of a native browser/OS alert. On iOS Safari the native "Save
         /// Password"/AutoFill sheet appears right after a Government Gateway sign-in and blocks every
@@ -82,34 +28,6 @@ namespace nipts_pts_automation_tests.HelperMethods
             }
             catch (NoAlertPresentException) { /* nothing blocking - the common case */ }
             catch (Exception) { /* never throw from best-effort dismissal */ }
-        }
-
-        /// <summary>
-        /// True when the WebDriver command channel has desynced/died - the signature of the iOS
-        /// Safari native "Save Password" sheet wedge. Once a command rides the ~90s HTTP timeout the
-        /// channel desyncs permanently: later commands read the previous command's late reply, so
-        /// <c>.Url</c> returns a leaked raw response (e.g. a serialized
-        /// "System.Collections.Generic.Dictionary`2[...]" - exactly what CI logged) or an
-        /// empty/non-http value instead of the page URL. A live Safari/WebKit session ALWAYS reports
-        /// an absolute http(s) URL, so anything else means the channel is dead and NEVER recovers -
-        /// callers should abandon their poll immediately rather than issue more commands that each
-        /// cost ~90s. Never throws.
-        /// </summary>
-        public static bool IsCommandChannelWedged(this IWebDriver driver)
-        {
-            string url;
-            try
-            {
-                url = driver.Url;
-            }
-            catch (Exception)
-            {
-                // .Url throwing (rather than returning) is itself a definitive wedge signal.
-                return true;
-            }
-
-            return string.IsNullOrWhiteSpace(url)
-                   || !url.StartsWith("http", StringComparison.OrdinalIgnoreCase);
         }
 
         public static IWebElement WaitForElement(this IWebDriver driver, By elementBy, bool forceWait = false)
@@ -163,12 +81,7 @@ namespace nipts_pts_automation_tests.HelperMethods
         {
             try { driver.WaitForAjax(); } catch (Exception) { /* best-effort readiness check */ }
             var headingBy = By.XPath("//h1 | //legend");
-            // iOS Safari is ~2-3x slower through the sign-in/redirect chain than every other
-            // platform, so give it a much larger budget (x6) before declaring the heading missing;
-            // other platforms keep the proven x3. This is the single biggest reason iOS was the only
-            // pipeline flaking on "page not loaded".
-            var headingWaitMultiplier = IsIosDevice() ? 6 : 3;
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(GlobalWaits * headingWaitMultiplier));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(GlobalWaits * 3));
             try
             {
                 return wait.Until(d =>
@@ -195,29 +108,6 @@ namespace nipts_pts_automation_tests.HelperMethods
                     {
                         return false;
                     }
-                });
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Single-pass, non-polling check for a heading (h1 or legend) whose text contains
-        /// <paramref name="pageTitle"/>. Unlike <see cref="IsHeadingLoaded"/> this does NOT wait, so
-        /// it can cheaply answer "are we already on this page?" (e.g. a prior step just navigated
-        /// here) without spending the full - on iOS x6 - heading-wait budget. Never throws.
-        /// </summary>
-        public static bool IsHeadingPresent(this IWebDriver driver, string pageTitle)
-        {
-            try
-            {
-                return driver.FindElements(By.XPath("//h1 | //legend")).Any(h =>
-                {
-                    var text = h.Text;
-                    if (string.IsNullOrEmpty(text)) text = h.GetAttribute("textContent") ?? string.Empty;
-                    return text.Contains(pageTitle);
                 });
             }
             catch (Exception)

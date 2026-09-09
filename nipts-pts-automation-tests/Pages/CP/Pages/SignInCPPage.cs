@@ -42,7 +42,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             var signInBy = By.XPath("//a[contains(text(),'Sign in')] | //button[contains(text(),'Sign in')]");
             var chooserBy = By.XPath("//label[@for='scp']");
             var deadline = DateTime.UtcNow.AddSeconds(
-                ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * (Waits.IsIosDevice() ? 6 : 3));
+                ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 3);
 
             // Poll for the Sign in link by PRESENCE rather than WaitForElement, which throws
             // "Element is not visible" and fails the step when a slow landing-page render or an early
@@ -100,7 +100,7 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             // Drive whatever page is currently shown, in a loop, until the credentials are submitted.
             var js = (IJavaScriptExecutor)_driver;
             var deadline = DateTime.UtcNow.AddSeconds(
-                ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * (Waits.IsIosDevice() ? 6 : 3));
+                ConfigSetup.BaseConfiguration.TestConfiguration.GlobalWaitsInSeconds * 3);
 
             while (DateTime.UtcNow < deadline)
             {

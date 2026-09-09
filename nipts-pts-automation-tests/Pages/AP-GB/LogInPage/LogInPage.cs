@@ -184,21 +184,13 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 _driver.FindElement(Accept_Cookies).Click();
                 Hide_Cookies.Click();
             }
-            if (Waits.IsIosDevice())
-                Console.WriteLine($"IsSignedIn(iOS): entering - user_id present={_driver.FindElements(By.Id("user_id")).Count}, password present={_driver.FindElements(By.Id("password")).Count}");
-            // Neutralise the password field BEFORE typing: changing its type after entry is too late,
-            // Safari has already flagged the login and still pops the keychain sheet that wedges iOS.
-            SuppressIosSavePasswordSheet();
             UserId.SendKeys(userName);
             Password.SendKeys(password);
             Thread.Sleep(2000);
-            SuppressIosSavePasswordSheet();
             // Defer the submit: a synchronous JS click rides the Government Gateway/B2C redirect and
-            // desyncs the iOS Safari command channel (~90s per later command). setTimeout returns
-            // immediately so the navigation can't wedge the channel.
+            // can desync the Safari command channel. setTimeout returns immediately so the
+            // navigation can't wedge the channel.
             JsClickDeferred(SignIn);
-            if (Waits.IsIosDevice())
-                Console.WriteLine("IsSignedIn(iOS): Sign in submit deferred-clicked; confirming auth...");
             Thread.Sleep(1000);
             if (_driver.FindElements(Accept_Cookies).Count > 0)
             {
@@ -206,62 +198,10 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
                 _driver.FindElement(Accept_Cookies).Click();
                 Hide_Cookies.Click();
             }
-            // iOS: the "Save Password" sheet can wedge the session AFTER this step, so the old
-            // "no sign-out link yet => assume success" shortcut declared success too early and the
-            // wedge then killed a later step with no retry. Instead, actively confirm the
-            // authenticated state here; returning false on a wedge/timeout lets the caller recreate
-            // the session and retry sign-in (which is where recovery is wired).
-            if (Waits.IsIosDevice())
-                return ConfirmSignedInIos();
-
             if (_driver.FindElements(SignInConfirmBy).Count > 0)
                 return _driver.WaitForElement(SignInConfirmBy).Enabled;
             else 
                 return true;
-        }
-
-        private bool ConfirmSignedInIos()
-        {
-            // Healthy sessions confirm as soon as the dashboard renders (the sign-out link appears or
-            // the dashboard heading shows). A wedged session trips IsCommandChannelWedged and bails
-            // fast, so a generous budget never penalises a slow-but-healthy load.
-            var start = DateTime.UtcNow;
-            var deadline = start.AddSeconds(GlobalWaits * 6);
-            var iteration = 0;
-            while (DateTime.UtcNow < deadline)
-            {
-                iteration++;
-                if (_driver.IsCommandChannelWedged())
-                {
-                    Console.WriteLine($"ConfirmSignedInIos: command channel WEDGED at {(DateTime.UtcNow - start).TotalSeconds:F1}s (iteration {iteration}) - bailing so the caller can recreate the session.");
-                    return false;
-                }
-                try
-                {
-                    _driver.DismissNativeAlertIfPresent();
-                    if (_driver.FindElements(SignInConfirmBy).Count > 0)
-                    {
-                        Console.WriteLine($"ConfirmSignedInIos: confirmed via sign-out link at {(DateTime.UtcNow - start).TotalSeconds:F1}s.");
-                        return true;
-                    }
-                    var heading = CurrentHeadingText();
-                    if (heading.Contains("Lifelong pet travel documents"))
-                    {
-                        Console.WriteLine($"ConfirmSignedInIos: confirmed via dashboard heading at {(DateTime.UtcNow - start).TotalSeconds:F1}s.");
-                        return true;
-                    }
-                    if (iteration % 5 == 0)
-                        Console.WriteLine($"ConfirmSignedInIos: still waiting {(DateTime.UtcNow - start).TotalSeconds:F1}s - heading='{heading}'");
-                }
-                catch (WebDriverException ex)
-                {
-                    // Command likely riding the wedge timeout; the next IsCommandChannelWedged confirms.
-                    Console.WriteLine($"ConfirmSignedInIos: WebDriverException at {(DateTime.UtcNow - start).TotalSeconds:F1}s - {ex.Message.Split('\n')[0]}");
-                }
-                Thread.Sleep(1000);
-            }
-            Console.WriteLine($"ConfirmSignedInIos: gave up after {(DateTime.UtcNow - start).TotalSeconds:F1}s - auth not confirmed (no wedge detected).");
-            return false;
         }
 
         public void ClickCreateSignInDetailsLink() => CreateSignInDetails.Click();
@@ -272,34 +212,6 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.LogInPage
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript(
                 "var el=arguments[0]; setTimeout(function(){ el.click(); }, 50);", element);
-        }
-
-        // iOS Safari pops a native "Save Password" keychain sheet after a login form submits. It is
-        // NOT a WebDriver alert, so it can't be dismissed and it blocks every following command until
-        // the ~90s HTTP timeout desyncs the session for good (URL reads '(unavailable)'). The sheet
-        // only triggers when a type=password field is submitted, so on iOS neutralise the field
-        // (value/name preserved -> identical POST) right before clicking Sign in to stop it appearing.
-        private void SuppressIosSavePasswordSheet()
-        {
-            if (!Waits.IsIosDevice()) return;
-            try
-            {
-                var result = ((IJavaScriptExecutor)_driver).ExecuteScript(
-                    "var pw=document.getElementById('password');" +
-                    "var uid=document.getElementById('user_id');" +
-                    "var type='none', form='none';" +
-                    "if(pw){var f=pw.form; if(f){f.setAttribute('autocomplete','off'); form='off';}" +
-                    "pw.setAttribute('autocomplete','off'); pw.type='text'; type=pw.type;}" +
-                    "if(uid){uid.setAttribute('autocomplete','off');}" +
-                    "if(document.activeElement){document.activeElement.blur();}" +
-                    "return 'pwFound='+(!!pw)+', uidFound='+(!!uid)+', pwType='+type+', formAutocomplete='+form;");
-                Console.WriteLine($"SuppressIosSavePasswordSheet: {result}");
-            }
-            catch (Exception ex)
-            {
-                // Best-effort suppression - never fail sign-in because the tweak errored.
-                Console.WriteLine($"SuppressIosSavePasswordSheet: JS failed - {ex.Message.Split('\n')[0]}");
-            }
         }
 
         public void ClickSignedOut()

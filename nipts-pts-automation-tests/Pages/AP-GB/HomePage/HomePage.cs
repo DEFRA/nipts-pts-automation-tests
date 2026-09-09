@@ -42,54 +42,6 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
         public bool IsPageLoaded()
         {
-            // If the iOS command channel already wedged during sign-in, every command here rides the
-            // ~90s HTTP timeout and the dashboard heading can never render - bail rather than burning
-            // ~8 min on two full heading polls plus a GoToUrl heal that also times out.
-            //
-            // BUT a single wedge check is NOT proof of a permanent wedge: immediately after Government
-            // Gateway sign-in the app is still mid-redirect to /TravelDocument, and a .Url read taken
-            // during that in-flight navigation blocks then throws - which looks identical to a real
-            // wedge on one probe. CI proved this: the fast-fail fired yet the very next .Url read
-            // showed a healthy session already parked on the correct /TravelDocument page. A real
-            // wedge NEVER recovers, so re-confirm after a short settle: a transient redirect clears on
-            // the second probe (fall through to the normal heading poll), a true wedge fails both.
-            if (Waits.IsIosDevice() && _driver.IsCommandChannelWedged())
-            {
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(3));
-                if (_driver.IsCommandChannelWedged())
-                {
-                    LogPageState("IsPageLoaded: iOS command channel wedged - failing fast");
-                    return false;
-                }
-                LogPageState("IsPageLoaded: transient wedge cleared after settle - continuing");
-            }
-
-            // iOS: don't wait on the app's own post-Government-Gateway redirect to render the
-            // dashboard. That redirect frequently wedges the WebKit command channel BEFORE the heading
-            // appears, and the GoToUrl heal below then can't recover a dead channel (CI: sign-in
-            // confirmed, next step 'gave up' with .Url='(unavailable)' after the full budget). While
-            // the channel is still fresh from sign-in, drive straight to the dashboard ourselves -
-            // we are already authenticated, so this lands on the home page on a clean navigation.
-            //
-            // BUT skip that navigation if the dashboard heading is already showing: callers such as
-            // the 'View all' step navigate here themselves first, and issuing a SECOND back-to-back
-            // full-page GoToUrl on the already-strained post-submission channel is what wedges it
-            // (CI: View-all nav succeeded, then this redundant nav 'gave up' after the full budget).
-            if (Waits.IsIosDevice() && !_driver.IsHeadingPresent("Lifelong pet travel documents"))
-            {
-                try
-                {
-                    _driver.DismissNativeAlertIfPresent();
-                    var dashUrl = ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl;
-                    if (!string.IsNullOrWhiteSpace(dashUrl))
-                        _driver.Navigate().GoToUrl($"{dashUrl.TrimEnd('/')}/TravelDocument");
-                }
-                catch (Exception)
-                {
-                    // Best-effort - the heading poll and heal below still get their chance.
-                }
-            }
-
             if (_driver.IsHeadingLoaded("Lifelong pet travel documents"))
                 return true;
 
@@ -388,7 +340,7 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
                     // (covers a genuinely aborted navigation). Healthy runs exit the first poll fast.
                     try { _driver.Navigate().GoToUrl(abs.ToString()); }
                     catch (Exception) { }
-                    summaryLoaded = SummaryHeadingPresent(globalWaits * (Waits.IsIosDevice() ? 6 : 3));
+                    summaryLoaded = SummaryHeadingPresent(globalWaits * 3);
                     if (!summaryLoaded)
                     {
                         try { _driver.Navigate().GoToUrl(abs.ToString()); }
@@ -471,14 +423,6 @@ namespace nipts_pts_automation_tests.Pages.AP_GB.HomePage
 
         public void ClickOnLifelongPetTravelDocumentsFromHeader()
         {
-            // Same iOS WebKit hazard as the submitted-page link: the header link's full-page nav to
-            // the dashboard wedges the command channel. Already authenticated, so on iOS go direct.
-            if (Waits.IsIosDevice())
-            {
-                var appUrl = ConfigSetup.BaseConfiguration.TestConfiguration.AppPortalUrl;
-                _driver.Navigate().GoToUrl($"{appUrl.TrimEnd('/')}/TravelDocument");
-                return;
-            }
             lifelongPetTraveDocuments.Click();
         }
 

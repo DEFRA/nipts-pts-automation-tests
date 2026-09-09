@@ -57,31 +57,26 @@ stages:
         targetBrowserName: ${{parameters.Target}}
 
 
-  # Safari stages (iPad and iPhone 14) disabled: the native iOS Safari Save-Password/AutoFill
-  # sheet swallows the Government Gateway credential submit, bouncing back to the B2C chooser
-  # ("We can't sign you in"). We instead request browserName 'chromium' - BrowserStack's real
-  # iOS Chrome app - which is the value DEFRA/nipts-pts-ops-automation-tests uses on these same
-  # devices (iPad Pro 12.9 2022 / iPhone 14). "Chrome" is silently aliased to Safari on iOS.
-  - stage: IOSIpad12ChromeRun
-    displayName: IOSIpad12ChromeRun
-    jobs:
-    - template: run-test-template.yml
-      parameters:
-        jobName: IOSIpad12ChromeRun
-        testStepTimeoutMinutes: 120
-        envConfigParam: ${{ parameters.Environment}}
-        apiEndPoint: ${{ parameters.ApiEndpoint}}
-        branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        TestDeviceName: 'iPad Pro 12.9 2022'
-        OSVersionName: '16'
-        BrowserVersionName: ''
-        dependsOn: ''
-        targetBrowserName: 'chromium'
-        # Real-device WebKit wedges the command channel at a non-deterministic point through the
-        # GG/B2C sign-in chain, so the full E2E flakes. Retry the whole scenario on a fresh
-        # BrowserStack session (each attempt is a new dotnet test process) up to 3 times.
-        retryCount: 3
+  # iOS automation stopped: real-device WebKit wedges the command channel non-deterministically
+  # through the Government Gateway / B2C sign-in chain, so the iOS stages are disabled. The
+  # iOS-specific application/framework code has also been removed. Re-enable these stages only if
+  # iOS coverage is reinstated.
+  # - stage: IOSIpad12ChromeRun
+  #   displayName: IOSIpad12ChromeRun
+  #   jobs:
+  #   - template: run-test-template.yml
+  #     parameters:
+  #       jobName: IOSIpad12ChromeRun
+  #       testStepTimeoutMinutes: 120
+  #       envConfigParam: ${{ parameters.Environment}}
+  #       apiEndPoint: ${{ parameters.ApiEndpoint}}
+  #       branchName: ${{ parameters.branchName}}
+  #       SeleniumGrid: ${{parameters.SeleniumGrid}}  
+  #       TestDeviceName: 'iPad Pro 12.9 2022'
+  #       OSVersionName: '16'
+  #       BrowserVersionName: ''
+  #       dependsOn: ''
+  #       targetBrowserName: 'chromium'
 
   # - stage: IOSIpad12SafariRun
   #   displayName: IOSIpad12SafariRun
@@ -100,26 +95,22 @@ stages:
   #       dependsOn: ''
   #       targetBrowserName: 'safari'
 
-  - stage: IOSIphone14ChromeRun
-    displayName: IOSIphone14ChromeRun
-    jobs:
-    - template: run-test-template.yml
-      parameters:
-        jobName: IOSIphone14ChromeRun
-        testStepTimeoutMinutes: 120
-        envConfigParam: ${{ parameters.Environment}}
-        apiEndPoint: ${{ parameters.ApiEndpoint}}
-        branchName: ${{ parameters.branchName}}
-        SeleniumGrid: ${{parameters.SeleniumGrid}}  
-        TestDeviceName: 'iPhone 14'
-        OSVersionName: '18'
-        BrowserVersionName: ''
-        dependsOn: ''
-        targetBrowserName: 'chromium'
-        # Real-device WebKit wedges the command channel at a non-deterministic point through the
-        # GG/B2C sign-in chain, so the full E2E flakes. Retry the whole scenario on a fresh
-        # BrowserStack session (each attempt is a new dotnet test process) up to 3 times.
-        retryCount: 3
+  # - stage: IOSIphone14ChromeRun
+  #   displayName: IOSIphone14ChromeRun
+  #   jobs:
+  #   - template: run-test-template.yml
+  #     parameters:
+  #       jobName: IOSIphone14ChromeRun
+  #       testStepTimeoutMinutes: 120
+  #       envConfigParam: ${{ parameters.Environment}}
+  #       apiEndPoint: ${{ parameters.ApiEndpoint}}
+  #       branchName: ${{ parameters.branchName}}
+  #       SeleniumGrid: ${{parameters.SeleniumGrid}}  
+  #       TestDeviceName: 'iPhone 14'
+  #       OSVersionName: '18'
+  #       BrowserVersionName: ''
+  #       dependsOn: ''
+  #       targetBrowserName: 'chromium'
 
   # Disabled: iPhone 14 Safari fails GG sign-in via the native Save-Password sheet (see note
   # above). iPhone 14 Chrome above is green and provides the iOS signal.

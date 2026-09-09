@@ -2,8 +2,6 @@
 using nipts_pts_automation_tests.Pages.AP_GB.LandingPage;
 using nipts_pts_automation_tests.Data;
 using nipts_pts_automation_tests.Tools;
-using nipts_pts_automation_tests.HelperMethods;
-using nipts_pts_automation_tests.Hooks;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using Reqnroll;
@@ -102,53 +100,11 @@ namespace nipts_pts_automation_tests.Steps.AP_GB
 
             if (TrySignIn(userObject))
                 return;
-
-            // iOS BrowserStack sessions can wedge the command channel around the GG/B2C sign-in (the
-            // native Save-Password sheet, a stalled redirect, or a bounce back to the chooser). When
-            // that happens, replace the session and re-drive the WHOLE login from a fresh navigation,
-            // which gives B2C a new authorize request with fresh state. Scoped to iOS on purpose - the
-            // desktop login path is left untouched.
-            if (!Waits.IsIosDevice())
-                return;
-
-            const int maxLoginRetries = 2;
-            for (var attempt = 1; attempt <= maxLoginRetries; attempt++)
-            {
-                Console.WriteLine($"Sign-in did not confirm - restarting the full login flow (attempt {attempt} of {maxLoginRetries}).");
-                try
-                {
-                    if (_objectContainer.IsRegistered<WebDriverHolder>())
-                        _objectContainer.Resolve<WebDriverHolder>().Recreate();
-
-                    var url = urlBuilder.Default("App").Build();
-                    _driver.Navigate().GoToUrl(url);
-                    landingPage?.EnterPassword();
-                    landingPage?.ClickContinueButton();
-                    signin?.SelectSignInMethod("GovernmentGateway");
-                    if (TrySignIn(userObject))
-                        return;
-                }
-                catch (Exception ex)
-                {
-                    // Best-effort recovery; the next step's page assertion makes the final call.
-                    Console.WriteLine($"Login retry {attempt} failed: {ex.Message}");
-                }
-            }
         }
 
         private bool TrySignIn(User user)
         {
-            try
-            {
-                return signin?.IsSignedIn(user.UserId, user.password) ?? false;
-            }
-            catch (WebDriverException) when (Waits.IsIosDevice())
-            {
-                // On iOS, a wedged command channel around sign-in surfaces as a WebDriver error.
-                // Treat it as "not signed in" so the iOS full-login retry above can restart the flow.
-                // Desktop keeps its original behaviour (the exception propagates).
-                return false;
-            }
+            return signin?.IsSignedIn(user.UserId, user.password) ?? false;
         }
 
         [When(@"click on signout button and verify the signout message on pets")]
