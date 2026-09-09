@@ -94,15 +94,29 @@ namespace nipts_pts_automation_tests.Pages.CP.Pages
             // select a different sailing, so the referral never appears in the SPS user's list.
             _scenarioContext["SailingHour"] = hour;
             _scenarioContext["SailingMinutes"] = minutes;
-            Thread.Sleep(1000);
-            ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView()", hourInput);
-
-            if (_driver.FindElements(hourEle).Count >0 || _driver.FindElements(minuteEle).Count >0)
-            {
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", hourInput, hour);
-                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].value = arguments[1];", minuteInput, minutes);
-            }
+            // Resolve the sailing inputs by PRESENCE (not visibility): govuk inputs intermittently
+            // report Displayed=false on slow BrowserStack sessions, so the old visibility-based
+            // hourInput/minuteInput getters could each burn the full GlobalWaits and throw
+            // "Element is not visible" (~91s = stacked waits). Presence + JS value-set is robust.
+            SetSailingTime(hour, minutes);
             return departureTime;
+        }
+
+        // Sets the hour/minute sailing fields robustly: resolves each input once by presence,
+        // dismisses the HMRC timeout overlay, scrolls into view, sets the value via JS and fires
+        // input+change so the app's client-side validation registers the entry.
+        private void SetSailingTime(string hour, string minutes)
+        {
+            var hourField = _driver.WaitForElementExists(By.XPath("//input[@id='sailingHour']"));
+            var minuteField = _driver.WaitForElementExists(By.XPath("//input[@id='sailingMinutes']"));
+            var js = (IJavaScriptExecutor)_driver;
+            js.ExecuteScript("arguments[0].scrollIntoView({block:'center'});", hourField);
+            const string setValue =
+                "arguments[0].value = arguments[1];" +
+                "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
+                "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));";
+            js.ExecuteScript(setValue, hourField, hour);
+            js.ExecuteScript(setValue, minuteField, minutes);
         }
 
         public void SelectDropDownDepartureTimeWithSPS()
